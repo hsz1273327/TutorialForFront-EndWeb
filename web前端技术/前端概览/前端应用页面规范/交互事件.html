@@ -1,0 +1,1899 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>交互事件 · Javascript攻略</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="hsz">
+        
+        
+    
+    <link rel="stylesheet" href="../../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-advanced-emoji/emoji-website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-katex/katex.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-donate/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../前端应用调用本地资源/" />
+    
+    
+    <link rel="prev" href="模板标签.html" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"repo":"TutorialForJavascript/TutorialForJavascript.github.io","types":["star","watch","fork"],"size":"small"};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="http://blog.hszofficial.site/" target="_blank" class="custom-link">Home</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../../">
+            
+                <a href="../../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../../../执行环境/">
+            
+                <a href="../../../执行环境/">
+            
+                    
+                    执行环境
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../../../执行环境/Javascript执行环境.html">
+            
+                <a href="../../../执行环境/Javascript执行环境.html">
+            
+                    
+                    Javascript执行环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../../../执行环境/代码风格.html">
+            
+                <a href="../../../执行环境/代码风格.html">
+            
+                    
+                    代码风格
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../../../执行环境/api文档自动生成.html">
+            
+                <a href="../../../执行环境/api文档自动生成.html">
+            
+                    
+                    api文档自动生成
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../../../执行环境/代码测试工具.html">
+            
+                <a href="../../../执行环境/代码测试工具.html">
+            
+                    
+                    代码测试工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../../../执行环境/log工具.html">
+            
+                <a href="../../../执行环境/log工具.html">
+            
+                    
+                    log工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../../../执行环境/性能基准测试.html">
+            
+                <a href="../../../执行环境/性能基准测试.html">
+            
+                    
+                    性能基准测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../../../基础语法/">
+            
+                <a href="../../../基础语法/">
+            
+                    
+                    基础语法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../../../基础语法/基本语法和代码结构.html">
+            
+                <a href="../../../基础语法/基本语法和代码结构.html">
+            
+                    
+                    基本语法和代码结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../../../基础语法/变量与值与对象.html">
+            
+                <a href="../../../基础语法/变量与值与对象.html">
+            
+                    
+                    变量与值与对象
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../../../基础语法/从运算符到函数.html">
+            
+                <a href="../../../基础语法/从运算符到函数.html">
+            
+                    
+                    从运算符到函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../../../基础语法/迭代器与生成器.html">
+            
+                <a href="../../../基础语法/迭代器与生成器.html">
+            
+                    
+                    迭代器与生成器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../../../基础语法/基本容器.html">
+            
+                <a href="../../../基础语法/基本容器.html">
+            
+                    
+                    基本容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../../../基础语法/异步编程.html">
+            
+                <a href="../../../基础语法/异步编程.html">
+            
+                    
+                    异步编程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../../../基础语法/面向对象编程.html">
+            
+                <a href="../../../基础语法/面向对象编程.html">
+            
+                    
+                    面向对象编程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="../../../基础语法/模块化编程.html">
+            
+                <a href="../../../基础语法/模块化编程.html">
+            
+                    
+                    模块化编程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="../../../基础语法/特殊对象和特殊接口.html">
+            
+                <a href="../../../基础语法/特殊对象和特殊接口.html">
+            
+                    
+                    特殊对象和特殊接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    web前端技术
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    前端概览
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    前端应用页面规范
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1.1.1" data-path="元数据获取.html">
+            
+                <a href="元数据获取.html">
+            
+                    
+                    元数据获取
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.1.2" data-path="语义化标签与页面布局.html">
+            
+                <a href="语义化标签与页面布局.html">
+            
+                    
+                    语义化标签与页面布局
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.1.3" data-path="模板标签.html">
+            
+                <a href="模板标签.html">
+            
+                    
+                    模板标签
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.1.1.4" data-path="交互事件.html">
+            
+                <a href="交互事件.html">
+            
+                    
+                    交互事件
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.2" data-path="../前端应用调用本地资源/">
+            
+                <a href="../前端应用调用本地资源/">
+            
+                    
+                    前端应用调用本地资源
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1.2.1" data-path="../前端应用调用本地资源/使用本地文件系统.html">
+            
+                <a href="../前端应用调用本地资源/使用本地文件系统.html">
+            
+                    
+                    使用本地文件系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.2.2" data-path="../前端应用调用本地资源/使用本地存储.html">
+            
+                <a href="../前端应用调用本地资源/使用本地存储.html">
+            
+                    
+                    使用本地存储
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.2.3" data-path="../前端应用调用本地资源/使用本地摄像头和麦克风.html">
+            
+                <a href="../前端应用调用本地资源/使用本地摄像头和麦克风.html">
+            
+                    
+                    使用本地摄像头和麦克风
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.2.4" data-path="../前端应用调用本地资源/使用语音.html">
+            
+                <a href="../前端应用调用本地资源/使用语音.html">
+            
+                    
+                    使用语音
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.2.5" data-path="../前端应用调用本地资源/使用本地多线程资源.html">
+            
+                <a href="../前端应用调用本地资源/使用本地多线程资源.html">
+            
+                    
+                    使用本地多线程资源
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.2.6" data-path="../前端应用调用本地资源/使用本地gpu计算资源.html">
+            
+                <a href="../前端应用调用本地资源/使用本地gpu计算资源.html">
+            
+                    
+                    使用本地gpu计算资源
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.3" data-path="../前端应用与通信/">
+            
+                <a href="../前端应用与通信/">
+            
+                    
+                    前端应用与通信
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1.3.1" data-path="../前端应用与通信/ajax及相关技术.html">
+            
+                <a href="../前端应用与通信/ajax及相关技术.html">
+            
+                    
+                    ajax及相关技术
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.3.2" data-path="../前端应用与通信/websocket.html">
+            
+                <a href="../前端应用与通信/websocket.html">
+            
+                    
+                    websocket
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.3.3" data-path="../前端应用与通信/grpc-web.html">
+            
+                <a href="../前端应用与通信/grpc-web.html">
+            
+                    
+                    grpc-web
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.3.4" data-path="../前端应用与通信/WebRTC进行端对端通信.html">
+            
+                <a href="../前端应用与通信/WebRTC进行端对端通信.html">
+            
+                    
+                    WebRTC进行端对端通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../../Stylus/">
+            
+                <a href="../../Stylus/">
+            
+                    
+                    Stylus
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.2.1" data-path="../../Stylus/注释.html">
+            
+                <a href="../../Stylus/注释.html">
+            
+                    
+                    注释
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.2" data-path="../../Stylus/选择器.html">
+            
+                <a href="../../Stylus/选择器.html">
+            
+                    
+                    选择器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.3" data-path="../../Stylus/变量与插值E.md">
+            
+                <span>
+            
+                    
+                    变量与插值
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.4" data-path="../../Stylus/运算符.html">
+            
+                <a href="../../Stylus/运算符.html">
+            
+                    
+                    运算符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.5" data-path="../../Stylus/控制语句.html">
+            
+                <a href="../../Stylus/控制语句.html">
+            
+                    
+                    控制语句
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.6" data-path="../../Stylus/内置方法.html">
+            
+                <a href="../../Stylus/内置方法.html">
+            
+                    
+                    内置方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.7" data-path="../../Stylus/混入模式与函数.html">
+            
+                <a href="../../Stylus/混入模式与函数.html">
+            
+                    
+                    混入模式与函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.8" data-path="../../Stylus/复用.html">
+            
+                <a href="../../Stylus/复用.html">
+            
+                    
+                    复用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.9" data-path="../../Stylus/`@`字符与特殊用法.html">
+            
+                <a href="../../Stylus/`@`字符与特殊用法.html">
+            
+                    
+                    @字符与特殊用法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.10" data-path="../../Stylus/jsApi.html">
+            
+                <a href="../../Stylus/jsApi.html">
+            
+                    
+                    jsApi
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../../Webpack/">
+            
+                <a href="../../Webpack/">
+            
+                    
+                    Webpack
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../../../使用Javascript搭建后端服务/">
+            
+                <a href="../../../使用Javascript搭建后端服务/">
+            
+                    
+                    使用Javascript搭建后端服务
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../../../使用Javascript搭建后端服务/RESTful接口服务.html">
+            
+                <a href="../../../使用Javascript搭建后端服务/RESTful接口服务.html">
+            
+                    
+                    RESTful接口服务
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../../../使用Javascript搭建后端服务/Websocket接口服务.html">
+            
+                <a href="../../../使用Javascript搭建后端服务/Websocket接口服务.html">
+            
+                    
+                    Websocket接口服务
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../../../使用Javascript搭建后端服务/GRpc接口服务.html">
+            
+                <a href="../../../使用Javascript搭建后端服务/GRpc接口服务.html">
+            
+                    
+                    GRpc接口服务
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../../.." >交互事件</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x4EA4;&#x4E92;&#x4E8B;&#x4EF6;"><b>1. </b>&#x4EA4;&#x4E92;&#x4E8B;&#x4EF6;</a></li><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x5168;&#x5C40;&#x4E8B;&#x4EF6;"><b>1.1. </b>&#x5168;&#x5C40;&#x4E8B;&#x4EF6;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x4E8B;&#x4EF6;&#x53E5;&#x67C4;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x7ED1;&#x5B9A;"><b>1.2. </b>&#x4E8B;&#x4EF6;&#x53E5;&#x67C4;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x7ED1;&#x5B9A;</a></li><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x7ED1;&#x5B9A;&#x5F02;&#x6B65;&#x56DE;&#x8C03;&#x51FD;&#x6570;"><b>1.2.1. </b>&#x7ED1;&#x5B9A;&#x5F02;&#x6B65;&#x56DE;&#x8C03;&#x51FD;&#x6570;</a></li></ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x6309;&#x94AE;button"><b>1.3. </b>&#x6309;&#x94AE;button</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x8868;&#x5355;form"><b>1.4. </b>&#x8868;&#x5355;form</a></li><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#form&#x7684;&#x5C5E;&#x6027;"><b>1.4.1. </b>form&#x7684;&#x5C5E;&#x6027;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x8868;&#x5355;&#x7EC4;&#x4EF6;&#x5206;&#x7EC4;"><b>1.4.2. </b>&#x8868;&#x5355;&#x7EC4;&#x4EF6;&#x5206;&#x7EC4;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x8F93;&#x5165;&#x7EC4;&#x4EF6;input&#x6807;&#x7B7E;"><b>1.4.3. </b>&#x8F93;&#x5165;&#x7EC4;&#x4EF6;input&#x6807;&#x7B7E;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x4E0B;&#x62C9;&#x83DC;&#x5355;select"><b>1.4.4. </b>&#x4E0B;&#x62C9;&#x83DC;&#x5355;select</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x4F8B;&#x5B50;"><b>1.4.5. </b>&#x4F8B;&#x5B50;</a></li></ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x62D6;&#x62FD;"><b>1.5. </b>&#x62D6;&#x62FD;</a></li><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x62D6;&#x62FD;&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;"><b>1.5.1. </b>&#x62D6;&#x62FD;&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#datatransfer&#x5BF9;&#x8C61;"><b>1.5.2. </b>DataTransfer&#x5BF9;&#x8C61;</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x4F8B;&#x5B50;_1"><b>1.5.3. </b>&#x4F8B;&#x5B50;</a></li></ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x6D4F;&#x89C8;&#x5668;&#x63D0;&#x9192;-updated-2019-03-27"><b>1.6. </b>&#x6D4F;&#x89C8;&#x5668;&#x63D0;&#x9192; (updated @2019-03-27)</a></li></ul></ul></div><a href="#&#x4EA4;&#x4E92;&#x4E8B;&#x4EF6;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="&#x4EA4;&#x4E92;&#x4E8B;&#x4EF6;"><a name="&#x4EA4;&#x4E92;&#x4E8B;&#x4EF6;" class="anchor-navigation-ex-anchor" href="#&#x4EA4;&#x4E92;&#x4E8B;&#x4EF6;"><i class="fa fa-link" aria-hidden="true"></i></a>1. &#x4EA4;&#x4E92;&#x4E8B;&#x4EF6;</h1>
+<p>&#x524D;&#x7AEF;&#x9879;&#x76EE;&#x9664;&#x4E86;&#x5C55;&#x793A;,&#x66F4;&#x591A;&#x7684;&#x4F5C;&#x7528;&#x662F;&#x63D0;&#x4F9B;&#x4EA4;&#x4E92;.&#x670D;&#x52A1;&#x5668;&#x4E4B;&#x6240;&#x4EE5;&#x53EB;&#x670D;&#x52A1;&#x5668;&#x662F;&#x4E3A;&#x4E86;&#x53EF;&#x4EE5;&#x5411;&#x5BA2;&#x6237;&#x63D0;&#x4F9B;&#x670D;&#x52A1;&#x7684;,&#x6CA1;&#x6709;&#x4EA4;&#x4E92;&#x670D;&#x52A1;&#x5668;&#x751A;&#x81F3;&#x6CA1;&#x6CD5;&#x77E5;&#x9053;&#x5BA2;&#x6237;&#x8981;&#x4EC0;&#x4E48;.</p>
+<p>&#x4E00;&#x822C;&#x7684;GUI&#x4E2D;&#x6211;&#x4EEC;&#x7BA1;&#x63D0;&#x4F9B;&#x4EA4;&#x4E92;&#x7684;&#x7EC4;&#x4EF6;&#x53EB;<code>&#x63A7;&#x4EF6;</code>.html&#x4E2D;&#x81EA;&#x7136;&#x6CA1;&#x6709;&#x8FD9;&#x4E2A;&#x6982;&#x5FF5;,&#x5B83;&#x53EA;&#x662F;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E9B;&#x57FA;&#x672C;&#x7684;&#x6807;&#x7B7E;&#x7528;&#x4E8E;&#x6807;&#x8BC6;&#x4E0D;&#x540C;&#x7684;&#x529F;&#x80FD;,&#x5E76;&#x7ED9;&#x4E0D;&#x540C;&#x7684;&#x6807;&#x7B7E;&#x63D0;&#x4F9B;&#x4E0D;&#x540C;&#x7684;&#x76D1;&#x542C;&#x4E8B;&#x4EF6;&#x6216;&#x8005;&#x7279;&#x6B8A;&#x5C5E;&#x6027;&#x4EE5;&#x5B9E;&#x73B0;&#x4EA4;&#x4E92;.</p>
+<p>&#x672C;&#x6587;&#x53EA;&#x662F;&#x4ECB;&#x7ECD;&#x4E00;&#x4E9B;&#x5E38;&#x89C1;&#x7684;&#x76D1;&#x542C;&#x4E8B;&#x4EF6;&#x7684;&#x60EF;&#x7528;&#x65B9;&#x6CD5;.&#x5177;&#x4F53;&#x5404;&#x4E2A;&#x6807;&#x7B7E;&#x6709;&#x54EA;&#x4E9B;&#x76D1;&#x542C;&#x9879;&#x8FD8;&#x8981;&#x770B;<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML" target="_blank">html&#x6587;&#x6863;</a>&#x548C;<a href="http://www.w3school.com.cn/jsref/dom_obj_event.asp" target="_blank">DOM&#x4E8B;&#x4EF6;&#x53E5;&#x67C4;&#x6587;&#x6863;</a></p>
+<p><strong>&#x672C;&#x8282;&#x7684;&#x4EE3;&#x7801;&#x5728;<a href="https://github.com/TutorialForJavascript/frontend-basic/tree/master/code/C1/S4" target="_blank">C1-S4</a>&#x4E2D;</strong></p>
+<h2 id="&#x5168;&#x5C40;&#x4E8B;&#x4EF6;"><a name="&#x5168;&#x5C40;&#x4E8B;&#x4EF6;" class="anchor-navigation-ex-anchor" href="#&#x5168;&#x5C40;&#x4E8B;&#x4EF6;"><i class="fa fa-link" aria-hidden="true"></i></a>1.1. &#x5168;&#x5C40;&#x4E8B;&#x4EF6;</h2>
+<p>html&#x4E2D;&#x7684;&#x4E8B;&#x4EF6;&#x53EF;&#x4EE5;&#x5206;&#x4E3A;</p>
+<ul>
+<li>Window&#x4E8B;&#x4EF6;&#x5C5E;&#x6027;(Window Event Attributes) &#x7531;window&#x5BF9;&#x8C61;&#x89E6;&#x53D1;&#x7684;&#x4E8B;&#x4EF6;,&#x9002;&#x7528;&#x4E8E;<code>body</code>&#x6807;&#x7B7E;</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>&#x5C5E;&#x6027;</th>
+<th>&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>onafterprint</code></td>
+<td>&#x5728;&#x6253;&#x5370;&#x6587;&#x6863;&#x4E4B;&#x540E;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onbeforeprint</code></td>
+<td>&#x5728;&#x6587;&#x6863;&#x6253;&#x5370;&#x4E4B;&#x524D;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onbeforeonload</code></td>
+<td>&#x5728;&#x6587;&#x6863;&#x52A0;&#x8F7D;&#x4E4B;&#x524D;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onblur</code></td>
+<td>&#x5F53;&#x7A97;&#x53E3;&#x5931;&#x53BB;&#x7126;&#x70B9;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onerror</code></td>
+<td>&#x5F53;&#x9519;&#x8BEF;&#x53D1;&#x751F;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onfocus</code></td>
+<td>&#x5F53;&#x7A97;&#x53E3;&#x83B7;&#x5F97;&#x7126;&#x70B9;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onhaschange</code></td>
+<td>&#x5F53;&#x6587;&#x6863;&#x6539;&#x53D8;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onload</code></td>
+<td>&#x5F53;&#x6587;&#x6863;&#x52A0;&#x8F7D;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onmessage</code></td>
+<td>&#x5F53;&#x89E6;&#x53D1;&#x6D88;&#x606F;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onoffline</code></td>
+<td>&#x5F53;&#x6587;&#x6863;&#x79BB;&#x7EBF;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>ononline</code></td>
+<td>&#x5F53;&#x6587;&#x6863;&#x4E0A;&#x7EBF;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onpagehide</code></td>
+<td>&#x5F53;&#x7A97;&#x53E3;&#x9690;&#x85CF;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onpageshow</code></td>
+<td>&#x5F53;&#x7A97;&#x53E3;&#x53EF;&#x89C1;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onpopstate</code></td>
+<td>&#x5F53;&#x7A97;&#x53E3;&#x5386;&#x53F2;&#x8BB0;&#x5F55;&#x6539;&#x53D8;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onredo</code></td>
+<td>&#x5F53;&#x6587;&#x6863;&#x6267;&#x884C;&#x518D;&#x6267;&#x884C;&#x64CD;&#x4F5C;(redo)&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onresize</code></td>
+<td>&#x5F53;&#x8C03;&#x6574;&#x7A97;&#x53E3;&#x5927;&#x5C0F;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onstorage</code></td>
+<td>&#x5F53;&#x6587;&#x6863;&#x52A0;&#x8F7D;&#x52A0;&#x8F7D;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onundo</code></td>
+<td>&#x5F53;<code>Web Storage</code>&#x533A;&#x57DF;&#x66F4;&#x65B0;&#x65F6;(&#x5B58;&#x50A8;&#x7A7A;&#x95F4;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x53D1;&#x751F;&#x53D8;&#x5316;&#x65F6;)</td>
+</tr>
+<tr>
+<td><code>onunload</code></td>
+<td>&#x5F53;&#x7528;&#x6237;&#x79BB;&#x5F00;&#x6587;&#x6863;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>&#x8868;&#x5355;&#x4E8B;&#x4EF6;(Form Events) &#x7531;&#x8868;&#x5355;&#x6807;&#x7B7E;<code>form</code>&#x53CA;&#x5176;&#x4E2D;&#x7684;&#x5B50;&#x5143;&#x7D20;&#x89E6;&#x53D1;&#x7684;&#x4E8B;&#x4EF6;</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>&#x5C5E;&#x6027;</th>
+<th>&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>onblur</code></td>
+<td>&#x5F53;&#x5143;&#x7D20;&#x5931;&#x53BB;&#x7126;&#x70B9;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onchange</code></td>
+<td>&#x5F53;&#x5143;&#x7D20;&#x6539;&#x53D8;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>oncontextmenu</code></td>
+<td>&#x5F53;&#x89E6;&#x53D1;&#x4E0A;&#x4E0B;&#x6587;&#x83DC;&#x5355;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onfocus</code></td>
+<td>&#x5F53;&#x5143;&#x7D20;&#x83B7;&#x5F97;&#x7126;&#x70B9;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onformchange</code></td>
+<td>&#x5F53;&#x8868;&#x5355;&#x6539;&#x53D8;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onforminput</code></td>
+<td>&#x5F53;&#x8868;&#x5355;&#x83B7;&#x5F97;&#x7528;&#x6237;&#x8F93;&#x5165;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>oninput</code></td>
+<td>&#x5F53;&#x5143;&#x7D20;&#x83B7;&#x5F97;&#x7528;&#x6237;&#x8F93;&#x5165;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>oninvalid</code></td>
+<td>&#x5F53;&#x5143;&#x7D20;&#x65E0;&#x6548;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onreset</code></td>
+<td>&#x5F53;&#x8868;&#x5355;&#x91CD;&#x7F6E;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;.HTML5&#x4E0D;&#x652F;&#x6301;.</td>
+</tr>
+<tr>
+<td><code>onselect</code></td>
+<td>&#x5F53;&#x9009;&#x53D6;&#x5143;&#x7D20;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onsubmit</code></td>
+<td>&#x5F53;&#x63D0;&#x4EA4;&#x8868;&#x5355;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>&#x952E;&#x76D8;&#x4E8B;&#x4EF6;(Keybord Events) &#x7531;&#x952E;&#x76D8;&#x64CD;&#x4F5C;&#x89E6;&#x53D1;&#x7684;&#x4E8B;&#x4EF6;</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>&#x5C5E;&#x6027;</th>
+<th>&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>onkeydown</code></td>
+<td>&#x5F53;&#x6309;&#x4E0B;&#x6309;&#x952E;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onkeypress</code></td>
+<td>&#x5F53;&#x6309;&#x4E0B;&#x5E76;&#x677E;&#x5F00;&#x6309;&#x952E;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onkeyup</code></td>
+<td>&#x5F53;&#x677E;&#x5F00;&#x6309;&#x952E;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>&#x9F20;&#x6807;&#x4E8B;&#x4EF6;(Mouse Events) &#x7531;&#x9F20;&#x6807;&#x64CD;&#x4F5C;&#x89E6;&#x53D1;&#x7684;&#x4E8B;&#x4EF6;</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>&#x5C5E;&#x6027;</th>
+<th>&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>onclick</code></td>
+<td>&#x5F53;&#x5355;&#x51FB;&#x9F20;&#x6807;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>ondblclick</code></td>
+<td>&#x5F53;&#x53CC;&#x51FB;&#x9F20;&#x6807;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>ondrag</code></td>
+<td>&#x5F53;&#x62D6;&#x52A8;&#x5143;&#x7D20;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>ondragend</code></td>
+<td>&#x5F53;&#x62D6;&#x52A8;&#x64CD;&#x4F5C;&#x7ED3;&#x675F;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>ondragenter</code></td>
+<td>&#x5F53;&#x5143;&#x7D20;&#x88AB;&#x62D6;&#x52A8;&#x81F3;&#x6709;&#x6548;&#x7684;&#x62D6;&#x653E;&#x76EE;&#x6807;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>ondragleave</code></td>
+<td>&#x5F53;&#x5143;&#x7D20;&#x79BB;&#x5F00;&#x6709;&#x6548;&#x62D6;&#x653E;&#x76EE;&#x6807;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>ondragover</code></td>
+<td>&#x5F53;&#x5143;&#x7D20;&#x88AB;&#x62D6;&#x52A8;&#x81F3;&#x6709;&#x6548;&#x62D6;&#x653E;&#x76EE;&#x6807;&#x4E0A;&#x65B9;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>ondragstart</code></td>
+<td>&#x5F53;&#x62D6;&#x52A8;&#x64CD;&#x4F5C;&#x5F00;&#x59CB;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>ondrop</code></td>
+<td>&#x5F53;&#x88AB;&#x62D6;&#x52A8;&#x5143;&#x7D20;&#x6B63;&#x5728;&#x88AB;&#x62D6;&#x653E;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onmousedown</code></td>
+<td>&#x5F53;&#x6309;&#x4E0B;&#x9F20;&#x6807;&#x6309;&#x94AE;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onmousemove</code></td>
+<td>&#x5F53;&#x9F20;&#x6807;&#x6307;&#x9488;&#x79FB;&#x52A8;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onmouseout</code></td>
+<td>&#x5F53;&#x9F20;&#x6807;&#x6307;&#x9488;&#x79FB;&#x51FA;&#x5143;&#x7D20;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onmouseover</code></td>
+<td>&#x5F53;&#x9F20;&#x6807;&#x6307;&#x9488;&#x79FB;&#x81F3;&#x5143;&#x7D20;&#x4E4B;&#x4E0A;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onmouseup</code></td>
+<td>&#x5F53;&#x677E;&#x5F00;&#x9F20;&#x6807;&#x6309;&#x94AE;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onmousewheel</code></td>
+<td>&#x5F53;&#x8F6C;&#x52A8;&#x9F20;&#x6807;&#x6EDA;&#x8F6E;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onscroll</code></td>
+<td>&#x5F53;&#x6EDA;&#x52A8;&#x5143;&#x7D20;&#x6EDA;&#x52A8;&#x5143;&#x7D20;&#x7684;&#x6EDA;&#x52A8;&#x6761;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>&#x5A92;&#x4ECB;&#x4E8B;&#x4EF6;(Media Events) &#x7531;&#x89C6;&#x9891;,&#x56FE;&#x50CF;&#x4EE5;&#x53CA;&#x97F3;&#x9891;&#x7B49;&#x5A92;&#x4ECB;&#x89E6;&#x53D1;&#x7684;&#x4E8B;&#x4EF6;,&#x9002;&#x7528;&#x4E8E;&#x6240;&#x6709;HTML 5&#x5143;&#x7D20;,&#x4E0D;&#x8FC7;&#x5728;&#x5A92;&#x4ECB;&#x5143;&#x7D20;(&#x5982;<code>audio</code>,<code>embed</code>,<code>img</code>,<code>object</code>&#x4EE5;&#x53CA;<code>video</code>)&#x4E2D;&#x6700;&#x5E38;&#x7528;</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>&#x5C5E;&#x6027;</th>
+<th>&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>onabort</code></td>
+<td>&#x5F53;&#x53D1;&#x751F;&#x4E2D;&#x6B62;&#x4E8B;&#x4EF6;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>oncanplay</code></td>
+<td>&#x5F53;&#x5A92;&#x4ECB;&#x80FD;&#x591F;&#x5F00;&#x59CB;&#x64AD;&#x653E;&#x4F46;&#x53EF;&#x80FD;&#x56E0;&#x7F13;&#x51B2;&#x800C;&#x9700;&#x8981;&#x505C;&#x6B62;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>oncanplaythrough</code></td>
+<td>&#x5F53;&#x5A92;&#x4ECB;&#x80FD;&#x591F;&#x65E0;&#x9700;&#x56E0;&#x7F13;&#x51B2;&#x800C;&#x505C;&#x6B62;&#x5373;&#x53EF;&#x64AD;&#x653E;&#x81F3;&#x7ED3;&#x5C3E;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>ondurationchange</code></td>
+<td>&#x5F53;&#x5A92;&#x4ECB;&#x957F;&#x5EA6;&#x6539;&#x53D8;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onemptied</code></td>
+<td>&#x5F53;&#x5A92;&#x4ECB;&#x8D44;&#x6E90;&#x5143;&#x7D20;&#x7A81;&#x7136;&#x4E3A;&#x7A7A;&#x65F6;(&#x7F51;&#x7EDC;&#x9519;&#x8BEF;&#x3001;&#x52A0;&#x8F7D;&#x9519;&#x8BEF;&#x7B49;)&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onended</code></td>
+<td>&#x5F53;&#x5A92;&#x4ECB;&#x5DF2;&#x62B5;&#x8FBE;&#x7ED3;&#x5C3E;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onerror</code></td>
+<td>&#x5F53;&#x5728;&#x5143;&#x7D20;&#x52A0;&#x8F7D;&#x671F;&#x95F4;&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onloadeddata</code></td>
+<td>&#x5F53;&#x52A0;&#x8F7D;&#x5A92;&#x4ECB;&#x6570;&#x636E;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onloadedmetadata</code></td>
+<td>&#x5F53;&#x5A92;&#x4ECB;&#x5143;&#x7D20;&#x7684;&#x6301;&#x7EED;&#x65F6;&#x95F4;&#x4EE5;&#x53CA;&#x5176;&#x4ED6;&#x5A92;&#x4ECB;&#x6570;&#x636E;&#x5DF2;&#x52A0;&#x8F7D;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onloadstart</code></td>
+<td>&#x5F53;&#x6D4F;&#x89C8;&#x5668;&#x5F00;&#x59CB;&#x52A0;&#x8F7D;&#x5A92;&#x4ECB;&#x6570;&#x636E;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onpause</code></td>
+<td>&#x5F53;&#x5A92;&#x4ECB;&#x6570;&#x636E;&#x6682;&#x505C;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onplay</code></td>
+<td>&#x5F53;&#x5A92;&#x4ECB;&#x6570;&#x636E;&#x5C06;&#x8981;&#x5F00;&#x59CB;&#x64AD;&#x653E;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onplaying</code></td>
+<td>&#x5F53;&#x5A92;&#x4ECB;&#x6570;&#x636E;&#x5DF2;&#x5F00;&#x59CB;&#x64AD;&#x653E;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onprogress</code></td>
+<td>&#x5F53;&#x6D4F;&#x89C8;&#x5668;&#x6B63;&#x5728;&#x53D6;&#x5A92;&#x4ECB;&#x6570;&#x636E;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onratechange</code></td>
+<td>&#x5F53;&#x5A92;&#x4ECB;&#x6570;&#x636E;&#x7684;&#x64AD;&#x653E;&#x901F;&#x7387;&#x6539;&#x53D8;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onreadystatechange</code></td>
+<td>&#x5F53;&#x5C31;&#x7EEA;&#x72B6;&#x6001;(ready-state)&#x6539;&#x53D8;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onseeked</code></td>
+<td>&#x5F53;&#x5A92;&#x4ECB;&#x5143;&#x7D20;&#x7684;&#x5B9A;&#x4F4D;&#x5C5E;&#x6027;&#x4E0D;&#x518D;&#x4E3A;&#x771F;&#x4E14;&#x5B9A;&#x4F4D;&#x5DF2;&#x7ED3;&#x675F;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onseeking</code></td>
+<td>&#x5F53;&#x5A92;&#x4ECB;&#x5143;&#x7D20;&#x7684;&#x5B9A;&#x4F4D;&#x5C5E;&#x6027;&#x4E3A;&#x771F;&#x4E14;&#x5B9A;&#x4F4D;&#x5DF2;&#x5F00;&#x59CB;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onstalled</code></td>
+<td>&#x5F53;&#x53D6;&#x56DE;&#x5A92;&#x4ECB;&#x6570;&#x636E;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF08;&#x5EF6;&#x8FDF;&#xFF09;&#x5B58;&#x5728;&#x9519;&#x8BEF;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onsuspend</code></td>
+<td>&#x5F53;&#x6D4F;&#x89C8;&#x5668;&#x5DF2;&#x5728;&#x53D6;&#x5A92;&#x4ECB;&#x6570;&#x636E;&#x4F46;&#x5728;&#x53D6;&#x56DE;&#x6574;&#x4E2A;&#x5A92;&#x4ECB;&#x6587;&#x4EF6;&#x4E4B;&#x524D;&#x505C;&#x6B62;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>ontimeupdate</code></td>
+<td>&#x5F53;&#x5A92;&#x4ECB;&#x6539;&#x53D8;&#x5176;&#x64AD;&#x653E;&#x4F4D;&#x7F6E;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onvolumechange</code></td>
+<td>&#x5F53;&#x5A92;&#x4ECB;&#x6539;&#x53D8;&#x97F3;&#x91CF;&#x4EA6;&#x6216;&#x5F53;&#x97F3;&#x91CF;&#x88AB;&#x8BBE;&#x7F6E;&#x4E3A;&#x9759;&#x97F3;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+<tr>
+<td><code>onwaiting</code></td>
+<td>&#x5F53;&#x5A92;&#x4ECB;&#x5DF2;&#x505C;&#x6B62;&#x64AD;&#x653E;&#x4F46;&#x6253;&#x7B97;&#x7EE7;&#x7EED;&#x64AD;&#x653E;&#x65F6;&#x8FD0;&#x884C;&#x811A;&#x672C;</td>
+</tr>
+</tbody>
+</table>
+<p>&#x5728;&#x8BBE;&#x8BA1;UI&#x4EA4;&#x4E92;&#x903B;&#x8F91;&#x7684;&#x65F6;&#x5019;&#x901A;&#x5E38;&#x601D;&#x8DEF;&#x662F;&#x5C3D;&#x91CF;&#x4EE5;&#x9F20;&#x6807;&#x6765;&#x63A7;&#x5236;,&#x8F85;&#x4EE5;&#x4E00;&#x4E9B;&#x5FEB;&#x6377;&#x952E;</p>
+<h2 id="&#x4E8B;&#x4EF6;&#x53E5;&#x67C4;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x7ED1;&#x5B9A;"><a name="&#x4E8B;&#x4EF6;&#x53E5;&#x67C4;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x7ED1;&#x5B9A;" class="anchor-navigation-ex-anchor" href="#&#x4E8B;&#x4EF6;&#x53E5;&#x67C4;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x7ED1;&#x5B9A;"><i class="fa fa-link" aria-hidden="true"></i></a>1.2. &#x4E8B;&#x4EF6;&#x53E5;&#x67C4;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x7ED1;&#x5B9A;</h2>
+<p>&#x4E8B;&#x4EF6;&#x53E5;&#x67C4;&#x9700;&#x8981;&#x6307;&#x5B9A;&#x56DE;&#x8C03;&#x51FD;&#x6570;,&#x5373;&#x5F53;&#x8FD9;&#x4E2A;&#x4E8B;&#x4EF6;&#x53D1;&#x751F;&#x4E86;,&#x8FD9;&#x4E2A;&#x6307;&#x5B9A;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x5C31;&#x4F1A;&#x88AB;&#x6267;&#x884C;.</p>
+<p>&#x8981;&#x7ED1;&#x5B9A;&#x56DE;&#x8C03;&#x51FD;&#x6570;,&#x53EF;&#x4EE5;&#x6709;&#x4E24;&#x79CD;&#x65B9;&#x5F0F;:</p>
+<ul>
+<li><p><code>&lt;HTMLHElement&gt;.on&lt;event&gt; = &lt;func&gt;</code>&#x5C31;&#x50CF;&#x4E0A;&#x9762;&#x5217;&#x7684;&#x90A3;&#x4E9B;&#x53E5;&#x67C4;&#x4E00;&#x6837;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x7B49;&#x53F7;&#x5C06;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x8D4B;&#x503C;&#x8FC7;&#x53BB;.</p>
+</li>
+<li><p><code>&lt;HTMLHElement&gt;.addEventListener(event:str,func:Function,usecapture:bool)-&gt;undefined</code>&#x4F7F;&#x7528;<code>addEventListener</code>&#x65B9;&#x6CD5;&#x5C06;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x4E0E;&#x4E8B;&#x4EF6;&#x7ED1;&#x5B9A;.</p>
+<p>  &#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x6BD4;&#x4E0A;&#x9762;&#x7684;&#x591A;&#x51FA;&#x4E86;&#x4E00;&#x4E2A;&#x53C2;&#x6570;usecapture,&#x5B83;&#x8868;&#x793A;&#x6CE8;&#x518C;&#x4E86;&#x8BE5;listener&#x7684;&#x5143;&#x7D20;&#x662F;&#x5426;&#x4F1A;&#x5148;&#x4E8E;&#x5B83;&#x4E0B;&#x65B9;&#x7684;&#x4EFB;&#x4F55;&#x4E8B;&#x4EF6;&#x76EE;&#x6807;&#x63A5;&#x6536;&#x5230;&#x8BE5;&#x4E8B;&#x4EF6;.&#x9ED8;&#x8BA4;&#x4E3A;false</p>
+</li>
+</ul>
+<h3 id="&#x7ED1;&#x5B9A;&#x5F02;&#x6B65;&#x56DE;&#x8C03;&#x51FD;&#x6570;"><a name="&#x7ED1;&#x5B9A;&#x5F02;&#x6B65;&#x56DE;&#x8C03;&#x51FD;&#x6570;" class="anchor-navigation-ex-anchor" href="#&#x7ED1;&#x5B9A;&#x5F02;&#x6B65;&#x56DE;&#x8C03;&#x51FD;&#x6570;"><i class="fa fa-link" aria-hidden="true"></i></a>1.2.1. &#x7ED1;&#x5B9A;&#x5F02;&#x6B65;&#x56DE;&#x8C03;&#x51FD;&#x6570;</h3>
+<p>&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x5F53;&#x7136;&#x662F;&#x6307;&#x7684;&#x4E00;&#x822C;&#x7684;&#x51FD;&#x6570;,&#x4F46;&#x5F88;&#x591A;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x7684;&#x4EE3;&#x7801;&#x4F7F;&#x7528;&#x4E86;es6/es7&#x4E2D;&#x7684;&#x5F02;&#x6B65;&#x51FD;&#x6570;,&#x8981;&#x77E5;&#x9053;&#x5F02;&#x6B65;&#x51FD;&#x6570;&#x662F;&#x6709;&#x4F20;&#x67D3;&#x6027;&#x7684;,&#x8FD9;&#x79CD;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x8BE5;&#x5982;&#x4F55;&#x64CD;&#x4F5C;&#x5462;?</p>
+<p>&#x7B54;&#x6848;&#x5C31;&#x662F;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x7BAD;&#x5934;&#x51FD;&#x6570;&#x5305;&#x88C5;&#x5728;&#x5916;&#x5C42;:</p>
+<pre><code class="lang-js"><span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">&quot;load&quot;</span>, () =&gt; load(), <span class="hljs-literal">false</span>);
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">load</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">// do the await things here.</span>
+}
+</code></pre>
+<h2 id="&#x6309;&#x94AE;button"><a name="&#x6309;&#x94AE;button" class="anchor-navigation-ex-anchor" href="#&#x6309;&#x94AE;button"><i class="fa fa-link" aria-hidden="true"></i></a>1.3. &#x6309;&#x94AE;button</h2>
+<p><strong>&#x672C;&#x8282;&#x7684;&#x4EE3;&#x7801;&#x5728;<a href="https://github.com/TutorialForJavascript/frontend-basic/tree/master/code/C1/S4/P2" target="_blank">C1-S4-P2</a>&#x4E2D;</strong></p>
+<p><code>button</code>&#x6807;&#x7B7E;&#x7528;&#x4E8E;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x6309;&#x94AE;,&#x5728;<code>button</code>&#x5143;&#x7D20;&#x5185;&#x90E8;&#x53EF;&#x4EE5;&#x653E;&#x7F6E;&#x5185;&#x5BB9;,&#x6BD4;&#x5982;&#x6587;&#x672C;&#x6216;&#x56FE;&#x50CF;.&#x8FD9;&#x662F;&#x8BE5;&#x5143;&#x7D20;&#x4E0E;&#x4F7F;&#x7528;<code>input</code>&#x5143;&#x7D20;&#x521B;&#x5EFA;&#x7684;&#x6309;&#x94AE;&#x4E4B;&#x95F4;&#x7684;&#x4E0D;&#x540C;&#x4E4B;&#x5904;.</p>
+<p><code>button</code>&#x63A7;&#x4EF6; &#x4E0E;<code>&lt;input type=&quot;button&quot;&gt;</code>&#x76F8;&#x6BD4;&#xFF0C;&#x63D0;&#x4F9B;&#x4E86;&#x66F4;&#x4E3A;&#x5F3A;&#x5927;&#x7684;&#x529F;&#x80FD;&#x548C;&#x66F4;&#x4E30;&#x5BCC;&#x7684;&#x5185;&#x5BB9;.<code>&lt;button&gt;</code>&#x4E0E;<code>&lt;/button&gt;</code>&#x6807;&#x7B7E;&#x4E4B;&#x95F4;&#x7684;&#x6240;&#x6709;&#x5185;&#x5BB9;&#x90FD;&#x662F;&#x6309;&#x94AE;&#x7684;&#x5185;&#x5BB9;,&#x5176;&#x4E2D;&#x5305;&#x62EC;&#x4EFB;&#x4F55;&#x53EF;&#x63A5;&#x53D7;&#x7684;&#x6B63;&#x6587;&#x5185;&#x5BB9;,&#x6BD4;&#x5982;&#x6587;&#x672C;&#x6216;&#x591A;&#x5A92;&#x4F53;&#x5185;&#x5BB9;.&#x4F8B;&#x5982;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x6309;&#x94AE;&#x4E2D;&#x5305;&#x62EC;&#x4E00;&#x4E2A;&#x56FE;&#x50CF;&#x548C;&#x76F8;&#x5173;&#x7684;&#x6587;&#x672C;,&#x7528;&#x5B83;&#x4EEC;&#x5728;&#x6309;&#x94AE;&#x4E2D;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5438;&#x5F15;&#x4EBA;&#x7684;&#x6807;&#x8BB0;&#x56FE;&#x50CF;.</p>
+<p>&#x552F;&#x4E00;&#x7981;&#x6B62;&#x4F7F;&#x7528;&#x7684;&#x5143;&#x7D20;&#x662F;<code>&#x56FE;&#x50CF;&#x6620;&#x5C04;</code>,&#x56E0;&#x4E3A;&#x5B83;&#x5BF9;&#x9F20;&#x6807;&#x548C;&#x952E;&#x76D8;&#x654F;&#x611F;&#x7684;&#x52A8;&#x4F5C;&#x4F1A;&#x5E72;&#x6270;&#x8868;&#x5355;&#x6309;&#x94AE;&#x7684;&#x884C;&#x4E3A;.</p>
+<p>&#x8BF7;&#x59CB;&#x7EC8;&#x4E3A;&#x6309;&#x94AE;&#x89C4;&#x5B9A;<code>type</code>&#x5C5E;&#x6027;.<code>IE</code>&#x7684;&#x9ED8;&#x8BA4;&#x7C7B;&#x578B;&#x662F;<code>&quot;button&quot;</code>,&#x800C;&#x5176;&#x4ED6;&#x6D4F;&#x89C8;&#x5668;&#x4E2D;(&#x5305;&#x62EC;W3C&#x89C4;&#x8303;)&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#x662F; <code>&quot;submit&quot;</code>.&#x5FAE;&#x8F6F;&#x679C;&#x7136;&#x6405;&#x5C4E;&#x68CD;.</p>
+<p>&#x4F8B;&#x5B50;&#x4E2D;&#x6211;&#x4EEC;&#x521B;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A;&#x56FE;&#x7247;&#x4E3A;&#x7A7A;&#x5FC3;&#x5FC3;&#x7684;&#x6309;&#x94AE;,&#x4E4B;&#x540E;&#x6211;&#x4EEC;&#x70B9;&#x51FB;&#x5B83;&#x8BA9;&#x4ED6;&#x66FF;&#x6362;&#x6210;&#x5B9E;&#x5FC3;&#x5FC3;&#x7684;&#x6309;&#x94AE;.</p>
+<h2 id="&#x8868;&#x5355;form"><a name="&#x8868;&#x5355;form" class="anchor-navigation-ex-anchor" href="#&#x8868;&#x5355;form"><i class="fa fa-link" aria-hidden="true"></i></a>1.4. &#x8868;&#x5355;form</h2>
+<p><strong>&#x672C;&#x8282;&#x7684;&#x4EE3;&#x7801;&#x5728;<a href="https://github.com/TutorialForJavascript/frontend-basic/tree/master/code/C1/S4/P3" target="_blank">C1-S4-P3</a>&#x4E2D;</strong></p>
+<p>HTML&#x8868;&#x5355;&#x7528;&#x4E8E;&#x641C;&#x96C6;&#x4E0D;&#x540C;&#x7C7B;&#x578B;&#x7684;&#x7528;&#x6237;&#x8F93;&#x5165;.&#x5B83;&#x901A;&#x5E38;&#x4E0D;&#x662F;&#x53F6;&#x5B50;&#x8282;&#x70B9;,&#x800C;&#x662F;&#x5305;&#x88F9;&#x4E00;&#x4E2A;&#x63A7;&#x4EF6;&#x6811;&#x7684;&#x679D;&#x8282;&#x70B9;.</p>
+<p>HTML&#x8868;&#x5355;&#x5305;&#x542B;&#x7684;&#x8868;&#x5355;&#x5143;&#x7D20;&#x901A;&#x5E38;&#x6307;&#x7684;&#x662F;&#x4E0D;&#x540C;&#x7C7B;&#x578B;&#x7684;<code>input</code>&#x5143;&#x7D20;,&#x590D;&#x9009;&#x6846;,&#x5355;&#x9009;&#x6309;&#x94AE;,&#x63D0;&#x4EA4;&#x6309;&#x94AE;&#x7B49;&#x7B49;.</p>
+<p>&#x8868;&#x5355;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>type</code>&#x4E3A;<code>submit</code>&#x7684;<code>input</code>&#x6807;&#x7B7E;&#x76F4;&#x63A5;&#x5411;&#x7531;<code>form</code>&#x5C5E;&#x6027;<code>action</code>&#x6307;&#x5B9A;&#x7684;&#x76EE;&#x6807;&#x5730;&#x5740;&#x53D1;&#x9001;<code>method</code>&#x5C5E;&#x6027;&#x6307;&#x5B9A;&#x7684;http&#x8BF7;&#x6C42;,&#x5176;&#x8BF7;&#x6C42;&#x5934;&#x7684;<code>content-type</code>&#x5B57;&#x6BB5;&#x4F1A;&#x6839;&#x636E;<code>form</code>&#x5C5E;&#x6027;<code>enctype</code>&#x6765;&#x6307;&#x5B9A;,&#x53EF;&#x4EE5;&#x6709;&#x4E09;&#x79CD;:</p>
+<table>
+<thead>
+<tr>
+<th>&#x503C;</th>
+<th>&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>application/x-www-form-urlencoded</code></td>
+<td>&#x5728;&#x53D1;&#x9001;&#x524D;&#x7F16;&#x7801;&#x6240;&#x6709;&#x5B57;&#x7B26;(&#x9ED8;&#x8BA4;)</td>
+</tr>
+<tr>
+<td><code>multipart/form-data</code></td>
+<td>&#x4E0D;&#x5BF9;&#x5B57;&#x7B26;&#x7F16;&#x7801;.&#x5728;&#x4F7F;&#x7528;&#x5305;&#x542B;&#x6587;&#x4EF6;&#x4E0A;&#x4F20;&#x63A7;&#x4EF6;&#x7684;&#x8868;&#x5355;&#x65F6;&#x5FC5;&#x987B;&#x4F7F;&#x7528;&#x8BE5;&#x503C;.</td>
+</tr>
+<tr>
+<td><code>text/plain</code></td>
+<td>&#x7A7A;&#x683C;&#x8F6C;&#x6362;&#x4E3A;<code>+</code>&#x52A0;&#x53F7;,&#x4F46;&#x4E0D;&#x5BF9;&#x7279;&#x6B8A;&#x5B57;&#x7B26;&#x7F16;&#x7801;.</td>
+</tr>
+</tbody>
+</table>
+<p>&#x73B0;&#x5728;&#x7684;&#x524D;&#x7AEF;&#x9879;&#x76EE;&#x901A;&#x5E38;&#x4E5F;&#x4E0D;&#x4F1A;&#x76F4;&#x63A5;&#x4F7F;&#x7528;<code>submit</code>&#x5C06;&#x6570;&#x636E;&#x4F20;&#x56DE;&#x670D;&#x52A1;&#x7AEF;,&#x800C;&#x662F;&#x4F1A;&#x6536;&#x96C6;&#x4E0B;&#x6765;&#x8981;&#x4E48;&#x505A;&#x4E00;&#x4E2A;&#x7F13;&#x5B58;&#x4EE5;&#x9632;&#x63D0;&#x4EA4;&#x5931;&#x8D25;&#x7528;&#x6237;&#x5168;&#x90E8;&#x91CD;&#x586B;,&#x8981;&#x4E48;&#x5C31;&#x5E72;&#x8106;&#x5728;&#x524D;&#x7AEF;&#x5C31;&#x505A;&#x521D;&#x6B65;&#x7684;&#x5408;&#x89C4;&#x68C0;&#x9A8C;,&#x4E0D;&#x901A;&#x8FC7;&#x76F4;&#x63A5;&#x5237;&#x65B0;&#x9875;&#x9762;&#x91CD;&#x586B;&#x4EE5;&#x51CF;&#x8F7B;&#x670D;&#x52A1;&#x5668;&#x538B;&#x529B;.</p>
+<h3 id="form&#x7684;&#x5C5E;&#x6027;"><a name="form&#x7684;&#x5C5E;&#x6027;" class="anchor-navigation-ex-anchor" href="#form&#x7684;&#x5C5E;&#x6027;"><i class="fa fa-link" aria-hidden="true"></i></a>1.4.1. form&#x7684;&#x5C5E;&#x6027;</h3>
+<table>
+<thead>
+<tr>
+<th>&#x5C5E;&#x6027;</th>
+<th>&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>accept-charset</code></td>
+<td>&#x89C4;&#x5B9A;&#x5728;&#x88AB;&#x63D0;&#x4EA4;&#x8868;&#x5355;&#x4E2D;&#x4F7F;&#x7528;&#x7684;&#x5B57;&#x7B26;&#x96C6;(&#x9ED8;&#x8BA4;:&#x9875;&#x9762;&#x5B57;&#x7B26;&#x96C6;).</td>
+</tr>
+<tr>
+<td><code>action</code></td>
+<td>&#x89C4;&#x5B9A;&#x5411;&#x4F55;&#x5904;&#x63D0;&#x4EA4;&#x8868;&#x5355;&#x7684;&#x5730;&#x5740;(URL)(&#x63D0;&#x4EA4;&#x9875;&#x9762;).</td>
+</tr>
+<tr>
+<td><code>autocomplete</code></td>
+<td>&#x89C4;&#x5B9A;&#x6D4F;&#x89C8;&#x5668;&#x5E94;&#x8BE5;&#x81EA;&#x52A8;&#x5B8C;&#x6210;&#x8868;&#x5355;(&#x9ED8;&#x8BA4;&#x5F00;&#x542F;)</td>
+</tr>
+<tr>
+<td><code>enctype</code></td>
+<td>&#x89C4;&#x5B9A;&#x88AB;&#x63D0;&#x4EA4;&#x6570;&#x636E;&#x7684;&#x7F16;&#x7801;(&#x9ED8;&#x8BA4;:url-encoded,&#x53EF;&#x9009;&#x8FD8;&#x6709;<code>multipart/form-data</code>&#x548C;<code>text/plain</code>)</td>
+</tr>
+<tr>
+<td><code>method</code></td>
+<td>&#x89C4;&#x5B9A;&#x5728;&#x63D0;&#x4EA4;&#x8868;&#x5355;&#x65F6;&#x6240;&#x7528;&#x7684; HTTP &#x65B9;&#x6CD5;(&#x9ED8;&#x8BA4;:GET)</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>&#x89C4;&#x5B9A;&#x8BC6;&#x522B;&#x8868;&#x5355;&#x7684;&#x540D;&#x79F0;(&#x5BF9;&#x4E8E; DOM &#x4F7F;&#x7528;:document.forms.name)</td>
+</tr>
+<tr>
+<td><code>novalidate</code></td>
+<td>&#x89C4;&#x5B9A;&#x6D4F;&#x89C8;&#x5668;&#x4E0D;&#x9A8C;&#x8BC1;&#x8868;&#x5355;&#x3002;</td>
+</tr>
+<tr>
+<td><code>target</code></td>
+<td>&#x89C4;&#x5B9A;<code>action</code>&#x5C5E;&#x6027;&#x4E2D;&#x5730;&#x5740;&#x7684;&#x76EE;&#x6807;(&#x9ED8;&#x8BA4;:_self)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>&#x65B9;&#x6CD5;</th>
+<th>&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>reset()</code></td>
+<td>&#x628A;&#x8868;&#x5355;&#x7684;&#x6240;&#x6709;&#x8F93;&#x5165;&#x5143;&#x7D20;&#x91CD;&#x7F6E;&#x4E3A;&#x5B83;&#x4EEC;&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#x3002;</td>
+</tr>
+<tr>
+<td><code>submit()</code></td>
+<td>&#x63D0;&#x4EA4;&#x8868;&#x5355;</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>&#x4E8B;&#x4EF6;&#x53E5;&#x67C4;</th>
+<th>&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>onreset</code></td>
+<td>&#x5728;&#x91CD;&#x7F6E;&#x8868;&#x5355;&#x5143;&#x7D20;&#x4E4B;&#x524D;&#x8C03;&#x7528;&#x3002;</td>
+</tr>
+<tr>
+<td><code>onsubmit</code></td>
+<td>&#x5728;&#x63D0;&#x4EA4;&#x8868;&#x5355;&#x4E4B;&#x524D;&#x8C03;&#x7528;&#x3002;</td>
+</tr>
+</tbody>
+</table>
+<p><strong><em>ps</em></strong>
+&#x4E8B;&#x4EF6;&#x53E5;&#x67C4;&#x8FD4;&#x56DE;<code>fasle</code>,&#x8868;&#x5355;&#x7684;&#x5143;&#x7D20;&#x5C31;&#x4E0D;&#x4F1A;&#x63D0;&#x4EA4;;&#x5982;&#x679C;&#x8BE5;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x5176;&#x4ED6;&#x503C;&#x6216;&#x4EC0;&#x4E48;&#x90FD;&#x6CA1;&#x6709;&#x8FD4;&#x56DE;,&#x5219;&#x8868;&#x5355;&#x4F1A;&#x88AB;&#x63D0;&#x4EA4;.
+&#x5F53;&#x8C03;&#x7528;&#x65B9;&#x6CD5;&#x65F6;,&#x4E8B;&#x4EF6;&#x53E5;&#x67C4;&#x4E0D;&#x4F1A;&#x88AB;&#x8C03;&#x7528;.</p>
+<h3 id="&#x8868;&#x5355;&#x7EC4;&#x4EF6;&#x5206;&#x7EC4;"><a name="&#x8868;&#x5355;&#x7EC4;&#x4EF6;&#x5206;&#x7EC4;" class="anchor-navigation-ex-anchor" href="#&#x8868;&#x5355;&#x7EC4;&#x4EF6;&#x5206;&#x7EC4;"><i class="fa fa-link" aria-hidden="true"></i></a>1.4.2. &#x8868;&#x5355;&#x7EC4;&#x4EF6;&#x5206;&#x7EC4;</h3>
+<p>&#x6709;&#x65F6;&#x8868;&#x5355;&#x76F8;&#x5F53;&#x590D;&#x6742;,&#x9700;&#x8981;&#x5C06;&#x7EC4;&#x4EF6;&#x5206;&#x7EC4;,&#x4E0D;&#x540C;&#x7684;&#x7EC4;&#x63D0;&#x4EA4;&#x7ED9;&#x4E0D;&#x540C;&#x7684;&#x63A5;&#x53E3;,&#x8FD9;&#x65F6;&#x5C31;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>fieldset</code>&#x6807;&#x7B7E;&#x5206;&#x7EC4;&#x5E76;&#x4F7F;&#x7528;<code>legend</code>&#x6807;&#x7B7E;&#x8BBE;&#x5B9A;&#x6807;&#x9898;.</p>
+<p><code>fieldset</code>&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;&#x7684;&#x5C5E;&#x6027;&#x6709;:</p>
+<ul>
+<li><p><code>disabled</code></p>
+<p>  &#x5982;&#x679C;&#x8BBE;&#x7F6E;&#x4E86;&#x8FD9;&#x4E2A;bool&#x503C;&#x5C5E;&#x6027;,&#x5B83;&#x7684;&#x540E;&#x4EE3;&#x8868;&#x5355;&#x63A7;&#x5236;&#x5143;&#x7D20;&#x4E5F;&#x4F1A;&#x7EE7;&#x627F;&#x8FD9;&#x4E2A;&#x5C5E;&#x6027;,&#x5B83;&#x7684;&#x9996;&#x4E2A;&#x53EF;&#x9009;&#x7684;<code>legend</code>&#x5143;&#x7D20;&#x9664;&#x5916;,&#x4F8B;&#x5982;,&#x7981;&#x6B62;&#x7F16;&#x8F91;.&#x8BE5;&#x5143;&#x7D20;&#x548C;&#x5B83;&#x7684;&#x5B50;&#x5143;&#x7D20;&#x4E0D;&#x4F1A;&#x63A5;&#x53D7;&#x4EFB;&#x4F55;&#x6D4F;&#x89C8;&#x5668;&#x4E8B;&#x4EF6;,&#x6BD4;&#x5982;&#x70B9;&#x51FB;&#x6216;&#x8005;<code>focus</code>&#x4E8B;&#x4EF6;,&#x4E00;&#x822C;&#x6765;&#x8BF4;&#x6D4F;&#x89C8;&#x5668;&#x4F1A;&#x5C06;&#x8FD9;&#x6837;&#x7684;&#x5143;&#x7D20;&#x5C55;&#x793A;&#x4F4D;&#x7070;&#x8272;.</p>
+</li>
+<li><p><code>form</code></p>
+<p>  &#x89C4;&#x5B9A;<code>fieldset</code>&#x6240;&#x5C5E;&#x7684;<code>form</code>&#x8868;&#x5355;.&#x8FD9;&#x4E2A;&#x5C5E;&#x6027;&#x7684;&#x503C;&#x4E0E;&#x5176;&#x6240;&#x5C5E;&#x7684;<code>form</code>&#x7684;ID&#x76F8;&#x540C;.&#x9ED8;&#x8BA4;&#x503C;&#x662F;&#x6700;&#x8FD1;&#x7684;&#x90A3;&#x4E2A;form.</p>
+</li>
+<li><p><code>name</code></p>
+<p>  &#x63A7;&#x5236;&#x5143;&#x7D20;&#x5206;&#x7EC4;&#x7684;&#x540D;&#x79F0;</p>
+</li>
+</ul>
+<h3 id="&#x8F93;&#x5165;&#x7EC4;&#x4EF6;input&#x6807;&#x7B7E;"><a name="&#x8F93;&#x5165;&#x7EC4;&#x4EF6;input&#x6807;&#x7B7E;" class="anchor-navigation-ex-anchor" href="#&#x8F93;&#x5165;&#x7EC4;&#x4EF6;input&#x6807;&#x7B7E;"><i class="fa fa-link" aria-hidden="true"></i></a>1.4.3. &#x8F93;&#x5165;&#x7EC4;&#x4EF6;input&#x6807;&#x7B7E;</h3>
+<p><code>input</code>&#x6807;&#x7B7E;&#x6309;<code>type</code>&#x5C5E;&#x6027;&#x7684;&#x4E0D;&#x540C;&#x4F1A;&#x88AB;&#x6E32;&#x67D3;&#x6210;&#x4E0D;&#x540C;&#x8F93;&#x5165;&#x63A7;&#x4EF6;,&#x5177;&#x4F53;&#x7684;&#x53EF;&#x4EE5;&#x67E5;&#x770B;<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML" target="_blank">&#x6587;&#x6863;</a>&#x4E2D;&#x7684;<code>&lt;input&gt; types</code>&#x90E8;&#x5206;.</p>
+<p>&#x5E38;&#x89C1;&#x7684;<code>input</code>&#x6807;&#x7B7E;&#x7684;<code>type</code>&#x5C5E;&#x6027;&#x5305;&#x62EC;:</p>
+<h4 id="&#x7279;&#x5B9A;&#x7C7B;&#x578B;&#x4FE1;&#x606F;&#x8F93;&#x5165;emailtelpasswordurl"><a name="&#x7279;&#x5B9A;&#x7C7B;&#x578B;&#x4FE1;&#x606F;&#x8F93;&#x5165;emailtelpasswordurl" class="anchor-navigation-ex-anchor" href="#&#x7279;&#x5B9A;&#x7C7B;&#x578B;&#x4FE1;&#x606F;&#x8F93;&#x5165;emailtelpasswordurl"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x7279;&#x5B9A;&#x7C7B;&#x578B;&#x4FE1;&#x606F;&#x8F93;&#x5165;emailtelpasswordurl" class="plugin-anchor" href="#&#x7279;&#x5B9A;&#x7C7B;&#x578B;&#x4FE1;&#x606F;&#x8F93;&#x5165;emailtelpasswordurl"><i class="fa fa-link" aria-hidden="true"></i></a>&#x7279;&#x5B9A;&#x7C7B;&#x578B;&#x4FE1;&#x606F;&#x8F93;&#x5165;<code>email</code>,<code>tel</code>,<code>password</code>,<code>url</code></h4>
+<p>&#x8FD9;&#x79CD;&#x7C7B;&#x578B;&#x4E00;&#x65B9;&#x9762;&#x662F;&#x8BED;&#x4E49;&#x5316;,&#x53E6;&#x4E00;&#x65B9;&#x9762;&#x4E5F;&#x662F;&#x4F1A;&#x5BF9;&#x7279;&#x5B9A;&#x7C7B;&#x578B;&#x505A;&#x4E00;&#x4E9B;&#x9ED8;&#x8BA4;&#x7684;&#x68C0;&#x9A8C;.</p>
+<h4 id="&#x5355;&#x9009;&#x4FE1;&#x606F;radio"><a name="&#x5355;&#x9009;&#x4FE1;&#x606F;radio" class="anchor-navigation-ex-anchor" href="#&#x5355;&#x9009;&#x4FE1;&#x606F;radio"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x5355;&#x9009;&#x4FE1;&#x606F;radio" class="plugin-anchor" href="#&#x5355;&#x9009;&#x4FE1;&#x606F;radio"><i class="fa fa-link" aria-hidden="true"></i></a>&#x5355;&#x9009;&#x4FE1;&#x606F;<code>radio</code></h4>
+<p>&#x987E;&#x540D;&#x601D;&#x4E49;,&#x5C31;&#x662F;&#x591A;&#x4E2A;&#x9009;&#x9879;&#x91CC;&#x9009;&#x4E00;&#x4E2A;,&#x901A;&#x5E38;&#x7528;<code>name</code>&#x56FA;&#x5B9A;&#x4E00;&#x4E2A;&#x7EC4;.</p>
+<h4 id="&#x591A;&#x9009;&#x4FE1;&#x606F;checkbox"><a name="&#x591A;&#x9009;&#x4FE1;&#x606F;checkbox" class="anchor-navigation-ex-anchor" href="#&#x591A;&#x9009;&#x4FE1;&#x606F;checkbox"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x591A;&#x9009;&#x4FE1;&#x606F;checkbox" class="plugin-anchor" href="#&#x591A;&#x9009;&#x4FE1;&#x606F;checkbox"><i class="fa fa-link" aria-hidden="true"></i></a>&#x591A;&#x9009;&#x4FE1;&#x606F;<code>checkbox</code></h4>
+<p>&#x987E;&#x540D;&#x601D;&#x4E49;,&#x5C31;&#x662F;&#x591A;&#x4E2A;&#x9009;&#x9879;&#x91CC;&#x9009;&#x591A;&#x4E2A;,&#x901A;&#x5E38;&#x7528;<code>name</code>&#x56FA;&#x5B9A;&#x4E00;&#x4E2A;&#x7EC4;.</p>
+<h3 id="&#x4E0B;&#x62C9;&#x83DC;&#x5355;select"><a name="&#x4E0B;&#x62C9;&#x83DC;&#x5355;select" class="anchor-navigation-ex-anchor" href="#&#x4E0B;&#x62C9;&#x83DC;&#x5355;select"><i class="fa fa-link" aria-hidden="true"></i></a>1.4.4. &#x4E0B;&#x62C9;&#x83DC;&#x5355;select</h3>
+<p>&#x548C;&#x5355;&#x9009;&#x591A;&#x9009;&#x7C7B;&#x4F3C;,&#x4E0D;&#x540C;&#x4E4B;&#x5904;&#x53EA;&#x662F;&#x9009;&#x62E9;&#x7684;&#x65B9;&#x5F0F;&#x6539;&#x4E3A;&#x4E86;&#x4E0B;&#x62C9;&#x83DC;&#x5355;.&#x901A;&#x5E38;&#x5B83;&#x4E0E;<code>option</code>&#x6807;&#x7B7E;&#x914D;&#x5408;&#x4F7F;&#x7528;</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">form</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;cars&quot;</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;volvo&quot;</span>&gt;</span>Volvo<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;saab&quot;</span>&gt;</span>Saab<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;fiat&quot;</span>&gt;</span>Fiat<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;audi&quot;</span>&gt;</span>Audi<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
+</code></pre>
+<p>&#x5B83;&#x7684;&#x5BF9;&#x8C61;&#x5C5E;&#x6027;&#x6709;:</p>
+<table>
+<thead>
+<tr>
+<th>&#x5C5E;&#x6027;</th>
+<th>&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>disabled</code></td>
+<td>&#x8BBE;&#x7F6E;&#x6216;&#x8FD4;&#x56DE;&#x662F;&#x5426;&#x5E94;&#x7981;&#x7528;&#x4E0B;&#x62C9;&#x5217;&#x8868;</td>
+</tr>
+<tr>
+<td><code>form</code></td>
+<td>&#x8FD4;&#x56DE;&#x5BF9;&#x5305;&#x542B;&#x4E0B;&#x62C9;&#x5217;&#x8868;&#x7684;&#x8868;&#x5355;&#x7684;&#x5F15;&#x7528;</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>&#x8BBE;&#x7F6E;&#x6216;&#x8FD4;&#x56DE;&#x4E0B;&#x62C9;&#x5217;&#x8868;&#x7684;<code>id</code></td>
+</tr>
+<tr>
+<td><code>length</code></td>
+<td>&#x8FD4;&#x56DE;&#x4E0B;&#x62C9;&#x5217;&#x8868;&#x4E2D;&#x7684;&#x9009;&#x9879;&#x6570;&#x76EE;</td>
+</tr>
+<tr>
+<td><code>multiple</code></td>
+<td>&#x8BBE;&#x7F6E;&#x6216;&#x8FD4;&#x56DE;&#x662F;&#x5426;&#x9009;&#x62E9;&#x591A;&#x4E2A;&#x9879;&#x76EE;</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>&#x8BBE;&#x7F6E;&#x6216;&#x8FD4;&#x56DE;&#x4E0B;&#x62C9;&#x5217;&#x8868;&#x7684;&#x540D;&#x79F0;</td>
+</tr>
+<tr>
+<td><code>selectedIndex</code></td>
+<td>&#x8BBE;&#x7F6E;&#x6216;&#x8FD4;&#x56DE;&#x4E0B;&#x62C9;&#x5217;&#x8868;&#x4E2D;&#x88AB;&#x9009;&#x9879;&#x76EE;&#x7684;&#x7D22;&#x5F15;&#x53F7;</td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td>&#x8BBE;&#x7F6E;&#x6216;&#x8FD4;&#x56DE;&#x4E0B;&#x62C9;&#x5217;&#x8868;&#x4E2D;&#x7684;&#x53EF;&#x89C1;&#x884C;&#x6570;</td>
+</tr>
+<tr>
+<td><code>tabIndex</code></td>
+<td>&#x8BBE;&#x7F6E;&#x6216;&#x8FD4;&#x56DE;&#x4E0B;&#x62C9;&#x5217;&#x8868;&#x7684;<code>tab</code>&#x952E;&#x63A7;&#x5236;&#x6B21;&#x5E8F;</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>&#x8FD4;&#x56DE;&#x4E0B;&#x62C9;&#x5217;&#x8868;&#x7684;&#x8868;&#x5355;&#x7C7B;&#x578B;&#x3002;</td>
+</tr>
+</tbody>
+</table>
+<p>&#x5BF9;&#x8C61;&#x65B9;&#x6CD5;&#x6709;:</p>
+<table>
+<thead>
+<tr>
+<th>&#x65B9;&#x6CD5;</th>
+<th>&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>add()</code></td>
+<td>&#x5411;&#x4E0B;&#x62C9;&#x5217;&#x8868;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x9009;&#x9879;</td>
+</tr>
+<tr>
+<td><code>blur()</code></td>
+<td>&#x4ECE;&#x4E0B;&#x62C9;&#x5217;&#x8868;&#x79FB;&#x5F00;&#x7126;&#x70B9;</td>
+</tr>
+<tr>
+<td><code>focus()</code></td>
+<td>&#x5728;&#x4E0B;&#x62C9;&#x5217;&#x8868;&#x4E0A;&#x8BBE;&#x7F6E;&#x7126;&#x70B9;</td>
+</tr>
+<tr>
+<td><code>remove()</code></td>
+<td>&#x4ECE;&#x4E0B;&#x62C9;&#x5217;&#x8868;&#x4E2D;&#x5220;&#x9664;&#x4E00;&#x4E2A;&#x9009;&#x9879;</td>
+</tr>
+</tbody>
+</table>
+<p>&#x4E8B;&#x4EF6;&#x53E5;&#x67C4;&#x6709;:</p>
+<table>
+<thead>
+<tr>
+<th>&#x4E8B;&#x4EF6;&#x53E5;&#x67C4;</th>
+<th>&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>onchange</code></td>
+<td>&#x5F53;&#x6539;&#x53D8;&#x9009;&#x62E9;&#x65F6;&#x8C03;&#x7528;&#x7684;&#x4E8B;&#x4EF6;&#x53E5;&#x67C4;&#x3002;</td>
+</tr>
+</tbody>
+</table>
+<h4 id="&#x6587;&#x672C;&#x8F93;&#x5165;&#x6846;text"><a name="&#x6587;&#x672C;&#x8F93;&#x5165;&#x6846;text" class="anchor-navigation-ex-anchor" href="#&#x6587;&#x672C;&#x8F93;&#x5165;&#x6846;text"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x6587;&#x672C;&#x8F93;&#x5165;&#x6846;text" class="plugin-anchor" href="#&#x6587;&#x672C;&#x8F93;&#x5165;&#x6846;text"><i class="fa fa-link" aria-hidden="true"></i></a>&#x6587;&#x672C;&#x8F93;&#x5165;&#x6846;<code>text</code></h4>
+<p>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5C5E;&#x6027;<code>minlength</code>&#x548C;<code>maxlength</code>&#x9650;&#x5B9A;&#x6587;&#x672C;&#x957F;&#x5EA6;&#x7684;&#x8F93;&#x5165;&#x6846;.</p>
+<h4 id="&#x6587;&#x4EF6;&#x9009;&#x62E9;file"><a name="&#x6587;&#x4EF6;&#x9009;&#x62E9;file" class="anchor-navigation-ex-anchor" href="#&#x6587;&#x4EF6;&#x9009;&#x62E9;file"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x6587;&#x4EF6;&#x9009;&#x62E9;file" class="plugin-anchor" href="#&#x6587;&#x4EF6;&#x9009;&#x62E9;file"><i class="fa fa-link" aria-hidden="true"></i></a>&#x6587;&#x4EF6;&#x9009;&#x62E9;<code>file</code></h4>
+<p>&#x4ECE;&#x672C;&#x5730;&#x9009;&#x62E9;&#x6587;&#x4EF6;&#x4F5C;&#x4E3A;&#x8F93;&#x5165;.&#x9009;&#x4E2D;&#x6587;&#x4EF6;&#x901A;&#x8FC7;<code>HTMLInputElement.files</code>&#x5C5E;&#x6027;&#x8FD4;&#x56DE;.</p>
+<p>&#x8FD4;&#x56DE;&#x503C;&#x662F;&#x4E00;&#x4E2A;<code>FileList</code>&#x5BF9;&#x8C61;,&#x8FD9;&#x4E2A;&#x5BF9;&#x8C61;&#x662F;&#x4E00;&#x4E2A;&#x5305;&#x542B;&#x4E86;&#x8BB8;&#x591A;<code>File</code>&#x6587;&#x4EF6;&#x7684;&#x5217;&#x8868;(&#x4F60;&#x4E5F;&#x53EF;&#x4EE5;&#x60F3;&#x5217;&#x8868;&#x4E00;&#x6837;&#x64CD;&#x4F5C;&#x5B83;).</p>
+<p>&#x6BCF;&#x4E2A;<code>File</code>&#x5BF9;&#x8C61;&#x5305;&#x542B;&#x4E86;&#x4E0B;&#x5217;&#x4FE1;&#x606F;: </p>
+<ul>
+<li>name: &#x6587;&#x4EF6;&#x540D;.</li>
+<li>lastModified: UNIX timestamp &#x5F62;&#x5F0F;&#x7684;&#x6700;&#x540E;&#x4FEE;&#x6539;&#x65F6;&#x95F4;.</li>
+<li>lastModifiedDate:  Date &#x5F62;&#x5F0F;&#x7684;&#x6700;&#x540E;&#x4FEE;&#x6539;&#x65F6;&#x95F4;.</li>
+<li>size: &#x6587;&#x4EF6;&#x7684;&#x5B57;&#x8282;&#x5927;&#x5C0F;.</li>
+<li>type: DOMString &#x6587;&#x4EF6;&#x7684; MIME &#x7C7B;&#x578B;.</li>
+</ul>
+<p>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>input</code>&#x7684;<code>accept</code>&#x5C5E;&#x6027;&#x63A7;&#x5236;&#x63A5;&#x6536;&#x7684;&#x6587;&#x4EF6;&#x7C7B;&#x578B;.</p>
+<p><code>accept</code>&#x5C5E;&#x6027;&#x63A5;&#x53D7;&#x4E00;&#x4E2A;&#x9017;&#x53F7;&#x5206;&#x9694;&#x7684;<code>MIME</code>&#x7C7B;&#x578B;&#x5B57;&#x7B26;&#x4E32;,&#x5982;:</p>
+<ul>
+<li><code>accept=&quot;image/png&quot;</code> or <code>accept=&quot;.png&quot;</code> &#x2014; &#x53EA;&#x63A5;&#x53D7;<code>png</code>&#x56FE;&#x7247;.</li>
+<li><code>accept=&quot;image/png,image/jpeg&quot;</code> or <code>accept=&quot;.png, .jpg, .jpeg&quot;</code>&#x2014; <code>PNG/JPEG</code>&#x6587;&#x4EF6;.</li>
+<li><code>accept=&quot;image/*&quot;</code> &#x2014; &#x63A5;&#x53D7;&#x4EFB;&#x4F55;&#x56FE;&#x7247;&#x6587;&#x4EF6;&#x7C7B;&#x578B;.</li>
+<li><code>accept=&quot;.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document&quot;</code> &#x2014; &#x63A5;&#x53D7;&#x4EFB;&#x4F55; MS Doc &#x6587;&#x4EF6;&#x7C7B;&#x578B;.</li>
+</ul>
+<h4 id="&#x989C;&#x8272;&#x9009;&#x62E9;&#x5668;color"><a name="&#x989C;&#x8272;&#x9009;&#x62E9;&#x5668;color" class="anchor-navigation-ex-anchor" href="#&#x989C;&#x8272;&#x9009;&#x62E9;&#x5668;color"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x989C;&#x8272;&#x9009;&#x62E9;&#x5668;color" class="plugin-anchor" href="#&#x989C;&#x8272;&#x9009;&#x62E9;&#x5668;color"><i class="fa fa-link" aria-hidden="true"></i></a>&#x989C;&#x8272;&#x9009;&#x62E9;&#x5668;<code>color</code></h4>
+<p>&#x547C;&#x51FA;&#x989C;&#x8272;&#x9009;&#x62E9;&#x5668;</p>
+<h4 id="&#x6570;&#x503C;&#x8F93;&#x5165;number"><a name="&#x6570;&#x503C;&#x8F93;&#x5165;number" class="anchor-navigation-ex-anchor" href="#&#x6570;&#x503C;&#x8F93;&#x5165;number"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x6570;&#x503C;&#x8F93;&#x5165;number" class="plugin-anchor" href="#&#x6570;&#x503C;&#x8F93;&#x5165;number"><i class="fa fa-link" aria-hidden="true"></i></a>&#x6570;&#x503C;&#x8F93;&#x5165;<code>number</code></h4>
+<p>&#x7528;&#x4E8E;&#x5E94;&#x8BE5;&#x5305;&#x542B;&#x6570;&#x503C;&#x7684;&#x8F93;&#x5165;&#x57DF;.&#x8FD9;&#x4E2A;&#x7C7B;&#x578B;&#x7684;<code>input</code>&#x6807;&#x7B7E;&#x989D;&#x5916;&#x53EF;&#x4EE5;&#x6709;&#x5C5E;&#x6027;</p>
+<table>
+<thead>
+<tr>
+<th>&#x5C5E;&#x6027;</th>
+<th>&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>max</code></td>
+<td>&#x89C4;&#x5B9A;&#x5141;&#x8BB8;&#x7684;&#x6700;&#x5927;&#x503C;</td>
+</tr>
+<tr>
+<td><code>min</code></td>
+<td>&#x89C4;&#x5B9A;&#x5141;&#x8BB8;&#x7684;&#x6700;&#x5C0F;&#x503C;</td>
+</tr>
+<tr>
+<td><code>step</code></td>
+<td>&#x89C4;&#x5B9A;&#x5408;&#x6CD5;&#x7684;&#x6570;&#x5B57;&#x95F4;&#x9694;(&#x5982;&#x679C; step=&quot;3&quot;&#xFF0C;&#x5219;&#x5408;&#x6CD5;&#x7684;&#x6570;&#x662F; -3,0,3,6 &#x7B49;)</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td>&#x89C4;&#x5B9A;&#x9ED8;&#x8BA4;&#x503C;  </td>
+</tr>
+</tbody>
+</table>
+<h4 id="&#x6570;&#x503C;&#x6ED1;&#x52A8;&#x6761;range"><a name="&#x6570;&#x503C;&#x6ED1;&#x52A8;&#x6761;range" class="anchor-navigation-ex-anchor" href="#&#x6570;&#x503C;&#x6ED1;&#x52A8;&#x6761;range"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x6570;&#x503C;&#x6ED1;&#x52A8;&#x6761;range" class="plugin-anchor" href="#&#x6570;&#x503C;&#x6ED1;&#x52A8;&#x6761;range"><i class="fa fa-link" aria-hidden="true"></i></a>&#x6570;&#x503C;&#x6ED1;&#x52A8;&#x6761;<code>range</code></h4>
+<p>&#x7528;&#x4E8E;&#x5E94;&#x8BE5;&#x5305;&#x542B;&#x4E00;&#x5B9A;&#x8303;&#x56F4;&#x5185;&#x6570;&#x5B57;&#x503C;&#x7684;&#x8F93;&#x5165;&#x57DF;.&#x8FD8;&#x80FD;&#x591F;&#x8BBE;&#x5B9A;&#x5BF9;&#x6240;&#x63A5;&#x53D7;&#x7684;&#x6570;&#x5B57;&#x7684;&#x9650;&#x5B9A;</p>
+<table>
+<thead>
+<tr>
+<th>&#x5C5E;&#x6027;</th>
+<th>&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>max</td>
+<td>&#x89C4;&#x5B9A;&#x5141;&#x8BB8;&#x7684;&#x6700;&#x5927;&#x503C;</td>
+</tr>
+<tr>
+<td>min</td>
+<td>&#x89C4;&#x5B9A;&#x5141;&#x8BB8;&#x7684;&#x6700;&#x5C0F;&#x503C;</td>
+</tr>
+</tbody>
+</table>
+<h4 id="&#x65E5;&#x671F;&#x9009;&#x62E9;&#x5668;date-month-weektime-datetime-datetime-local"><a name="&#x65E5;&#x671F;&#x9009;&#x62E9;&#x5668;date-month-weektime-datetime-datetime-local" class="anchor-navigation-ex-anchor" href="#&#x65E5;&#x671F;&#x9009;&#x62E9;&#x5668;date-month-weektime-datetime-datetime-local"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x65E5;&#x671F;&#x9009;&#x62E9;&#x5668;date-month-weektime-datetime-datetime-local" class="plugin-anchor" href="#&#x65E5;&#x671F;&#x9009;&#x62E9;&#x5668;date-month-weektime-datetime-datetime-local"><i class="fa fa-link" aria-hidden="true"></i></a>&#x65E5;&#x671F;&#x9009;&#x62E9;&#x5668;<code>date</code>, <code>month</code>, <code>week</code>,<code>time</code>, <code>datetime</code>, <code>datetime-local</code></h4>
+<p>&#x7528;&#x4E8E;&#x9009;&#x62E9;&#x65E5;&#x671F;&#x65F6;&#x95F4;.&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>min</code>&#x548C;<code>max</code>&#x5C5E;&#x6027;&#x786E;&#x5B9A;&#x65E5;&#x671F;&#x8303;&#x56F4;.</p>
+<h4 id="search"><a name="search" class="anchor-navigation-ex-anchor" href="#search"><i class="fa fa-link" aria-hidden="true"></i></a><a name="search" class="plugin-anchor" href="#search"><i class="fa fa-link" aria-hidden="true"></i></a><code>search</code></h4>
+<p>&#x7528;&#x4E8E;&#x641C;&#x7D22;&#x57DF;,&#x6BD4;&#x5982;&#x7AD9;&#x70B9;&#x641C;&#x7D22;&#x6216;Google&#x641C;&#x7D22;&#x7B49;</p>
+<p><code>search</code>&#x57DF;&#x663E;&#x793A;&#x4E3A;&#x5E38;&#x89C4;&#x7684;&#x6587;&#x672C;&#x57DF;.</p>
+<h4 id="&#x91CD;&#x7F6E;&#x6309;&#x94AE;reset"><a name="&#x91CD;&#x7F6E;&#x6309;&#x94AE;reset" class="anchor-navigation-ex-anchor" href="#&#x91CD;&#x7F6E;&#x6309;&#x94AE;reset"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x91CD;&#x7F6E;&#x6309;&#x94AE;reset" class="plugin-anchor" href="#&#x91CD;&#x7F6E;&#x6309;&#x94AE;reset"><i class="fa fa-link" aria-hidden="true"></i></a>&#x91CD;&#x7F6E;&#x6309;&#x94AE;<code>reset</code></h4>
+<p>&#x63D0;&#x4EA4;&#x6309;&#x94AE;&#x4F7F;&#x7528;<code>value</code>&#x5C5E;&#x6027;&#x63A7;&#x5236;&#x5176;&#x4E2D;&#x7684;&#x6587;&#x672C;,&#x540C;&#x65F6;&#x91CD;&#x7F6E;&#x64CD;&#x4F5C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;&#x5C5E;&#x6027;<code>accesskey</code>&#x6765;&#x6307;&#x5B9A;&#x5FEB;&#x6377;&#x952E;.</p>
+<h4 id="&#x63D0;&#x4EA4;&#x6309;&#x94AE;submit"><a name="&#x63D0;&#x4EA4;&#x6309;&#x94AE;submit" class="anchor-navigation-ex-anchor" href="#&#x63D0;&#x4EA4;&#x6309;&#x94AE;submit"><i class="fa fa-link" aria-hidden="true"></i></a><a name="&#x63D0;&#x4EA4;&#x6309;&#x94AE;submit" class="plugin-anchor" href="#&#x63D0;&#x4EA4;&#x6309;&#x94AE;submit"><i class="fa fa-link" aria-hidden="true"></i></a>&#x63D0;&#x4EA4;&#x6309;&#x94AE;<code>submit</code></h4>
+<p>&#x63D0;&#x4EA4;&#x6309;&#x94AE;&#x4F7F;&#x7528;<code>value</code>&#x5C5E;&#x6027;&#x63A7;&#x5236;&#x5176;&#x4E2D;&#x7684;&#x6587;&#x672C;,&#x540C;&#x65F6;&#x63D0;&#x4EA4;&#x64CD;&#x4F5C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;&#x5C5E;&#x6027;<code>accesskey</code>&#x6765;&#x6307;&#x5B9A;&#x5FEB;&#x6377;&#x952E;.</p>
+<h3 id="&#x4F8B;&#x5B50;"><a name="&#x4F8B;&#x5B50;" class="anchor-navigation-ex-anchor" href="#&#x4F8B;&#x5B50;"><i class="fa fa-link" aria-hidden="true"></i></a>1.4.5. &#x4F8B;&#x5B50;</h3>
+<p>&#x5404;&#x79CD;&#x63A7;&#x4EF6;&#x5408;&#x5728;&#x4E00;&#x8D77;&#x6784;&#x9020;&#x4E00;&#x4E2A;&#x8868;&#x5355;,&#x4E00;&#x4E2A;&#x5E38;&#x89C1;&#x7684;&#x8868;&#x5355;&#x5199;&#x6CD5;&#x5982;&#x4E0B;:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">form</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">fieldset</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">legend</span>&gt;</span>Person Info<span class="hljs-tag">&lt;/<span class="hljs-name">legend</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Gender:<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;radio&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;sex&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;male&quot;</span> <span class="hljs-attr">checked</span>&gt;</span>Male
+        <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;radio&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;sex&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;female&quot;</span>&gt;</span>Female
+        <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>First name:<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;firstname&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Last name:<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;lastname&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;Submit&quot;</span> /&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">fieldset</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
+</code></pre>
+<p>&#x672C;&#x6BB5;&#x843D;&#x7684;&#x4F8B;&#x5B50;&#x6211;&#x4EEC;&#x6765;&#x83B7;&#x53D6;&#x67D0;&#x4E2A;&#x7528;&#x6237;&#x7684;&#x57FA;&#x672C;&#x4FE1;&#x606F;,&#x70B9;&#x51FB;&#x63D0;&#x4EA4;&#x540E;&#x6211;&#x4EEC;&#x5728;&#x6D4F;&#x89C8;&#x5668;&#x7684;console&#x4E2D;&#x6253;&#x5370;&#x51FA;&#x6765;.&#x6BCF;&#x6B21;&#x63D0;&#x4EA4;&#x5219;&#x4F1A;&#x6BD4;&#x8F83;&#x548C;&#x4E0A;&#x6B21;&#x662F;&#x5426;&#x4E0D;&#x540C;,&#x53EA;&#x6709;&#x4E0D;&#x540C;&#x65F6;&#x624D;&#x4F1A;&#x6253;&#x5370;.&#x70B9;&#x51FB;<code>reset</code>&#x5219;&#x6E05;&#x7A7A;.</p>
+<p>&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x7B2C;&#x4E09;&#x65B9;&#x6A21;&#x5757;<code>js-md5</code>&#x6765;&#x505A;&#x9664;&#x91CD;.</p>
+<h2 id="&#x62D6;&#x62FD;"><a name="&#x62D6;&#x62FD;" class="anchor-navigation-ex-anchor" href="#&#x62D6;&#x62FD;"><i class="fa fa-link" aria-hidden="true"></i></a>1.5. &#x62D6;&#x62FD;</h2>
+<p><strong>&#x672C;&#x8282;&#x7684;&#x4EE3;&#x7801;&#x5728;<a href="https://github.com/TutorialForJavascript/frontend-basic/tree/master/code/C1/S4/P4" target="_blank">C1-S4-P4</a>&#x4E2D;</strong></p>
+<p>&#x62D6;&#x653E;&#x662F;&#x4E00;&#x79CD;&#x5E38;&#x89C1;&#x7684;&#x7279;&#x6027;,&#x5373;&#x6293;&#x53D6;&#x5BF9;&#x8C61;&#x4EE5;&#x540E;&#x62D6;&#x5230;&#x53E6;&#x4E00;&#x4E2A;&#x4F4D;&#x7F6E;.&#x5728;HTML5&#x4E2D;,&#x62D6;&#x653E;&#x662F;&#x6807;&#x51C6;&#x7684;&#x4E00;&#x90E8;&#x5206;,&#x4EFB;&#x4F55;&#x5143;&#x7D20;&#x90FD;&#x80FD;&#x591F;&#x62D6;&#x653E;.</p>
+<h3 id="&#x62D6;&#x62FD;&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;"><a name="&#x62D6;&#x62FD;&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;" class="anchor-navigation-ex-anchor" href="#&#x62D6;&#x62FD;&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;"><i class="fa fa-link" aria-hidden="true"></i></a>1.5.1. &#x62D6;&#x62FD;&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;</h3>
+<p>&#x5927;&#x81F4;&#x5206;&#x4E3A;&#x5982;&#x4E0B;&#x51E0;&#x6B65;:</p>
+<ul>
+<li>&#x9F20;&#x6807;&#x70B9;&#x51FB;&#x5BF9;&#x8C61;&#x5F00;&#x59CB;&#x62D6;&#x62FD;,&#x4E8B;&#x4EF6;&#x53E5;&#x67C4;<code>ondragstart</code></li>
+<li>&#x9F20;&#x6807;hold&#x4F4F;&#x5BF9;&#x8C61;&#x62D6;&#x52A8;,&#x4E8B;&#x4EF6;&#x53E5;&#x67C4;<code>ondrop</code></li>
+<li>&#x62D6;&#x52A8;&#x81F3;&#x6709;&#x6548;&#x5143;&#x7D20;&#x4E0A;,&#x4E8B;&#x4EF6;&#x53E5;&#x67C4;<code>ondragover</code></li>
+</ul>
+<p>&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x5143;&#x7D20;&#x7684;&#x5C5E;&#x6027;<code>draggable=&quot;true&quot;</code>&#x6765;&#x8BA9;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x53EF;&#x4EE5;&#x88AB;&#x62D6;&#x52A8;.&#x7136;&#x540E;&#x4E3A;&#x4E8B;&#x4EF6;&#x53E5;&#x67C4;<code>ondragstart</code>&#x8BBE;&#x7F6E;&#x56DE;&#x8C03;&#x51FD;&#x6570;<code>func(event)</code>&#x6765;&#x8BBE;&#x7F6E;&#x88AB;&#x62D6;&#x52A8;&#x7684;&#x4FE1;&#x606F;.
+&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x7684;&#x53C2;&#x6570;&#x4E3A;&#x4E8B;&#x4EF6;&#x5BF9;&#x8C61;,&#x5176;&#x4E2D;&#x7684;&#x5B57;&#x6BB5;<code>dataTransfer</code>&#x4FDD;&#x5B58;&#x6570;&#x636E;&#x8F6C;&#x79FB;&#x5BF9;&#x8C61;.&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5176;<code>setData(type,id)</code>&#x65B9;&#x6CD5;&#x6765;&#x8BBE;&#x7F6E;&#x88AB;&#x62D6;&#x52A8;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x548C;&#x503C;.</p>
+<p>&#x4F7F;&#x7528;<code>ondragover</code>&#x4E8B;&#x4EF6;&#x53E5;&#x67C4;&#x6765;&#x5B9A;&#x4E49;&#x8981;&#x62D6;&#x52A8;&#x7684;&#x5BF9;&#x8C61;&#x8981;&#x653E;&#x5230;&#x4F55;&#x5904;,&#x9ED8;&#x8BA4;&#x65E0;&#x6CD5;&#x5C06;&#x6570;&#x636E;&#x6216;&#x5143;&#x7D20;&#x653E;&#x7F6E;&#x5230;&#x5176;&#x4ED6;&#x5143;&#x7D20;&#x4E2D;,&#x5982;&#x679C;&#x9700;&#x8981;&#x8BBE;&#x7F6E;&#x5141;&#x8BB8;&#x653E;&#x7F6E;,&#x6211;&#x4EEC;&#x5FC5;&#x987B;&#x963B;&#x6B62;&#x5BF9;&#x5143;&#x7D20;&#x7684;&#x9ED8;&#x8BA4;&#x5904;&#x7406;&#x65B9;&#x5F0F;.&#x8FD9;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>ondragover</code>&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x7684;&#x53C2;&#x6570;&#x7684;<code>event.preventDefault()</code>&#x65B9;&#x6CD5;&#x6765;&#x5B9E;&#x73B0;.</p>
+<p>&#x8FDB;&#x884C;&#x653E;&#x7F6E;&#x5219;&#x662F;&#x8BBE;&#x7F6E;&#x4E8B;&#x4EF6;&#x53E5;&#x67C4;<code>ondrop</code>,&#x4F7F;&#x7528;&#x5176;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x7684;&#x53C2;&#x6570;<code>event</code>&#x7684;&#x5B57;&#x6BB5;<code>event.dataTransfer.getData(&quot;Text&quot;)</code>&#x6765;&#x83B7;&#x53D6;&#x88AB;&#x62D6;&#x62FD;&#x7684;&#x5BF9;&#x8C61;&#x7684;id,&#x4F7F;&#x7528;<code>event.target.appendChild(document.getElementById(data))</code>&#x6765;&#x5C06;&#x5143;&#x7D20;&#x653E;&#x7F6E;&#x5165;&#x5176;&#x4E2D;.</p>
+<h3 id="datatransfer&#x5BF9;&#x8C61;"><a name="datatransfer&#x5BF9;&#x8C61;" class="anchor-navigation-ex-anchor" href="#datatransfer&#x5BF9;&#x8C61;"><i class="fa fa-link" aria-hidden="true"></i></a>1.5.2. DataTransfer&#x5BF9;&#x8C61;</h3>
+<p>DataTransfer&#x5BF9;&#x8C61;&#x5B9A;&#x4E49;&#x7684;&#x5C5E;&#x6027;&#x548C;&#x65B9;&#x6CD5;&#x6709;&#x5F88;&#x591A;&#x79CD;,&#x6211;&#x4EEC;&#x770B;&#x4E0B;&#x5217;&#x5165;&#x6807;&#x51C6;&#x7684;&#x51E0;&#x4E2A;.</p>
+<table>
+<thead>
+<tr>
+<th>&#x5C5E;&#x6027;</th>
+<th>&#x8BF4;&#x660E;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>types</code></td>
+<td>&#x53EA;&#x8BFB;&#x5C5E;&#x6027;&#x3002;&#x5B83;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x6211;&#x4EEC;&#x5728;dragstart&#x4E8B;&#x4EF6;&#x4E2D;&#x8BBE;&#x7F6E;&#x7684;&#x62D6;&#x52A8;&#x6570;&#x636E;&#x683C;&#x5F0F;&#x7684;&#x6570;&#x7EC4;&#x3002; &#x683C;&#x5F0F;&#x987A;&#x5E8F;&#x4E0E;&#x62D6;&#x52A8;&#x64CD;&#x4F5C;&#x4E2D;&#x5305;&#x542B;&#x7684;&#x6570;&#x636E;&#x987A;&#x5E8F;&#x76F8;&#x540C;&#x3002;IE10+&#x3001;Edge&#x3001;safari3.1&#x3001;Firefox3.5+ &#x548C;Chrome4&#x4EE5;&#x4E0A;&#x652F;&#x6301;&#x8BE5;&#x5C5E;&#x6027;</td>
+</tr>
+<tr>
+<td><code>files</code></td>
+<td>&#x8FD4;&#x56DE;&#x62D6;&#x52A8;&#x64CD;&#x4F5C;&#x4E2D;&#x7684;&#x6587;&#x4EF6;&#x5217;&#x8868;&#x3002;&#x5305;&#x542B;&#x4E00;&#x4E2A;&#x5728;&#x6570;&#x636E;&#x4F20;&#x8F93;&#x4E0A;&#x6240;&#x6709;&#x53EF;&#x7528;&#x7684;&#x672C;&#x5730;&#x6587;&#x4EF6;&#x5217;&#x8868;&#x3002;&#x5982;&#x679C;&#x62D6;&#x52A8;&#x64CD;&#x4F5C;&#x4E0D;&#x6D89;&#x53CA;&#x62D6;&#x52A8;&#x6587;&#x4EF6;&#xFF0C;&#x6B64;&#x5C5E;&#x6027;&#x662F;&#x4E00;&#x4E2A;&#x7A7A;&#x5217;&#x8868;&#x3002;</td>
+</tr>
+<tr>
+<td><code>dropEffect</code></td>
+<td>&#x83B7;&#x53D6;&#x5F53;&#x524D;&#x9009;&#x5B9A;&#x7684;&#x62D6;&#x653E;&#x64CD;&#x4F5C;&#x7684;&#x7C7B;&#x578B;&#x6216;&#x5C06;&#x64CD;&#x4F5C;&#x8BBE;&#x7F6E;&#x4E3A;&#x65B0;&#x7C7B;&#x578B;&#x3002;&#x5B83;&#x5E94;&#x8BE5;&#x59CB;&#x7EC8;&#x8BBE;&#x7F6E;&#x6210;effectAllowed&#x7684;&#x53EF;&#x80FD;&#x503C;&#x4E4B;&#x4E00;&#x3010;none&#x3001;move&#x3001;copy&#x3001;link&#x3011;&#x3002;dragover&#x4E8B;&#x4EF6;&#x5904;&#x7406;&#x7A0B;&#x5E8F;&#x4E2D;&#x9488;&#x5BF9;&#x653E;&#x7F6E;&#x76EE;&#x6807;&#x6765;&#x8BBE;&#x7F6E;dropEffect&#x3002;</td>
+</tr>
+<tr>
+<td><code>effectAllowed</code></td>
+<td>&#x6307;&#x5B9A;&#x62D6;&#x653E;&#x64CD;&#x4F5C;&#x6240;&#x5141;&#x8BB8;&#x7684;&#x6548;&#x679C;&#x3002;&#x5FC5;&#x987B;&#x662F;&#x5176;&#x4E2D;&#x4E4B;&#x4E00;&#x3010; none, copy, copyLink, copyMove, link, linkMove, move, all, uninitialized&#x3011;&#x9ED8;&#x8BA4;&#x4E3A;uninitialized &#x8868;&#x793A;&#x5141;&#x8BB8;&#x6240;&#x6709;&#x7684;&#x6548;&#x679C;&#x3002;ondragstart&#x5904;&#x7406;&#x7A0B;&#x5E8F;&#x4E2D;&#x8BBE;&#x7F6E;effectAllowed&#x5C5E;&#x6027;</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>&#x65B9;&#x6CD5;</th>
+<th>&#x8BF4;&#x660E;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>void setData(format, data)</code></td>
+<td>&#x5C06;&#x62D6;&#x52A8;&#x64CD;&#x4F5C;&#x7684;&#x62D6;&#x52A8;&#x6570;&#x636E;&#x8BBE;&#x7F6E;&#x4E3A;&#x6307;&#x5B9A;&#x7684;&#x6570;&#x636E;&#x548C;&#x7C7B;&#x578B;&#x3002;format&#x53EF;&#x4EE5;&#x662F;MIME&#x7C7B;&#x578B;</td>
+</tr>
+<tr>
+<td><code>String getData(format)</code></td>
+<td>&#x8FD4;&#x56DE;&#x6307;&#x5B9A;&#x683C;&#x5F0F;&#x7684;&#x6570;&#x636E;&#xFF0C;format&#x4E0E;setData()&#x4E2D;&#x4E00;&#x81F4;</td>
+</tr>
+<tr>
+<td><code>void clearData([format])</code></td>
+<td>&#x5220;&#x9664;&#x7ED9;&#x5B9A;&#x7C7B;&#x578B;&#x7684;&#x62D6;&#x52A8;&#x64CD;&#x4F5C;&#x7684;&#x6570;&#x636E;&#x3002;&#x5982;&#x679C;&#x7ED9;&#x5B9A;&#x7C7B;&#x578B;&#x7684;&#x6570;&#x636E;&#x4E0D;&#x5B58;&#x5728;&#xFF0C;&#x6B64;&#x65B9;&#x6CD5;&#x4E0D;&#x6267;&#x884C;&#x4EFB;&#x4F55;&#x64CD;&#x4F5C;&#x3002;&#x5982;&#x679C;&#x4E0D;&#x7ED9;&#x5B9A;&#x53C2;&#x6570;&#xFF0C;&#x5219;&#x5220;&#x9664;&#x6240;&#x6709;&#x7C7B;&#x578B;&#x7684;&#x6570;&#x636E;&#x3002;</td>
+</tr>
+<tr>
+<td><code>void setDragImage(img, xOffset, yOffset)</code></td>
+<td>&#x6307;&#x5B9A;&#x4E00;&#x526F;&#x56FE;&#x50CF;&#xFF0C;&#x5F53;&#x62D6;&#x52A8;&#x53D1;&#x751F;&#x65F6;&#xFF0C;&#x663E;&#x793A;&#x5728;&#x5149;&#x6807;&#x4E0B;&#x65B9;&#x3002;&#x5927;&#x591A;&#x6570;&#x60C5;&#x51B5;&#x4E0B;&#x4E0D;&#x7528;&#x8BBE;&#x7F6E;&#xFF0C;&#x56E0;&#x4E3A;&#x88AB;&#x62D6;&#x52A8;&#x7684;&#x8282;&#x70B9;&#x88AB;&#x521B;&#x5EFA;&#x6210;&#x9ED8;&#x8BA4;&#x56FE;&#x7247;&#x3002;x,y&#x53C2;&#x6570;&#x5206;&#x522B;&#x6307;&#x793A;&#x56FE;&#x50CF;&#x7684;&#x6C34;&#x5E73;&#x3001;&#x5782;&#x76F4;&#x504F;&#x79FB;&#x91CF;</td>
+</tr>
+</tbody>
+</table>
+<h3 id="&#x4F8B;&#x5B50;_1"><a name="&#x4F8B;&#x5B50;_1" class="anchor-navigation-ex-anchor" href="#&#x4F8B;&#x5B50;_1"><i class="fa fa-link" aria-hidden="true"></i></a>1.5.3. &#x4F8B;&#x5B50;</h3>
+<p>&#x6211;&#x4EEC;&#x7684;&#x4F8B;&#x5B50;&#x662F;&#x4E00;&#x4E2A;&#x5F88;&#x5E38;&#x89C1;&#x7684;&#x4EA4;&#x4E92;&#x65B9;&#x5F0F;,&#x4E0A;&#x9762;&#x4E3A;&#x53EF;&#x9009;&#x5217;&#x8868;,&#x4E0B;&#x9762;&#x4E3A;&#x88AB;&#x9009;&#x5217;&#x8868;.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;container&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;border&quot;</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#x53EF;&#x9009;&#x9879;:<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;person1&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;border&quot;</span> <span class="hljs-attr">draggable</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span>person1<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;person2&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;border&quot;</span> <span class="hljs-attr">draggable</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span>person2<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;person3&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;border&quot;</span> <span class="hljs-attr">draggable</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span>person3<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;person4&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;border&quot;</span> <span class="hljs-attr">draggable</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span>person4<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;target_container&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;border&quot;</span>&gt;</span>  
+            <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>&#x5DF2;&#x9009;&#x9879;:<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x8981;&#x5B9E;&#x73B0;&#x62D6;&#x62FD;,&#x9700;&#x8981;&#x5199;&#x4E00;&#x4E2A;&#x811A;&#x672C;&#x6765;&#x63A7;&#x5236;.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">let</span> listFormRender = {
+    list: <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&quot;container&quot;</span>),
+    target_list: <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&quot;target_container&quot;</span>),
+    bindEvent: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">this</span>.list.ondragstart = <span class="hljs-keyword">this</span>.onDragStart
+        <span class="hljs-keyword">this</span>.target_list.ondrop = <span class="hljs-keyword">this</span>.onDrop
+        <span class="hljs-keyword">this</span>.target_list.ondragover = <span class="hljs-keyword">this</span>.onDragover
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;bind&quot;</span>)
+    },
+    onDragStart: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) </span>{
+        event.dataTransfer.setData(<span class="hljs-string">&quot;TS&quot;</span>, event.target.id)
+    },
+    onDrop: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) </span>{
+        event.preventDefault()
+        <span class="hljs-keyword">let</span> data = event.dataTransfer.getData(<span class="hljs-string">&quot;TS&quot;</span>)
+        <span class="hljs-keyword">let</span> item = <span class="hljs-built_in">document</span>.getElementById(data)
+        event.target.appendChild()
+        item.setAttribute(<span class="hljs-string">&quot;draggable&quot;</span>,<span class="hljs-literal">false</span>)
+
+    },
+    onDragover: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) </span>{
+        event.preventDefault()
+    }
+}
+
+<span class="hljs-keyword">let</span> main = () =&gt; {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;main&quot;</span>)
+    listFormRender.bindEvent()
+}
+main()
+</code></pre>
+<p>&#x8FD9;&#x4E2A;&#x811A;&#x672C;&#x4E2D;&#x6211;&#x4EEC;&#x5B9A;&#x4E49;&#x4E86;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;<code>listFormRender</code>&#x6765;&#x76F4;&#x63A5;&#x7BA1;&#x7406;&#x62D6;&#x62FD;&#x5217;&#x8868;&#x7684;&#x6D3B;&#x52A8;,&#x8BBE;&#x5B9A;&#x597D;&#x62D6;&#x52A8;&#x5BF9;&#x8C61;&#x6240;&#x5728;&#x7684;&#x5BB9;&#x5668;&#x548C;&#x76EE;&#x6807;&#x5BB9;&#x5668;.&#x4E3A;&#x4ED6;&#x4EEC;&#x5404;&#x81EA;&#x7684;&#x4E8B;&#x4EF6;&#x53E5;&#x67C4;&#x5206;&#x522B;&#x7ED1;&#x5B9A;&#x4E0A;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x5373;&#x53EF;.</p>
+<h2 id="&#x6D4F;&#x89C8;&#x5668;&#x63D0;&#x9192;-updated-2019-03-27"><a name="&#x6D4F;&#x89C8;&#x5668;&#x63D0;&#x9192;-updated-2019-03-27" class="anchor-navigation-ex-anchor" href="#&#x6D4F;&#x89C8;&#x5668;&#x63D0;&#x9192;-updated-2019-03-27"><i class="fa fa-link" aria-hidden="true"></i></a>1.6. &#x6D4F;&#x89C8;&#x5668;&#x63D0;&#x9192; (updated @2019-03-27)</h2>
+<p>&#x4EE5;&#x5F80;&#x7684;&#x7F51;&#x9875;&#x63D0;&#x793A;&#x4EC5;&#x9650;&#x5728;&#x5176;&#x9875;&#x9762;&#x4E2D;,&#x800C;html5&#x73B0;&#x5728;&#x652F;&#x6301;&#x684C;&#x9762;&#x7EA7;&#x7684;&#x901A;&#x77E5;,&#x4E5F;&#x5C31;&#x662F;web notification,&#x8FD9;&#x4E00;&#x7279;&#x6027;&#x975E;&#x5E38;&#x9002;&#x5408;&#x6D4F;&#x89C8;&#x5668;&#x7AEF;&#x7684;&#x97F3;&#x4E50;app.&#x53C8;&#x6216;&#x8005;&#x662F;&#x90AE;&#x4EF6;app,&#x5982;&#x679C;&#x7ED3;&#x5408;&#x540E;&#x6587;&#x4E2D;&#x7684;<a href="https://tutorialforjavascript.github.io/%E4%BD%BF%E7%94%A8Javascript%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1/Websocket%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1.html" target="_blank">websocket</a>&#x5219;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x670D;&#x52A1;&#x7AEF;&#x4E3B;&#x52A8;&#x63A8;&#x9001;&#x63D0;&#x793A;.</p>
+<p><strong>&#x672C;&#x8282;&#x7684;&#x4EE3;&#x7801;&#x5728;<a href="https://github.com/TutorialForJavascript/frontend-basic/tree/master/code/C1/S4/P5" target="_blank">C1-S4-P5</a>&#x4E2D;</strong></p>
+<p><code>web notification</code>&#x7684;&#x7528;&#x6CD5;&#x4E5F;&#x7B80;&#x5355;</p>
+<p>&#x9996;&#x5148;,&#x7531;&#x4E8E;&#x6D4F;&#x89C8;&#x5668;&#x6743;&#x9650;&#x95EE;&#x9898;,&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5411;&#x7528;&#x6237;&#x8BF7;&#x6C42;&#x5F00;&#x901A;web notification&#x529F;&#x80FD;</p>
+<pre><code class="lang-js">Notification.requestPermission((status)=&gt;{  
+    <span class="hljs-comment">//status&#x662F;&#x6388;&#x6743;&#x72B6;&#x6001;&#xFF0C;&#x5982;&#x679C;&#x7528;&#x6237;&#x5141;&#x8BB8;&#x663E;&#x793A;&#x684C;&#x9762;&#x901A;&#x77E5;&#xFF0C;&#x5219;status&#x4E3A;&apos;granted&apos;  </span>
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;status: &apos;</span> + status)
+    <span class="hljs-comment">//permission&#x53EA;&#x8BFB;&#x5C5E;&#x6027;  </span>
+    <span class="hljs-keyword">let</span> permission = Notification.permission
+    <span class="hljs-comment">//default &#x7528;&#x6237;&#x6CA1;&#x6709;&#x63A5;&#x6536;&#x6216;&#x62D2;&#x7EDD;&#x6388;&#x6743;&#x8BF7;&#x6C42; &#x4E0D;&#x80FD;&#x663E;&#x793A;&#x901A;&#x77E5;  </span>
+    <span class="hljs-comment">//granted &#x7528;&#x6237;&#x63A5;&#x53D7;&#x6388;&#x6743;&#x8BF7;&#x6C42; &#x5141;&#x8BB8;&#x663E;&#x793A;&#x901A;&#x77E5;  </span>
+    <span class="hljs-comment">//denied  &#x7528;&#x6237;&#x62D2;&#x7EDD;&#x6388;&#x6743;&#x8BF7;&#x6C42; &#x4E0D;&#x5141;&#x8BB8;&#x663E;&#x793A;&#x901A;&#x77E5;  </span>
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;permission: &apos;</span> + permission)
+})
+</code></pre>
+<p>&#x5F53;&#x8FD9;&#x6BB5;&#x4EE3;&#x7801;&#x6267;&#x884C;&#x65F6;,&#x6D4F;&#x89C8;&#x5668;&#x4F1A;&#x8BE2;&#x95EE;&#x7528;&#x6237;&#x662F;&#x5426;&#x5141;&#x8BB8;&#x8BE5;&#x7AD9;&#x70B9;&#x663E;&#x793A;&#x6D88;&#x606F;&#x901A;&#x77E5;.</p>
+<p>&#x63A5;&#x7740;&#x5C31;&#x662F;&#x4F7F;&#x7528;&#x4E86;:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">if</span> (Notification.permission === <span class="hljs-string">&apos;granted&apos;</span>) {  
+    <span class="hljs-comment">//show notification</span>
+    <span class="hljs-keyword">let</span> n = <span class="hljs-keyword">new</span> Notification(<span class="hljs-string">&quot;sir, you got a message&quot;</span>, {  
+        icon: <span class="hljs-string">&apos;img/icon.png&apos;</span>,  
+        body: <span class="hljs-string">&apos;you will have a meeting 5 minutes later.&apos;</span>  
+    })
+}
+</code></pre>
+<p>Notification&#x672C;&#x8EAB;&#x8FD8;&#x652F;&#x6301;&#x6DFB;&#x52A0;&#x4EA4;&#x4E92;,&#x5B83;&#x6709;4&#x4E2A;&#x5E38;&#x7528;&#x7684;&#x51FD;&#x6570;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x5904;&#x7406;&#x4E8B;&#x4EF6;&#x4EA4;&#x4E92;:</p>
+<ul>
+<li>onshow&#x51FD;&#x6570;&#x53EF;&#x4EE5;&#x5728;&#x6D88;&#x606F;&#x5C55;&#x793A;&#x65F6;&#x6267;&#x884C;</li>
+<li>onclick&#x51FD;&#x6570;&#x53EF;&#x4EE5;&#x5728;&#x7528;&#x6237;&#x70B9;&#x51FB;&#x6D88;&#x606F;&#x540E;&#x88AB;&#x8C03;&#x7528;</li>
+<li>onclose&#x51FD;&#x6570;&#x662F;&#x5728;&#x6D88;&#x606F;&#x6846;&#x88AB;&#x5173;&#x95ED;&#x65F6;&#x88AB;&#x8C03;&#x7528;</li>
+<li>onerror&#x51FD;&#x6570;&#x662F;&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x65F6;&#x88AB;&#x8C03;&#x7528;</li>
+</ul>
+<p>&#x4E0A;&#x9762;&#x4E5F;&#x63D0;&#x5230;&#x4E86;,&#x5982;&#x679C;&#x6CA1;&#x6709;&#x88AB;&#x6388;&#x6743;&#x800C;&#x7EE7;&#x7EED;&#x521B;&#x5EFA;&#x6D88;&#x606F;&#x901A;&#x77E5;&#x4E5F;&#x4F1A;&#x6267;&#x884C;onerror&#x51FD;&#x6570;.&#x638C;&#x63E1;&#x4E86;&#x8FD9;&#x51E0;&#x4E2A;&#x4E8B;&#x4EF6;&#x7684;&#x5E94;&#x7528;&#x57FA;&#x672C;&#x4E0A;&#x53EF;&#x4EE5;&#x5F88;&#x597D;&#x5730;&#x5904;&#x7406;&#x6D88;&#x606F;&#x4E8B;&#x4EF6;&#x4E86;</p>
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;:&#x901A;&#x77E5;&#x529F;&#x80FD;&#x9700;&#x8981;&#x6D4F;&#x89C8;&#x5668;&#x4E2D;&#x6253;&#x5F00;,&#x9ED8;&#x8BA4;&#x662F;&#x88AB;&#x963B;&#x6B62;&#x7684;,chrome&#x4E2D;&#x5728;&#x9AD8;&#x7EA7;&#x8BBE;&#x7F6E;&#x4E2D;&#x6253;&#x5F00; </p>
+<footer class="page-footer"><span class="copyright">Copyright &#xA9; hsz 2019 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x4EF6;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
+2019-03-27 21:56:17
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="模板标签.html" class="navigation navigation-prev " aria-label="Previous page: 模板标签">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../前端应用调用本地资源/" class="navigation navigation-next " aria-label="Next page: 前端应用调用本地资源">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"交互事件","level":"1.4.1.1.4","depth":4,"next":{"title":"前端应用调用本地资源","level":"1.4.1.2","depth":3,"path":"web前端技术/前端概览/前端应用调用本地资源/README.md","ref":"web前端技术/前端概览/前端应用调用本地资源/README.md","articles":[{"title":"使用本地文件系统","level":"1.4.1.2.1","depth":4,"path":"web前端技术/前端概览/前端应用调用本地资源/使用本地文件系统.md","ref":"web前端技术/前端概览/前端应用调用本地资源/使用本地文件系统.md","articles":[]},{"title":"使用本地存储","level":"1.4.1.2.2","depth":4,"path":"web前端技术/前端概览/前端应用调用本地资源/使用本地存储.md","ref":"web前端技术/前端概览/前端应用调用本地资源/使用本地存储.md","articles":[]},{"title":"使用本地摄像头和麦克风","level":"1.4.1.2.3","depth":4,"path":"web前端技术/前端概览/前端应用调用本地资源/使用本地摄像头和麦克风.md","ref":"web前端技术/前端概览/前端应用调用本地资源/使用本地摄像头和麦克风.md","articles":[]},{"title":"使用语音","level":"1.4.1.2.4","depth":4,"path":"web前端技术/前端概览/前端应用调用本地资源/使用语音.md","ref":"web前端技术/前端概览/前端应用调用本地资源/使用语音.md","articles":[]},{"title":"使用本地多线程资源","level":"1.4.1.2.5","depth":4,"path":"web前端技术/前端概览/前端应用调用本地资源/使用本地多线程资源.md","ref":"web前端技术/前端概览/前端应用调用本地资源/使用本地多线程资源.md","articles":[]},{"title":"使用本地gpu计算资源","level":"1.4.1.2.6","depth":4,"path":"web前端技术/前端概览/前端应用调用本地资源/使用本地gpu计算资源.md","ref":"web前端技术/前端概览/前端应用调用本地资源/使用本地gpu计算资源.md","articles":[]}]},"previous":{"title":"模板标签","level":"1.4.1.1.3","depth":4,"path":"web前端技术/前端概览/前端应用页面规范/模板标签.md","ref":"web前端技术/前端概览/前端应用页面规范/模板标签.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-lunr","-search","search-pro","advanced-emoji","github","github-buttons","katex","splitter","expandable-chapters-small","tbfed-pagefooter","-sharing","donate","sitemap-general","anchors","anchor-navigation-ex"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy hsz 2019","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"github":{"url":"https://github.com/TutorialForJavascript/TutorialForJavascript.github.io"},"splitter":{},"search-pro":{"cutWordLib":"nodejieba","defineWord":["Gitbook Use"]},"donate":{"title":"","button":"赏","wechat":"http://blog.hszofficial.site/img/wechat_donate.jpg","alipay":"http://blog.hszofficial.site/img/zhifubao_donate.jpg","wechatText":"微信打赏","alipayText":"支付宝打赏"},"sitemap-general":{"prefix":"http://blog.hszofficial.site/TutorialForJavascript/"},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right","showLevelIcon":true},"mode":"float","multipleH1":true,"pageTop":{"showLevelIcon":false,"mode":"float","pageTop":{"showLevelIcon":false,"level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right"},"level1Icon":"","showLevel":true,"level2Icon":"","level3Icon":"","associatedWithSummary":true,"float":{"showLevelIcon":true,"level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right"}},"printLog":false,"showGoTop":true,"showLevel":true},"github-buttons":{"repo":"TutorialForJavascript/TutorialForJavascript.github.io","types":["star","watch","fork"],"size":"small"},"expandable-chapters-small":{},"advanced-emoji":{"embedEmojis":false},"sharing":{"weibo":false,"facebook":false,"twitter":false,"google":true,"instapaper":false,"vk":false,"all":["google"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"theme":"default","author":"hsz","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Javascript攻略","language":"zh-hans","links":{"sidebar":{"Home":"http://blog.hszofficial.site/"}},"gitbook":">=2.0.0","description":"Javascript运行环境的介绍"},"file":{"path":"web前端技术/前端概览/前端应用页面规范/交互事件.md","mtime":"2019-03-27T13:56:17.774Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-28T11:00:56.127Z"},"basePath":"../../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../../gitbook/gitbook.js"></script>
+    <script src="../../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-donate/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

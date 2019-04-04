@@ -1,0 +1,1046 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>使用Javascript搭建后端服务 · Javascript攻略</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="hsz">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-advanced-emoji/emoji-website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-katex/katex.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-donate/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="RESTful接口服务.html" />
+    
+    
+    <link rel="prev" href="../web前端技术/Webpack/" />
+    
+
+    <style>
+    @media only screen and (max-width: 640px) {
+        .book-header .hidden-mobile {
+            display: none;
+        }
+    }
+    </style>
+    <script>
+        window["gitbook-plugin-github-buttons"] = {"repo":"TutorialForJavascript/TutorialForJavascript.github.io","types":["star","watch","fork"],"size":"small"};
+    </script>
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+    
+        
+        <li>
+            <a href="http://blog.hszofficial.site/" target="_blank" class="custom-link">Home</a>
+        </li>
+    
+    
+
+    
+    <li class="divider"></li>
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../执行环境/">
+            
+                <a href="../执行环境/">
+            
+                    
+                    执行环境
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../执行环境/Javascript执行环境.html">
+            
+                <a href="../执行环境/Javascript执行环境.html">
+            
+                    
+                    Javascript执行环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../执行环境/代码风格.html">
+            
+                <a href="../执行环境/代码风格.html">
+            
+                    
+                    代码风格
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../执行环境/api文档自动生成.html">
+            
+                <a href="../执行环境/api文档自动生成.html">
+            
+                    
+                    api文档自动生成
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../执行环境/代码测试工具.html">
+            
+                <a href="../执行环境/代码测试工具.html">
+            
+                    
+                    代码测试工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../执行环境/log工具.html">
+            
+                <a href="../执行环境/log工具.html">
+            
+                    
+                    log工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../执行环境/性能基准测试.html">
+            
+                <a href="../执行环境/性能基准测试.html">
+            
+                    
+                    性能基准测试
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../基础语法/">
+            
+                <a href="../基础语法/">
+            
+                    
+                    基础语法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../基础语法/基本语法和代码结构.html">
+            
+                <a href="../基础语法/基本语法和代码结构.html">
+            
+                    
+                    基本语法和代码结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../基础语法/变量与值与对象.html">
+            
+                <a href="../基础语法/变量与值与对象.html">
+            
+                    
+                    变量与值与对象
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../基础语法/从运算符到函数.html">
+            
+                <a href="../基础语法/从运算符到函数.html">
+            
+                    
+                    从运算符到函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../基础语法/迭代器与生成器.html">
+            
+                <a href="../基础语法/迭代器与生成器.html">
+            
+                    
+                    迭代器与生成器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../基础语法/基本容器.html">
+            
+                <a href="../基础语法/基本容器.html">
+            
+                    
+                    基本容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../基础语法/异步编程.html">
+            
+                <a href="../基础语法/异步编程.html">
+            
+                    
+                    异步编程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../基础语法/面向对象编程.html">
+            
+                <a href="../基础语法/面向对象编程.html">
+            
+                    
+                    面向对象编程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="../基础语法/模块化编程.html">
+            
+                <a href="../基础语法/模块化编程.html">
+            
+                    
+                    模块化编程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="../基础语法/特殊对象和特殊接口.html">
+            
+                <a href="../基础语法/特殊对象和特殊接口.html">
+            
+                    
+                    特殊对象和特殊接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../web前端技术/">
+            
+                <a href="../web前端技术/">
+            
+                    
+                    web前端技术
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../web前端技术/前端概览/">
+            
+                <a href="../web前端技术/前端概览/">
+            
+                    
+                    前端概览
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1.1" data-path="../web前端技术/前端概览/前端应用页面规范/">
+            
+                <a href="../web前端技术/前端概览/前端应用页面规范/">
+            
+                    
+                    前端应用页面规范
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1.1.1" data-path="../web前端技术/前端概览/前端应用页面规范/元数据获取.html">
+            
+                <a href="../web前端技术/前端概览/前端应用页面规范/元数据获取.html">
+            
+                    
+                    元数据获取
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.1.2" data-path="../web前端技术/前端概览/前端应用页面规范/语义化标签与页面布局.html">
+            
+                <a href="../web前端技术/前端概览/前端应用页面规范/语义化标签与页面布局.html">
+            
+                    
+                    语义化标签与页面布局
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.1.3" data-path="../web前端技术/前端概览/前端应用页面规范/模板标签.html">
+            
+                <a href="../web前端技术/前端概览/前端应用页面规范/模板标签.html">
+            
+                    
+                    模板标签
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.1.4" data-path="../web前端技术/前端概览/前端应用页面规范/交互事件.html">
+            
+                <a href="../web前端技术/前端概览/前端应用页面规范/交互事件.html">
+            
+                    
+                    交互事件
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.2" data-path="../web前端技术/前端概览/前端应用调用本地资源/">
+            
+                <a href="../web前端技术/前端概览/前端应用调用本地资源/">
+            
+                    
+                    前端应用调用本地资源
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1.2.1" data-path="../web前端技术/前端概览/前端应用调用本地资源/使用本地文件系统.html">
+            
+                <a href="../web前端技术/前端概览/前端应用调用本地资源/使用本地文件系统.html">
+            
+                    
+                    使用本地文件系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.2.2" data-path="../web前端技术/前端概览/前端应用调用本地资源/使用本地存储.html">
+            
+                <a href="../web前端技术/前端概览/前端应用调用本地资源/使用本地存储.html">
+            
+                    
+                    使用本地存储
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.2.3" data-path="../web前端技术/前端概览/前端应用调用本地资源/使用本地摄像头和麦克风.html">
+            
+                <a href="../web前端技术/前端概览/前端应用调用本地资源/使用本地摄像头和麦克风.html">
+            
+                    
+                    使用本地摄像头和麦克风
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.2.4" data-path="../web前端技术/前端概览/前端应用调用本地资源/使用语音.html">
+            
+                <a href="../web前端技术/前端概览/前端应用调用本地资源/使用语音.html">
+            
+                    
+                    使用语音
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.2.5" data-path="../web前端技术/前端概览/前端应用调用本地资源/使用本地多线程资源.html">
+            
+                <a href="../web前端技术/前端概览/前端应用调用本地资源/使用本地多线程资源.html">
+            
+                    
+                    使用本地多线程资源
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.2.6" data-path="../web前端技术/前端概览/前端应用调用本地资源/使用本地gpu计算资源.html">
+            
+                <a href="../web前端技术/前端概览/前端应用调用本地资源/使用本地gpu计算资源.html">
+            
+                    
+                    使用本地gpu计算资源
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.3" data-path="../web前端技术/前端概览/前端应用与通信/">
+            
+                <a href="../web前端技术/前端概览/前端应用与通信/">
+            
+                    
+                    前端应用与通信
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1.3.1" data-path="../web前端技术/前端概览/前端应用与通信/ajax及相关技术.html">
+            
+                <a href="../web前端技术/前端概览/前端应用与通信/ajax及相关技术.html">
+            
+                    
+                    ajax及相关技术
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.3.2" data-path="../web前端技术/前端概览/前端应用与通信/websocket.html">
+            
+                <a href="../web前端技术/前端概览/前端应用与通信/websocket.html">
+            
+                    
+                    websocket
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.3.3" data-path="../web前端技术/前端概览/前端应用与通信/grpc-web.html">
+            
+                <a href="../web前端技术/前端概览/前端应用与通信/grpc-web.html">
+            
+                    
+                    grpc-web
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.3.4" data-path="../web前端技术/前端概览/前端应用与通信/WebRTC进行端对端通信.html">
+            
+                <a href="../web前端技术/前端概览/前端应用与通信/WebRTC进行端对端通信.html">
+            
+                    
+                    WebRTC进行端对端通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../web前端技术/Stylus/">
+            
+                <a href="../web前端技术/Stylus/">
+            
+                    
+                    Stylus
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.2.1" data-path="../web前端技术/Stylus/注释.html">
+            
+                <a href="../web前端技术/Stylus/注释.html">
+            
+                    
+                    注释
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.2" data-path="../web前端技术/Stylus/选择器.html">
+            
+                <a href="../web前端技术/Stylus/选择器.html">
+            
+                    
+                    选择器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.3" data-path="../web前端技术/Stylus/变量与插值E.md">
+            
+                <span>
+            
+                    
+                    变量与插值
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.4" data-path="../web前端技术/Stylus/运算符.html">
+            
+                <a href="../web前端技术/Stylus/运算符.html">
+            
+                    
+                    运算符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.5" data-path="../web前端技术/Stylus/控制语句.html">
+            
+                <a href="../web前端技术/Stylus/控制语句.html">
+            
+                    
+                    控制语句
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.6" data-path="../web前端技术/Stylus/内置方法.html">
+            
+                <a href="../web前端技术/Stylus/内置方法.html">
+            
+                    
+                    内置方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.7" data-path="../web前端技术/Stylus/混入模式与函数.html">
+            
+                <a href="../web前端技术/Stylus/混入模式与函数.html">
+            
+                    
+                    混入模式与函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.8" data-path="../web前端技术/Stylus/复用.html">
+            
+                <a href="../web前端技术/Stylus/复用.html">
+            
+                    
+                    复用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.9" data-path="../web前端技术/Stylus/`@`字符与特殊用法.html">
+            
+                <a href="../web前端技术/Stylus/`@`字符与特殊用法.html">
+            
+                    
+                    @字符与特殊用法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.10" data-path="../web前端技术/Stylus/jsApi.html">
+            
+                <a href="../web前端技术/Stylus/jsApi.html">
+            
+                    
+                    jsApi
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../web前端技术/Webpack/">
+            
+                <a href="../web前端技术/Webpack/">
+            
+                    
+                    Webpack
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.5" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    使用Javascript搭建后端服务
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="RESTful接口服务.html">
+            
+                <a href="RESTful接口服务.html">
+            
+                    
+                    RESTful接口服务
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="Websocket接口服务.html">
+            
+                <a href="Websocket接口服务.html">
+            
+                    
+                    Websocket接口服务
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="GRpc接口服务.html">
+            
+                <a href="GRpc接口服务.html">
+            
+                    
+                    GRpc接口服务
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >使用Javascript搭建后端服务</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#&#x4F7F;&#x7528;javascript&#x642D;&#x5EFA;&#x540E;&#x7AEF;&#x670D;&#x52A1;"><b>1. </b>&#x4F7F;&#x7528;Javascript&#x642D;&#x5EFA;&#x540E;&#x7AEF;&#x670D;&#x52A1;</a></li></ul></div><a href="#&#x4F7F;&#x7528;javascript&#x642D;&#x5EFA;&#x540E;&#x7AEF;&#x670D;&#x52A1;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="&#x4F7F;&#x7528;javascript&#x642D;&#x5EFA;&#x540E;&#x7AEF;&#x670D;&#x52A1;"><a name="&#x4F7F;&#x7528;javascript&#x642D;&#x5EFA;&#x540E;&#x7AEF;&#x670D;&#x52A1;" class="anchor-navigation-ex-anchor" href="#&#x4F7F;&#x7528;javascript&#x642D;&#x5EFA;&#x540E;&#x7AEF;&#x670D;&#x52A1;"><i class="fa fa-link" aria-hidden="true"></i></a>1. &#x4F7F;&#x7528;Javascript&#x642D;&#x5EFA;&#x540E;&#x7AEF;&#x670D;&#x52A1;</h1>
+<p>&#x901A;&#x5E38;&#x540E;&#x7AEF;&#x670D;&#x52A1;&#x57CB;&#x5F97;&#x8D8A;&#x6DF1;&#x8D8A;&#x4E0D;&#x4F1A;&#x9009;&#x62E9;&#x4F7F;&#x7528;js&#x6765;&#x6784;&#x5EFA;,&#x4F46;&#x73B0;&#x5728;&#x5FAE;&#x670D;&#x52A1;&#x67B6;&#x6784;&#x76DB;&#x884C;,js&#x4E5F;&#x51ED;&#x501F;&#x5176;&#x7EAF;&#x5F02;&#x6B65;&#x652F;&#x6301;&#x9AD8;&#x5E76;&#x53D1;&#x548C;&#x5F00;&#x53D1;&#x8C03;&#x8BD5;&#x7B80;&#x5355;&#x7684;&#x7279;&#x70B9;&#x6210;&#x4E86;&#x540E;&#x7AEF;&#x670D;&#x52A1;&#x7684;&#x53EF;&#x9009;&#x9879;&#x4E4B;&#x4E00;.</p>
+<p>&#x901A;&#x5E38;js&#x5728;&#x540E;&#x7AEF;&#x7684;&#x89D2;&#x8272;&#x66F4;&#x591A;&#x7684;&#x662F;:</p>
+<ul>
+<li>&#x5FAE;&#x670D;&#x52A1;&#x67B6;&#x6784;&#x4E2D;&#x4F5C;&#x4E3A;&#x7EC4;&#x4EF6;&#x63D0;&#x4F9B;&#x63A5;&#x53E3;</li>
+<li>&#x4F5C;&#x4E3A;&#x8FDE;&#x63A5;&#x524D;&#x7AEF;&#x7684;APIgateway&#x6839;&#x636E;&#x4E1A;&#x52A1;&#x9700;&#x8981;&#x805A;&#x5408;&#x540E;&#x7AEF;&#x63A5;&#x53E3;</li>
+</ul>
+<p>&#x800C;&#x5E38;&#x89C1;&#x7684;&#x6280;&#x672F;&#x4E3B;&#x8981;&#x662F;:</p>
+<ul>
+<li>&#x57FA;&#x4E8E;HTTP&#x7684;RESTful&#x63A5;&#x53E3;&#x670D;&#x52A1;</li>
+<li>&#x57FA;&#x4E8E;Websocket&#x7684;&#x957F;&#x8FDE;&#x63A5;&#x670D;&#x52A1;</li>
+<li>GRpc&#x63D0;&#x4F9B;&#x7684;&#x63A5;&#x53E3;&#x670D;&#x52A1;</li>
+</ul>
+<p>&#x800C;&#x540E;&#x7AEF;&#x76F8;&#x5173;&#x7684;&#x6280;&#x672F;&#x6709;:</p>
+<ul>
+<li>&#x5173;&#x7CFB;&#x6570;&#x636E;&#x5E93;&#x6280;&#x672F;,&#x5E38;&#x89C1;&#x7684;&#x6709;<a href="http://www.postgres.cn/docs/10/" target="_blank">PostgreSQL</a>,&#x4E1A;&#x52A1;&#x4E0A;&#x4E00;&#x822C;&#x4F7F;&#x7528;orm&#x6765;&#x64CD;&#x4F5C;&#x6570;&#x636E;&#x5E93;.&#x5E38;&#x7528;&#x7684;orm&#x6709;<a href="http://docs.sequelizejs.com/" target="_blank">sequelize</a>&#x914D;&#x5408;<a href="https://github.com/brianc/node-postgres" target="_blank">pg</a>&#x548C;<a href="https://github.com/scarney81/pg-hstore" target="_blank">pg-hstore</a>&#x4F7F;&#x7528;</li>
+<li>&#x5171;&#x4EAB;&#x5185;&#x5B58;&#x6280;&#x672F;,&#x5E38;&#x89C1;&#x7684;&#x662F;Redis,&#x6211;&#x4EEC;&#x4F7F;&#x7528;<a href="http://redis.js.org/" target="_blank">node-redis</a>&#x914D;&#x5408;<a href="https://github.com/petkaantonov/bluebird" target="_blank">bluebird</a></li>
+<li>&#x6D88;&#x606F;&#x961F;&#x5217;&#x6280;&#x672F;,&#x5E38;&#x89C1;&#x7684;&#x6709;rabbitMQ,&#x6211;&#x4EEC;&#x4F7F;&#x7528;<a href="https://github.com/squaremo/rabbit.js" target="_blank">rabbit.js</a></li>
+<li><p>&#x6D88;&#x606F;&#x7684;&#x53D1;&#x5E03;&#x8BA2;&#x9605;&#x5DE5;&#x5177;,&#x5E38;&#x89C1;&#x7684;&#x6709;Redis,rabbitMQ,postgreSQL</p>
+</li>
+<li><p><a href="http://zeromq.org/" target="_blank">zmq</a>&#x4E00;&#x79CD;&#x57FA;&#x4E8E;&#x901A;&#x4FE1;&#x6A21;&#x5F0F;&#x7684;&#x6D88;&#x606F;&#x7EC4;&#x4EF6;&#x6846;&#x67B6;</p>
+</li>
+<li><a href="https://github.com/node-webrtc/node-webrtc" target="_blank">webrtc</a>&#x4E00;&#x79CD;&#x5728;&#x6D4F;&#x89C8;&#x5668;&#x7AEF;&#x4E5F;&#x6709;&#x5B9E;&#x73B0;&#x7684;p2p&#x5373;&#x65F6;&#x901A;&#x4FE1;&#x6280;&#x672F;</li>
+</ul>
+<footer class="page-footer"><span class="copyright">Copyright &#xA9; hsz 2019 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x4EF6;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
+2019-03-28 18:51:15
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../web前端技术/Webpack/" class="navigation navigation-prev " aria-label="Previous page: Webpack">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="RESTful接口服务.html" class="navigation navigation-next " aria-label="Next page: RESTful接口服务">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"使用Javascript搭建后端服务","level":"1.5","depth":1,"next":{"title":"RESTful接口服务","level":"1.5.1","depth":2,"path":"使用Javascript搭建后端服务/RESTful接口服务.md","ref":"使用Javascript搭建后端服务/RESTful接口服务.md","articles":[]},"previous":{"title":"Webpack","level":"1.4.3","depth":2,"path":"web前端技术/Webpack/README.md","ref":"web前端技术/Webpack/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-lunr","-search","search-pro","advanced-emoji","github","github-buttons","katex","splitter","expandable-chapters-small","tbfed-pagefooter","-sharing","donate","sitemap-general","anchors","anchor-navigation-ex"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy hsz 2019","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"github":{"url":"https://github.com/TutorialForJavascript/TutorialForJavascript.github.io"},"splitter":{},"search-pro":{"cutWordLib":"nodejieba","defineWord":["Gitbook Use"]},"donate":{"title":"","button":"赏","wechat":"http://blog.hszofficial.site/img/wechat_donate.jpg","alipay":"http://blog.hszofficial.site/img/zhifubao_donate.jpg","wechatText":"微信打赏","alipayText":"支付宝打赏"},"sitemap-general":{"prefix":"http://blog.hszofficial.site/TutorialForJavascript/"},"katex":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right","showLevelIcon":true},"mode":"float","multipleH1":true,"pageTop":{"showLevelIcon":false,"mode":"float","pageTop":{"showLevelIcon":false,"level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right"},"level1Icon":"","showLevel":true,"level2Icon":"","level3Icon":"","associatedWithSummary":true,"float":{"showLevelIcon":true,"level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right"}},"printLog":false,"showGoTop":true,"showLevel":true},"github-buttons":{"repo":"TutorialForJavascript/TutorialForJavascript.github.io","types":["star","watch","fork"],"size":"small"},"expandable-chapters-small":{},"advanced-emoji":{"embedEmojis":false},"sharing":{"weibo":false,"facebook":false,"twitter":false,"google":true,"instapaper":false,"vk":false,"all":["google"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"theme":"default","author":"hsz","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Javascript攻略","language":"zh-hans","links":{"sidebar":{"Home":"http://blog.hszofficial.site/"}},"gitbook":">=2.0.0","description":"Javascript运行环境的介绍"},"file":{"path":"使用Javascript搭建后端服务/README.md","mtime":"2019-03-28T10:51:15.490Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-28T11:00:56.127Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github-buttons/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-donate/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

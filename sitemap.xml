@@ -49,6 +49,14 @@
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Stylus/%60@%60字符与特殊用法.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Stylus/jsApi.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Webpack/</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Vue/</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Vue/工具链.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Vue/组件.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Vue/使用element组件包构建前端项目.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Vue/数据状态维护.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Vue/路由.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Vue/从后端同步数据.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Vue/更丰富的属性展示.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/使用Javascript搭建后端服务/</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/使用Javascript搭建后端服务/RESTful接口服务.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/使用Javascript搭建后端服务/Websocket接口服务.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>

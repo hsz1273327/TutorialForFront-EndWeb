@@ -38,6 +38,7 @@
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/前端概览/前端应用与通信/websocket.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/前端概览/前端应用与通信/grpc-web.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/前端概览/前端应用与通信/WebRTC进行端对端通信.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/前端概览/前端应用与通信/EventSource.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Stylus/</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Stylus/注释.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Stylus/选择器.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
@@ -46,7 +47,7 @@
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Stylus/内置方法.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Stylus/混入模式与函数.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Stylus/复用.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Stylus/%60@%60字符与特殊用法.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Stylus/at字符与特殊用法.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Stylus/jsApi.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Webpack/</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Vue/</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
@@ -56,9 +57,10 @@
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Vue/数据状态维护.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Vue/路由.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Vue/从后端同步数据.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Vue/更丰富的属性展示.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Vue/属性展示.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://blog.hszofficial.site/TutorialForJavascript/web前端技术/Vue/优化项目.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/使用Javascript搭建后端服务/</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://blog.hszofficial.site/TutorialForJavascript/使用Javascript搭建后端服务/RESTful接口服务.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://blog.hszofficial.site/TutorialForJavascript/使用Javascript搭建后端服务/http接口服务.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/使用Javascript搭建后端服务/Websocket接口服务.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>http://blog.hszofficial.site/TutorialForJavascript/使用Javascript搭建后端服务/GRpc接口服务.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 </urlset>

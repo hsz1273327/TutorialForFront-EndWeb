@@ -119,4 +119,6 @@ Python是模块化编程的语言,而Js在设计初期就没考虑模块化的�
 
 本文使用[jupyter notebook](https://jupyter.org/)结合[jp-babel](https://www.npmjs.com/package/jp-babel)和[itypescript](https://github.com/nearbydelta/itypescript)编写,[docsify](https://docsify.js.org/#/?id=docsify)解析生成网页.
 
+同时本文的示例代码都在项目的各个分支中,大家可以按`${章}-{节}-{内容}`的方式查找到对应的示例代码.文章中也会给出链接方便查看.
+
 本文主要参考自阮一峰大大的书<ECMAScript 6 入门>和SICP,加上一些个人理解,本人才疏学浅如有错误望各位读者指正.

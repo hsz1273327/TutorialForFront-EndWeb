@@ -1,0 +1,44 @@
+{
+  "name": "js-toolchain-exp",
+  "version": "1.0.0",
+  "description": "js演示工具集",
+  "main": "bin/index.js",
+  "scripts": {
+    "start": "./node_modules/.bin/babel-node src/index.js",
+    "build": "./node_modules/.bin/babel src -d bin"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hszofficial/js-toolchain-exp.git"
+  },
+  "keywords": [
+    "演示"
+  ],
+  "author": "hsz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hszofficial/js-toolchain-exp/issues"
+  },
+  "homepage": "https://github.com/hszofficial/js-toolchain-exp#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/node": "^7.8.4",
+    "@babel/plugin-transform-flow-strip-types": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/register": "^7.8.3",
+    "@babel/runtime": "^7.8.4"
+  },
+  "babel":{
+    "presets": [
+      ["@babel/preset-env",{
+        "targets":{
+          "node": "current"
+        }
+      }]
+    ],
+    "plugins": [
+    "@babel/plugin-transform-flow-strip-types"
+    ]
+  }
+}

@@ -1,16 +1,15 @@
-import * as Pino from 'pino'
+const add = (a: number, b: number): number => a + b
 
-const logger = Pino({name:"myapp"})
-
-const promises:Array<Promise<number>> = [
-    new Promise<number>((resolve:(value:number)=>void,reject) => resolve(1)),
-    new Promise<number>((resolve:(value:number)=>void,reject) => resolve(2)),
-    new Promise<number>((resolve:(value:number)=>void,reject) => resolve(3))
-]
-
-async function test(hello: string):Promise<void> {
-    for await (const p of promises) {
-        logger.info(`${hello},${p}`)
+class Child {
+    public name: string
+    public age: number
+    constructor(name: string, age: number) {
+        this.name = name
+        this.age = age
+    }
+    self_introduction(): string {
+        return `hello my name is ${this.name}, I'm ${this.age} years old`
     }
 }
-test("hello")
+
+export { add, Child }

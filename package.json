@@ -5,7 +5,8 @@
     "main": "bin/index.js",
     "scripts": {
         "start": "./node_modules/.bin/ts-node src/index.ts",
-        "build": "./node_modules/.bin/tsc"
+        "build": "./node_modules/.bin/tsc",
+        "test": "./node_modules/.bin/mocha"
     },
     "repository": {
         "type": "git",
@@ -21,12 +22,20 @@
     },
     "homepage": "https://github.com/hszofficial/js-toolchain-exp#readme",
     "devDependencies": {
+        "@types/mocha": "^7.0.1",
+        "assert": "^2.0.0",
         "ts-node": "^8.6.2",
         "typescript": "^3.7.5"
     },
     "dependencies": {
         "@types/node": "^13.7.1",
-        "@types/pino": "^5.15.5",
-        "pino": "^5.16.0"
+        "mocha": "^7.0.1"
+    },
+    "mocha": {
+        "extension": [
+            "ts"
+        ],
+        "require": "ts-node/register",
+        "reporter": "Min"
     }
 }

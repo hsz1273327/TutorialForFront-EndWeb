@@ -1,0 +1,1 @@
+console.log(`child thread ${process.argv[2]} ok`)

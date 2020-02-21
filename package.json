@@ -6,7 +6,7 @@
     "scripts": {
         "start": "./node_modules/.bin/ts-node src/index.ts",
         "build": "./node_modules/.bin/tsc",
-        "test": "./node_modules/.bin/mocha"
+        "test": "./node_modules/.bin/nyc ./node_modules/.bin/mocha"
     },
     "repository": {
         "type": "git",
@@ -24,6 +24,8 @@
     "devDependencies": {
         "@types/mocha": "^7.0.1",
         "assert": "^2.0.0",
+        "nyc": "^15.0.0",
+        "source-map-support": "^0.5.16",
         "ts-node": "^8.6.2",
         "typescript": "^3.7.5"
     },
@@ -35,7 +37,23 @@
         "extension": [
             "ts"
         ],
-        "require": "ts-node/register",
-        "reporter": "Min"
+        "require": [
+            "ts-node/register",
+            "source-map-support/register"
+        ],
+        "recursive": true
+    },
+    "nyc": {
+        "extension": [
+            ".ts",
+            ".tsx"
+        ],
+        "exclude": [
+            "**/*.d.ts"
+        ],
+        "reporter": [
+            "html"
+        ],
+        "all": true
     }
 }

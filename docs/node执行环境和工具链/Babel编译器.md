@@ -98,7 +98,7 @@ targets支持的平台有:chrome, opera, edge, firefox, safari, ie, ios, android
 
 ## helloworld
 
-我们在分支[es-babel](https://github.com/hszofficial/js-toolchain-exp/tree/es-babel)上演示这个helloworld.这个简单项目的执行环境时node.
+我们在分支[node执行环境和工具链-babel编译器](https://github.com/hsz1273327/TutorialForJavascript/tree/node%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83%E5%92%8C%E5%B7%A5%E5%85%B7%E9%93%BE-babel%E7%BC%96)上演示这个helloworld.这个简单项目的执行环境时node.
 
 我们init项目,然后再安装环境:
 

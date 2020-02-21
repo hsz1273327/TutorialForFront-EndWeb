@@ -1,12 +1,13 @@
-const promises = [
-    new Promise(resolve => resolve(1)),
-    new Promise(resolve => resolve(2)),
-    new Promise(resolve => resolve(3))
-]
+const add = (a, b) => a + b
 
-async function test (hello: string) {
-    for await (const p of promises) {
-        console.log(`${ hello },${ p }`)
+class Child {
+    constructor (name, age) {
+        this.name = name
+        this.age = age
+    }
+    self_introduction () {
+        return `hello my name is ${ this.name }, I'm ${ this.age } years old`
     }
 }
-test("hello")
+
+export { add, Child }

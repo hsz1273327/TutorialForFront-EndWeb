@@ -1,59 +1,135 @@
 {
-    "name": "js-toolchain-exp",
-    "version": "1.0.0",
-    "description": "js演示工具集",
-    "main": "bin/index.js",
-    "scripts": {
-        "start": "./node_modules/.bin/ts-node src/index.ts",
-        "build": "./node_modules/.bin/tsc",
-        "test": "./node_modules/.bin/nyc ./node_modules/.bin/mocha"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/hszofficial/js-toolchain-exp.git"
-    },
-    "keywords": [
-        "演示"
+  "name": "js-toolchain-exp",
+  "version": "1.0.0",
+  "description": "js演示工具集",
+  "main": "bin/index.js",
+  "scripts": {
+    "start": "./node_modules/.bin/ts-node src/index.ts",
+    "build": "./node_modules/.bin/tsc",
+    "test": "./node_modules/.bin/nyc ./node_modules/.bin/mocha",
+    "doc": "./node_modules/.bin/esdoc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hszofficial/js-toolchain-exp.git"
+  },
+  "keywords": [
+    "演示"
+  ],
+  "author": "hsz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hszofficial/js-toolchain-exp/issues"
+  },
+  "homepage": "https://github.com/hszofficial/js-toolchain-exp#readme",
+  "devDependencies": {
+    "@types/mocha": "^7.0.1",
+    "assert": "^2.0.0",
+    "esdoc": "^1.1.0",
+    "esdoc-standard-plugin": "^1.0.0",
+    "esdoc-typescript-plugin": "^1.0.1",
+    "nyc": "^15.0.0",
+    "source-map-support": "^0.5.16",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "@types/node": "^13.7.1",
+    "mocha": "^7.0.1"
+  },
+  "mocha": {
+    "extension": [
+      "ts"
     ],
-    "author": "hsz",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/hszofficial/js-toolchain-exp/issues"
-    },
-    "homepage": "https://github.com/hszofficial/js-toolchain-exp#readme",
-    "devDependencies": {
-        "@types/mocha": "^7.0.1",
-        "assert": "^2.0.0",
-        "nyc": "^15.0.0",
-        "source-map-support": "^0.5.16",
-        "ts-node": "^8.6.2",
-        "typescript": "^3.7.5"
-    },
-    "dependencies": {
-        "@types/node": "^13.7.1",
-        "mocha": "^7.0.1"
-    },
-    "mocha": {
-        "extension": [
-            "ts"
-        ],
-        "require": [
-            "ts-node/register",
-            "source-map-support/register"
-        ],
-        "recursive": true
-    },
-    "nyc": {
-        "extension": [
-            ".ts",
-            ".tsx"
-        ],
-        "exclude": [
-            "**/*.d.ts"
-        ],
-        "reporter": [
-            "html"
-        ],
-        "all": true
-    }
+    "require": [
+      "ts-node/register",
+      "source-map-support/register"
+    ],
+    "recursive": true
+  },
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude": [
+      "**/*.d.ts"
+    ],
+    "reporter": [
+      "html"
+    ],
+    "all": true
+  },
+  "esdoc": {
+    "destination": "./docs",
+    "source": "./src",
+    "plugins": [
+      {
+        "name": "esdoc-typescript-plugin",
+        "option": {
+          "enable": true
+        }
+      },
+      {
+        "name": "esdoc-standard-plugin",
+        "option": {
+          "lint": {
+            "enable": true
+          },
+          "coverage": {
+            "enable": true
+          },
+          "accessor": {
+            "access": [
+              "public",
+              "protected",
+              "private"
+            ],
+            "autoPrivate": true
+          },
+          "undocumentIdentifier": {
+            "enable": true
+          },
+          "unexportedIdentifier": {
+            "enable": false
+          },
+          "typeInference": {
+            "enable": true
+          },
+          "brand": {
+            "title": "My Test",
+            "description": "this is awesome library",
+            "repository": "https://github.com/foo/bar",
+            "site": "http://my-library.org",
+            "author": "https://twitter.com/foo",
+            "image": "http://my-library.org/logo.png"
+          },
+          "manual": {
+            "index": "./manual/index.md",
+            "globalIndex": true,
+            "asset": "./manual/asset",
+            "files": [
+              "./manual/overview.md"
+            ]
+          },
+          "test": {
+            "source": "./test/",
+            "interfaces": [
+              "describe",
+              "it",
+              "context",
+              "suite",
+              "test"
+            ],
+            "includes": [
+              "(spec|Spec|test|Test)\\.ts$"
+            ],
+            "excludes": [
+              "\\.config\\.ts$"
+            ]
+          }
+        }
+      }
+    ]
+  }
 }

@@ -16,7 +16,7 @@
 实际上标准的log是有分级的,标准是4个等级:
 
 
-```typescript
+```javascript
 console.log('文字信息')
 ```
 
@@ -24,7 +24,7 @@ console.log('文字信息')
 
 
 
-```typescript
+```javascript
 console.info('提示信息')
 ```
 
@@ -32,7 +32,7 @@ console.info('提示信息')
 
 
 
-```typescript
+```javascript
 console.warn('警告信息')
 ```
 
@@ -40,7 +40,7 @@ console.warn('警告信息')
 
 
 
-```typescript
+```javascript
 console.error('错误信息')
 ```
 
@@ -69,7 +69,7 @@ console.error('错误信息')
 
 
 
-```typescript
+```javascript
 console.group('第一个组')
 console.log("1-1")
 console.log("1-2")
@@ -98,7 +98,7 @@ console.groupEnd()
 使用console.table()可以将传入的对象,Map或数组以表格形式输出,这个函数适合输出格式化数据
 
 
-```typescript
+```javascript
 console.table({
     a:1,
     b:2
@@ -114,7 +114,7 @@ console.table({
 
 
 
-```typescript
+```javascript
 console.table([1,2,3,4])
 ```
 
@@ -129,7 +129,7 @@ console.table([1,2,3,4])
 
 
 
-```typescript
+```javascript
 console.table(new Map([['one',1], ['two', 2], ['three', 3]]))
 ```
 
@@ -143,7 +143,7 @@ console.table(new Map([['one',1], ['two', 2], ['three', 3]]))
 
 
 
-```typescript
+```javascript
 console.table(new Set(["a","b","c"]))
 ```
 
@@ -161,7 +161,7 @@ console.table(new Set(["a","b","c"]))
 使用Console.dir()显示一个对象的所有属性和方法,这个就有点像python中的dir(obj)
 
 
-```typescript
+```javascript
 console.dir({
     a:1,
     b:2,
@@ -177,7 +177,7 @@ console.dir({
 `console.dirxml()`这个接口算是浏览器脚本时代遗留的特有接口,用于查看`html/xml`生成的dom节点
 
 
-```typescript
+```javascript
 console.dirxml(`<ul id="box">
   <li>蚂蚁部落一</li>
   <li>蚂蚁部落二</li>
@@ -199,12 +199,12 @@ console.dirxml(`<ul id="box">
 `console.assert(exp,msg)`这个接口在一定程度上式assert的替代
 
 
-```typescript
+```javascript
 console.assert(true, "你永远看不见我")
 ```
 
 
-```typescript
+```javascript
 console.assert(false, "你永远看不见我")
 ```
 
@@ -216,7 +216,7 @@ console.assert(false, "你永远看不见我")
 使用`console.count(tag)`输出内容和被调用的次数可以使用`console.countReset(tag)`重置被调用的次数
 
 
-```typescript
+```javascript
 (()=> {
     for(let i = 0; i < 3; i++){
         console.count("运行次数：")
@@ -236,7 +236,7 @@ console.assert(false, "你永远看不见我")
 使用Console.trace()来追踪函数被调用的过程,在复杂项目时调用过程非常多,用这个命令可以查看到栈上的信息
 
 
-```typescript
+```javascript
 const add=(a, b)=> {
     console.trace("Add function")
     return a + b
@@ -276,7 +276,7 @@ let x = add3(1, 1)
 
 
 
-```typescript
+```javascript
 console.time("Chrome中循环1000次的时间")
 for(var i = 0; i < 10; i++)
 {
@@ -308,7 +308,7 @@ console.timeEnd("Chrome中循环1000次的时间")
 在浏览器环境下,默认的console模块就已经足够好用,但如果是服务端上,由于没有格式定义和level筛选,console模块就有点不够用了.我们可以使用[pino](https://www.npmjs.com/package/pino),这个是一个具备完整的log工具特性的log工具.
 
 
-```typescript
+```javascript
 import pino from 'pino'
 
 const logger = pino({name:"myapp"})
@@ -321,7 +321,7 @@ logger.warn({lang: 'fr'}, 'au revoir')
 
 
 
-```typescript
+```javascript
 logger.level//查看当前的最低等级
 ```
 
@@ -333,7 +333,7 @@ logger.level//查看当前的最低等级
 
 
 
-```typescript
+```javascript
 logger.level="warn"//设置最低等级
 ```
 
@@ -345,7 +345,7 @@ logger.level="warn"//设置最低等级
 
 
 
-```typescript
+```javascript
 logger.level
 ```
 
@@ -359,10 +359,5 @@ logger.level
 ### typescript使用pino
 
 在typescript中我们需要额外安装pino的类型声明包`@types/pino`才能正常的使用pino.
-typescript中我们必须使用`import * as Pino from 'pino'`才可以正常的导入pino,,这个例子可以看分支[ts-pino]()
+typescript中我们必须使用`import * as Pino from 'pino'`才可以正常的导入pino,,这个例子可以看分支[node执行环境和工具链-log工具 ](https://github.com/hsz1273327/TutorialForJavascript/tree/node%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83%E5%92%8C%E5%B7%A5%E5%85%B7%E9%93%BE-log%E5%B7%A5%E5%85%B7)
 
-
-
-```typescript
-
-```

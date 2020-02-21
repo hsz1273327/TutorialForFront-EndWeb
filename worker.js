@@ -1,1 +1,2 @@
-console.log(`child thread ${process.argv[2]} ok`)
+import { workerData } from 'worker_threads'
+console.log(`child thread ${ workerData.tid } ok`)

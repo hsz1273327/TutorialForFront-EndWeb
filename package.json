@@ -25,6 +25,8 @@
         "typescript": "^3.7.5"
     },
     "dependencies": {
-        "@types/node": "^13.7.1"
+        "@types/node": "^13.7.1",
+        "@types/pino": "^5.15.5",
+        "pino": "^5.16.0"
     }
 }

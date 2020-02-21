@@ -1,3 +1,3 @@
-# node执行环境和工具链-代码测试工具-babel_mocha
+# node执行环境和工具链-注释文档-babel
 
-这个分支演示babel下用mocha做测试
+这个分支演示babel下使用esdoc创建项目文档.

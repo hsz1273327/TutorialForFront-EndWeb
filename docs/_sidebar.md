@@ -23,6 +23,7 @@
         * [时间日期对象](ECMAScript/时间日期对象.md)
         * [面向对象编程](ECMAScript/面向对象编程.md)
         * [模块化编程](ECMAScript/模块化编程.md)
+        * [并行计算](ECMAScript/并行计算.md)
 
     <!-- * [TypeScript](TypeScript/README.md)
        

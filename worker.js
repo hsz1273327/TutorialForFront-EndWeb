@@ -1,30 +1,29 @@
 import process from 'process'
-import { workerData,parentPort } from 'worker_threads'
+import { parentPort, workerData } from 'worker_threads'
 
 const workerID = workerData.tid
+const sharedBuffer = workerData.sharedBuffer
+
+function fac (n) {
+    let result = n
+    while (n > 1) {
+        n -= 1
+        result = result * n
+    }
+    return result
+}
 
 console.log(`child worker ${ workerID } ok`)
 
-function sendmsg(){
-    console.log(`${workerID}: get message start`)
-    let counter = 0
-    let c = setInterval(()=>{
-        parentPort.postMessage(counter)
-        counter += 1
-    },1000)
-    setTimeout(()=>{
-        clearInterval(c)
-        process.exit()
-    },10000) 
-    
-}
-
 parentPort.on('message',
-(message)=>{
-    if (message==='start'){
-        sendmsg()
-    }else{
-        console.log(`${workerID}: unknown message`)
+    (message) => {
+        if (message === 'start') {
+            let answer = fac(workerID + 1)
+            let v1 = new Int32Array(sharedBuffer)
+            v1[ workerID ] = answer
+            process.exit()
+        } else {
+            console.log(`${ workerID }: unknown message`)
+        }
     }
-}
 )

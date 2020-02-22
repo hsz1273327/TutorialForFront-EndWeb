@@ -4,19 +4,41 @@ import {Worker,isMainThread} from 'worker_threads'
 if (isMainThread) {
   // 这会在工作线程实例中重新加载当前文件。
     console.log(`在主线程中`)
-    const worker1 = new Worker("./worker.js",{workerData:{tid:1}})
-    const worker2 = new Worker("./worker.js",{workerData:{tid:2}})
-
-    worker1.on("online",()=>worker1.postMessage("start"))
-    worker2.on("online",()=>worker2.postMessage("start"))
-
-    worker1.on("message",
-    (message)=>console.log(`get msg ${message} from worker1 `))
-    worker2.on("message",
-    (message)=>console.log(`get msg ${message} from worker2 `))
-
-    worker1.on("exit",()=>console.log(`worker1 exit`))
-    worker2.on("exit",()=>console.log(`worker2 exit`))
+    let sharedBuffer = new SharedArrayBuffer(16)
+    let workers = [0,1,2,3,4].map(
+        (i)=>new Worker("./worker.js",{workerData:{tid:i,sharedBuffer}})
+    )
+    let promises = workers.map(
+        (worker,index)=>{
+            worker.on(
+            "online",
+            ()=>worker.postMessage("start")
+            )
+            
+            let p = new Promise( 
+                (resolve, reject)=>{
+                    worker.on(
+                        "exit",
+                        ()=>{
+                            console.log(`worker ${index} exit`)
+                            resolve("done")
+                        }
+                    )
+                }
+            )
+            return p
+        }
+    )
+    Promise.all(promises).then(
+        data=>{
+            console.log(data)
+            let v1 = new Int32Array(sharedBuffer)
+            let result = Array.from(v1)
+            console.log(`get result ${result}`)
+        }
+    ).catch(
+        error=>console.error(error)
+    )
 
 } else {
   console.log('不在主线程中');

@@ -26,18 +26,17 @@
         * [模块化编程](ECMAScript/模块化编程.md)
         * [并行计算](ECMAScript/并行计算.md)
 
-    <!-- * [TypeScript](TypeScript/README.md)
-       
-        * [基本语法和代码结构](TypeScript/语法扩展/基本语法和代码结构.md)
-        * [变量与值与对象](ECMAScript/语法扩展/变量与值与对象.md)
-        * [从运算符到函数](ECMAScript/语法扩展/从运算符到函数.md)
-        * [迭代器与生成器](ECMAScript/语法扩展/迭代器与生成器.md)
-        * [基本容器](ECMAScript/语法扩展/基本容器.md)
-        * [异步编程](ECMAScript/语法扩展/异步编程.md)
-        * [面向对象编程](ECMAScript/语法扩展/面向对象编程.md)
-        * [模块化编程](ECMAScript/语法扩展/模块化编程.md)
-        * [特殊对象和特殊接口](ECMAScript/语法扩展/特殊对象和特殊接口.md)
+    * [TypeScript](TypeScript/README.md)
+        * [枚举](TypeScript/枚举.md)
+        * [Typescript与面向对象编程](TypeScript/Typescript与面向对象编程.md)
+        * [装饰器](TypeScript/装饰器.md)
+        * [类型系统](TypeScript/类型系统.md)
 
+
+    <!-- * [使用Javascript搭建后端服务](使用Javascript搭建后端服务/README.md)
+      * [http接口服务](使用Javascript搭建后端服务/http接口服务.md)
+      * [Websocket接口服务](使用Javascript搭建后端服务/Websocket接口服务.md)
+      * [GRpc接口服务](使用Javascript搭建后端服务/GRpc接口服务.md)
     * [web前端技术](web前端技术/README.md)
         * [前端概览](web前端技术/前端概览/README.md)
             * [前端应用页面规范](web前端技术/前端概览/前端应用页面规范/README.md)
@@ -80,8 +79,4 @@
             * [从后端同步数据](web前端技术/Vue/从后端同步数据.md)
             * [属性展示](web前端技术/Vue/属性展示.md)
             * [优化项目](web前端技术/Vue/优化项目.md)
-
-    * [使用Javascript搭建后端服务](使用Javascript搭建后端服务/README.md)
-      * [http接口服务](使用Javascript搭建后端服务/http接口服务.md)
-      * [Websocket接口服务](使用Javascript搭建后端服务/Websocket接口服务.md)
-      * [GRpc接口服务](使用Javascript搭建后端服务/GRpc接口服务.md) -->
+     -->

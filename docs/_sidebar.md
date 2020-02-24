@@ -16,6 +16,7 @@
         * [从运算符到函数](ECMAScript/从运算符到函数.md)
         * [迭代器与生成器](ECMAScript/迭代器与生成器.md)
         * [基本容器](ECMAScript/基本容器.md)
+        * [Json](ECMAScript/Json.md)
         * [Promise](ECMAScript/Promise.md)
         * [异步协程语法](ECMAScript/异步协程语法.md)
         * [异步编程](ECMAScript/异步编程.md)

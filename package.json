@@ -1,10 +1,11 @@
 {
-  "name": "module_dis",
+  "name": "module_dis_t",
   "version": "1.0.0",
   "description": "js演示工具集",
   "email":"hsz1273327@gmail.com",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files":["package.json","README.md","tsconfig.json","dist"],
   "scripts": {
     "start": "./node_modules/.bin/ts-node src/index.ts",
     "build": "./node_modules/.bin/tsc",

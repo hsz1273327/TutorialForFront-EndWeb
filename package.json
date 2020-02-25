@@ -1,13 +1,16 @@
 {
-  "name": "js-toolchain-exp",
+  "name": "module_dis",
   "version": "1.0.0",
   "description": "js演示工具集",
-  "main": "bin/index.js",
+  "email":"hsz1273327@gmail.com",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "start": "./node_modules/.bin/ts-node src/index.ts",
     "build": "./node_modules/.bin/tsc",
     "test": "./node_modules/.bin/nyc ./node_modules/.bin/mocha",
-    "doc": "./node_modules/.bin/esdoc"
+    "doc": "./node_modules/.bin/esdoc",
+    "release": "./node_modules/.bin/tsc && npm publish"
   },
   "repository": {
     "type": "git",
@@ -31,11 +34,11 @@
     "nyc": "^15.0.0",
     "source-map-support": "^0.5.16",
     "ts-node": "^8.6.2",
-    "typescript": "^3.7.5"
+    "mocha": "^7.0.1",
+    "typescript": "^3.7.5",
+    "@types/node": "^13.7.1"
   },
   "dependencies": {
-    "@types/node": "^13.7.1",
-    "mocha": "^7.0.1"
   },
   "mocha": {
     "extension": [

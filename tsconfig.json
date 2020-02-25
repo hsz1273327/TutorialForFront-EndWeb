@@ -1,19 +1,23 @@
 {
     "compilerOptions": {
         "module": "CommonJS",
-        "lib": ["DOM","ES2018"],
+        "lib": ["DOM","ES2018","ES2017","ES6"],
         "target": "ES5",
+        "declaration": true,
         "noImplicitAny": true,
         "removeComments": true,
         "preserveConstEnums": true,
         "outDir": "dist",
-        "sourceMap": true
+        "sourceMap": true,
+        "esModuleInterop": true,
+        "strict": true
     },
     "include": [
         "src/**/*"
     ],
     "exclude": [
         "node_modules",
-        "**/*.spec.ts"
+        "**/*.spec.ts",
+        "dist"
     ]
 }

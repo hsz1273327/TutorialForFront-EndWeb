@@ -8,6 +8,7 @@
         * [代码风格](node执行环境和工具链/代码风格.md)
         * [代码测试工具](node执行环境和工具链/代码测试工具.md)
         * [注释文档](node执行环境和工具链/注释文档.md)
+        * [项目发布](node执行环境和工具链/项目发布.md)
 
     * [ECMAScript](ECMAScript/README.md)
         * [基本语法和代码结构](ECMAScript/基本语法和代码结构.md)

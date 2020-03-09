@@ -18,7 +18,35 @@
       auto2top: true,
       alias: {
         '/.*/_sidebar.md': '/_sidebar.md'
-      }
+      },
+      pagination: {
+        previousText: '上一章节',
+        nextText: '下一章节',
+        crossChapter: true,
+        crossChapterText: true,
+      },
+      search: {
+      maxAge: 86400000, // 过期时间，单位毫秒，默认一天
+      paths: [], // or 'auto'
+      placeholder: 'Type to search',
+
+      // 支持本地化
+      placeholder: {
+        '/zh-cn/': '搜索',
+        '/': 'Type to search'
+      },
+
+      noData: 'No Results!',
+
+      // 支持本地化
+      noData: {
+        '/zh-cn/': '找不到结果',
+        '/': 'No Results'
+      },
+
+      // 搜索标题的最大程级, 1 - 6
+      depth: 2
+    }
     }
   </script>
   <!-- CDN files for docsify-katex -->
@@ -29,6 +57,7 @@
     href="//cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"
   />
   <!-- Put them above docsify.min.js -->
+  
   <script src="//cdn.jsdelivr.net/npm/docsify@latest/lib/docsify.min.js" async></script>
   <script src="//unpkg.com/prismjs/components/prism-typescript.min.js" async></script>
   <script src="//unpkg.com/prismjs/components/prism-javascript.min.js" async></script>
@@ -37,7 +66,7 @@
   <script src="//unpkg.com/prismjs/components/prism-sql.min.js" async></script>
   <script src="//unpkg.com/prismjs/components/prism-css.min.js" async></script>
   <script src="//unpkg.com/prismjs/components/prism-stylus.min.js" async></script>
-  prism-stylus.min.js
-  
+  <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
+  <script src="//unpkg.com/docsify/lib/plugins/search.js"></script>
 </body>
 </html>

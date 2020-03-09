@@ -2,9 +2,9 @@
 
 ## 关键帧(`@keyframes`)
 
-Stylus支持`@keyframes`规则，当编译的时候转换成`@-webkit-keyframes`：
+Stylus支持`@keyframes`规则,当编译的时候转换成`@-webkit-keyframes`：
 
-```
+```stylus
 @keyframes pulse
 0%
   background-color red
@@ -24,9 +24,9 @@ Stylus支持`@keyframes`规则，当编译的时候转换成`@-webkit-keyframes`
   -webkit-transform scale(1.0) rotate(0deg)
 ```
 
-生成为：
+生成css为：
 
-```
+```css
 @-webkit-keyframes pulse {
   0% {
   background-color: red;
@@ -54,11 +54,13 @@ Stylus支持`@keyframes`规则，当编译的时候转换成`@-webkit-keyframes`
 
 }
 ```
+
 ### 扩展
 
-使用@keyframes，通过vendors变量，会自动添加私有前缀(webkit moz official)。这意味着你可以子啊任意时候立即高效地做修改。
-考虑下面的例子：
-```
+使用`@keyframes`通过vendors变量会自动添加私有前缀(webkit moz official).这意味着你可以在任意时候立即高效地做修改.
+考虑下面的例子:
+
+```stylus
 @keyframes foo {
   from {
     color: black
@@ -68,8 +70,10 @@ Stylus支持`@keyframes`规则，当编译的时候转换成`@-webkit-keyframes`
   }
 }
 ```
-扩增两个默认前缀，官方解析：
-```
+
+扩增两个默认前缀,官方解析:
+
+```stylus
 @-moz-keyframes foo {
   0% {
     color: #000;
@@ -98,8 +102,10 @@ Stylus支持`@keyframes`规则，当编译的时候转换成`@-webkit-keyframes`
   }
 }
 ```
-如果我们只想有标准解析，很简单，修改vendors：
-```
+
+如果我们只想有标准解析,很简单,修改vendors:
+
+```stylus
 vendors = official
 
 @keyframes foo {
@@ -111,8 +117,10 @@ vendors = official
   }
 }
 ```
-生成为：
-```
+
+生成css为:
+
+```css
 @keyframes foo {
   0% {
     color: #000;
@@ -123,10 +131,12 @@ vendors = official
   }
 }
 ```
+
 ## 自定义字体(`@font-face`)
 
-`@font-face`跟其在CSS中作用表现一样，在后面简单地添加个块状属性即可，类似下面：
-```
+`@font-face`跟其在CSS中作用表现一样,在后面简单地添加个块状属性即可,类似下面:
+
+```stylus
 @font-face
   font-family Geo
   font-style normal
@@ -134,12 +144,11 @@ vendors = official
 
 .ingeo
   font-family Geo
-
 ```
 
-生成为：
+生成css为：
 
-```
+```css
 @font-face {
   font-family: Geo;
   font-style: normal;
@@ -151,16 +160,19 @@ vendors = official
 ```
 
 ## 媒体(`@media`)
-`@media`工作原理和在常规CSS中一样，但是，要使用Stylus的块状符号。
 
-```
+`@media`工作原理和在常规CSS中一样,但是要使用Stylus的块状符号.
+
+```stylus
 @media print
   #header
   #footer
     display none
 ```
-生成为：
-```
+
+生成css为:
+
+```css
 @media print {
   #header,
   #footer {
@@ -171,14 +183,19 @@ vendors = official
 
 ## CSS字面量(`@css`)
 
-不管什么原因，如果遇到Stylus搞不定的特殊需求，你可以使用@css使其作为CSS字面量解决之。
-```
+不管什么原因,如果遇到Stylus搞不定的特殊需求,你可以使用`@css`使其作为CSS字面量解决之.
+
+```stylus
 @css {
   body {
     font: 14px;
   }
 }
-编译为：
+```
+
+编译css为:
+
+```css
 body {
   font: 14px;
 }

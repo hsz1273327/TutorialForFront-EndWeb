@@ -1,6 +1,9 @@
 # JavaScript API
-require模块，用给定的Stylus代码字符串调用render()，以及（可选的）optional对象。
+
+require模块,用给定的Stylus代码字符串调用render()，以及（可选的）optional对象。
 传递filename参数可以利用Stylus框架提供更好的错误报告。
+
+
 ```
 var stylus = require('stylus');
 
@@ -42,6 +45,7 @@ stylus(str)
 ```
 
 ## `.import(path)`
+
 推迟给定path导入，直到计算被执行。下面这个例子基本上跟在Stylus片段中执行@import 'mixins/vendor'一样：
 
 ```

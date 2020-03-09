@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd";>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../node_modules/babel-core/browser.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js "></script>
+    <title>事件触发</title>
+</head>
+<body>
+    <!-- HTML结构 -->
+    <div id="test-jquery">
+        <p id="result" >JavaScript</p>
+        <button id="button">change style</button>
+    </div>
+    <script type="text/babel">
+    var clickEvent = (jqobj,targetobj)=>{
+        jqobj.click(()=>{
+                targetobj.css("color","red").css("background-color","#ffd351")
+            })
+    }
+    var point = $("#button")
+    var target = $("#result")
+    clickEvent(point,target)
+    </script>
+</body>
+</html>

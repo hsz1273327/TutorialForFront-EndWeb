@@ -1,17 +1,25 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd";>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>helloworld</title>
-        <link href="style.css" rel="stylesheet" type="text/css" />
-        <script src="index.js" async="async"></script>
-    </head>
-    <body>
-    <main id="root">
-        <header>
-            <h1>我的第一个标题</h1>
-            <p>我的第一个段落。</p>
-        </header>
-    </main>
-    </body>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <title>事件触发</title>
+</head>
+<body>
+    <!-- HTML结构 -->
+    <div id="test-jquery">
+        <p id="result" >JavaScript</p>
+        <button id="button">change style</button>
+    </div>
+    <script>
+    var clickEvent = (jqobj,targetobj)=>{
+        jqobj.click(()=>{
+                targetobj.css("color","red").css("background-color","#ffd351")
+            })
+    }
+    var point = $("#button")
+    var target = $("#result")
+    clickEvent(point,target)
+    </script>
+</body>
 </html>

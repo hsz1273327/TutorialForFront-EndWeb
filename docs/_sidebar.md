@@ -1,6 +1,6 @@
 * [回到博客](http://blog.hszofficial.site/)
 
-* 目录
+* [目录](README.md)
     * [node执行环境和工具链](node执行环境和工具链/README.md)
         * [Babel编译器](node执行环境和工具链/Babel编译器.md)
         * [TypeScript编译器](node执行环境和工具链/TypeScript编译器.md)

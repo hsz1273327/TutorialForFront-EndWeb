@@ -3,23 +3,13 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
-    <title>事件触发</title>
+    <title>animation</title>
 </head>
 <body>
     <!-- HTML结构 -->
     <div id="test-jquery">
-        <p id="result" >JavaScript</p>
-        <button id="button">change style</button>
+        <img id="img" src="source/img/jftw.jpg" alt="解放台湾!"/>
     </div>
-    <script>
-    var clickEvent = (jqobj,targetobj)=>{
-        jqobj.click(()=>{
-                targetobj.css("color","red").css("background-color","#ffd351")
-            })
-    }
-    var point = $("#button")
-    var target = $("#result")
-    clickEvent(point,target)
-    </script>
+    <script src="animation.js"></script>
 </body>
 </html>

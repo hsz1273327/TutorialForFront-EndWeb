@@ -3,14 +3,36 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>按钮</title>
+    <title>表单</title>
+    <script src="https://cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"> </script>
     <script src="index.js" async="async"></script>
 </head>
 
 <body>
-    <main id="root">
-        <button id="try" type="button"><img src="heart.png"> </button>
-    </main>
+    <form id="test_form">
+        <fieldset>
+            <legend>Person Info</legend>
+            <p>Gender:</p>
+            <input type="radio" name="gender" value="male" checked>Male
+            <br>
+            <input type="radio" name="gender" value="female">Female
+            <br>
+            <p>First name:<input type="text" name="firstname" minlength=2 maxlength=10></p>
+            <br>
+            <p>Last name:<input type="text" name="lastname" minlength=2 maxlength=10></p>
+            <br>
+            <p>Birthday:<input type="date" name=birthday min="1960-01-01" max="2019-02-22"></p>
+            <br>
+            <p>Email:<input type="email" name=email></p>
+            <br>
+            <p>Tel:<input type="tel" name=tel></p>
+            <br>
+            <p>Home Page:<input type="url" name=homepage></p>
+            <br>
+            <input type="reset" value="Reset" accesskey="r"/>
+            <input type="submit" value="Submit" accesskey="s"/>
+        </fieldset>
+    </form>
 </body>
 
 </html>

@@ -1,15 +1,58 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>元数据获取</title>
-        <link href="style.css" rel="stylesheet" type="text/css" />
-        <script src="index.js" async="async"></script>
-    </head>
-    <body>
-    <main id="root">
-        <p>点击这个按钮，获得您的坐标：</p>
-        <button id="try">试一下</button>
+
+<head>
+    <meta charset="UTF-8">
+    <title>展示HTML 5结构标签</title>
+    <link href="main.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <header>header</header>
+    <nav>
+        <ul class="nav">
+            <li>nav</li>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+    <main>
+        <article>
+            <header>
+                <hgroup>
+                    <h1>展示HTML 5结构标签</h1>
+                    <h2>HTML5的语义化</h2>
+                    <time datetime="2019-02-12">2019.02.12</time>
+                </hgroup>
+            </header>
+            <section class="bord-sample1">
+                <h3>这里是section1标题...</h3>
+                <p>section1 用于展示边框效果</p>
+            </section>
+            <section class="bord-sample2">
+                <h3>这里是section2标题...</h3>
+                <p>section2 用于展示使用图片的边框效果</p>
+            </section>
+            <section class="bord-sample3">
+                <h3>这里是section3标题...</h3>
+                <p>section3 用于展示渐变色边框效果</p>
+            </section>
+            <footer>article-footer</footer>
+
+        </article>
+        <aside>
+            <section>
+                <ul>
+                    <h4>aside</h4>
+                    <li><a href="#">Design</a> (23)</li>
+                    <li><a href="#">Design </a>(18)</li>
+                </ul>
+            </section>
+        </aside>
     </main>
-    </body>
+    <footer>footer</footer>
+    </main>
+</body>
+
 </html>

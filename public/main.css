@@ -1,0 +1,59 @@
+@charset "UTF-8";
+/* CSS Document */
+
+body {
+    display: -webkit-flex;
+    display: flex;
+    /* -webkit-align-items: center;
+    align-items: center; */
+    -webkit-flex-direction: column;
+    flex-direction: column;
+
+}
+
+body .nav {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-align-items: center;
+    align-items: center;
+    justify-content: space-around;
+    -webkit-justify-content: space-around;
+    margin: auto;
+}
+
+header,
+main,
+footer {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    margin: auto;
+}
+
+section {
+    margin: auto;
+}
+
+.bord-sample1 {
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 10% 20% 30%/ 40% 50%;
+    box-shadow: 2px 3px red;
+    -webkit-box-shadow: 5px 6px red;
+}
+
+.bord-sample2 {
+    border: 30px solid;
+    border-image-source: url("border-img.png");
+    border-image-slice: 30;
+    border-image-repeat: stretch;
+}
+
+.bord-sample3 {
+    border: 30px solid;
+    border-image-source: linear-gradient(red, yellow);
+    border-image-slice: 10;
+}

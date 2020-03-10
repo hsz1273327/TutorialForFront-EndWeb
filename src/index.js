@@ -1,30 +1,42 @@
-let listFormRender = {
-    list: document.getElementById("container"),
-    target_list: document.getElementById("target_container"),
-    bindEvent: function () {
-        this.list.ondragstart = this.onDragStart
-        this.target_list.ondrop = this.onDrop
-        this.target_list.ondragover = this.onDragover
-        console.log("bind")
-    },
-    onDragStart: function (event) {
-        event.dataTransfer.setData("TS", event.target.id)
-    },
-    onDrop: function (event) {
-        event.preventDefault()
-        let data = event.dataTransfer.getData("TS")
-        let item = document.getElementById(data)
-        event.target.appendChild()
-        item.setAttribute("draggable",false)
+const title = "test notification"
+const options = {
+    body: "test body",
+    tag: "test tag",
+    icon: "img/xkfy.png"
+}
 
-    },
-    onDragover: function (event) {
-        event.preventDefault()
+const showNotification = (callback, title, options) => {
+    switch (Notification.permission) {
+        case "granted":
+            {
+                console.log(Notification.permission)
+                callback(title, options)
+            }
+            break
+        default:
+            alert("请先打开浏览器的通知权限")
     }
 }
 
+const showNotificationCallback = (title, options) => {
+    let n = new Notification(title, options)
+    n.onclick = () => {
+        alert("on click")
+    }
+    n.onerror = () => {
+        alert("on error")
+    }
+    n.onclose = () => {
+        alert("on close")
+    }
+    n.onshow = () => {
+        alert("on show")
+    }
+}
+
+
 let main = () => {
-    console.log("main")
-    listFormRender.bindEvent()
+    let button = document.querySelector("#button")
+    button.onclick = () => showNotification(showNotificationCallback, title, options)
 }
 main()

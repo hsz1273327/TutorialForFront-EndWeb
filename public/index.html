@@ -3,36 +3,22 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>表单</title>
-    <script src="https://cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"> </script>
+    <title>拖拽</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
     <script src="index.js" async="async"></script>
 </head>
-
 <body>
-    <form id="test_form">
-        <fieldset>
-            <legend>Person Info</legend>
-            <p>Gender:</p>
-            <input type="radio" name="gender" value="male" checked>Male
-            <br>
-            <input type="radio" name="gender" value="female">Female
-            <br>
-            <p>First name:<input type="text" name="firstname" minlength=2 maxlength=10></p>
-            <br>
-            <p>Last name:<input type="text" name="lastname" minlength=2 maxlength=10></p>
-            <br>
-            <p>Birthday:<input type="date" name=birthday min="1960-01-01" max="2019-02-22"></p>
-            <br>
-            <p>Email:<input type="email" name=email></p>
-            <br>
-            <p>Tel:<input type="tel" name=tel></p>
-            <br>
-            <p>Home Page:<input type="url" name=homepage></p>
-            <br>
-            <input type="reset" value="Reset" accesskey="r"/>
-            <input type="submit" value="Submit" accesskey="s"/>
-        </fieldset>
-    </form>
+    <div>
+        <ul id="container" class="border">
+            <p>可选项:</p>
+            <li id="person1" class="border" draggable="true">person1</li>
+            <li id="person2" class="border" draggable="true">person2</li>
+            <li id="person3" class="border" draggable="true">person3</li>
+            <li id="person4" class="border" draggable="true">person4</li>
+        </ul>
+        <ul id="target_container" class="border">  
+            <p>已选项:</p>
+        </ul>
+    </div>
 </body>
-
 </html>

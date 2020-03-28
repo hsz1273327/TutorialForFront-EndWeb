@@ -48,7 +48,7 @@
 + 使用js配合与服务端的通信规范或获取本地资源接口获取用户需要的资源内容.
 + 将获取到的资源内容在本地处理,之后在DOM中渲染出来展示.
 
-本文的例子是一个前端项目的最简单样板[浏览器环境-helloworld[](),](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-helloworld)实现了抓取github最新注册的用户的用户名,并展示出来的功能.有兴趣的可以看下.
+本文的例子是一个前端项目的最简单样板[浏览器环境-helloworld](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-helloworld)实现了抓取github最新注册的用户的用户名,并展示出来的功能.有兴趣的可以看下.
 
 本例子使用html中的fetch接口获取github公开restful api中需要的数据.
 

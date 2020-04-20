@@ -1,8 +1,8 @@
-# 浏览器环境-浏览器与页面渲染-webpack-image_compression
+# 浏览器环境-浏览器与页面渲染-webpack-html_template
 
 ## 项目主旨
 
-演示使用webpack打包图片资源并压缩让js可以调用以优化前端性能
+演示使用webpack打包html模板
 
 ## 用法
 

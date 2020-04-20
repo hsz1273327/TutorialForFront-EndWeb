@@ -27,7 +27,7 @@ webpack本体安装很简单:
 npm install --save-dev webpack webpack-cli
 ```
 
-这个[最简单的webpack项目](浏览器环境-浏览器与页面渲染-webpack-helloworld)源码上看包括:
+这个[最简单的webpack项目](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-helloworld)源码上看包括:
 
 + 一个用于渲染的html文件(`public/index.html`)
 
@@ -123,6 +123,7 @@ Loaders需要单独安装并且需要在webpack.config.js中的`modules`字段�
 
 
 修改后的webpack配置文件`webpack.config.js`如下:
+
 ```js
 const path = require('path')
 
@@ -147,7 +148,7 @@ module.exports = {
 }
 ```
 
-在代码[babel_helloworld]()中我们修改上面的js代码为es6写法
+在代码[babel_helloworld](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-babel_helloworld)中我们修改上面的js代码为es6写法
 
 + 入口文件(`src/index.js`)
     ```js
@@ -167,10 +168,11 @@ module.exports = {
 
 ## 为导入css
 
-另一种资源就是css文件.我们来为项目设置下样式,新的代码在`C3-E1`中.
+另一种资源就是css文件.我们来为项目设置下样式,新的代码在[css_helloworld]()中.
 
 
 要加载css文件需要使用`css-loader`和`style-loader`,二者处理的任务不同.
+
 + `css-loader`使你能够使用类似`@import` 和`url(...)`的方法实现`require()`的功能;
 + `style-loader`将所有的计算后的样式加入页面中.
 

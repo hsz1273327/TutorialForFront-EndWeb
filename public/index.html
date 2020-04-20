@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>桌面通知</title>
-        <link href="style.css" rel="stylesheet" type="text/css" />
-        <script src="index.js" async="async"></script>
-    </head>
-    <body>
-    <main id="root">
-        <p>点击这个按钮查看是否有notification权限</p>
-        <button id="check">查一下</button>
-        <p>点击这个按钮申请notification权限</p>
-        <button id="ask">申请权限</button>
-        <p>点击这个按钮发送推送</p>
-        <button id="try">试一下</button>
+<head>
+    <meta charset="UTF-8">
+    <title>例子:读写文件系统中的图片</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="index.js" async="async"></script>
+</head>
+
+<body>
+    <main>
+        <input type="file" id="files" name="files[]" multiple />
+        <div id="output"></div>
+        <p>
+            Drop picture here
+        </p>
+        <div id="drop_zone"></div>
+        <button id="abortbt">Cancel read</button>
+        <button id="download">download picture</button>
+        <div id="progress_bar">
+            <div class="percent">0%</div>
+        </div>
     </main>
-    </body>
+
+
+
+</body>
+
 </html>

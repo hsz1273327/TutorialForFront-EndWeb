@@ -257,7 +257,7 @@ document.querySelector("#root").appendChild(greeter())
 
 ### 使用stylus定义css
 
-本节代码在[stylus_helloworld]()分支中.
+本节代码在[stylus_helloworld](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-stylus_helloworld)分支中.
 
 就像babel之于js,我更愿意使用stylus来定义样式,这还需要安装如下依赖:
 

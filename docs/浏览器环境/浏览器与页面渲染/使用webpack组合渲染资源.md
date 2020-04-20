@@ -27,7 +27,7 @@ webpack本体安装很简单:
 npm install --save-dev webpack webpack-cli
 ```
 
-这个[最简单的webpack项目]()源码上看包括:
+这个[最简单的webpack项目](浏览器环境-浏览器与页面渲染-webpack-helloworld)源码上看包括:
 
 + 一个用于渲染的html文件(`public/index.html`)
 
@@ -68,17 +68,21 @@ npm install --save-dev webpack webpack-cli
     ```
 
 为了可以让webpack正确的打包项目,同时还要为webpack写一个配置文件`webpack.config.js`:
-```js
-const path = require('path')
 
-module.exports = {
-    entry: './src/index.js',
-    output: {
-        path: __dirname + '/public',
-        filename: 'bundle.js'
++ `webpack.config.js`
+
+    ```js
+    const path = require('path')
+
+    module.exports = {
+        entry: './src/index.js',
+        output: {
+            path: __dirname + '/public',
+            filename: 'bundle.js'
+        }
     }
-}
-```
+    ```
+
 这个配置指明了入口函数和编译后项目的输出位置以及输出的文件.
 之后我们只要执行命令`./node_modules/.bin/webpack --config webpack.config.js`即可,为方便起见我们将这条命令放到`package.json`的`scripts`中.
 
@@ -106,7 +110,7 @@ npm install --save-dev babel-core babel-preset-env babel-loader@7
 
 `babel-loader`是一个加载器.
 
-Loaders是webpack提供的核心功能之一了.通过使用不同的loader,webpack有能力调用外部的脚本或工具实现对不同格式的文件的处理.比如说分析转换scss为css或者把下一代的JS文件（ES6，ES7)转换为现代浏览器兼容的JS文件.
+Loaders是webpack提供的核心功能之一了.通过使用不同的loader,webpack有能力调用外部的脚本或工具实现对不同格式的文件的处理.比如说分析转换scss为css或者把下一代的JS文件(ES6，ES7)转换为现代浏览器兼容的JS文件.
 
 Loaders需要单独安装并且需要在webpack.config.js中的`modules`字段下的`rules`字段中进行配置.这是一个由对象组成的array.每个对象描述一组加载规则,包括以下几方面:
 
@@ -143,7 +147,7 @@ module.exports = {
 }
 ```
 
-在代码C2中我们修改C1中的js代码为es6写法
+在代码[babel_helloworld]()中我们修改上面的js代码为es6写法
 
 + 入口文件(`src/index.js`)
     ```js

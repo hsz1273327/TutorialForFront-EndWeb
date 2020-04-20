@@ -365,7 +365,7 @@ npm install --save-dev url-loader file-loader
 + `url-loader`用于导入图片,如果图片小与限制就会转化为base64码
 + `file-loader`用于在图片过大时从文件系统中找到文件
 
-
+本部分代码在[image_loader](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-image_loader)分支
 修改配置文件:
 
 ```js
@@ -436,6 +436,7 @@ export default function(){
 ```
 
 由于我们的图片有36k大,执行完成后会生成一个文件名由16进制字符串组成的jpg文件.如果我们希望图片更有可读性,可以修改配置文件中`url-loader`的部分:
+
 ```js
 {
     loader: 'url-loader',
@@ -448,7 +449,7 @@ export default function(){
 
 ### 对图片进行压缩
 
-本节的代码在C4-E2.
+本节的代码在[image_compression]()分支.
 
 我们往往希望加快前端项目的加载速度,压缩图片是最常见最简单暴力的方式,可以使用`image-webpack-loader`来压缩图片
 

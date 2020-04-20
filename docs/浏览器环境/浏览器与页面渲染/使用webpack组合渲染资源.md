@@ -168,7 +168,7 @@ module.exports = {
 
 ## 为导入css
 
-另一种资源就是css文件.我们来为项目设置下样式,新的代码在[css_helloworld]()中.
+另一种资源就是css文件.我们来为项目设置下样式,新的代码在[css_helloworld](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-css_helloworld)中.
 
 
 要加载css文件需要使用`css-loader`和`style-loader`,二者处理的任务不同.
@@ -257,7 +257,7 @@ document.querySelector("#root").appendChild(greeter())
 
 ### 使用stylus定义css
 
-本节代码在C3-E2中.
+本节代码在[stylus_helloworld]()分支中.
 
 就像babel之于js,我更愿意使用stylus来定义样式,这还需要安装如下依赖:
 
@@ -314,7 +314,8 @@ module.exports = {
 ```
 
 我们删掉`src/main.css`后新增一个stylus源码文件`main.styl`
-```
+
+```stylus
 html 
     box-sizing border-box
     -ms-text-size-adjust 100%

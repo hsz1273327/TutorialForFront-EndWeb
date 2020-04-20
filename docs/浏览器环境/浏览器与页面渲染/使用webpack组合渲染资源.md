@@ -529,7 +529,7 @@ module.exports = {
 
 上面的所有例子中我们都需要有一个html文件来加载js.那我们可以不可以将这个html文件也作为组件呢,这样我们就不再需要预先定义public文件夹了.
 
-本节的例子代码在[html_template]()分支
+本节的例子代码在[html_template](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-html_template)分支
 
 
 我们可以使用`HtmlWebpackPlugin`,这是一个webpack插件,其作用是依据一个简单的`index.html`模板，生成一个自动引用你打包后的JS文件的新index.html.这在每次生成的js文件名称不同时非常有用(比如添加了hash值).
@@ -586,10 +586,9 @@ Webpack有很多内置插件,同时也有很多第三方插件,可以让我们�
 
 使用插件的方法如上面的例子,我们需要通过npm安装它,然后要做的就是在webpack配置中的`plugins`关键字部分添加该插件的一个实例(plugins是一个数组)
 
-
 ## 为前端项目配置调试工具
 
-本部分代码在C6.
+本部分代码在[other_tools]()分支.
 
 上面的内容其实已经可以直接使用了,但以上的配置并不方便调试.为了方便开发时进行调试,我们可以再多做下面几件事
 

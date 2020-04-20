@@ -36,12 +36,25 @@ module.exports = {
             {
                 test: /\.(png|jpg|jpeg|gif|eot|ttf|woff|woff2|svg|svgz)$/i,
                 use: [{
-                    loader: 'url-loader',
-                    options: {
-                        limit: 10000,
-                        name: '[path][name].[ext]?[hash:6]!./dir/file.png'
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10000,
+                            name: '[path][name].[ext]?[hash:6]!./dir/file.png'
+                        }
+                    },
+                    {
+                        loader: 'image-webpack-loader',
+                        query: {
+                            progressive: true,
+                            optimizationLevel: 7,
+                            interlaced: false,
+                            pngquant: {
+                                quality: '65-90',
+                                speed: 4
+                            }
+                        }
                     }
-                }]
+                ]
             }
         ]
     }

@@ -457,6 +457,8 @@ export default function(){
 npm install --save-dev image-webpack-loader
 ```
 
+需要注意`image-webpack-loader`的安装依赖`autoconf`,`automake`,`libtool`,`nasm,`这些在linux/mac下安装十分方便但在windows下则很不好装,因此建议windows下就别用这个插件做图片压缩了.
+
 修改配置文件:
 
 ```js

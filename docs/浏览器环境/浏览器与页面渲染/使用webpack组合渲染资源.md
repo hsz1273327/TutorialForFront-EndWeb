@@ -449,7 +449,7 @@ export default function(){
 
 ### 对图片进行压缩
 
-本节的代码在[image_compression]()分支.
+本节的代码在[image_compression](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-image_compression)分支.
 
 我们往往希望加快前端项目的加载速度,压缩图片是最常见最简单暴力的方式,可以使用`image-webpack-loader`来压缩图片
 
@@ -527,13 +527,15 @@ module.exports = {
 
 ## 将html模板作为组件
 
-本节的例子为C5
+上面的所有例子中我们都需要有一个html文件来加载js.那我们可以不可以将这个html文件也作为组件呢,这样我们就不再需要预先定义public文件夹了.
 
-上面的所有例子中我们都需要有一个html文件来加载js.那我们可以不可以将这个html文件也作为组件呢,这样我们就不再需要预先定义public文件夹了
+本节的例子代码在[html_template]()分支
+
 
 我们可以使用`HtmlWebpackPlugin`,这是一个webpack插件,其作用是依据一个简单的`index.html`模板，生成一个自动引用你打包后的JS文件的新index.html.这在每次生成的js文件名称不同时非常有用(比如添加了hash值).
 
 安装:
+
 ```shell
 npm install --save-dev html-webpack-plugin
 ```

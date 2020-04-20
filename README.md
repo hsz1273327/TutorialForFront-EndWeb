@@ -1,8 +1,8 @@
-# 浏览器环境-浏览器与页面渲染-webpack-helloworld
+# 浏览器环境-浏览器与页面渲染-webpack-babel_helloworld
 
 ## 项目主旨
 
-演示使用webpack打包前端资源
+演示使用webpack打包es6以上语法的js文件
 
 ## 用法
 

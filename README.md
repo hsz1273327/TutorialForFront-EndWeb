@@ -1,8 +1,8 @@
-# 浏览器环境-浏览器与页面渲染-webpack-css_helloworld
+# 浏览器环境-浏览器与页面渲染-webpack-image_loadewr
 
 ## 项目主旨
 
-演示使用webpack打包css资源让js可以调用
+演示使用webpack打包图片资源让js可以调用
 
 ## 用法
 

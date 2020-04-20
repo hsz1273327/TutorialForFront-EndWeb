@@ -7,10 +7,9 @@ module.exports = {
         filename: 'bundle.js'
     },
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.js$/,
-                use:{
+                use: {
                     loader: 'babel-loader'
                 },
                 exclude: path.resolve(__dirname, 'node_modules'),
@@ -18,25 +17,31 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: [
-                    {
-                        loader: "style-loader"
-                    }, {
-                        loader: "css-loader"
-                    }
-                ]
+                use: [{
+                    loader: "style-loader"
+                }, {
+                    loader: "css-loader"
+                }]
             },
             {
                 test: /\.styl$/,
-                use: [
-                    {
-                        loader: "style-loader"
-                    }, {
-                        loader: "css-loader"
-                    },{
-                        loader: "stylus-loader"
+                use: [{
+                    loader: "style-loader"
+                }, {
+                    loader: "css-loader"
+                }, {
+                    loader: "stylus-loader"
+                }]
+            },
+            {
+                test: /\.(png|jpg|jpeg|gif|eot|ttf|woff|woff2|svg|svgz)$/i,
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        limit: 10000,
+                        name: '[path][name].[ext]?[hash:6]!./dir/file.png'
                     }
-                ]
+                }]
             }
         ]
     }

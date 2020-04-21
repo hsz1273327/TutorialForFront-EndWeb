@@ -1,8 +1,8 @@
-# 浏览器环境-浏览器与页面渲染-webpack-html_template
+# 浏览器环境-浏览器与页面渲染-webpack-other_tools
 
 ## 项目主旨
 
-演示使用webpack打包html模板
+演示使用webpack相关的其他工具
 
 ## 用法
 

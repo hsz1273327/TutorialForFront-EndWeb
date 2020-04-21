@@ -1,5 +1,5 @@
 {
-  "name": "html_template",
+  "name": "other_tools",
   "version": "0.0.1",
   "description": "simple tools",
   "author": "hsz12",
@@ -18,6 +18,7 @@
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
     "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.5.2",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.2.0",
@@ -27,7 +28,8 @@
     "stylus-loader": "^3.0.2",
     "url-loader": "^4.1.0",
     "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {}
 }

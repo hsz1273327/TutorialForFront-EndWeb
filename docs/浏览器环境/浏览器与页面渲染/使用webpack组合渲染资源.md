@@ -88,23 +88,19 @@ npm install --save-dev webpack webpack-cli
 
 ## babel支持
 
-babel使用`babel-loader`实现加载,但个人测试最新的`babel-loader`必须搭配`@babel/core`和`@babel/preset-env`使用,但似乎目前还有一些bug,我使用这个搭配的时候并不成功.作为替代可以使用`babel-loader@7`来强制安装支持`babel-core`和`babel-preset-env`的版本.
+babel使用`babel-loader`实现加载,`babel-loader`必须搭配`@babel/core`和`@babel/preset-env`使用.
 
 ```shell
-npm install --save-dev babel-core babel-preset-env babel-loader@7
+npm install --save-dev @babel/core @babel/preset-env babel-loader
 ```
 
 同时不要忘记在package.json中和node环境下一样加上babel的配置:
 
 ```json
 {
-    "babel": {
-        "presets": [
-            [
-                "env"
-            ]
-        ]
-    },
+    "babel":{
+        "presets": ["@babel/env"]
+     }
 }
 ```
 

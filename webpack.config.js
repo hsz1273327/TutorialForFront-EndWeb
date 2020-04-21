@@ -1,7 +1,9 @@
 const path = require('path')
-const webpack = require('webpack');
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CleanWebpackPlugin = require("clean-webpack-plugin")
+const { CleanWebpackPlugin }= require("clean-webpack-plugin")
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
     entry: './src/index.js',
@@ -27,21 +29,17 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: [{
-                    loader: "style-loader"
-                }, {
-                    loader: "css-loader"
-                }]
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: ["css-loader"]
+                })
             },
             {
                 test: /\.styl$/,
-                use: [{
-                    loader: "style-loader"
-                }, {
-                    loader: "css-loader"
-                }, {
-                    loader: "stylus-loader"
-                }]
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: ["css-loader", "stylus-loader"]
+                })
             },
             {
                 test: /\.(png|jpg|jpeg|gif|eot|ttf|woff|woff2|svg|svgz)$/i,
@@ -77,6 +75,13 @@ module.exports = {
             root: __dirname,
             verbose: true,
             dry: false
-        })
-    ]
+        }),
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        new ExtractTextPlugin("style.css")
+    ],
+    optimization: {
+        minimizer: [
+            new UglifyJSPlugin(),
+        ]
+    }
 }

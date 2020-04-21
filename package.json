@@ -6,9 +6,7 @@
   "license": "MIT",
   "babel": {
     "presets": [
-      [
-        "env"
-      ]
+      "@babel/env"
     ]
   },
   "scripts": {
@@ -17,17 +15,17 @@
     "test": "./node_modules/.bin/nyc --reporter=text ./node_modules/.bin/mocha --require babel-polyfill --require babel-register"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-preset-env": "^1.7.0",
-    "css-loader": "^2.1.0",
-    "file-loader": "^3.0.1",
-    "image-webpack-loader": "^4.6.0",
-    "style-loader": "^0.23.1",
-    "stylus": "^0.54.5",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.5.2",
+    "file-loader": "^6.0.0",
+    "image-webpack-loader": "^6.0.0",
+    "style-loader": "^1.1.4",
+    "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
-    "url-loader": "^1.1.2",
-    "webpack": "^4.28.3",
-    "webpack-cli": "^3.2.1"
+    "url-loader": "^4.1.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
   }
 }

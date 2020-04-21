@@ -6,9 +6,7 @@
   "license": "MIT",
   "babel": {
     "presets": [
-      [
-        "env"
-      ]
+      "@babel/env"
     ]
   },
   "scripts": {
@@ -17,9 +15,9 @@
     "test": "./node_modules/.bin/nyc --reporter=text ./node_modules/.bin/mocha --require babel-polyfill --require babel-register"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
     "babel-loader": "^8.1.0",
-    "babel-preset-env": "^1.7.0",
     "css-loader": "^3.5.2",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.2.0",

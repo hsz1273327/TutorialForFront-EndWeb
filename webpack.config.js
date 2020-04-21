@@ -1,11 +1,20 @@
 const path = require('path')
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CleanWebpackPlugin = require("clean-webpack-plugin")
 
 module.exports = {
     entry: './src/index.js',
     output: {
-        path: __dirname + '/public',
-        filename: 'bundle.js'
+        path: __dirname + '/build',
+        filename: 'bundle-[hash].js'
+    },
+    devtool: 'eval-source-map',
+    devServer: {
+        contentBase: "./build", //本地服务器所加载的页面所在的目录
+        historyApiFallback: true, //不跳转
+        inline: true,
+        hot: true
     },
     module: {
         rules: [{
@@ -59,9 +68,15 @@ module.exports = {
             }
         ]
     },
-    plugins:[
+    plugins: [
         new HtmlWebpackPlugin({
             template: __dirname + "/src/index.tmpl.html" //new 一个这个插件的实例，并传入相关的参数
+        }),
+        new webpack.HotModuleReplacementPlugin(), //热加载插件
+        new CleanWebpackPlugin('build/*.*', {
+            root: __dirname,
+            verbose: true,
+            dry: false
         })
     ]
 }

@@ -798,7 +798,7 @@ module.exports = {
 
 #### 编译环境隔离
 
-本部分的代码在[]()分支.
+本部分的代码在[compiling_env](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2-webpack-compiling_env)分支.
   
 在最开始的时候我们就看到webpack需要指定一个config因此针对不同环境我们可以配置不同配置文件.
 
@@ -817,16 +817,16 @@ npm install --save-dev webpack-merge
 const path = require('path')
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CleanWebpackPlugin = require("clean-webpack-plugin")
+const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 
 module.exports = {
     entry: path.resolve(__dirname, '../src/index.js'),
     output: {
-        path: path.resolve(__dirname, '../build'),
+        path: path.resolve(__dirname, '../public'),
         filename: 'bundle-[hash].js'
     },
     devServer: {
-        contentBase: path.resolve(__dirname, '../build'), //本地服务器所加载的页面所在的目录
+        contentBase: path.resolve(__dirname, '../public'), //本地服务器所加载的页面所在的目录
         historyApiFallback: true, //不跳转
         inline: true,
         hot: true
@@ -870,8 +870,7 @@ module.exports = {
             template: path.resolve(__dirname, '../src/index.tmpl.html') //new 一个这个插件的实例，并传入相关的参数
         }),
         new webpack.HotModuleReplacementPlugin(), //热加载插件
-        new CleanWebpackPlugin('build/*.*', {
-            root: path.resolve(__dirname, ".."),
+        new CleanWebpackPlugin({
             verbose: true,
             dry: false
         })
@@ -884,6 +883,7 @@ module.exports = {
 + `webpack.config.dev.js`
 
 开发环境的配置文件
+
 ```js
 const merge = require('webpack-merge')
 const base = require('./webpack.config.base.js')
@@ -914,6 +914,7 @@ module.exports = merge(base,{
     }
 })
 ```
+
 开发环境我们并不需要将js和css分离,因此只用使用最简单的配置方式.
 
 + `webpack.config.test.js`
@@ -1005,7 +1006,7 @@ module.exports = merge(base,{
 
 #### 源码环境隔离
 
-本部分的代码在C7-E3.
+本部分的代码在[quarantine_env]()分支.
 
 在`env/conf`文件夹下我们创建3个json文件来设置不同环境下源码中使用的配置量
 

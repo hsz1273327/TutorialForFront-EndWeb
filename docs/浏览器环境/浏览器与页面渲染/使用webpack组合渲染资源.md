@@ -1006,7 +1006,7 @@ module.exports = merge(base,{
 
 #### 源码环境隔离
 
-本部分的代码在[quarantine_env]()分支.
+本部分的代码在[quarantine_env](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-quarantine_env)分支.
 
 在`env/conf`文件夹下我们创建3个json文件来设置不同环境下源码中使用的配置量
 

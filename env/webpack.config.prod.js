@@ -3,6 +3,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const merge = require('webpack-merge')
 const base = require('./webpack.config.base.js')
+const env = require("./conf/prod.json")
 
 module.exports = merge(base,{
     module: {
@@ -25,7 +26,12 @@ module.exports = merge(base,{
     },
     plugins: [
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new ExtractTextPlugin("style.css")
+        new ExtractTextPlugin("style.css"),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify(env)
+            }
+        })
     ],
     optimization: {
         minimizer: [

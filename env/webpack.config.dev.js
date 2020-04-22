@@ -1,10 +1,13 @@
+const webpack = require('webpack')
 const merge = require('webpack-merge')
 const base = require('./webpack.config.base.js')
+const env = require("./conf/dev.json")
 
-module.exports = merge(base, {
+module.exports = merge(base,{
     devtool: 'eval-source-map',
     module: {
-        rules: [{
+        rules: [
+            {
                 test: /\.css$/,
                 use: [{
                     loader: "style-loader"
@@ -23,5 +26,12 @@ module.exports = merge(base, {
                 }]
             }
         ]
-    }
+    },
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify(env)
+            }
+        })
+    ]
 })

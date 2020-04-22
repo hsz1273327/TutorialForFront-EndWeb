@@ -687,7 +687,9 @@ module.exports = {
   ...
   plugins: [
     ...// 这里是之前配置的其它各种插件
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin({
+            verbose: true,
+            dry: false})
   ]
 }
 ```
@@ -698,7 +700,7 @@ module.exports = {
 
 ### 优化代码
 
-这部分代码在[optimize_code]()分支
+这部分代码在[optimize_code](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-optimize_code)分支
 
 webpack提供了一些在发布阶段非常有用的优化插件,它们大多来自于webpack社区,可以通过npm安装,通过以下插件可以完成产品发布阶段所需的功能
 
@@ -796,7 +798,7 @@ module.exports = {
 
 #### 编译环境隔离
 
-本部分的代码在C7-E2.
+本部分的代码在[]()分支.
   
 在最开始的时候我们就看到webpack需要指定一个config因此针对不同环境我们可以配置不同配置文件.
 

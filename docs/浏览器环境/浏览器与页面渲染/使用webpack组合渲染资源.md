@@ -681,17 +681,13 @@ npm install --save-dev clean-webpack-plugin
 
 ```js
 ...
-const CleanWebpackPlugin = require("clean-webpack-plugin")
+const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 
 module.exports = {
   ...
   plugins: [
     ...// 这里是之前配置的其它各种插件
-    new CleanWebpackPlugin('build/*.*', {
-      root: __dirname,
-      verbose: true,
-      dry: false
-  })
+    new CleanWebpackPlugin()
   ]
 }
 ```

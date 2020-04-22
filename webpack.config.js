@@ -76,7 +76,9 @@ module.exports = {
         //     verbose: true,
         //     dry: false
         // }),
-        new CleanWebpackPlugin(),
+        new CleanWebpackPlugin({
+            verbose: true,
+            dry: false}),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new ExtractTextPlugin("style.css")
     ],

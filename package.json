@@ -10,9 +10,8 @@
     ]
   },
   "scripts": {
-    "stylus": "./node_modules/.bin/stylus",
-    "build": "./node_modules/.bin/webpack --config webpack.config.js",
-    "test": "./node_modules/.bin/nyc --reporter=text ./node_modules/.bin/mocha --require babel-polyfill --require babel-register"
+    "start": "./node_modules/.bin/webpack-dev-server --open",
+    "build": "./node_modules/.bin/webpack --config webpack.config.js"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

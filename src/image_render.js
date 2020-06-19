@@ -1,4 +1,4 @@
-class ImageRender{
+export class ImageRender{
     /**
      * @desc 读取文件的处理对象
      * @public {HTMLElement} progress - 进度条
@@ -7,12 +7,20 @@ class ImageRender{
      * @param {Element} processElement - 进度条元素
      * @param {Element} imageElement - 图片的展示位置
      */
-    constructor(file,processElement,imageElement) {
-        this.progress = processElement
+    constructor(file,output) {
+        this.output = output
         this.file = file
-        this.progress.style.width = '0%'
-        this.progress.textContent = '0%'
         this.reader = new FileReader()
+        this.row = document.createElement('li')
+        let desc = document.createElement("strong")
+        desc.innerText=`${this.file.name} ${this.file.type} - ${this.file.size} bytes last modified: ${this.file.lastModifiedDate.toLocaleDateString()}`
+        this.row.appendChild(desc)
+        this.progress_bar = document.createElement('div')
+        this.progress_bar.style.width = '0%'
+        this.progress_bar.textContent = '0%'
+        this.output.appendChild(this.row)
+        this.output.appendChild(this.progress_bar)
+        
     }
     /**
      * 退出读取.
@@ -25,9 +33,9 @@ class ImageRender{
      */
     bindEvent() {
         this.reader.onerror = this.errorHandler
-        this.reader.onprogress = this.updateProgress
+        this.reader.onprogress = (eve)=>this.updateProgress(eve)
         this.reader.onabort = this.onAbort
-        this.reader.onloadstart = this.onLoadStart
+        this.reader.onloadstart = ()=>this.onLoadStart()
         this.reader.onload = this.onLoad()
     }
     /**
@@ -42,6 +50,7 @@ class ImageRender{
      * @param {Event} e - 事件
      */
     onAbort(e) {
+        this.row.removeChild(this.abortbt)
         alert('File read cancelled')
     }
     /**
@@ -49,24 +58,35 @@ class ImageRender{
      * @param {Event} e - 事件
      */
     onLoadStart(e) {
-        document.getElementById('progress_bar').className = 'loading';
+        this.abortbt = document.createElement('button')
+        this.abortbt.innerText="取消"
+        this.abortbt.addEventListener("onclick",()=>{
+            this.abort()
+            //this.row.removeChild(this.abortbt)
+        }, false)
+        this.row.appendChild(this.abortbt)
+        this.progress_bar.className = 'loading';
     }
     _onLoad(theFile) {
-        return function (e) {
+        return (e) =>{
             console.log("this.progress")
-            let progress = document.querySelector('.percent')
-            progress.style.width = '100%'
-            progress.textContent = '100%'
+            console.log(this.progress_bar)
+            //let progress = document.querySelector('.percent')
+            this.progress_bar.style.width = '100%'
+            this.progress_bar.textContent = '100%'
+
             let span = document.createElement('span')
-            span.innerHTML = [
-                '<img class="thumb" src="',
-                e.target.result,
-                '" title="',
-                theFile.name,
-                '"/>'
-            ].join('')
-            document.getElementById('output').insertBefore(span, null)
-            setTimeout("document.getElementById('progress_bar').className='';", 2000);
+            let image = document.createElement('img')
+            image.src = e.target.result
+            image.title = theFile.name
+            image.className = "thumb"
+            span.appendChild(image)
+            let downloadbt=document.createElement('button')
+            downloadbt.innerText="下载"
+            //downloadbt.addEventListener("onclick", download, false)
+            span.appendChild(downloadbt)
+            this.row.appendChild(span)
+            //setTimeout("document.getElementById('progress_bar').className='';", 2000);
         }
     }
     /**
@@ -104,11 +124,9 @@ class ImageRender{
             let percentLoaded = Math.round((eve.loaded / eve.total) * 100);
             // Increase the progress bar length.
             if (percentLoaded < 100) {
-                this.progress.style.width = percentLoaded + '%'
-                this.progress.textContent = percentLoaded + '%'
+                this.progress_bar.style.width = percentLoaded + '%'
+                this.progress_bar.textContent = percentLoaded + '%'
             }
         }
     }
 }
-
-export ImageRender

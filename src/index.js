@@ -1,11 +1,11 @@
-import './main.styl'
+import './style.css'
 import { ImageRender } from './image_render'
 
 const files = document.getElementById('files')
-const abortbt = document.getElementById('abortbt')
 const dropZone = document.getElementById('drop_zone')
-const downloadbt = document.getElementById('download')
+const output_div = document.getElementById('output')
 
+let reader
 function supportedFile () {
     if (("File" in window) && ("FileReader" in window) && ("FileList" in window) && ("Blob" in window)) {
         return true
@@ -29,33 +29,41 @@ function handleFileSelect (event) {
     }
     /// 处理文件
     let output = []
+    let output_ul = document.createElement('ul')
+    output_div.appendChild(output_ul)
     for (let f of files) {
         if (!f.type.match('image.*')) {
             continue
         }
-        reader = new ImageRender()
-        ImageReadRender.reader.bindEvent(f)
-        ImageReadRender.reader.readAsDataURL(f)
-        output.push('<li><strong>',
-            f.name,
-            '</strong> (',
-            f.type || 'n/a',
-            ') - ',
-            f.size,
-            ' bytes, last modified: ',
-            f.lastModifiedDate.toLocaleDateString(),
-            '</li>')
-        // Read in the image file as a data URL.
+        reader = new ImageRender(f,output_ul)
+        reader.bindEvent()
+        reader.readAsDataURL()
     }
-    document.getElementById('output').innerHTML = '<ul>' + output.join('') + '</ul>'
+    //document.getElementById('output').innerHTML = '<ul>' + output.join('') + '</ul>'
 
+}
+/**
+ * @desc 放置到位后的处理回调函数.
+ * @param {Event} eve 
+ */
+function handleDragOver(eve) {
+    eve.stopPropagation()
+    eve.preventDefault()
+    eve.dataTransfer.dropEffect = 'copy' // Explicitly show this is a copy.
+}
+
+function abortRead() {
+    reader.abort()
 }
 
 function main () {
-    let files = document.getElementById('files')
-    let abortbt = document.getElementById('abortbt')
-    let dropZone = document.getElementById('drop_zone')
-    let downloadbt = document.getElementById('download')
+    if (supportedFile()) {
+        files.addEventListener('change', handleFileSelect, false)
+        dropZone.addEventListener('dragover', handleDragOver, false)
+        dropZone.addEventListener('drop', handleFileSelect, false)
+    } else {
+        alert('The File APIs are not fully supported in this browser.')
+    }
 }
 
 main()

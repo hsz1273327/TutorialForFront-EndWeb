@@ -1,6 +1,6 @@
 # node执行环境和工具链
 
-[node.js](https://nodejs.org/zh-cn/)是js的标准执行环境.在现代js编程领域,它是js编程的基石.几乎所有与js相关的工具都必须在node环境下使用.同时它也默认给出了一些基本的通用工具和使用规范.
+[node.js](https://nodejs.org/zh-cn/)是js的标准执行环境.在现代js编程上是js编程的基石.几乎所有与js相关的工具都必须在node环境下使用.同时它也默认给出了一些基本的通用工具和使用规范.
 
 在安装好后,我们应该设置环境变量`NODE_HOME=/你的安装目录`和`NODE_PATH="/你的全局模块安装位置:$NODE_PATH"`.
 
@@ -37,8 +37,7 @@ npm config ls|查看npm在机器上的设置
 ---|---
 npm init|初始化一个项目,会生成一个`package.json`作为配置文件来管理该项目
 
-
-### package.json配置文件
+### `package.json`配置文件
 
 package.json是一个node.js项目的配置文件,它大约是这样的:
 

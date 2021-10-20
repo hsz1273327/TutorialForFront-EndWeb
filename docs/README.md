@@ -24,8 +24,6 @@ web前端技术狭义上说就是针对桌面端的网页制作技术,也就是�
 本文结构上说大致分为:
 
 + Javascript介绍
-+ Stylus构造css介绍
-+ Html5介绍
 + 基于Vue的浏览器前端应用
 + 基于Vue的chrome插件应用
 + 基于Vue和Electron的桌面客户端应用

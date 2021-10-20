@@ -67,6 +67,7 @@ npm install -g typescript
  ...
 }
 ```
+
 只有使用命令`npm start`即可执行项目,`npm run build`即可编译项目
 
 ## helloworld

@@ -32,7 +32,7 @@ ECMAScript是Javascript的正式名(简称ES).到2021年为止有如下版本:
 + `ES9`(`ECMAScript 2018`): ES8基础上的一次更新,增加了如下特性:
     + 异步迭代器以及对应的调用语法`for await (let i of x)`
     + `Promise.finally()`方法
-    + Rest/Spread属性
+    + Object的Rest/Spread属性
     + 正则表达式命名捕获组和反向断言
     + 正则表达式dotAll模式
 + `ES10`(`ECMAScript 2019`):依然是小更新,增加了如下特性:

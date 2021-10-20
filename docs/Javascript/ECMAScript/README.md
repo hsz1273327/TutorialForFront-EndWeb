@@ -25,19 +25,19 @@ ECMAScript是Javascript的正式名(简称ES).到2021年为止有如下版本:
     + 在ES6的Promise基础上增加了关键字`async,await`关键字和对应的异步操作编程范式
     + `Object.values(o)`获取对象的字段值的列表
     + `Object.entries(o)`获取对象的键值对构造的列表
-    + String padding,字符串增加`padStart(n)`和`padEnd(n)`用于在其头部或者尾部增加对应个数的空格
+    + String padding,字符串增加`String..prototype.padStart(n)`和`String..prototype.padEnd(n)`用于在其头部或者尾部增加对应个数的空格
     + 函数参数列表结尾允许逗号
     + `Object.getOwnPropertyDescriptors()`获取一个对象的所有自身属性的描述符,如果没有任何自身属性,则返回空对象.
     + `SharedArrayBuffer`类型用来表示一个通用的,固定长度的原始二进制数据缓冲区.以及对应的`Atomics`类型可以对`SharedArrayBuffer`对象进行原子操作
 + `ES9`(`ECMAScript 2018`): ES8基础上的一次更新,增加了如下特性:
     + 异步迭代器以及对应的调用语法`for await (let i of x)`
-    + `Promise.finally()`方法
+    + `Promise.prototype.finally()`方法
     + Object的Rest/Spread属性
     + 正则表达式命名捕获组和反向断言
     + 正则表达式dotAll模式
 + `ES10`(`ECMAScript 2019`):依然是小更新,增加了如下特性:
-    + `Array.flat()`和`Array.flatMap()`
-    + `String.trimStart()`和`String.trimEnd()`用于去除字符串首尾空白字符
+    + `Array.prototype.flat()`和`Array.prototype.flatMap()`
+    + `String.prototype.trimStart()`和`String.prototype.trimEnd()`用于去除字符串首尾空白字符
     + `String.prototype.matchAll`为所有匹配的匹配对象返回一个迭代器
     + `Symbol.prototype.description`获取Symbol对象的可选描述字符串
     + `Object.fromEntries()`返回一个给定对象自身可枚举属性的键值对数组,常用于将Map转化为Object

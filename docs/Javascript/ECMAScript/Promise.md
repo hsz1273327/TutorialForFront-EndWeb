@@ -1,4 +1,3 @@
-
 # Promise
 
 promise翻译成中文就是保证,是ES6时提出的一种异步编程解决方案,用于解决回调地狱问题,同时也为`async/await`语法提供基础设施.
@@ -25,7 +24,7 @@ Promise在js中的作用类似python中的Future对象,但具体功能却完全�
 
 ## 构造方法
 
-Promise对象是一个构造函数,参数是一个函数对象,用来生成Promise实例.
+Promise对象是一个构造函数,参数是一个函数对象用来生成Promise实例.
 
 ```js
 let promise = new Promise(function(resolve, reject) {
@@ -40,29 +39,23 @@ let promise = new Promise(function(resolve, reject) {
 
 ```
 
+Promise构造函数接受一个函数作为参数,该函数的两个参数分别是`resolve`和`reject`.它们是两个函数,由JavaScript引擎提供不用自己部署.
 
-Promise构造函数接受一个函数作为参数,该函数的两个参数分别是resolve和reject.它们是两个函数,由JavaScript引擎提供不用自己部署.
++ `resolve`函数
 
+    将`Promise`对象的状态从"未完成"变为"成功"(即从Pending变为Resolved),在异步操作成功时调用,并将异步操作的结果,作为参数传递出去
 
-+ resolve函数
-
-    将Promise对象的状态从"未完成"变为"成功"(即从Pending变为Resolved),在异步操作成功时调用,并将异步操作的结果,作为参数传递出去
-    
-+ reject函数
++ `reject`函数
 
     将Promise对象的状态从"未完成"变为"失败"(即从Pending变为Rejected),在异步操作失败时调用,并将异步操作报出的错误,作为参数传递出去.
-
-
 
 ## 实例方法
 
 每个Promise的实例都可以通过下面的实例方法来控制处理流程,其最终的效果类似同步操作中的`try/catch/finally`.
 
-### then
-
+### `then`
 
 Promise实例具有`then`方法,也就是说`then`方法是定义在原型对象`Promise.prototype`上的.它的作用是为Promise实例添加状态改变时的回调函数.前面说过`then`方法的第一个参数是Resolved状态的回调函数,第二个参数(可选)是Rejected状态的回调函数.
-
 
 ```js
 promise.then(function(value) {
@@ -79,8 +72,7 @@ then方法可以接受两个回调函数作为参数.
 
 其中第二个函数是可选的不一定要提供.这两个函数都接受Promise对象传出的值作为参数.
 
->一个简单的例子
-
+> 一个简单的例子
 
 ```javascript
 function timeout(ms) {
@@ -94,15 +86,17 @@ timeout(100).then((value) => {
 })
 ```
 
-    done
+结果:
 
+```javascript
+done
+```
 
 上面代码中timeout方法返回一个Promise实例.表示一段时间以后才会发生的结果.过了指定的时间(ms参数)以后,Promise实例的状态变为Resolved,就会触发then方法绑定的回调函数.
 
 Promise新建后就会立即执行.
 
 > 异步实现
-
 
 ```javascript
 let promise = new Promise(function(resolve, reject) {
@@ -118,15 +112,17 @@ console.log('3')
 
 ```
 
-    1
-    3
-    2.
+结果:
 
+```javascript
+1
+3
+2.
+```
 
 可以看到实际上异步主要就是在then上实现了
 
-> 读取本地文件
-
+> 读取本地文件(node限定)
 
 ```javascript
 import fs from "fs"
@@ -150,10 +146,6 @@ function getText(path){
     return promise
 }
 
-```
-
-
-```javascript
 getText("./README.md").then(
     function(data) {
       console.log('Contents: ' + data)
@@ -164,10 +156,13 @@ getText("./README.md").then(
 )
 ```
 
-    Contents: # Javascript基础语法
-    
-    ES
+结果:
 
+```javascript
+Contents: # Javascript基础语法
+
+ES
+```
 
 `getText`是对`fs.readFile`的封装,用于读取文本文件,需要注意的是在`getText`内部,resolve函数和reject函数调用时都带有参数.
 
@@ -177,6 +172,7 @@ getText("./README.md").then(
 
 + `resolve`函数的参数除了正常的值以外还可能是另一个Promise实例,表示异步操作的结果有可能是一个值,也有可能是另一个异步操作.
 
+例子:
 
 ```javascript
 let p1 = new Promise(function (resolve, reject) {
@@ -193,24 +189,28 @@ p2.then(result => console.log(result))
 p2.catch(error => console.log(error))
 ```
 
-    Error: fail
-        at Timeout._onTimeout (evalmachine.<anonymous>:3:12)
-        at listOnTimeout (internal/timers.js:549:17)
-        at processTimers (internal/timers.js:492:7)
+结果:
+
+```javascript
+Error: fail
+    at Timeout._onTimeout (evalmachine.<anonymous>:3:12)
+    at listOnTimeout (internal/timers.js:549:17)
+    at processTimers (internal/timers.js:492:7)
 
 
-    (node:58497) UnhandledPromiseRejectionWarning: Error: fail
-        at Timeout._onTimeout (evalmachine.<anonymous>:3:12)
-        at listOnTimeout (internal/timers.js:549:17)
-        at processTimers (internal/timers.js:492:7)
-    (node:58497) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 1)
-    (node:58497) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
-
+(node:58497) UnhandledPromiseRejectionWarning: Error: fail
+    at Timeout._onTimeout (evalmachine.<anonymous>:3:12)
+    at listOnTimeout (internal/timers.js:549:17)
+    at processTimers (internal/timers.js:492:7)
+(node:58497) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 1)
+(node:58497) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+```
 
 上面代码中p1是一个Promise,3秒之后变为rejected.p2的状态由p1决定,1秒之后p2调用resolve方法,但是此时p1的状态还没有改变,因此p2的状态也不会变.又过了2秒p1变为rejected,p2也跟着变为rejected.
 
 then方法返回的是一个**新的Promise实例**(注意,不是原来那个Promise实例).因此可以采用链式写法,即`then`方法后面再调用另一个`then`方法.
 
+例子:
 
 ```javascript
 getText("./README.md").then(
@@ -225,11 +225,14 @@ getText("./README.md").then(
 )
 ```
 
-    Contents: # Javascript基础语法
-    
-    ES
-    get: ok
+结果:
 
+```javascript
+Contents: # Javascript基础语法
+
+ES
+get: ok
+```
 
 上面的代码使用`then`方法,依次指定了两个回调函数.第一个回调函数完成以后会将返回结果作为参数传入第二个回调函数.
 
@@ -237,6 +240,7 @@ getText("./README.md").then(
 
 通常我们在`then`中会使用箭头函数.
 
+例子:
 
 ```javascript
 getText("./README.md").then(
@@ -251,16 +255,20 @@ getText("./README.md").then(
 )
 ```
 
-    Contents: # Javascript基础语法
-    
-    ES
-    get: ok
+结果:
 
+```javascript
+Contents: # Javascript基础语法
 
-### catch
+ES
+get: ok
+```
+
+### `catch`
 
 `catch`方法是`then(null, rejection)`的别名,用于指定发生错误时的回调函数.
 
+例子:
 
 ```javascript
 getText("./NotExist.md").then(
@@ -275,8 +283,11 @@ getText("./NotExist.md").then(
 )
 ```
 
-    get error: Error: ENOENT: no such file or directory, open './NotExist.md'
+结果:
 
+```javascript
+get error: Error: ENOENT: no such file or directory, open './NotExist.md'
+```
 
 上面代码中`getText`方法返回一个Promise对象,如果该对象状态变为Resolved,则会调用`then`方法指定的回调函数;如果异步操作抛出错误,状态就会变为Rejected,就会调用`catch`方法指定的回调函数处理这个错误.另外`then`方法指定的回调函数如果运行中抛出错误也会被catch方法捕获.
 
@@ -290,8 +301,7 @@ p.then((val) => console.log(fulfilled:", val))
   .then(null, (err) => console.log("rejected:", err))
 ```
 
-下面是一个例子
-
+下面是一个例子:
 
 ```javascript
 let promise1 = new Promise(function(resolve, reject) {
@@ -302,21 +312,25 @@ promise1.catch(error => {
 })
 ```
 
-    Error: test
-        at evalmachine.<anonymous>:2:9
-        at new Promise (<anonymous>)
-        at evalmachine.<anonymous>:1:16
-        at Script.runInThisContext (vm.js:120:20)
-        at Object.runInThisContext (vm.js:311:38)
-        at run ([eval]:1054:15)
-        at onRunRequest ([eval]:888:18)
-        at onMessage ([eval]:848:13)
-        at process.emit (events.js:321:20)
-        at emit (internal/child_process.js:881:12)
+结果:
 
+```javascript
+Error: test
+    at evalmachine.<anonymous>:2:9
+    at new Promise (<anonymous>)
+    at evalmachine.<anonymous>:1:16
+    at Script.runInThisContext (vm.js:120:20)
+    at Object.runInThisContext (vm.js:311:38)
+    at run ([eval]:1054:15)
+    at onRunRequest ([eval]:888:18)
+    at onMessage ([eval]:848:13)
+    at process.emit (events.js:321:20)
+    at emit (internal/child_process.js:881:12)
+```
 
 上面代码中,promise抛出一个错误就被catch方法指定的回调函数捕获.reject方法的作用等同于抛出错误.如果Promise状态已经变成Resolved再抛出错误是无效的
 
+例子:
 
 ```javascript
 let promise2 = new Promise(function(resolve, reject) {
@@ -326,13 +340,17 @@ let promise2 = new Promise(function(resolve, reject) {
 promise2.then(value => { console.log(value) }).catch(error => { console.log(error) })
 ```
 
-    ok
+结果:
 
+```javascript
+ok
+```
 
 上面代码中Promise在resolve语句后面再抛出错误不会被捕获等于没有抛出.
 
 Promise对象的错误具有"冒泡"性质,会一直向后传递直到被捕获为止.也就是说错误总是会被下一个catch语句捕获.
 
+测试:
 
 ```javascript
 getText("./README.md").then((post)=> {
@@ -344,13 +362,16 @@ getText("./README.md").then((post)=> {
 })
 ```
 
-    [Error: ENOENT: no such file or directory, open './NotExist.md'] {
-      errno: -2,
-      code: 'ENOENT',
-      syscall: 'open',
-      path: './NotExist.md'
-    }
+结果:
 
+```javascript
+[Error: ENOENT: no such file or directory, open './NotExist.md'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: './NotExist.md'
+}
+```
 
 上面代码中一共有三个Promise对象--一个由getText产生,两个由then产生.它们之中任何一个抛出的错误都会被最后一个catch捕获.
 
@@ -358,6 +379,7 @@ getText("./README.md").then((post)=> {
 
 跟传统的`try/catch`代码块不同的是,如果没有使用`catch`方法指定错误处理的回调函数,Promise对象抛出的错误不会传递到外层代码,即不会有任何反应.
 
+测试:
 
 ```javascript
 function someAsyncThing() {
@@ -372,32 +394,35 @@ someAsyncThing().then(function() {
 })
 ```
 
+结果:
 
-    ReferenceError: x is not defined
+```javascript
+ReferenceError: x is not defined
 
-        at evalmachine.<anonymous>:4:13
+    at evalmachine.<anonymous>:4:13
 
-        at new Promise (<anonymous>)
+    at new Promise (<anonymous>)
 
-        at someAsyncThing (evalmachine.<anonymous>:2:10)
+    at someAsyncThing (evalmachine.<anonymous>:2:10)
 
-        at evalmachine.<anonymous>:8:1
+    at evalmachine.<anonymous>:8:1
 
-        at Script.runInThisContext (vm.js:120:20)
+    at Script.runInThisContext (vm.js:120:20)
 
-        at Object.runInThisContext (vm.js:311:38)
+    at Object.runInThisContext (vm.js:311:38)
 
-        at run ([eval]:1054:15)
+    at run ([eval]:1054:15)
 
-        at onRunRequest ([eval]:888:18)
+    at onRunRequest ([eval]:888:18)
 
-        at onMessage ([eval]:848:13)
+    at onMessage ([eval]:848:13)
 
-        at process.emit (events.js:321:20)
-
+    at process.emit (events.js:321:20)
+```
 
 上面代码中`someAsyncThing`函数产生的Promise对象会报错,但是由于没有指定`catch`方法,这个错误不会被捕获也不会传递到外层代码,导致运行后没有任何输出.
 
+测试:
 
 ```javascript
 let promise3 = new Promise(function(resolve, reject) {
@@ -407,18 +432,23 @@ let promise3 = new Promise(function(resolve, reject) {
 promise3.then(function(value) { console.log(value) })
 ```
 
-    ok
+结果:
+
+```javascript
+ok
 
 
-    Error: test
-        at Timeout._onTimeout (evalmachine.<anonymous>:4:11)
-        at listOnTimeout (internal/timers.js:549:17)
-        at processTimers (internal/timers.js:492:7)
+Error: test
+    at Timeout._onTimeout (evalmachine.<anonymous>:4:11)
+    at listOnTimeout (internal/timers.js:549:17)
+    at processTimers (internal/timers.js:492:7)
+```
 
 上面代码中,Promise指定在下一轮"事件循环"再抛出错误,结果由于没有指定使用`try/catch`语句就冒泡到最外层成了未捕获的错误.因为此时Promise的函数体已经运行结束了,所以这个错误是在Promise函数体外抛出的.
 
 Node.js有一个`unhandledRejection`事件专门监听未捕获的reject错误.
 
+测试:
 
 ```javascript
 let someAsyncThing1 = function() {
@@ -437,22 +467,26 @@ someAsyncThing1()
 });
 ```
 
-    oh no ReferenceError: x is not defined
-        at evalmachine.<anonymous>:4:13
-        at new Promise (<anonymous>)
-        at someAsyncThing1 (evalmachine.<anonymous>:2:10)
-        at evalmachine.<anonymous>:8:1
-        at Script.runInThisContext (vm.js:120:20)
-        at Object.runInThisContext (vm.js:311:38)
-        at run ([eval]:1054:15)
-        at onRunRequest ([eval]:888:18)
-        at onMessage ([eval]:848:13)
-        at process.emit (events.js:321:20)
-    carry on
+结果:
 
+```javascript
+oh no ReferenceError: x is not defined
+    at evalmachine.<anonymous>:4:13
+    at new Promise (<anonymous>)
+    at someAsyncThing1 (evalmachine.<anonymous>:2:10)
+    at evalmachine.<anonymous>:8:1
+    at Script.runInThisContext (vm.js:120:20)
+    at Object.runInThisContext (vm.js:311:38)
+    at run ([eval]:1054:15)
+    at onRunRequest ([eval]:888:18)
+    at onMessage ([eval]:848:13)
+    at process.emit (events.js:321:20)
+carry on
+```
 
 上面代码运行完catch方法指定的回调函数,会接着运行后面那个then方法指定的回调函数.如果没有报错则会跳过catch方法.
 
+测试:
 
 ```javascript
 Promise.resolve()
@@ -464,13 +498,17 @@ Promise.resolve()
 })
 ```
 
-    carry on
+结果:
 
+```javascript
+carry on
+```
 
 上面的代码因为没有报错跳过了`catch`方法,直接执行后面的`then`方法.此时要是`then`方法里面报错就与前面的`catch`无关了.
 
 `catch`方法之中还能再抛出错误.
 
+测试:
 
 ```javascript
 let someAsyncThing2 = function() {
@@ -491,29 +529,33 @@ someAsyncThing2().then(function() {
 })
 ```
 
-    oh no ReferenceError: x is not defined
-        at evalmachine.<anonymous>:4:13
-        at new Promise (<anonymous>)
-        at someAsyncThing2 (evalmachine.<anonymous>:2:10)
-        at evalmachine.<anonymous>:8:1
-        at Script.runInThisContext (vm.js:120:20)
-        at Object.runInThisContext (vm.js:311:38)
-        at run ([eval]:1054:15)
-        at onRunRequest ([eval]:888:18)
-        at onMessage ([eval]:848:13)
-        at process.emit (events.js:321:20)
+结果:
+
+```javascript
+oh no ReferenceError: x is not defined
+    at evalmachine.<anonymous>:4:13
+    at new Promise (<anonymous>)
+    at someAsyncThing2 (evalmachine.<anonymous>:2:10)
+    at evalmachine.<anonymous>:8:1
+    at Script.runInThisContext (vm.js:120:20)
+    at Object.runInThisContext (vm.js:311:38)
+    at run ([eval]:1054:15)
+    at onRunRequest ([eval]:888:18)
+    at onMessage ([eval]:848:13)
+    at process.emit (events.js:321:20)
 
 
 
-    ReferenceError: y is not defined
+ReferenceError: y is not defined
 
-        at evalmachine.<anonymous>:13:3
+    at evalmachine.<anonymous>:13:3
 
-        at processTicksAndRejections (internal/process/task_queues.js:97:5)
-
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+```
 
 上面代码中`catch`方法抛出一个错误,因为后面没有别的`catch`方法了导致这个错误不会被捕获也不会传递到外层.如果改写一下结果就不一样了.
 
+测试:
 
 ```javascript
 someAsyncThing2().then(function() {
@@ -528,25 +570,28 @@ someAsyncThing2().then(function() {
 
 ```
 
-    oh no ReferenceError: x is not defined
-        at evalmachine.<anonymous>:4:13
-        at new Promise (<anonymous>)
-        at someAsyncThing2 (evalmachine.<anonymous>:2:10)
-        at evalmachine.<anonymous>:1:1
-        at Script.runInThisContext (vm.js:120:20)
-        at Object.runInThisContext (vm.js:311:38)
-        at run ([eval]:1054:15)
-        at onRunRequest ([eval]:888:18)
-        at onMessage ([eval]:848:13)
-        at process.emit (events.js:321:20)
-    carry on ReferenceError: y is not defined
-        at evalmachine.<anonymous>:6:3
-        at processTicksAndRejections (internal/process/task_queues.js:97:5)
+结果:
 
+```javascript
+oh no ReferenceError: x is not defined
+    at evalmachine.<anonymous>:4:13
+    at new Promise (<anonymous>)
+    at someAsyncThing2 (evalmachine.<anonymous>:2:10)
+    at evalmachine.<anonymous>:1:1
+    at Script.runInThisContext (vm.js:120:20)
+    at Object.runInThisContext (vm.js:311:38)
+    at run ([eval]:1054:15)
+    at onRunRequest ([eval]:888:18)
+    at onMessage ([eval]:848:13)
+    at process.emit (events.js:321:20)
+carry on ReferenceError: y is not defined
+    at evalmachine.<anonymous>:6:3
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+```
 
 上面代码中第二个`catch`方法用来捕获,前一个`catch`方法抛出的错误.
 
-### finally
+### finally[ES9]
 
 `finally`方法用于指定不管Promise对象最后状态如何都会执行的操作.通常用于清理操作.该函数不管怎样都必须执行.
 `finally`方法的回调函数没有参数.
@@ -561,6 +606,7 @@ server.listen(0)
   .finally(server.stop)
 ```
 
+测试:
 
 ```javascript
 getText("./README.md").then(
@@ -577,12 +623,16 @@ getText("./README.md").then(
 )
 ```
 
-    Contents: # Javascript基础语法
-    
-    ES
-    finally
+结果:
 
+```javascript
+Contents: # Javascript基础语法
 
+ES
+finally
+```
+
+测试:
 
 ```javascript
 getText("./NOTEXIST.md").then(
@@ -599,15 +649,16 @@ getText("./NOTEXIST.md").then(
 )
 ```
 
-    get error: Error: ENOENT: no such file or directory, open './NOTEXIST.md'
-    finally
+结果:
 
+```javascript
+get error: Error: ENOENT: no such file or directory, open './NOTEXIST.md'
+finally
+```
 
 ## Promise对象的方法
 
 Promise对象也提供方法用于构造新的Promise实例.
-
-
 
 ### Promise.resolve()
 
@@ -621,11 +672,12 @@ Promise对象也提供方法用于构造新的Promise实例.
 2. Promise
 
     如果参数是Promise实例,那么`Promise.resolve`将不做任何修改,原封不动地返回这个实例.
-    
+
 3. 参数是一个`thenable`对象
 
     `thenable`对象指的是具有`then`方法的对象,比如下面这个对象.
 
+例子:
 
 ```javascript
 let thenable = {
@@ -633,23 +685,23 @@ let thenable = {
     resolve(42)
   }
 }
-```
-
-`Promise.resolve`方法会将这个对象转为Promise对象,然后就立即执行`thenable`对象的`then`方法.
-
-
-```javascript
 let pthen = Promise.resolve(thenable)
 pthen.then(function(value) {
   console.log(value)  // 42
 })
 ```
 
-    42
+结果:
 
+```javascript
+42
+```
+
+`Promise.resolve`方法会将这个对象转为Promise对象,然后就立即执行`thenable`对象的`then`方法.
 
 `Promise.resolve`也支持调用时不带任何参数,这会直接返回一个Resolved状态的Promise对象.所以如果希望得到一个Promise对象,比较方便的方法就是直接调用`Promise.resolve`方法.
 
+例子:
 
 ```javascript
 let pvoid = Promise.resolve()
@@ -659,8 +711,11 @@ pvoid.then(function () {
 })
 ```
 
-    42
+结果:
 
+```javascript
+42
+```
 
 ### Promise.reject()
 
@@ -679,10 +734,11 @@ p.then(null, function (s){
 
 上面代码生成一个Promise对象的实例p,状态为rejected,回调函数会立即执行.
 
-### Promise.allSettled()
+### Promise.allSettled()[ES11]
 
 `Promise.allSettled()`用于获取一组Promise实例的最终状态.它的参数是一个由Promise实例组成的数组.返回的则是一个新的Promise实例,这个实例的结果是要检查的Promise实例的最终状态列表
 
+例子:
 
 ```javascript
 let p_noexist = getText("./NOTEXIST.md")
@@ -691,19 +747,22 @@ let p_readme = getText("./README.md")
 Promise.allSettled([p_noexist,p_readme]).then(data=>console.log(data))
 ```
 
-    [
-      {
-        status: 'rejected',
-        reason: [Error: ENOENT: no such file or directory, open './NOTEXIST.md'] {
-          errno: -2,
-          code: 'ENOENT',
-          syscall: 'open',
-          path: './NOTEXIST.md'
-        }
-      },
-      { status: 'fulfilled', value: '# Javascript基础语法\n\nES' }
-    ]
+结果:
 
+```javascript
+[
+  {
+    status: 'rejected',
+    reason: [Error: ENOENT: no such file or directory, open './NOTEXIST.md'] {
+      errno: -2,
+      code: 'ENOENT',
+      syscall: 'open',
+      path: './NOTEXIST.md'
+    }
+  },
+  { status: 'fulfilled', value: '# Javascript基础语法\n\nES' }
+]
+```
 
 ### Promise.all()
 
@@ -713,20 +772,15 @@ Promise.all方法用于将多个Promise实例包装成一个新的Promise实例.
 
 + 只有所有被包装的Promise实例的状态都变成`fulfilled`,新生成的Promise实例的状态才会变成`fulfilled`,此时新生成的Promise实例的的值就是所有被包装的Promise实例的值组成的序列
 
-
 + 只要所有被包装的Promise实例之中有一个被`rejected`,p的状态就变成`rejected`,此时第一个被`reject`的实例的返回值会传递给新生成的Promise实例作为其抛出的错误.
 
-
-
+例子:
 
 ```javascript
 let promises_fulfilled = ["./README.md","./README.md","./README.md"].map(function (path) {
   return getText(path)
 })
-```
 
-
-```javascript
 Promise.all(promises_fulfilled).then(
     data=>console.log(data)
 ).catch(
@@ -734,13 +788,17 @@ Promise.all(promises_fulfilled).then(
 )
 ```
 
-    [
-      '# Javascript基础语法\n\nES',
-      '# Javascript基础语法\n\nES',
-      '# Javascript基础语法\n\nES'
-    ]
+结果:
 
+```javascript
+[
+  '# Javascript基础语法\n\nES',
+  '# Javascript基础语法\n\nES',
+  '# Javascript基础语法\n\nES'
+]
+```
 
+例子:
 
 ```javascript
 let promises_rejected = ["./README.md","./NOEXIST.md","./README.md"].map(function (path) {
@@ -748,10 +806,14 @@ let promises_rejected = ["./README.md","./NOEXIST.md","./README.md"].map(functio
 })
 ```
 
-    (node:58497) UnhandledPromiseRejectionWarning: Error: ENOENT: no such file or directory, open './NOEXIST.md'
-    (node:58497) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 7)
+结果:
 
+```javascript
+(node:58497) UnhandledPromiseRejectionWarning: Error: ENOENT: no such file or directory, open './NOEXIST.md'
+(node:58497) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 7)
+```
 
+例子:
 
 ```javascript
 Promise.all(promises_rejected).then(
@@ -761,14 +823,17 @@ Promise.all(promises_rejected).then(
 )
 ```
 
-    [Error: ENOENT: no such file or directory, open './NOEXIST.md'] {
-      errno: -2,
-      code: 'ENOENT',
-      syscall: 'open',
-      path: './NOEXIST.md'
-    }
-    (node:58497) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 7)
+结果:
 
+```javascript
+[Error: ENOENT: no such file or directory, open './NOEXIST.md'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: './NOEXIST.md'
+}
+(node:58497) PromiseRejectionHandledWarning: Promise rejection was handled asynchronously (rejection id: 7)
+```
 
 ### Promise.race()
 

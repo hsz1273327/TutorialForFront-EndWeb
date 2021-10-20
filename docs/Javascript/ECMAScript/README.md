@@ -43,7 +43,7 @@ ECMAScript是Javascript的正式名(简称ES).到2021年为止有如下版本:
     + `Object.fromEntries()`返回一个给定对象自身可枚举属性的键值对数组,常用于将Map转化为Object
     + 可选Catch
 + `ES11`(`ECMAScript 2020`):一个较大的更新版本,主要是针对空值的处理做出了优化,增加了如下特性:
-    + 空值处理运算符(Nullish coalescing Operator)`?? t // f`用法类似三元运算符`? t : f`
+    + 空值处理运算符(Nullish coalescing Operator)`?? t // f`用法类似条件运算符`? t : f`
     + 可选链运算符(Optional chaining)`obj?.attr`用于检测不确定的中间节点
     + `Promise.allSettled`返回一个在所有给定的promise已被决议或被拒绝后决议的promise,并带有一个对象数组,每个对象表示对应的promise结果
     + 模块动态导入全局方法`import()`

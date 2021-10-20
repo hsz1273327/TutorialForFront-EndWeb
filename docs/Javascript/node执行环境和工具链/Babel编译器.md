@@ -1,4 +1,3 @@
-
 # Babel编译器
 
 [Babel](https://www.babeljs.cn/)是ECMAScript的语法编译器,它可以把高级语法的js代码编译为低级语法的js代码以适应各种环境.babel高度模块化,因此如果要使用完全的特性就需要安装对应的模块,这都有点让人觉得有点过度设计.
@@ -76,9 +75,8 @@
     ],
 }
 ```
+
 targets支持的平台有:chrome, opera, edge, firefox, safari, ie, ios, android, node, electron.
-
-
 
 ## 编译操作
 

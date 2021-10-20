@@ -1,37 +1,29 @@
-
 # Json
 
-js默认对json有支持使用对象`JSON`. 使用接口`JSON.parse()`可以将json字符串转化为js对象;使用`JSON.stringify()`将js对象转化为json字符串.
+js默认对json有支持使用对象`JSON`. 使用接口`JSON.parse(string)`可以将json字符串转化为js对象;使用`JSON.stringify(value[, replacer [, space]])`将js对象转化为json字符串.
 
+例子:
 
 ```javascript
 let json_str = JSON.stringify({a:1,b:2})
-json_str
+console.log(json_str)
+console.log(JSON.parse(json_str))
 ```
 
-
-
-
-    '{"a":1,"b":2}'
-
-
-
+结果:
 
 ```javascript
-JSON.parse(json_str)
+'{"a":1,"b":2}'
+{ a: 1, b: 2 }
 ```
 
-
-
-
-    { a: 1, b: 2 }
-
-
+其中`JSON.stringify`的参数`space`用于控制解析出来的字符串的缩进格式,一般我们为了可读性会设置2或者4
 
 ## json样式检验
 
 比较常见的样式检验协议是[json schema](https://json-schema.org/),在js中最常用的实现工具是[ajv](https://github.com/epoberezkin/ajv).针对typescript,ajv提供了自己的TypeScript声明,因此不需要安装额外的模块.
 
+例子:
 
 ```javascript
 import Ajv from 'ajv';
@@ -74,9 +66,9 @@ schema = {
 const validate = ajv.compile(schema)
 ```
 
+结果:
 
-
-
+```javascript
     {
       '$id': 'https://example.com/address.schema.json',
       '$schema': 'http://json-schema.org/draft-07/schema#',
@@ -97,9 +89,9 @@ const validate = ajv.compile(schema)
         'extended-address': [ 'street-address' ]
       }
     }
+```
 
-
-
+测试:
 
 ```javascript
 let data_ok = {
@@ -112,28 +104,24 @@ let data_err = {
     "region":"南山区",
     "country-name":"中国"
 }
-
-```
-
-
-```javascript
 let valid_ok = validate(data_ok)
 // 符合格式要求的验证会返回true
 if (!valid_ok) {
     console.log(validate.errors)
 }
-```
 
-
-```javascript
 let valid_err = validate(data_err)
 // 不符合格式要求的验证会返回false,并且在validate.errors中保存错误信息
 if (!valid_err) {
     console.log(validate.errors)
 }
+
 ```
 
-    [
+结果:
+
+```javascript
+[
       {
         keyword: 'required',
         dataPath: '',
@@ -142,4 +130,4 @@ if (!valid_err) {
         message: "should have required property 'locality'"
       }
     ]
-
+```

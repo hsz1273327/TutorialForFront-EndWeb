@@ -279,6 +279,29 @@ customer.details.notok?.()
     + `Array[Array[ any,any]]`形式的数组
     + Map[any,any]
 
++ `Object.defineProperty(obj, prop, descriptor)`直接在一个对象上定义一个新元素或者修改一个对象的现有元素,并返回此对象
+
+    例子:
+
+    ```javascript
+    const object1 = {};
+
+    Object.defineProperty(object1, 'property1', {
+    value: 42,
+    writable: false
+    });
+
+    console.log(object1.property1)
+    ```
+
++ `Object.getPrototypeOf(object)`获取对象的原型
+
++ `Object.setPrototypeOf(obj, prototype)`为对象设置原型
+
++ `Object.isExtensible(object)`判断对象是否可以在其上添加元素
+
++ `Object.preventExtensions(object)`让对象不再能添加新元素到其中
+
 ### 对象元素遍历
 
 有6种方式可以用来遍历对象的元素:

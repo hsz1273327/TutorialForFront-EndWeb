@@ -1,4 +1,3 @@
-
 # TypeScript编译器
 
 TypeScript是微软创建的一门Javascript方言,它有专门的编译器来将TypeScript源码转换成javascript代码.要使用它,需要安装编译器
@@ -44,13 +43,10 @@ npm install -g typescript
     + `*` 匹配0或多个字符（不包括目录分隔符）
     + `?` 匹配一个任意字符（不包括目录分隔符）
     + `**/` 递归匹配任意子目录
-    
+
     需要注意编译器如果不做额外设置默认只会编译后缀为`.ts/.tsx/.d.ts`的源码,如果在`compilerOptions`中设置了字段`allowJs`为true,则还可以包含`.js和.jsx`.
-    
-    
 
 ## typescript执行环境
-
 
 [ts-node](https://github.com/TypeStrong/ts-node)是typescript的一个解释器,同时其子模块`ts-node/register`类似`@babel/register`也提供运行时支持.使用ts-node我们就可以直接执行ts源码不用编译了.但和`@babel/node`的问题一样,我们不应该在生产环境使用它.
 
@@ -72,7 +68,7 @@ npm install -g typescript
 
 ## helloworld
 
-我们在分支[node执行环境和工具链-typescript编译器](https://github.com/hsz1273327/TutorialForJavascript/tree/node%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83%E5%92%8C%E5%B7%A5%E5%85%B7%E9%93%BE-typescript%E7%BC%96%E8%AF%91%E5%99%A8)上演示这个helloworld.这个简单项目的执行环境时node.
+我们在分支[node执行环境和工具链-typescript编译器](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83%E5%92%8C%E5%B7%A5%E5%85%B7%E9%93%BE-typescript%E7%BC%96%E8%AF%91%E5%99%A8)上演示这个helloworld.这个简单项目的执行环境时node.
 
 我们init项目,然后再安装环境:
 

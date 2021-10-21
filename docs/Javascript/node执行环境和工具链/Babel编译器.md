@@ -1,4 +1,3 @@
-
 # Babel编译器
 
 [Babel](https://www.babeljs.cn/)是ECMAScript的语法编译器,它可以把高级语法的js代码编译为低级语法的js代码以适应各种环境.babel高度模块化,因此如果要使用完全的特性就需要安装对应的模块,这都有点让人觉得有点过度设计.
@@ -76,9 +75,8 @@
     ],
 }
 ```
+
 targets支持的平台有:chrome, opera, edge, firefox, safari, ie, ios, android, node, electron.
-
-
 
 ## 编译操作
 
@@ -98,7 +96,7 @@ targets支持的平台有:chrome, opera, edge, firefox, safari, ie, ios, android
 
 ## helloworld
 
-我们在分支[node执行环境和工具链-babel编译器](https://github.com/hsz1273327/TutorialForJavascript/tree/node%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83%E5%92%8C%E5%B7%A5%E5%85%B7%E9%93%BE-babel%E7%BC%96)上演示这个helloworld.这个简单项目的执行环境时node.
+我们在分支[node执行环境和工具链-babel编译器](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83%E5%92%8C%E5%B7%A5%E5%85%B7%E9%93%BE-babel%E7%BC%96%E8%AF%91%E5%99%A8)上演示这个helloworld.这个简单项目的执行环境时node.
 
 我们init项目,然后再安装环境:
 

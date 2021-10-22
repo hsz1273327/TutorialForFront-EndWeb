@@ -1,4 +1,4 @@
-# node环境构建应用-使用node搭建后端服务-wsurlpath
+# node环境构建应用-使用node搭建后端服务-wschannel
 
 使用ws的helloworld
 

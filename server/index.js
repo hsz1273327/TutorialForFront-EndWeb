@@ -9,8 +9,7 @@ const HOST = "0.0.0.0"
 const PORT = 5000
 
 const PackageDefintion = protoLoader.loadSync(
-    PROTO_PATH,
-    {
+    PROTO_PATH, {
         keepCase: true,
         longs: String,
         enums: String,
@@ -22,12 +21,14 @@ const PackageDefintion = protoLoader.loadSync(
 const rpc_proto = grpc.loadPackageDefinition(PackageDefintion).squarerpc_service
 
 const SquareService = {
-    square (call, callback) {
-        console.log(`get message ${ call.request.message }`)
-        let result = call.request.message ** 2
-        callback(null, {
-            message: result
-        })
+    rangeSquare(call) {
+        let limit = call.request.message
+        for (let i = 0; i <= limit; i++) {
+            call.write({
+                message: i ** 2
+            })
+        }
+        call.end()
     }
 }
 
@@ -35,7 +36,7 @@ const server = new grpc.Server()
 
 server.addService(rpc_proto.SquareService.service, SquareService)
 
-function main () {
+function main() {
     server.bindAsync(
         `${ HOST }:${ PORT }`,
         grpc.ServerCredentials.createInsecure(),

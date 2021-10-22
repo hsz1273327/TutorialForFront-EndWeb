@@ -1,7 +1,6 @@
 import path from "path"
 import grpc from "@grpc/grpc-js"
 import * as protoLoader from "@grpc/proto-loader"
-import bluebird from 'bluebird'
 const __dirname = path.resolve()
 const PROTO_PATH = __dirname + "/schema/square_service.proto"
 
@@ -25,13 +24,16 @@ const clientcb = new rpc_proto.SquareService(
     grpc.credentials.createInsecure()
 )
 
-const client = bluebird.Promise.promisifyAll(clientcb)   //Promise.promisifyAll(clientcb)
-
-async function main() {
-    let result = await client.squareAsync({
+function main() {
+    let call = clientcb.rangeSquare({
         message: 12.3
     })
-    console.log(result.message)
+    call.on("data",(message)=>{
+        console.log(message.message)
+    })
+    call.on("end",()=>{
+        console.log("stream end")
+    })
 }
 
 main()

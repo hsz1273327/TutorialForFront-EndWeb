@@ -248,7 +248,7 @@ ws即然是一个双工通信协议,那他自然支持流数据的推送.
 
 很多时候我们需要的不光是请求响应,作为一个双工通信的协议,我们也需要可以向客户端推送数据.
 
-[例子C4](https://github.com/TutorialForJavascript/js-server/tree/master/code/Websocket%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C4)是一个简单的推送任务,它会每隔10s向全体广播一次当前时间.
+[例子C4](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8-%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1-wspush)是一个简单的推送任务,它会每隔10s向全体广播一次当前时间.
 
 这个例子使用了`setInterval`做周期性的推动,当然了更常见的是监听一个redis或者其他中间件,如果有消息传过来就推送.这个可以留着自己研究下.
 
@@ -256,87 +256,87 @@ ws即然是一个双工通信协议,那他自然支持流数据的推送.
 
 我们常见的websocket连接通常不会是一个光秃秃host,而是会根据http路径区分功能.这个当然可以[通过nginx来解决](http://blog.hszofficial.site/recommend/2019/03/20/%E7%8E%A9%E8%BD%ACNginx/),但如果我们希望直接一个服务解决那该如何操作呢?
 
-我们就需要结合http服务模块来做了.例子[C5](https://github.com/TutorialForJavascript/js-server/tree/master/code/Websocket%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C5)
+我们就需要结合http服务模块来做了.[例子C5](https://github.com/TutorialForJavascript/js-server/tree/master/code/Websocket%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C5)
 
 + 服务端
 
-```js
-import WebSocket from 'ws'
-import http from 'http'
-import url from 'url'
+    ```js
+    import WebSocket from 'ws'
+    import http from 'http'
+    import url from 'url'
 
-const server = http.createServer()
-const wss1 = new WebSocket.Server({
-    noServer: true
-})
-const wss2 = new WebSocket.Server({
-    noServer: true
-})
-
-wss1.on('connection', ws => {
-    ws.on('message', message => {
-        console.log('received: %s', message)
-        switch (message) {
-            case "close":
-                {
-                    ws.close()
-                }
-                break
-            case "helloworld":
-                {
-                    ws.send('Hello World')
-                }
-                break
-            default:
-                {
-                    ws.send('unkonwn command')
-                }
-        }
+    const server = http.createServer()
+    const wss1 = new WebSocket.Server({
+        noServer: true
     })
-})
-
-wss2.on('connection', ws => {
-    ws.on('message', message => {
-        console.log('received: %s', message)
-        switch (message) {
-            case "close":
-                {
-                    ws.close()
-                }
-                break
-            case "helloworld":
-                {
-                    ws.send('Hello World')
-                }
-                break
-            default:
-                {
-                    ws.send('unkonwn command')
-                }
-        }
+    const wss2 = new WebSocket.Server({
+        noServer: true
     })
-})
 
-server.on('upgrade', (request, socket, head) => {
-    const pathname = url.parse(request.url).pathname
-    console.log(pathname)
-    if (pathname === '/room1') {
-        wss1.handleUpgrade(request, socket, head, ws =>{
-            wss1.emit('connection', ws, request)
-            console.log("emit room1")
+    wss1.on('connection', ws => {
+        ws.on('message', message => {
+            console.log('received: %s', message)
+            switch (message) {
+                case "close":
+                    {
+                        ws.close()
+                    }
+                    break
+                case "helloworld":
+                    {
+                        ws.send('Hello World')
+                    }
+                    break
+                default:
+                    {
+                        ws.send('unkonwn command')
+                    }
+            }
         })
-    } else if (pathname === '/room2') {
-        wss2.handleUpgrade(request, socket, head, ws => {
-            wss2.emit('connection', ws, request)
-            console.log("emit room2")
+    })
+
+    wss2.on('connection', ws => {
+        ws.on('message', message => {
+            console.log('received: %s', message)
+            switch (message) {
+                case "close":
+                    {
+                        ws.close()
+                    }
+                    break
+                case "helloworld":
+                    {
+                        ws.send('Hello World')
+                    }
+                    break
+                default:
+                    {
+                        ws.send('unkonwn command')
+                    }
+            }
         })
-    } else {
-        socket.destroy()
-        console.log("destory socket")
-    }
-});
-server.listen(3000)
-```
+    })
+
+    server.on('upgrade', (request, socket, head) => {
+        const pathname = url.parse(request.url).pathname
+        console.log(pathname)
+        if (pathname === '/room1') {
+            wss1.handleUpgrade(request, socket, head, ws =>{
+                wss1.emit('connection', ws, request)
+                console.log("emit room1")
+            })
+        } else if (pathname === '/room2') {
+            wss2.handleUpgrade(request, socket, head, ws => {
+                wss2.emit('connection', ws, request)
+                console.log("emit room2")
+            })
+        } else {
+            socket.destroy()
+            console.log("destory socket")
+        }
+    });
+    server.listen(3000)
+    ```
 
 ## 用户管理
 
@@ -347,7 +347,7 @@ server.listen(3000)
 
 ### 借助http服务器动态的创建wsserver
 
-例子[C6](https://github.com/TutorialForJavascript/js-server/tree/master/code/Websocket%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C6)演示了如何创建动态的wsserver.
+[例子C6](https://github.com/TutorialForJavascript/js-server/tree/master/code/Websocket%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C6)演示了如何创建动态的wsserver.
 
 为了保持回调函数不要太长,我们可以将回调函数定义在外面,然后通过闭包在每个wss和ws中绑定.
 
@@ -407,7 +407,6 @@ wss.on('connection', ws => {
     ```js
     import faker from 'faker'
     import WebSocket from 'ws'
-
 
     const ws = new WebSocket('ws://localhost:3000/channel?id=1')
     const self = faker.fake("{{name.lastName}}")

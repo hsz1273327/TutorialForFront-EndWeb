@@ -4,16 +4,14 @@ const wsserver = new WebSocket.Server({
     port: 3000
 })
 
-
-wsserver.broadcast = (data) => {
-    wsserver.clients.forEach((client) => {
-        if (client.readyState === WebSocket.OPEN) {
-            client.send(data)
-        }
-    })
-}
-
 wsserver.on('connection', ws => {
+    ws.publish = (message) => {
+        wsserver.clients.forEach(client => {
+            if (client !== ws && client.readyState === WebSocket.OPEN) {
+                client.send(message)
+            }
+        })
+    }
     ws.on('message', message => {
         console.log('received: %s', message)
         let data = null
@@ -37,7 +35,7 @@ wsserver.on('connection', ws => {
             case "helloworld":
                 {
                     console.log(data.message)
-                    wsserver.broadcast(JSON.stringify({
+                    ws.publish(JSON.stringify({
                         event: "helloworld",
                         message: `helloworld ${ data.message }`
                     }))

@@ -119,7 +119,7 @@ ws即然是一个双工通信协议,那他自然支持流数据的推送.
 + `Blob`: Blob类型将队列blob中的原始数据以二进制中传输.`bufferedAmount`将加上原始数据的字节数的值.
 + `ArrayBufferView`: 可以以二进制帧的形式发送任何JavaScript类数组对象;其二进制数据内容将被队列于缓冲区中.值`bufferedAmount`将加上必要字节数的值.
 
-这边的例子[C1](https://github.com/TutorialForJavascript/js-server/tree/master/code/Websocket%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C1)以ArrayBuffer为例演示了传递二进制数据的方式,其中主要的注意点是:
+[这边的例子](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8-%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1-wsbinary)以ArrayBuffer为例演示了传递二进制数据的方式,其中主要的注意点是:
 
 + 客户端需要指明`ws.binaryType = "arraybuffer"`或`ws.binaryType = "blob"`
 + 如果是`arraybuffer`需要在客户端按它的类型转换下`data = new Float32Array(data)`

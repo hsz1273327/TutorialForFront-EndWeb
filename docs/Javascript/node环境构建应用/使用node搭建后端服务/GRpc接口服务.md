@@ -289,49 +289,49 @@ service SquareService {
 
 ### 请求流完成后返回流
 
-这个例子[C3](https://github.com/TutorialForJavascript/js-server/tree/master/code/GRpc%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C3)实现了传过来一串数,之后以流的形式返回这组数每个的平方.
+这个[例子C3](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8-%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1-grpcstream2endstream)实现了传过来一串数,之后以流的形式返回这组数每个的平方.
 
 + 修改服务端
 
-```js
-streamrangeSquare(call) {
-    let container = []
-    call.on("data", (message) => {
-        console.log(`get ${message.message}`)
-        container.push(message.message)
-    })
-    call.on("end", () => {
-        console.log("stream end")
-        for (let i of container) {
-            call.write({
-                message: i ** 2
-            })
-        }
-        call.end()
-    })
+    ```js
+    streamrangeSquare(call) {
+        let container = []
+        call.on("data", (message) => {
+            console.log(`get ${message.message}`)
+            container.push(message.message)
+        })
+        call.on("end", () => {
+            console.log("stream end")
+            for (let i of container) {
+                call.write({
+                    message: i ** 2
+                })
+            }
+            call.end()
+        })
 
-}
-```
+    }
+    ```
 
 + 修改客户端
 
-```js
-let result = []
-let call = clientcb.streamrangeSquare()
-call.on("data", (message) => {
-    console.log(`get message ${message.message}`)
-    result.push(message.message)
-})
-call.on("end", () => {
-    console.log(`stream end with result: ${result}`)
-})
-for (let i = 0; i <= 5; i++) {
-    call.write({
-        message: i
+    ```js
+    let result = []
+    let call = clientcb.streamrangeSquare()
+    call.on("data", (message) => {
+        console.log(`get message ${message.message}`)
+        result.push(message.message)
     })
-}
-call.end()
-```
+    call.on("end", () => {
+        console.log(`stream end with result: ${result}`)
+    })
+    for (let i = 0; i <= 5; i++) {
+        call.write({
+            message: i
+        })
+    }
+    call.end()
+    ```
 
 ### 请求的进行中就返回响应
 

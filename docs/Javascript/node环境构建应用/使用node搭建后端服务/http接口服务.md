@@ -144,7 +144,6 @@ ctx也提供了几个特殊对象方便我们构造响应.
 同时会为每个创建了的Notification创建一个定时任务的promise,这个任务将会向一个redis的目标用户uid为名的channel发出一个发布订阅的发布请求.
 而我们的`/stream/:uid`将会监听redis的uid对应的channel以推送提醒.
 
-
 这个例子实际上是3个资源加一个sse推送流
 
 + main,也就是存放Notification和相关资源的容器

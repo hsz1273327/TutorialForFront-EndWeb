@@ -57,13 +57,16 @@ const server = new grpc.Server()
 需要注意请求和响应的结果都需要符合proto文件中定义的结构.
 
 定义好后需要使用`server.addService`将`protobuf`文件中的定义与实现绑定
-最后使用`server.bind`绑定host和`grpc.ServerCredentials.createInsecure()`创建出来的rpc实例.之后`server.start()`启动服务
+最后使用`server.bindAsync`绑定host和`grpc.ServerCredentials.createInsecure()`创建出来的rpc实例,在其回调函数中使用`server.start()`启动服务
 
 ```js
-import grpc from "grpc"
+import * as assert from 'assert'
+import path from "path"
+import grpc from "@grpc/grpc-js"
 import * as protoLoader from "@grpc/proto-loader"
 
-const PROTO_PATH = __dirname + "/../schema/square_service.proto"
+const __dirname = path.resolve()
+const PROTO_PATH = __dirname + "/schema/square_service.proto"
 
 const HOST = "0.0.0.0"
 const PORT = 5000
@@ -94,9 +97,15 @@ const server = new grpc.Server()
 server.addService(rpc_proto.SquareService.service,SquareService)
 
 function main(){
-    server.bind(`${HOST}:${PORT}`, grpc.ServerCredentials.createInsecure())
-    console.log(`start @ ${HOST}:${PORT}`)
-    server.start()
+    server.bindAsync(
+        `${ HOST }:${ PORT }`,
+        grpc.ServerCredentials.createInsecure(),
+        (err, port) => {
+            assert.ifError(err)
+            console.log(`start @ ${ port }`)
+            server.start()
+        }
+    )
 }
 
 main()
@@ -113,15 +122,18 @@ const clientcb = new rpc_proto.SquareService(
     host,
     grpc.credentials.createInsecure()
 )
-const client = bluebird.promisifyAll(clientcb)
+const client = bluebird.Promise.promisifyAll(clientcb)
 ```
 
 后面要调用这个客户端只需要在方法后面加上`Async`即可
 
 ```js
-import grpc from "grpc"
+import path from "path"
+import grpc from "@grpc/grpc-js"
 import * as protoLoader from "@grpc/proto-loader"
-import * as bluebird from 'bluebird'
+import bluebird from 'bluebird'
+const __dirname = path.resolve()
+const PROTO_PATH = __dirname + "/schema/square_service.proto"
 
 
 const PROTO_PATH = __dirname + "/../schema/square_service.proto"
@@ -146,7 +158,7 @@ const clientcb = new rpc_proto.SquareService(
     grpc.credentials.createInsecure()
 )
 
-const client = bluebird.promisifyAll(clientcb)
+const client = bluebird.Promise.promisifyAll(clientcb)
 
 async function main() {
     let result = await client.squareAsync({
@@ -157,8 +169,6 @@ async function main() {
 
 main()
 ```
-
-这个服务我们将其封如dockerimage中,方便其他文章使用.
 
 ## 请求-流响应
 

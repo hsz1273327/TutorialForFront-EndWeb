@@ -54,7 +54,7 @@ ctx也提供了几个特殊对象方便我们构造响应.
 | `ctx.type`                   | 读写     | `Content-Type`设置,具体的可以看[MDN上的介绍](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Type) |
 | `ctx.headerSent`             | 只读     | 用于检查是否已经发送了一个响应头,用于查看客户端是否可能会收到错误通知                                                |
 | `ctx.lastModified`           | 只写     | 将`Last-Modified`标头设置为适当的UTC字符串,常使用`new Date()`                                                        |
-| ctx.etag                     | 只写     | 设置包含"包裹的ETag响应,常见用法`ctx.etag = crypto.createHash('md5').update(ctx.body).digest('hex')`                 |
+| `ctx.etag`                   | 只写     | 设置包含"包裹的ETag响应,常见用法`ctx.etag = crypto.createHash('md5').update(ctx.body).digest('hex')`                 |
 | `ctx.redirect(url, [alt])`   | 方法     | 执行[302]重定向到url.字符串"back"是特别提供Referrer支持的,当Referrer不存在时,使用`alt`或"/"                          |
 | `ctx.attachment([filename])` | 方法     | 将`Content-Disposition`设置为"附件"以指示客户端提示下载.(可选)指定下载的`filename`                                   |
 | `ctx.set(field,value)`       | 方法     | 设置响应标头field到value                                                                                             |

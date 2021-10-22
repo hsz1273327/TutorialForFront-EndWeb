@@ -2,9 +2,7 @@
 
 [GRpc](https://grpc.io/)正如其名,是一种RPC.它实际上和RESTful接口在功能上是相近的,本质都是一种请求响应模式的服务.只是作为一个RPC,GRpc一般描述动作而非资源,并且它可以返回的不光是一个数据,而是一组流数据.
 
-GRpc是一种跨语言的Rpc,它建立在`http2`上使用[protobuf](https://developers.google.com/protocol-buffers/)作为结构化数据的序列化工具,
-
-它有4种形式:
+GRpc是一种跨语言的Rpc,它建立在`http2`上使用[protobuf](https://developers.google.com/protocol-buffers/)作为结构化数据的序列化工具,它有4种形式:
 
 + 请求-响应
 + 请求-流响应
@@ -354,3 +352,7 @@ streamrangeSquare(call) {
 
 1. grpc的精度会在传递中有不一致的情况,比较建议使用字符串传递需要精确的数据(比如金融领域)
 2. 虽然看起来流请求-流响应的模式写起来和websocket很像,但他们有本质区别--grpc必须由客户端发起,而websocket不需要.
+
+## 更多特性
+
+grpc作为一个已经在各种业务场景中充分应用了的框架拥有许多非常实用的特性,详细的介绍可以看[我的这篇文章](https://blog.hszofficial.site/introduce/2021/06/17/grpc%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/).可以结合其中介绍的特性再从官方文档中找到对应实现方式和例子来详细了解.

@@ -21,7 +21,7 @@ const PackageDefintion = protoLoader.loadSync(
 const rpc_proto = grpc.loadPackageDefinition(PackageDefintion).squarerpc_service
 
 const SquareService = {
-    sumSquare(call, callback) {
+    streamrangeSquare(call) {
         let container = []
         call.on("data", (message) => {
             console.log(`get ${message.message}`)
@@ -29,9 +29,12 @@ const SquareService = {
         })
         call.on("end", () => {
             console.log("stream end")
-            callback(null, {
-                message: container.map(e => e ** 2).reduce((x, y) => x + y)
-            })
+            for (let i of container) {
+                call.write({
+                    message: i ** 2
+                })
+            }
+            call.end()
         })
     }
 }

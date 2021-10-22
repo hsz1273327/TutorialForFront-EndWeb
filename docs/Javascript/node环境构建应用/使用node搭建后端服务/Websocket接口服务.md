@@ -107,7 +107,6 @@ js可以使用[ws](https://github.com/websockets/ws)这个框架来实现websock
 
 需要注意这个lib的接口和Websocket API的并不一致.比如onmessage中的回调函数参数为获取的数据而非一个messageEvent.
 
-
 ## 传递二进制数据
 
 ws即然是一个双工通信协议,那他自然支持流数据的推送.
@@ -119,7 +118,7 @@ ws即然是一个双工通信协议,那他自然支持流数据的推送.
 + `Blob`: Blob类型将队列blob中的原始数据以二进制中传输.`bufferedAmount`将加上原始数据的字节数的值.
 + `ArrayBufferView`: 可以以二进制帧的形式发送任何JavaScript类数组对象;其二进制数据内容将被队列于缓冲区中.值`bufferedAmount`将加上必要字节数的值.
 
-[这边的例子](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8-%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1-wsbinary)以ArrayBuffer为例演示了传递二进制数据的方式,其中主要的注意点是:
+[这边的例子C1](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8-%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1-wsbinary)以ArrayBuffer为例演示了传递二进制数据的方式,其中主要的注意点是:
 
 + 客户端需要指明`ws.binaryType = "arraybuffer"`或`ws.binaryType = "blob"`
 + 如果是`arraybuffer`需要在客户端按它的类型转换下`data = new Float32Array(data)`
@@ -128,7 +127,7 @@ ws即然是一个双工通信协议,那他自然支持流数据的推送.
 
 另一个常见的应用是广播,即服务端向全体用户发送同样的消息.这个可以借助`ws.clients`来实现,它是一个维护全体客户端连接的set.
 
-[这个例子](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8-%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1-wsbroadcast)会向全体客户端发送一个`welcome+客户的名字`的消息,这个例子我们会将数据已json的形式传递,已其中的`event`字段来判断触发的事件
+[这个例子C2](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8-%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1-wsbroadcast)会向全体客户端发送一个`welcome+客户的名字`的消息,这个例子我们会将数据已json的形式传递,已其中的`event`字段来判断触发的事件
 
 + 服务端
   
@@ -241,7 +240,7 @@ ws即然是一个双工通信协议,那他自然支持流数据的推送.
 
 很多时候广播是由客户端发起希望发给处掉自己外的其他人,那我们就还得再做一些处理
 
-下面的例子[C3](https://github.com/TutorialForJavascript/js-server/tree/master/code/Websocket%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C3)展示了如何实现这个功能.
+[下面的例子C3](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8-%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1-wsbroadcastwithoutself)展示了如何实现这个功能.
 
 我们在C2的基础上为ws封装一个`publish`方法,它会排除掉自己向其他一个server的用户发送消息.
 
@@ -249,7 +248,7 @@ ws即然是一个双工通信协议,那他自然支持流数据的推送.
 
 很多时候我们需要的不光是请求响应,作为一个双工通信的协议,我们也需要可以向客户端推送数据.
 
-[C4](https://github.com/TutorialForJavascript/js-server/tree/master/code/Websocket%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C4)是一个简单的推送任务,它会每隔10s向全体广播一次当前时间.
+[例子C4](https://github.com/TutorialForJavascript/js-server/tree/master/code/Websocket%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C4)是一个简单的推送任务,它会每隔10s向全体广播一次当前时间.
 
 这个例子使用了`setInterval`做周期性的推动,当然了更常见的是监听一个redis或者其他中间件,如果有消息传过来就推送.这个可以留着自己研究下.
 

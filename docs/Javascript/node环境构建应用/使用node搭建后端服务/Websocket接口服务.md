@@ -1,7 +1,7 @@
 # 使用Javascript构建Websocket接口服务
 
 js可以使用[ws](https://github.com/websockets/ws)这个框架来实现websocket接口的构造.[接口文档](https://github.com/websockets/ws/blob/master/doc/ws.md)
-我们依然从一个[helloworld](https://github.com/TutorialForJavascript/js-server/tree/master/code/Websocket%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C0)开始.这个例子我们在客户端连同服务端后立即发送一个`helloworld`消息给后端服务器,服务器接到后则返回一个`helloworld`消息给客户端.客户端在接收到服务器消息后发送一个`close`消息给服务器,服务器就断开和客户端的连接.
+我们依然从一个[helloworld](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8-%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1-wshello)开始.这个例子我们在客户端连同服务端后立即发送一个`helloworld`消息给后端服务器,服务器接到后则返回一个`helloworld`消息给客户端.客户端在接收到服务器消息后发送一个`close`消息给服务器,服务器就断开和客户端的连接.
 
 + 客户端
 
@@ -105,7 +105,6 @@ js可以使用[ws](https://github.com/websockets/ws)这个框架来实现websock
 
 3. 再上面的握手成功后客户端和服务器会建立TCP连接,后续就可以进行TCP通讯了
 
-
 需要注意这个lib的接口和Websocket API的并不一致.比如onmessage中的回调函数参数为获取的数据而非一个messageEvent.
 
 
@@ -114,17 +113,11 @@ js可以使用[ws](https://github.com/websockets/ws)这个框架来实现websock
 ws即然是一个双工通信协议,那他自然支持流数据的推送.
 
 这主要是靠`send`接口,send支持的数据类型包括
-+ `USVString`
-    文本字符串.字符串将以`UTF-8`格式添加到缓冲区,并且`bufferedAmount`将加上该字符串以`UTF-8`格式编码时的字节数的值.
-+ `ArrayBuffer`
 
-    可以使用一有类型的数组对象发送底层二进制数据;其二进制数据内存将被缓存于缓冲区,`bufferedAmount`将加上所需字节数的值.
-+ `Blob`
-
-    Blob类型将队列blob中的原始数据以二进制中传输.`bufferedAmount`将加上原始数据的字节数的值.
-+ `ArrayBufferView`
-
-    可以以二进制帧的形式发送任何JavaScript类数组对象;其二进制数据内容将被队列于缓冲区中.值`bufferedAmount`将加上必要字节数的值.
++ `USVString`: 文本字符串.字符串将以`UTF-8`格式添加到缓冲区,并且`bufferedAmount`将加上该字符串以`UTF-8`格式编码时的字节数的值.
++ `ArrayBuffer`: 可以使用一有类型的数组对象发送底层二进制数据;其二进制数据内存将被缓存于缓冲区,`bufferedAmount`将加上所需字节数的值.
++ `Blob`: Blob类型将队列blob中的原始数据以二进制中传输.`bufferedAmount`将加上原始数据的字节数的值.
++ `ArrayBufferView`: 可以以二进制帧的形式发送任何JavaScript类数组对象;其二进制数据内容将被队列于缓冲区中.值`bufferedAmount`将加上必要字节数的值.
 
 这边的例子[C1](https://github.com/TutorialForJavascript/js-server/tree/master/code/Websocket%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C1)以ArrayBuffer为例演示了传递二进制数据的方式,其中主要的注意点是:
 

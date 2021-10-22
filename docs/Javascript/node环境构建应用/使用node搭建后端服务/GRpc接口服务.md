@@ -227,7 +227,7 @@ call.on("end",()=>{
 
 这种需求不是很多见,可能用的比较多的是收集一串数据后统一进行处理吧,流只是可以确保是同一个客户端发过来的而已.
 
-这个例子[C2](https://github.com/TutorialForJavascript/js-server/tree/master/code/GRpc%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C2)实现了传过来一串数,之后返回他们的平方和
+这个[例子C2](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8-%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1-grpcstream2res)实现了传过来一串数,之后返回他们的平方和
 
 ### 修改`protobuf`文件
 

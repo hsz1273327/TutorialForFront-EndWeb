@@ -16,7 +16,11 @@ wsserver.on('connection', ws => {
                 break
             case "helloworld":
                 {
-                    ws.send('Hello World')
+                    const array = new Float32Array(10000)
+                    for (var i = 0; i < array.length; ++i) {
+                        array[i] = i / 2;
+                    }
+                    ws.send(array)
                 }
                 break
             default:

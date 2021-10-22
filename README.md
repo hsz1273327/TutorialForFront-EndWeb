@@ -1,6 +1,6 @@
-# node环境构建应用-使用node搭建后端服务-koa中间件
+# node环境构建应用-使用node搭建后端服务-httpcomplete
 
-koa中间件例子
+koa构造http服务的完整例子
 
 ## 用法
 

@@ -33,7 +33,6 @@
         * [Typescript与面向对象编程](Javascript/TypeScript/Typescript与面向对象编程.md)
         * [装饰器](Javascript/TypeScript/装饰器.md)
     * [番外:node环境构建应用](Javascript/node环境构建应用/README.md)
-        * [使用node构建命令行工具](Javascript/node环境构建应用/使用node构建命令行工具/README.md)
         * [使用node搭建后端服务](Javascript/node环境构建应用/使用node搭建后端服务/README.md)
             * [http接口服务](Javascript/node环境构建应用/使用node搭建后端服务/http接口服务.md)
             * [Websocket接口服务](Javascript/node环境构建应用/使用node搭建后端服务/Websocket接口服务.md)

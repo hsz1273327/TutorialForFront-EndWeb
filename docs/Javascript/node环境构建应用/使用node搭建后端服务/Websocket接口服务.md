@@ -128,7 +128,7 @@ ws即然是一个双工通信协议,那他自然支持流数据的推送.
 
 另一个常见的应用是广播,即服务端向全体用户发送同样的消息.这个可以借助`ws.clients`来实现,它是一个维护全体客户端连接的set.
 
-这个例子[C2](https://github.com/TutorialForJavascript/js-server/tree/master/code/Websocket%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C2)会向全体客户端发送一个`welcome+客户的名字`的消息,这个例子我们会将数据已json的形式传递,已其中的`event`字段来判断触发的事件
+[这个例子](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8-%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1-wsbroadcast)会向全体客户端发送一个`welcome+客户的名字`的消息,这个例子我们会将数据已json的形式传递,已其中的`event`字段来判断触发的事件
 
 + 服务端
   
@@ -139,7 +139,6 @@ ws即然是一个双工通信协议,那他自然支持流数据的推送.
         port: 3000
     })
 
-
     wsserver.broadcast = (data) => {
         wsserver.clients.forEach((client) => {
             if (client.readyState === WebSocket.OPEN) {
@@ -147,7 +146,6 @@ ws即然是一个双工通信协议,那他自然支持流数据的推送.
             }
         })
     }
-
 
     wsserver.on('connection', ws => {
         ws.on('message', message => {
@@ -194,50 +192,50 @@ ws即然是一个双工通信协议,那他自然支持流数据的推送.
 
 + 客户端
 
-```js
-const ws = new WebSocket('ws://localhost:3000')
-ws.binaryType = "arraybuffer"
-ws.on('open', () => {
-    ws.send(JSON.stringify({
-        event: 'helloworld',
-        message: 'hsz'
-    }))
-})
-ws.on('message', (message) => {
-    let data = null
-    try{
-        data = JSON.parse(message)
-    }catch(error){
-        ws.send('message is not json')
-        return
-    }
-    if (!data || !data.event){
-        ws.send('no event')
-        return
-    }
-    switch (data.event) {
-        case "close":
-            {
-                ws.close()
-            }
-            break
-        case "helloworld":
-            {
-                console.log(data.message)
-                assert.equal(data.message, "helloworld hsz")
-                ws.close()
-            }
-            break
-        default:
-            {
-                ws.send('unkonwn command')
-            }
-    }
-})
-ws.on('close', () => {
-    console.log('disconnected');
-})
-```
+    ```js
+    const ws = new WebSocket('ws://localhost:3000')
+    ws.binaryType = "arraybuffer"
+    ws.on('open', () => {
+        ws.send(JSON.stringify({
+            event: 'helloworld',
+            message: 'hsz'
+        }))
+    })
+    ws.on('message', (message) => {
+        let data = null
+        try{
+            data = JSON.parse(message)
+        }catch(error){
+            ws.send('message is not json')
+            return
+        }
+        if (!data || !data.event){
+            ws.send('no event')
+            return
+        }
+        switch (data.event) {
+            case "close":
+                {
+                    ws.close()
+                }
+                break
+            case "helloworld":
+                {
+                    console.log(data.message)
+                    assert.equal(data.message, "helloworld hsz")
+                    ws.close()
+                }
+                break
+            default:
+                {
+                    ws.send('unkonwn command')
+                }
+        }
+    })
+    ws.on('close', () => {
+        console.log('disconnected');
+    })
+    ```
 
 ### 广播排除发件人
 

@@ -17,8 +17,6 @@ webpack是一个前端项目的打包工具,它会把你的项目当做一个整
 1. 加载器`loader`
 2. 插件`Plugins`
 
-本文的例子代码在<https://github.com/TutorialForJavascript/frontend-Webpack/tree/master/code>,实现一个最简单的仅仅只是显示文字的html页面.但也分为几个步骤
-
 ## 本体安装
 
 webpack本体安装很简单:
@@ -117,7 +115,6 @@ Loaders需要单独安装并且需要在webpack.config.js中的`modules`字段�
 + `include/exclude`手动添加必须处理的文件(文件夹)或屏蔽不需要处理的文件(文件夹)(可选)
 + `query`为loaders提供额外的设置选项(可选)
 
-
 修改后的webpack配置文件`webpack.config.js`如下:
 
 ```js
@@ -147,13 +144,14 @@ module.exports = {
 在代码[babel_helloworld](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-babel_helloworld)中我们修改上面的js代码为es6写法
 
 + 入口文件(`src/index.js`)
+
     ```js
     import greeter from './greeting.js'
     document.querySelector("#root").appendChild(greeter())
     ```
 
 + 模块文件(`src/greeting.js`)
-    
+
     ```js
     export default function(){
         let greet = document.createElement('div')
@@ -165,7 +163,6 @@ module.exports = {
 ## 为导入css
 
 另一种资源就是css文件.我们来为项目设置下样式,新的代码在[css_helloworld](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-css_helloworld)中.
-
 
 要加载css文件需要使用`css-loader`和`style-loader`,二者处理的任务不同.
 
@@ -343,9 +340,11 @@ document.querySelector("#root").appendChild(greeter())
 ## 导入图片
 
 在html中引入图片实际上就是引入一个图片的url
+
 ```html
 <img src="/eg_tulip.jpg"  alt="上海鲜花港 - 郁金香" />
 ```
+
 我们使用webpack将图片作为模块打包,实际上就是把这个图片的位置指出来,即
 
 ```js
@@ -413,8 +412,8 @@ module.exports = {
     }
 }
 ```
-上面的配置中url-loader我们设置了limit,只要图片大小小于1000字节限制时图片会自动转成`base64`码引用
 
+上面的配置中url-loader我们设置了limit,只要图片大小小于1000字节限制时图片会自动转成`base64`码引用
 
 我们在`greeting`模块中引入这张图片:
 
@@ -529,7 +528,6 @@ module.exports = {
 
 本节的例子代码在[html_template](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-html_template)分支
 
-
 我们可以使用`HtmlWebpackPlugin`,这是一个webpack插件,其作用是依据一个简单的`index.html`模板，生成一个自动引用你打包后的JS文件的新index.html.这在每次生成的js文件名称不同时非常有用(比如添加了hash值).
 
 安装:
@@ -595,9 +593,11 @@ Webpack有很多内置插件,同时也有很多第三方插件,可以让我们�
 调试用静态服务器依赖`webpack-dev-server`这个node模块
 
 安装:
+
 ```shell
 npm install --save-dev webpack-dev-server
 ```
+
 热加载模块其实是webpack自带的功能,我们只需要修改配置文件即可,下面是修改好后的配置文件:
 
 ```js
@@ -634,17 +634,15 @@ cheap-module-source-map      | 在一个单独的文件中生成一个不带列�
 eval-source-map              | 使用eval打包源文件模块,在同一个文件中生成干净的完整的sourcemap.这个选项可以在不影响构建速度的前提下生成完整的sourcemap,但是对打包后输出的JS文件的执行具有性能和安全的隐患.在开发阶段这是一个非常好的选项,在生产阶段则一定不要启用这个选项;
 cheap-module-eval-source-map | 这是在打包文件时最快的生成sourcemap的方法,生成的sourcemap会和打包后的JavaScript文件同行显示,没有列映射,和eval-source-map选项具有相似的缺点
 
-
-    
 + `devServer`,这个字段可以用于配置开发服务器包括:
-  + `contentBase`默认webpack-dev-server会为根文件夹提供本地服务器,如果想为另外一个目录下的文件提供本地服务器,应该在这里设置其所在目录
-  + `port`设置默认监听端口,如果省略默认为`8080`
-  + `inline`设置为true时,当服务器指定文件夹中文件改变时会自动刷新页面
-  + `historyApiFallback`如果设置为true时所有的跳转将指向`index.html`,这个选项在开发单页应用时非常有用,它依赖于HTML5 history API.
-  + `hot`,当设置为true时启动热更新,即当源文件有修改时,就会自动编译自动刷新页面
-  + `open`,是否启动默认浏览器
+    + `contentBase`默认webpack-dev-server会为根文件夹提供本地服务器,如果想为另外一个目录下的文件提供本地服务器,应该在这里设置其所在目录
+    + `port`设置默认监听端口,如果省略默认为`8080`
+    + `inline`设置为true时,当服务器指定文件夹中文件改变时会自动刷新页面
+    + `historyApiFallback`如果设置为true时所有的跳转将指向`index.html`,这个选项在开发单页应用时非常有用,它依赖于HTML5 history API.
+    + `hot`,当设置为true时启动热更新,即当源文件有修改时,就会自动编译自动刷新页面
+    + `open`,是否启动默认浏览器
 
-要使用这个服务器,我们可以使用命令`./node_modules/.bin/webpack-dev-server --open`
+  要使用这个服务器,我们可以使用命令`./node_modules/.bin/webpack-dev-server --open`
 
 为了方便起见,我们在`package.json`的scripts中将其配置为命令`"start": "./node_modules/.bin/webpack-dev-server --open"`,这种方式可以使用命令`npm start`启动这个服务器
 
@@ -673,6 +671,7 @@ module.exports = {
 调试阶段不可避免的会反反复复的编译,如果使用了缓存,那必然会有越来越多的无用文件残留下来,可以使用插件`clean-webpack-plugin`进行清除操作.
 
 安装:
+
 ```shell
 npm install --save-dev clean-webpack-plugin
 ```
@@ -714,9 +713,7 @@ webpack提供了一些在发布阶段非常有用的优化插件,它们大多来
 
     注意目前这个插件对webpack4支持不好,可以使用`extract-text-webpack-plugin@next`
 
-
 `OccurenceOrder`是内置插件,你需要做的只是安装其它非内置插件.
-
 
 ```shell
 npm install --save-dev extract-text-webpack-plugin@next uglifyjs-webpack-plugin
@@ -769,15 +766,16 @@ module.exports = {
 
 + `UglifyJSPlugin`插件不放在`plugins`字段中,而在`optimization->minimizer`字段中
 + `ExtractTextPlugin`除了要在`plugins`字段中创建外,还需要在定义css规则的loader部分做处理,其形式是:
-```js
-{
-    test: /\.styl$/,
-    use: ExtractTextPlugin.extract({
-        fallback: "style-loader",
-        use: ["css-loader", "stylus-loader"]
-    })
-}
-```
+
+    ```js
+    {
+        test: /\.styl$/,
+        use: ExtractTextPlugin.extract({
+            fallback: "style-loader",
+            use: ["css-loader", "stylus-loader"]
+        })
+    }
+    ```
 
 ### 区分环境
 
@@ -792,9 +790,7 @@ module.exports = {
 
 要区分环境我们需要使用工具`webpack-merge`,他可以用于merge两个Object以实现类似继承的功能.
 
-
 这个部分的例子我们的目标是让不同环境的源码编译出来后`greeting`后面接的字不同,比如dev环境的源码编译出来后就是`greeting dev!`
-
 
 #### 编译环境隔离
 
@@ -805,6 +801,7 @@ module.exports = {
 要实现不同配置文件间的聚合我们需要安装`webpack-merge`.
 
 安装:
+
 ```shell
 npm install --save-dev webpack-merge
 ```
@@ -813,194 +810,194 @@ npm install --save-dev webpack-merge
 
 + `webpack.config.base.js`
 
-```js
-const path = require('path')
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { CleanWebpackPlugin } = require("clean-webpack-plugin")
+    ```js
+    const path = require('path')
+    const webpack = require('webpack');
+    const HtmlWebpackPlugin = require('html-webpack-plugin')
+    const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 
-module.exports = {
-    entry: path.resolve(__dirname, '../src/index.js'),
-    output: {
-        path: path.resolve(__dirname, '../public'),
-        filename: 'bundle-[hash].js'
-    },
-    devServer: {
-        contentBase: path.resolve(__dirname, '../public'), //本地服务器所加载的页面所在的目录
-        historyApiFallback: true, //不跳转
-        inline: true,
-        hot: true
-    },
-    module: {
-        rules: [{
-                test: /\.js$/,
-                use: {
-                    loader: 'babel-loader'
-                },
-                exclude: path.resolve(__dirname, '../node_modules'),
-                include: path.resolve(__dirname, '../src')
-            },
-            {
-                test: /\.(png|jpg|jpeg|gif|eot|ttf|woff|woff2|svg|svgz)$/i,
-                use: [{
-                        loader: 'url-loader',
-                        options: {
-                            limit: 10000,
-                            name: '[path][name].[ext]?[hash:6]!./dir/file.png'
-                        }
+    module.exports = {
+        entry: path.resolve(__dirname, '../src/index.js'),
+        output: {
+            path: path.resolve(__dirname, '../public'),
+            filename: 'bundle-[hash].js'
+        },
+        devServer: {
+            contentBase: path.resolve(__dirname, '../public'), //本地服务器所加载的页面所在的目录
+            historyApiFallback: true, //不跳转
+            inline: true,
+            hot: true
+        },
+        module: {
+            rules: [{
+                    test: /\.js$/,
+                    use: {
+                        loader: 'babel-loader'
                     },
-                    {
-                        loader: 'image-webpack-loader',
-                        query: {
-                            progressive: true,
-                            optimizationLevel: 7,
-                            interlaced: false,
-                            pngquant: {
-                                quality: '65-90',
-                                speed: 4
+                    exclude: path.resolve(__dirname, '../node_modules'),
+                    include: path.resolve(__dirname, '../src')
+                },
+                {
+                    test: /\.(png|jpg|jpeg|gif|eot|ttf|woff|woff2|svg|svgz)$/i,
+                    use: [{
+                            loader: 'url-loader',
+                            options: {
+                                limit: 10000,
+                                name: '[path][name].[ext]?[hash:6]!./dir/file.png'
+                            }
+                        },
+                        {
+                            loader: 'image-webpack-loader',
+                            query: {
+                                progressive: true,
+                                optimizationLevel: 7,
+                                interlaced: false,
+                                pngquant: {
+                                    quality: '65-90',
+                                    speed: 4
+                                }
                             }
                         }
-                    }
-                ]
-            }
+                    ]
+                }
+            ]
+        },
+        plugins: [
+            new HtmlWebpackPlugin({
+                template: path.resolve(__dirname, '../src/index.tmpl.html') //new 一个这个插件的实例，并传入相关的参数
+            }),
+            new webpack.HotModuleReplacementPlugin(), //热加载插件
+            new CleanWebpackPlugin({
+                verbose: true,
+                dry: false
+            })
         ]
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, '../src/index.tmpl.html') //new 一个这个插件的实例，并传入相关的参数
-        }),
-        new webpack.HotModuleReplacementPlugin(), //热加载插件
-        new CleanWebpackPlugin({
-            verbose: true,
-            dry: false
-        })
-    ]
-}
-```
+    }
+    ```
 
-这个对象是各个环境编译环境的基础,各个环境就是在其基础上进行添加修改,注意由于配置文件位置变了,需要修改所有与位置相关的部分.
+    这个对象是各个环境编译环境的基础,各个环境就是在其基础上进行添加修改,注意由于配置文件位置变了,需要修改所有与位置相关的部分.
 
 + `webpack.config.dev.js`
 
-开发环境的配置文件
+    开发环境的配置文件
 
-```js
-const merge = require('webpack-merge')
-const base = require('./webpack.config.base.js')
+    ```js
+    const merge = require('webpack-merge')
+    const base = require('./webpack.config.base.js')
 
-module.exports = merge(base,{
-    devtool: 'eval-source-map',
-    module: {
-        rules: [
-            {
-                test: /\.css$/,
-                use: [{
-                    loader: "style-loader"
-                }, {
-                    loader: "css-loader"
-                }]
-            },
-            {
-                test: /\.styl$/,
-                use: [{
-                    loader: "style-loader"
-                }, {
-                    loader: "css-loader"
-                }, {
-                    loader: "stylus-loader"
-                }]
-            }
-        ]
-    }
-})
-```
+    module.exports = merge(base,{
+        devtool: 'eval-source-map',
+        module: {
+            rules: [
+                {
+                    test: /\.css$/,
+                    use: [{
+                        loader: "style-loader"
+                    }, {
+                        loader: "css-loader"
+                    }]
+                },
+                {
+                    test: /\.styl$/,
+                    use: [{
+                        loader: "style-loader"
+                    }, {
+                        loader: "css-loader"
+                    }, {
+                        loader: "stylus-loader"
+                    }]
+                }
+            ]
+        }
+    })
+    ```
 
-开发环境我们并不需要将js和css分离,因此只用使用最简单的配置方式.
+    开发环境我们并不需要将js和css分离,因此只用使用最简单的配置方式.
 
 + `webpack.config.test.js`
 
-测试环境,通常编译设置和生产环境的大部分是一样的,这样才好做基准测试嘛.但也要便于调试
+    测试环境,通常编译设置和生产环境的大部分是一样的,这样才好做基准测试嘛.但也要便于调试
 
-```js
-const webpack = require('webpack');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const merge = require('webpack-merge')
-const base = require('./webpack.config.base.js')
+    ```js
+    const webpack = require('webpack');
+    const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+    const ExtractTextPlugin = require('extract-text-webpack-plugin')
+    const merge = require('webpack-merge')
+    const base = require('./webpack.config.base.js')
 
-module.exports = merge(base,{
-    devtool: 'eval-source-map',
-    module: {
-        rules: [
-            {
-                test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: ["css-loader"]
-                })
-            },
-            {
-                test: /\.styl$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: ["css-loader", "stylus-loader"]
-                })
-            }
-        ]
-    },
-    plugins: [
-        new webpack.optimize.OccurrenceOrderPlugin(),
-        new ExtractTextPlugin("style.css")
-    ],
-    optimization: {
-        minimizer: [
-            new UglifyJSPlugin(),
-        ]
-    }
-})
-```
+    module.exports = merge(base,{
+        devtool: 'eval-source-map',
+        module: {
+            rules: [
+                {
+                    test: /\.css$/,
+                    use: ExtractTextPlugin.extract({
+                        fallback: "style-loader",
+                        use: ["css-loader"]
+                    })
+                },
+                {
+                    test: /\.styl$/,
+                    use: ExtractTextPlugin.extract({
+                        fallback: "style-loader",
+                        use: ["css-loader", "stylus-loader"]
+                    })
+                }
+            ]
+        },
+        plugins: [
+            new webpack.optimize.OccurrenceOrderPlugin(),
+            new ExtractTextPlugin("style.css")
+        ],
+        optimization: {
+            minimizer: [
+                new UglifyJSPlugin(),
+            ]
+        }
+    })
+    ```
 
 + `webpack.config.prod.js`
 
-生产环境下我们不需要`sourcemap`,因此就不设置devtool了
+    生产环境下我们不需要`sourcemap`,因此就不设置devtool了
 
-```js
-const webpack = require('webpack');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const merge = require('webpack-merge')
-const base = require('./webpack.config.base.js')
+    ```js
+    const webpack = require('webpack');
+    const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+    const ExtractTextPlugin = require('extract-text-webpack-plugin')
+    const merge = require('webpack-merge')
+    const base = require('./webpack.config.base.js')
 
-module.exports = merge(base,{
-    module: {
-        rules: [
-            {
-                test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: ["css-loader"]
-                })
-            },
-            {
-                test: /\.styl$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: ["css-loader", "stylus-loader"]
-                })
-            }
-        ]
-    },
-    plugins: [
-        new webpack.optimize.OccurrenceOrderPlugin(),
-        new ExtractTextPlugin("style.css")
-    ],
-    optimization: {
-        minimizer: [
-            new UglifyJSPlugin(),
-        ]
-    }
-})
-```
+    module.exports = merge(base,{
+        module: {
+            rules: [
+                {
+                    test: /\.css$/,
+                    use: ExtractTextPlugin.extract({
+                        fallback: "style-loader",
+                        use: ["css-loader"]
+                    })
+                },
+                {
+                    test: /\.styl$/,
+                    use: ExtractTextPlugin.extract({
+                        fallback: "style-loader",
+                        use: ["css-loader", "stylus-loader"]
+                    })
+                }
+            ]
+        },
+        plugins: [
+            new webpack.optimize.OccurrenceOrderPlugin(),
+            new ExtractTextPlugin("style.css")
+        ],
+        optimization: {
+            minimizer: [
+                new UglifyJSPlugin(),
+            ]
+        }
+    })
+    ```
 
 注意merge并不会覆盖操作,一旦base中定义的在后面一个对象中也有定义,那就会引起冲突报错.
 
@@ -1012,120 +1009,121 @@ module.exports = merge(base,{
 
 + `env/conf/dev.json`
 
-```json
-{
-    "env":"dev"
-}
-```
+    ```json
+    {
+        "env":"dev"
+    }
+    ```
 
 + `env/conf/test.json`
 
-```json
-{
-    "env":"test"
-}
-```
+    ```json
+    {
+        "env":"test"
+    }
+    ```
 
 + `env/conf/prod.json`
 
-```json
-{
-    "env":"prod"
-}
-```
+    ```json
+    {
+        "env":"prod"
+    }
+    ```
 
 为了可以使用这些配置项中的参数,我们需要修改我们的源码:
 
 + `src/conf.js`
 
-```js
-const NODE_ENV = process.env.NODE_ENV
+    ```js
+    const NODE_ENV = process.env.NODE_ENV
 
-export default NODE_ENV
-```
-这个模块用于给上面定义的配置对象一个统一的导入入口.
+    export default NODE_ENV
+    ```
+
+    这个模块用于给上面定义的配置对象一个统一的导入入口.
 
 + `src/greeting.js`
 
-```js
-import eg_tulip from "./eg_tulip.jpg"
-import conf from "./conf.js"
+    ```js
+    import eg_tulip from "./eg_tulip.jpg"
+    import conf from "./conf.js"
 
-export default function () {
-    let greet = document.createElement('div')
-    greet.textContent = `greeting ${conf.env}!`
-    let img = document.createElement("img")
-    img.src = eg_tulip
-    greet.appendChild(img)
-    return greet
-}
-```
-我们将这个模块的文字内容配置化.使用上面定义的`conf.js`定义的对象中的字段来构造输出的内容
+    export default function () {
+        let greet = document.createElement('div')
+        greet.textContent = `greeting ${conf.env}!`
+        let img = document.createElement("img")
+        img.src = eg_tulip
+        greet.appendChild(img)
+        return greet
+    }
+    ```
 
+    我们将这个模块的文字内容配置化.使用上面定义的`conf.js`定义的对象中的字段来构造输出的内容
 
 如何将这两边联系起来呢?我们需要修改配置文件,引入插件`webpack.DefinePlugin`:
 
 + `webpack.config.dev.js`
 
-开发环境的配置文件
-```js
-...
-const env = require("./conf/dev.json")
+    开发环境的配置文件
 
-module.exports = merge(base,{
+    ```js
     ...
-    plugins: [
-        new webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': JSON.stringify(env)
-            }
-        })
-    ]
-})
-```
+    const env = require("./conf/dev.json")
 
+    module.exports = merge(base,{
+        ...
+        plugins: [
+            new webpack.DefinePlugin({
+                'process.env': {
+                    'NODE_ENV': JSON.stringify(env)
+                }
+            })
+        ]
+    })
+    ```
 
 + `webpack.config.test.js`
 
-测试环境,通常编译设置和生产环境的大部分是一样的,这样才好做基准测试嘛.但也要便于调试
+    测试环境,通常编译设置和生产环境的大部分是一样的,这样才好做基准测试嘛.但也要便于调试
 
-```js
-...
-const env = require("./conf/test.json")
-
-module.exports = merge(base,{
+    ```js
     ...
-    plugins: [
+    const env = require("./conf/test.json")
+
+    module.exports = merge(base,{
         ...
-        new webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': JSON.stringify(env)
-            }
-        })
-    ]
-})
-```
+        plugins: [
+            ...
+            new webpack.DefinePlugin({
+                'process.env': {
+                    'NODE_ENV': JSON.stringify(env)
+                }
+            })
+        ]
+    })
+    ```
 
 + `webpack.config.prod.js`
 
-生产环境下我们不需要`sourcemap`,因此就不设置devtool了
+    生产环境下我们不需要`sourcemap`,因此就不设置devtool了
 
-```js
-...
-const env = require("./conf/prod.json")
-
-module.exports = merge(base,{
+    ```js
     ...
-    plugins: [
+    const env = require("./conf/prod.json")
+
+    module.exports = merge(base,{
         ...
-        new webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': JSON.stringify(env)
-            }
-        })
-    ]
-})
-```
+        plugins: [
+            ...
+            new webpack.DefinePlugin({
+                'process.env': {
+                    'NODE_ENV': JSON.stringify(env)
+                }
+            })
+        ]
+    })
+    ```
 
 ### 收尾工作
 
@@ -1141,4 +1139,5 @@ module.exports = merge(base,{
     "build:prod": "./node_modules/.bin/webpack --config env/webpack.config.prod.js"
 }
 ```
-以上就是一个相对完整的webpack环境
+
+以上就是一个相对完整的webpack环境.

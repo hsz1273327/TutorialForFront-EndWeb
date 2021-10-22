@@ -27,7 +27,7 @@ webpack本体安装很简单:
 npm install --save-dev webpack webpack-cli
 ```
 
-这个[最简单的webpack项目](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-helloworld)源码上看包括:
+这个[最简单的webpack项目](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-helloworld)源码上看包括:
 
 + 一个用于渲染的html文件(`public/index.html`)
 
@@ -144,7 +144,7 @@ module.exports = {
 }
 ```
 
-在代码[babel_helloworld](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-babel_helloworld)中我们修改上面的js代码为es6写法
+在代码[babel_helloworld](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-babel_helloworld)中我们修改上面的js代码为es6写法
 
 + 入口文件(`src/index.js`)
     ```js
@@ -164,7 +164,7 @@ module.exports = {
 
 ## 为导入css
 
-另一种资源就是css文件.我们来为项目设置下样式,新的代码在[css_helloworld](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-css_helloworld)中.
+另一种资源就是css文件.我们来为项目设置下样式,新的代码在[css_helloworld](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-css_helloworld)中.
 
 
 要加载css文件需要使用`css-loader`和`style-loader`,二者处理的任务不同.
@@ -253,7 +253,7 @@ document.querySelector("#root").appendChild(greeter())
 
 ### 使用stylus定义css
 
-本节代码在[stylus_helloworld](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-stylus_helloworld)分支中.
+本节代码在[stylus_helloworld](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-stylus_helloworld)分支中.
 
 就像babel之于js,我更愿意使用stylus来定义样式,这还需要安装如下依赖:
 
@@ -361,7 +361,7 @@ npm install --save-dev url-loader file-loader
 + `url-loader`用于导入图片,如果图片小与限制就会转化为base64码
 + `file-loader`用于在图片过大时从文件系统中找到文件
 
-本部分代码在[image_loader](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-image_loader)分支
+本部分代码在[image_loader](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-image_loader)分支
 修改配置文件:
 
 ```js
@@ -445,7 +445,7 @@ export default function(){
 
 ### 对图片进行压缩
 
-本节的代码在[image_compression](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-image_compression)分支.
+本节的代码在[image_compression](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-image_compression)分支.
 
 我们往往希望加快前端项目的加载速度,压缩图片是最常见最简单暴力的方式,可以使用`image-webpack-loader`来压缩图片
 
@@ -527,7 +527,7 @@ module.exports = {
 
 上面的所有例子中我们都需要有一个html文件来加载js.那我们可以不可以将这个html文件也作为组件呢,这样我们就不再需要预先定义public文件夹了.
 
-本节的例子代码在[html_template](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-html_template)分支
+本节的例子代码在[html_template](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-html_template)分支
 
 
 我们可以使用`HtmlWebpackPlugin`,这是一个webpack插件,其作用是依据一个简单的`index.html`模板，生成一个自动引用你打包后的JS文件的新index.html.这在每次生成的js文件名称不同时非常有用(比如添加了hash值).
@@ -586,7 +586,7 @@ Webpack有很多内置插件,同时也有很多第三方插件,可以让我们�
 
 ## 为前端项目配置调试工具
 
-本部分代码在[other_tools](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-other_tools)分支.
+本部分代码在[other_tools](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-other_tools)分支.
 
 上面的内容其实已经可以直接使用了,但以上的配置并不方便调试.为了方便开发时进行调试,我们可以再多做下面几件事
 
@@ -700,7 +700,7 @@ module.exports = {
 
 ### 优化代码
 
-这部分代码在[optimize_code](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-optimize_code)分支
+这部分代码在[optimize_code](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-optimize_code)分支
 
 webpack提供了一些在发布阶段非常有用的优化插件,它们大多来自于webpack社区,可以通过npm安装,通过以下插件可以完成产品发布阶段所需的功能
 
@@ -798,7 +798,7 @@ module.exports = {
 
 #### 编译环境隔离
 
-本部分的代码在[compiling_env](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-compiling_env)分支.
+本部分的代码在[compiling_env](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-compiling_env)分支.
   
 在最开始的时候我们就看到webpack需要指定一个config因此针对不同环境我们可以配置不同配置文件.
 
@@ -1006,7 +1006,7 @@ module.exports = merge(base,{
 
 #### 源码环境隔离
 
-本部分的代码在[quarantine_env](https://github.com/hsz1273327/TutorialForJavascript/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-quarantine_env)分支.
+本部分的代码在[quarantine_env](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93-webpack-quarantine_env)分支.
 
 在`env/conf`文件夹下我们创建3个json文件来设置不同环境下源码中使用的配置量
 

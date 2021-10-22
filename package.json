@@ -1,0 +1,19 @@
+{
+    "name": "ws-hello",
+    "type": "module",
+    "version": "0.0.1",
+    "description": "simple tools",
+    "author": "huangsizhe",
+    "license": "MIT",
+    "devDependencies": {
+        "mocha": "^9.1.0",
+        "nyc": "^13.3.0"
+    },
+    "dependencies": {
+        "ws": "^8.2.0"
+    },
+    "scripts": {
+        "start": "node src/index.js",
+        "test": "./node_modules/.bin/nyc --reporter=text ./node_modules/.bin/mocha"
+    }
+}

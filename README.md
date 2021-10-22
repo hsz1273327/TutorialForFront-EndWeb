@@ -1,3 +1,8 @@
-# dev分支
+# node环境构建应用-使用node搭建后端服务-wshello
 
-用于提供一个空的开发分支给其他例子分支作为基础
+使用ws的helloworld
+
+## 用法
+
++ `npm start`启动服务
++ `npm run test`测试接口

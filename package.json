@@ -1,0 +1,17 @@
+{
+    "name": "browser-browser_and_page-event-button",
+    "version": "1.0.0",
+    "description": "前端演示",
+    "main": "src/index.js",
+    "scripts": {
+      "start": "./node_modules/.bin/live-server --port=3000 public"
+    },
+    "keywords": [
+      "演示"
+    ],
+    "author": "hsz",
+    "license": "MIT",
+    "dependencies": {
+      "live-server": "^1.2.1"
+    }
+  }

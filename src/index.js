@@ -5,10 +5,30 @@ const wsserver = new WebSocket.Server({
 })
 
 
+wsserver.broadcast = (data) => {
+    wsserver.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(data)
+        }
+    })
+}
+
 wsserver.on('connection', ws => {
     ws.on('message', message => {
         console.log('received: %s', message)
-        switch (message) {
+        let data = null
+        try {
+            data = JSON.parse(message)
+        } catch (error) {
+            ws.send('message is not json')
+            return
+        }
+
+        if (!data || !data.event) {
+            ws.send('no event')
+            return
+        }
+        switch (data.event) {
             case "close":
                 {
                     ws.close()
@@ -16,11 +36,11 @@ wsserver.on('connection', ws => {
                 break
             case "helloworld":
                 {
-                    const array = new Float32Array(10000)
-                    for (var i = 0; i < array.length; ++i) {
-                        array[i] = i / 2;
-                    }
-                    ws.send(array)
+                    console.log(data.message)
+                    wsserver.broadcast(JSON.stringify({
+                        event: "helloworld",
+                        message: `helloworld ${ data.message }`
+                    }))
                 }
                 break
             default:

@@ -1,40 +1,17 @@
 {
-    "name": "browser-browser_and_page-event-button",
-    "version": "1.0.0",
-    "description": "前端演示",
-    "main": "src/index.js",
-    "scripts": {
-      "start": "./node_modules/.bin/live-server --port=3000 public",
-      "build": "./node_modules/.bin/babel src -d public"
-    },
-    "keywords": [
-      "演示"
-    ],
-    "author": "hsz",
-    "license": "MIT",
-    "devDependencies": {
-      "live-server": "^1.2.1",
-      "@babel/cli": "^7.8.4",
-      "@babel/core": "^7.8.4",
-      "@babel/node": "^7.8.4",
-      "@babel/plugin-transform-flow-strip-types": "^7.8.3",
-      "@babel/preset-env": "^7.8.4",
-      "@babel/register": "^7.8.3",
-      "@babel/runtime": "^7.8.4"
-    },
-    "babel": {
-      "presets": [
-        [
-          "@babel/preset-env",
-          {
-            "targets": {
-              "node": "current"
-            }
-          }
-        ]
-      ],
-      "plugins": [
-        "@babel/plugin-transform-flow-strip-types"
-      ]
-    }
+  "name": "browser-browser_and_page-event-button",
+  "version": "1.0.0",
+  "description": "前端演示",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "./node_modules/.bin/live-server --port=3000 public"
+  },
+  "keywords": [
+    "演示"
+  ],
+  "author": "hsz",
+  "license": "MIT",
+  "dependencies": {
+    "live-server": "^1.2.1"
   }
+}

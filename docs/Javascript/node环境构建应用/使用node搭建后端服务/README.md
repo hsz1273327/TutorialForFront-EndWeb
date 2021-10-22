@@ -23,5 +23,4 @@ Javascript并不是最佳的后端服务语言,但它并不是不能做,node.js�
 + [zmq](http://zeromq.org/)一种基于通信模式的消息组件框架
 + [webrtc](https://github.com/node-webrtc/node-webrtc)一种在浏览器端也有实现的p2p即时通信技术
 
-
 不过还是那句话,不建议后端开发使用node.不过本系列文章的演示程序后台都将使用node编写,这样读者不用再多学一门编程语言在后台部分陷入泥潭

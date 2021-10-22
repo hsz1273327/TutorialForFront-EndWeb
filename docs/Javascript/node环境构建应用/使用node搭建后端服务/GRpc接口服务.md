@@ -19,7 +19,7 @@ GRpc是一种跨语言的Rpc,它建立在`http2`上使用[protobuf](https://deve
 
 ## 请求-响应
 
-这个例子[C0](https://github.com/TutorialForJavascript/js-server/tree/master/code/GRpc%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C0)我们来实现一个简单的服务--输入一个数,输出这个数的平方
+这个[helloworld例子](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8-%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1-grpchello)我们来实现一个简单的服务--输入一个数,输出这个数的平方
 
 ### 创建一个`protobuf`文件
 

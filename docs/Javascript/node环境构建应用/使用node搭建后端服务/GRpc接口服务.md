@@ -174,7 +174,7 @@ main()
 
 这种需求比较常见,有点类似,python中的range函数,它生成的是一个流而非一个数组,它会一次一条的按顺序将数据发送回请求的客户端.
 
-这个例子[C1](https://github.com/TutorialForJavascript/js-server/tree/master/code/GRpc%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C1)实现了给出一个正整数,它会返回从0开始到它为止的每个整数的平方.
+这个[例子C1](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8-%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1-grpcreq2stream)实现了给出一个正整数,它会返回从0开始到它为止的每个整数的平方.
 
 ### 修改`protobuf`文件
 

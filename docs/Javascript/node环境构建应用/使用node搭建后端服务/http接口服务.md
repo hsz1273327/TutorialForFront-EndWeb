@@ -126,7 +126,7 @@ ctx也提供了几个特殊对象方便我们构造响应.
 
 ## 一个完整例子
 
-我们用例子[C2](https://github.com/TutorialForJavascript/js-server/tree/master/code/RESTful%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C2)来封装一个服务资源--Notification. 这个Notification包含如下字段:
+我们用例子[C2](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8-%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1-httpcomplete)来封装一个服务资源--Notification. 这个Notification包含如下字段:
 
 ```json
 {

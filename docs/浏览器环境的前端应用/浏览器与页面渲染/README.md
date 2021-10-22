@@ -54,3 +54,18 @@ CSS是阻塞渲染的资源,需要将它尽早尽快地下载到客户端,以便
 
 + `async`属性:加载和渲染后续文档元素的过程将和脚本的加载与执行并行执行.无顺序
 + `defer`属性:加载后续文档元素的过程将和脚本的加载并行进行,但脚本的执行要在所有元素解析完成之后,DOMContentLoaded事件触发之前完成.
+
+## 在浏览器中使用ES module
+
+`script`可以设置参数`type="module"`来激活使用ES module,这样你的脚本中就可以使用`import`语法加载模块了.在浏览器中`import`不光可以从本地加载模块还可以使用http协议获取模块
+
+```html
+<script type="module">
+  import { getOriginPrivateDirectory } from 'https://cdn.jsdelivr.net/npm/native-file-system-adapter/mod.js'
+  // Get a directory handle for a sandboxed virtual file system
+  // same as calling navigator.storage.getDirectory()
+  const dirHandle1 = await getOriginPrivateDirectory()
+  // or use an adapter (see adapters table above for a list of available adapters)
+  const dirHandle2 = await getOriginPrivateDirectory(import('https://cdn.jsdelivr.net/npm/native-file-system-adapter/src/adapters/<adapterName>.js'))
+</script>
+```

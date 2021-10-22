@@ -100,7 +100,7 @@ css有3种样式引入方式:
 
 css的加载顺序如下:
 
-`(外部样式)External style sheet<(内部样式)Internal style sheet<(内联样式)Inline style `
+`(外部样式)External style sheet<(内部样式)Internal style sheet<(内联样式)Inline style`
 
 有种特殊情况,就是如果外部样式放在内部样式的后面,则外部样式将覆盖内部样式.
 

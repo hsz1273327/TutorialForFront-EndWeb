@@ -1,14 +1,7 @@
-import assert from 'assert'
 import WebSocket from 'ws'
 
 
 const ws = new WebSocket('ws://localhost:3000')
-ws.on('open', () => {
-    ws.send(JSON.stringify({
-        event: 'helloworld',
-        message: 'hsz'
-    }))
-})
 ws.on('message', (message) => {
     let data = null
     try {
@@ -27,11 +20,9 @@ ws.on('message', (message) => {
                 ws.close()
             }
             break
-        case "helloworld":
+        case "clock":
             {
                 console.log(data.message)
-                assert.equal(data.message, "helloworld hsz")
-                ws.close()
             }
             break
         default:

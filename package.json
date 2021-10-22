@@ -1,0 +1,21 @@
+{
+    "name": "hello",
+    "version": "0.0.1",
+    "type": "module",
+    "description": "simple tools",
+    "author": "huangsizhe",
+    "license": "MIT",
+    "devDependencies": {
+        "mocha": "^9.1.0",
+        "nyc": "^13.3.0"
+    },
+    "dependencies": {
+        "@grpc/proto-loader": "^0.6.6",
+        "bluebird": "^3.7.2",
+        "@grpc/grpc-js": "^1.4.1"
+    },
+    "scripts": {
+        "start": "node server/index.js",
+        "test": "node test/index.js"
+    }
+}

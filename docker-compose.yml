@@ -1,0 +1,6 @@
+version: '3.6'
+services:
+  rest-helloworld:
+    build: .
+    ports:
+      - 5000:5000

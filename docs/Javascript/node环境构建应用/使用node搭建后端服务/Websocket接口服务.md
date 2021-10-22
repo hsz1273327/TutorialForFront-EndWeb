@@ -384,7 +384,7 @@ wss.on('connection', ws => {
 
 使用中介模式我们一样是用一个Map集合client,这样要使用时只要用client的名字来查找即可.
 
-[C7](https://github.com/TutorialForJavascript/js-server/tree/master/code/Websocket%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C7)是一个简易的聊天室应用.我们可以通过`event:client_list`获取当前有哪些用户,然后根据这个指定用户去通过``event:talk_with`来发送消息.
+[C7](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8-%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1-wsmediator)是一个简易的聊天室应用.我们可以通过`event:client_list`获取当前有哪些用户,然后根据这个指定用户去通过``event:talk_with`来发送消息.
 
 这个例子需要有一套用户系统,这边做了相当的简化.
 

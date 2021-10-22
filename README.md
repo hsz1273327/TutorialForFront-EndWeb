@@ -1,4 +1,4 @@
-# node环境构建应用-使用node搭建后端服务-wsbinary
+# node环境构建应用-使用node搭建后端服务-wsbroadcast
 
 使用ws的helloworld
 

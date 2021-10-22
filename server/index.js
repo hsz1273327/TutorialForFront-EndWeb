@@ -22,18 +22,14 @@ const rpc_proto = grpc.loadPackageDefinition(PackageDefintion).squarerpc_service
 
 const SquareService = {
     streamrangeSquare(call) {
-        let container = []
         call.on("data", (message) => {
             console.log(`get ${message.message}`)
-            container.push(message.message)
+            call.write({
+                message: message.message ** 2
+            })
         })
         call.on("end", () => {
             console.log("stream end")
-            for (let i of container) {
-                call.write({
-                    message: i ** 2
-                })
-            }
             call.end()
         })
     }

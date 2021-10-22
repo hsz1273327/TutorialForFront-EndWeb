@@ -1,4 +1,4 @@
-# node环境构建应用-使用node搭建后端服务-grpcstream2endstream
+# node环境构建应用-使用node搭建后端服务-grpcstream2stream
 
 这个例子是grpc最简单的应用.一个请求流对应一个流响应.这个例子无法使用异步
 

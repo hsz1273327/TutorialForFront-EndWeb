@@ -335,7 +335,7 @@ service SquareService {
 
 ### 请求的进行中就返回响应
 
-这个例子[C4](https://github.com/TutorialForJavascript/js-server/tree/master/code/GRpc%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C4)实现了传过来一串数,每收到一个数就处理了进行返回.
+这个[例子C4](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8-%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1-grpcstream2stream)实现了传过来一串数,每收到一个数就处理了进行返回.
 
 + 修改服务端
 

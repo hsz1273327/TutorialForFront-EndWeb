@@ -24,16 +24,18 @@ const clientcb = new rpc_proto.SquareService(
     grpc.credentials.createInsecure()
 )
 
+
+
 function main() {
-    let call = clientcb.rangeSquare({
-        message: 12.3
-    })
-    call.on("data",(message)=>{
-        console.log(message.message)
-    })
-    call.on("end",()=>{
-        console.log("stream end")
-    })
+    let call = clientcb.sumSquare(
+        (error, message) => console.log(`result: ${message.message}`)
+    )
+    for (let i = 0; i <= 5; i++) {
+        call.write({
+            message: i
+        })
+    }
+    call.end()
 }
 
 main()

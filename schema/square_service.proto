@@ -2,7 +2,7 @@ syntax = "proto3";
 package squarerpc_service;
 
 service SquareService {
-    rpc rangeSquare (Message) returns (stream Message){}
+    rpc sumSquare (stream Message) returns (Message){}
 }
 
 message Message {

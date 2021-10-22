@@ -347,7 +347,7 @@ ws即然是一个双工通信协议,那他自然支持流数据的推送.
 
 ### 借助http服务器动态的创建wsserver
 
-[例子C6](https://github.com/TutorialForJavascript/js-server/tree/master/code/Websocket%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C6)演示了如何创建动态的wsserver.
+[例子C6](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8-%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1-wschannel)演示了如何创建动态的wsserver.
 
 为了保持回调函数不要太长,我们可以将回调函数定义在外面,然后通过闭包在每个wss和ws中绑定.
 

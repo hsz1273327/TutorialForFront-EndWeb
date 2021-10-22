@@ -69,3 +69,5 @@ CSS是阻塞渲染的资源,需要将它尽早尽快地下载到客户端,以便
   const dirHandle2 = await getOriginPrivateDirectory(import('https://cdn.jsdelivr.net/npm/native-file-system-adapter/src/adapters/<adapterName>.js'))
 </script>
 ```
+
+不过需要注意,`type="module"`必须结合http服务器使用,在文件系统中这种方式是无法加载`src`中指定的文件的,因此我们可以安装`live-server`,然后设置`"start": "./node_modules/.bin/live-server --port=3000 public"`,测试的时候执行`npm start`即可.

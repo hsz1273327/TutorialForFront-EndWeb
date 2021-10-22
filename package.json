@@ -10,5 +10,8 @@
         "演示"
     ],
     "author": "hsz",
-    "license": "MIT"
+    "license": "MIT",
+    "devDependencies": {
+      "live-server": "^1.2.1"
+    }
 }

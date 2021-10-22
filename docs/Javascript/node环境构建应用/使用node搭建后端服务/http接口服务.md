@@ -97,7 +97,7 @@ ctx也提供了几个特殊对象方便我们构造响应.
 
 ### 自己写个插件
 
-我们的第二个例子[C1](https://github.com/TutorialForJavascript/js-server/tree/master/code/RESTful%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C1)就是一个自己写的插件,这个插件实现一个没什么用的功能--给所有的response的json体内加上`author:hsz`.
+我们的[第二个例子](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8-%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1-koa%E4%B8%AD%E9%97%B4%E4%BB%B6)就是一个自己写的插件,这个插件实现一个没什么用的功能--给所有的response的json体内加上`author:hsz`.
 
 插件和业务逻辑都是使用`app.use()`来调用,但不太一样的是插件是一个包含`ctx`和`next`两个参数的协程函数,而`await next()`则是进入下一层的标志,在其上的是处理请求,在其下的是处理响应.
 
@@ -105,7 +105,7 @@ ctx也提供了几个特殊对象方便我们构造响应.
 
 ### 使用插件
 
-和业务逻辑一样,插件也是使用`app.use()`来使用.只是需要注意使用的顺序,即先`use`的在外层,后`use`的在内层.这个在例子[C1]()中也有体现
+和业务逻辑一样,插件也是使用`app.use()`来使用.只是需要注意使用的顺序,即先`use`的在外层,后`use`的在内层.这个在上面例子中也有体现
 
 ### 常见插件
 

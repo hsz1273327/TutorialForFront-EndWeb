@@ -1,7 +1,7 @@
 {
-    "name": "speech-recognition",
+    "name": "speech-synthesis",
     "version": "0.0.1",
-    "description": "语音识别",
+    "description": "语音合成",
     "author": "huangsizhe",
     "license": "MIT",
     "devDependencies": {

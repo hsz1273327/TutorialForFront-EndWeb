@@ -7,8 +7,9 @@ html {
 }
 
 body {
-  height: inherit;
-  overflow: hidden;
+  height: 90%;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 h1, p {
@@ -17,20 +18,57 @@ h1, p {
   padding: 20px;
 }
 
-div {
-  height: 100px;
+.txt, select, form > div {
+  display: block;
+  margin: 0 auto;
+  font-family: sans-serif;
+  font-size: 16px;
+  padding: 5px;
+}
+
+.txt {
+  width: 80%;
+}
+
+select {
+  width: 83%;
+}
+
+form > div {
+  width: 81%;
+}
+
+.txt, form > div {
+  margin-bottom: 10px;
   overflow: auto;
-  position: absolute;
-  bottom: 0px;
-  right: 0;
-  left: 0;
-  background-color: rgba(255,255,255,0.2);
 }
 
-ul {
-  margin: 0;
+.clearfix {
+  clear: both;
 }
 
-.hints span {
-  text-shadow: 0px 0px 6px rgba(255,255,255,0.7);
+label {
+  float: left;
+  width: 10%;
+  line-height: 1.5;
+}
+
+.rate-value, .pitch-value {
+  float: right;
+  width: 5%;
+  line-height: 1.5;
+}
+
+#rate, #pitch {
+  float: right;
+  width: 81%;
+}
+
+.controls {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.controls button {
+  padding: 10px;
 }

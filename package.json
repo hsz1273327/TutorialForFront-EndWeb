@@ -1,5 +1,5 @@
 {
-    "name": "localstorage-webstorage",
+    "name": "localstorage-indexdb",
     "version": "0.0.1",
     "description": "simple tools",
     "author": "huangsizhe",

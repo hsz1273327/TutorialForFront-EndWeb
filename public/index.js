@@ -1,26 +1,32 @@
 "use strict"
 import { MD5 } from 'https://cdn.jsdelivr.net/npm/crypto-es/lib/md5.js'
+import Dexie from 'https://cdn.jsdelivr.net/npm/dexie@latest/dist/dexie.mjs'
 
 const Storage = {
+    db: new Dexie("PersonInfoDatabase"),
+    init_db: function () {
+        this.db.version(1).stores({
+            person: "id,firstname,lastname,gender,birthday,email,tel,homepage"
+        })
+    },
     saveOne: function (md5_id, table) {
-        localStorage.setItem(md5_id, JSON.stringify(table));
+        return this.db.transaction('rw', this.db.person, async () => {
+            // Make sure we have something in DB:
+            table.id = md5_id
+            await this.db.person.add(table)
+        })
     },
     loadAll: function () {
-        if (localStorage.length > 0) {
-            let keys = Object.keys(localStorage);
-            let result = [];
-            for (let id of keys) {
-                let body = localStorage[id];
-                let table = JSON.parse(body);
-                table.id = id;
-                result.push(table);
+        return this.db.transaction('rw', this.db.person, async () => {
+            if ((await this.db.person.count()) > 0) {
+                let result = await this.db.person.toArray()
+                return result
+            } else {
+                return false
             }
-            return result;
-        } else {
-            return false;
-        }
+        })
     }
-};
+}
 
 
 function isNull (exp) {
@@ -36,7 +42,6 @@ let formRender = {
         console.log("bind form")
     },
     onSubmit: function () {
-        console.log("fafasf")
         let table = {
             gender: formRender.target_form.gender.value,
             firstname: formRender.target_form.firstname.value,
@@ -53,7 +58,6 @@ let formRender = {
             console.log(err)
             return false
         }
-
         if (isNull(formRender.last_md5)) {
             formRender.last_md5 = this_md5
             console.log("first table")

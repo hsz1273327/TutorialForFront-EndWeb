@@ -108,19 +108,22 @@ let showRender = {
         return rendered_content
     },
     onClick: function () {
-        let tables = Storage.loadAll()
-        if (tables) {
-            if (showRender.table_body.childNodes.length > 0) {
-                showRender.table_body.innerHTML = ""
+        let tables_promise = Storage.loadAll();
+        tables_promise.then(result => {
+            if (result) {
+                if (showRender.table_body.childNodes.length > 0) {
+                    showRender.table_body.innerHTML = "";
+                }
+                for (let table of result) {
+                    let row = showRender.renderRow(table);
+                    showRender.table_body.appendChild(row);
+                }
+            } else {
+                alert("no storage at all");
             }
-            for (let table of tables) {
-                let row = showRender.renderRow(table)
-
-                showRender.table_body.appendChild(row)
-            }
-        } else {
-            alert("no storage at all")
-        }
+        }).catch(e => {
+            alert(e.stack || e);
+        });
     }
 }
 

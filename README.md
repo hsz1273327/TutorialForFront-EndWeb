@@ -1,5 +1,5 @@
-# 浏览器环境-浏览器调用本地资源-使用本地存储-cookie
+# 浏览器环境-浏览器调用本地资源-使用本地存储-webstorage
 
 ## 项目主旨
 
-本项目介绍如何使用cookie
+本项目介绍如何使用webstorage,以`localStorage`为例

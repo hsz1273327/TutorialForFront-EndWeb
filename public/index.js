@@ -1,27 +1,27 @@
 "use strict"
 import { MD5 } from 'https://cdn.jsdelivr.net/npm/crypto-es/lib/md5.js'
+
 const Storage = {
     saveOne: function (md5_id, table) {
-        document.cookie = `${ md5_id }=${ JSON.stringify(table) }`
+        localStorage.setItem(md5_id, JSON.stringify(table));
     },
     loadAll: function () {
-        if (document.cookie.length > 0) {
-            let data = document.cookie.split(";")
-            let result = []
-            for (let i of data) {
-                let content = i.split("=")
-                let id = content[ 0 ]
-                let body = content[ 1 ]
-                let table = JSON.parse(body)
-                table.id = id
-                result.push(table)
+        if (localStorage.length > 0) {
+            let keys = Object.keys(localStorage);
+            let result = [];
+            for (let id of keys) {
+                let body = localStorage[id];
+                let table = JSON.parse(body);
+                table.id = id;
+                result.push(table);
             }
-            return result
+            return result;
         } else {
-            return false
+            return false;
         }
     }
-}
+};
+
 
 function isNull (exp) {
     return !exp && typeof exp != "undefined" && exp != 0

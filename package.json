@@ -1,0 +1,13 @@
+{
+    "name": "speech-recognition",
+    "version": "0.0.1",
+    "description": "语音识别",
+    "author": "huangsizhe",
+    "license": "MIT",
+    "devDependencies": {
+        "live-server": "^1.2.1"
+    },
+    "scripts": {
+        "start": "./node_modules/.bin/live-server --port=3000 public"
+    }
+}

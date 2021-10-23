@@ -1,14 +1,14 @@
-# 基本的dedicated worker例子
+# 基本的shared worker例子
 
 ## 项目主旨
 
-本项目介绍如何使用dedicated worker
+本项目介绍如何使用shared worker
 
 ## 用法
 
-使用`npm start`后在`localhost:3000`打开
+使用`npm start`后在`localhost:3000`打开.
 
-两个文本框内输入数,回车后就会出现相乘的结果
+两个文本框内输入数,回车后就会出现相乘的结果,而在其中点击`乘方页面`后输入一个数回车后返回这个数的平方.
 
 ## 使用范围
 

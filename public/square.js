@@ -1,16 +1,12 @@
 'use strict'
 
-/**
- * 计算乘法用的应用
- */
-class MulApplication {
+class SquareApplication {
 
     constructor () {
         // 控件
-        this.first = document.querySelector('#number1')
-        this.second = document.querySelector('#number2')
+        this.squareNumber = document.querySelector('#number3')
+        this.result2 = document.querySelector('.result2')
         this.form = document.querySelector('form')
-        this.result1 = document.querySelector('.result1')
         this.myWorker = new SharedWorker("worker.js")
         // 绑定事件
         this.bindEvent()
@@ -20,8 +16,7 @@ class MulApplication {
      * 为输入输出设备和按钮绑定事件句柄的回调函数
      */
     bindEvent () {
-        this.first.onchange = () => this.query()
-        this.second.onchange = () => this.query()
+        this.squareNumber.onchange = () => this.query()
         this.form.onsubmit = function (e) {
             e.preventDefault()
         }
@@ -31,7 +26,7 @@ class MulApplication {
      * 向worker请求计算结果
      */
     query () {
-        this.myWorker.port.postMessage([ this.first.value, this.second.value ])
+        this.myWorker.port.postMessage([ this.squareNumber.value, this.squareNumber.value ])
         console.log('Message posted to worker')
     }
     /**
@@ -39,7 +34,7 @@ class MulApplication {
      * @param {Event} event - 消息传递事件
      */
     onResult (event) {
-        this.result1.textContent = event.data
+        this.result2.textContent = event.data
         console.log('Message received from worker')
     }
 }
@@ -48,7 +43,7 @@ class MulApplication {
  * 入口函数,这个入口函数是一个异步函数
  */
 function main () {
-    let app = new MulApplication()
+    let app = new SquareApplication()
 }
 
 main()

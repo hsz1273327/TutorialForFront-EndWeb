@@ -22,7 +22,7 @@ let formRender = {
       tel: formRender.target_form.tel.value,
       homepage: formRender.target_form.homepage.value
     };
-    let this_md5 = MD5(JSON.stringify(table));
+    let this_md5 = MD5(JSON.stringify(table)).toString()
 
     if (isNull(formRender.last_md5)) {
       formRender.last_md5 = this_md5;

@@ -48,7 +48,7 @@ let formRender = {
         }
         let this_md5
         try {
-            this_md5 = MD5(JSON.stringify(table))
+            this_md5 = MD5(JSON.stringify(table)).toString();
         } catch (err) {
             console.log(err)
             return false

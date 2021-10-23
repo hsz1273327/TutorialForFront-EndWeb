@@ -1,32 +1,32 @@
 "use strict"
 import { MD5 } from 'https://cdn.jsdelivr.net/npm/crypto-es/lib/md5.js'
-import Dexie from 'https://cdn.jsdelivr.net/npm/dexie@latest/dist/dexie.mjs'
+import websql from 'https://cdn.jsdelivr.net/gh/oskarer/websql-promisified/src/index.js'
 
 const Storage = {
-    db: new Dexie("PersonInfoDatabase"),
-    init_db: function () {
-        this.db.version(1).stores({
-            user: "id,firstname,lastname,gender,birthday,email,tel,homepage"
+    db: openDatabase('PersonInfoDatabase', '1.0', 'Test DB', 2 * 1024 * 1024),
+    db_promise: null,
+    init_db: async function () {
+        this.db_promise = websql(this.db)
+        await this.db.transaction(function (tx) {
+            tx.executeSql('CREATE TABLE IF NOT EXISTS Person (' + 'id TEXT PRIMARY KEY NOT NULL,' + 'firstname TEXT NOT NULL,' + 'lastname TEXT NOT NULL,' + 'gender TEXT NOT NULL,' + 'birthday TEXT NOT NULL,' + 'email TEXT NOT NULL,' + 'tel TEXT NOT NULL,' + 'homepage TEXT NOT NULL)')
         })
     },
     saveOne: async function (md5_id, table) {
-        table.id = md5_id
-        console.log(table)
-        let res = await this.db.transaction('rw', this.db.user, async () => {
-            // Make sure we have something in DB:
-            await this.db.user.add(table)
+        return await this.db_promise.transaction(function (tx) {
+            tx.executeSql(`INSERT INTO Person VALUES ('${ md5_id }','${ table.firstname }','${ table.lastname }','${ table.gender }','${ table.birthday }','${ table.email }','${ table.tel }','${ table.homepage }');`)
         })
-        return res
     },
     loadAll: async function () {
-        return await this.db.transaction('rw', this.db.user, async () => {
-            if ((await this.db.user.count()) > 0) {
-                let result = await this.db.user.toArray()
-                return result
-            } else {
-                return false
-            }
+        let result = await this.db_promise.transaction(function (tx) {
+            tx.executeSql(`SELECT * FROM Person`)
         })
+        console.log(result)
+        if (result[0].rows.length > 0) {
+            return result[0].rows
+        } else {
+            alert("no storage at all");
+        }
+        return result
     }
 }
 
@@ -140,8 +140,11 @@ let showRender = {
 
 let main = () => {
     console.log("main")
-    Storage.init_db();
-    formRender.bindEvent()
-    showRender.bindEvent()
+    Storage.init_db().then(
+        () => {
+            formRender.bindEvent()
+            showRender.bindEvent()
+        }
+    )
 }
 main()

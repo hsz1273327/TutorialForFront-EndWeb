@@ -2,31 +2,60 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <title>Shared worker</title>
-  <link rel="stylesheet" href="style.css" type="text/css">
-  <script type="module" src="index.js" async="async"></script>
+    <meta charset="UTF-8">
+    <title>录像</title>
+    <link rel="icon" sizes="192x192" href="webrtc-icon-192x192.png">
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="https://at.alicdn.com/t/font_1067578_54hyfq64fhc.css" rel="stylesheet" type="text/css" />
+    <script src="index.js" async="async"></script>
 </head>
 
 <body>
-  <main>
-    <h1>Shared Worker基本例子--乘</h1>
-    <div class="controls" tabindex="0">
-      <form>
-        <div>
-          <label for="number1">乘数 1: </label>
-          <input type="text" id="number1" value="0">
-        </div>
-        <div>
-          <label for="number2">乘数 2: </label>
-          <input type="text" id="number2" value="0">
-        </div>
-      </form>
-      <p class="result1">结果: 0</p>
-      <p><a href="square.html" target="_blank">乘方页面</a></p>
-    </div>
-  </main>
+    <main>
+        <div id="container">
+            <h1> WebRTC samples<span>选择输入输出的设备</span></h1>
+            <p>使用<code>mediaDevices.enumerateDevices()</code>获取可用的音频/视频输入资源,以及输出设备,然后使用<code>deviceId</code>指定
+                要使用的资源给<code>getUserMedia()</code></p>
 
+            <div class="select">
+                <label for="audioSource">音频输入: </label><select id="audioSource">
+                </select>
+            </div>
+            </br>
+            <div class="select">
+                <label for="audioOutput">音频输出: </label><select id="audioOutput"></select>
+            </div>
+            </br>
+            <div class="select">
+                <label for="videoSource">视频输入: </label><select id="videoSource">
+                </select>
+            </div>
+            </br>
+
+            <form>
+                <legend>
+                    录制选项
+                </legend>
+                <fieldset>
+                    <label for="videoMineType">视频格式: </label><select id="videoMineType">
+                    </select>
+                    <button id="record" type="button" value=false>
+                        <span class="icon iconfont icon-luzhi"></span>
+                    </button>
+                    <p id="mimetype_selected"></p>
+                    <button id="download" type="button">
+                        <span class="icon iconfont icon-xiazai"></span>
+                    </button>
+                    <button id="snap" type="button">
+                        <span class="icon iconfont icon-cut"></span>
+                    </button>
+                </fieldset>
+            </form>
+            <video id="video" playsinline autoplay></video>
+            <p class="small"><b>注意:</b> 如果听到混响声,则说明麦克风正在获取你的输出,请降低音量或将麦克风远离扬声器/耳机</p>
+            <canvas></canvas>
+        </div>
+    </main>
 </body>
 
 </html>

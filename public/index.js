@@ -1,5 +1,5 @@
 "use strict";
-import * as md5 from "https://cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"
+import { MD5 } from 'https://cdn.jsdelivr.net/npm/crypto-es/lib/md5.js';
 function isNull(exp) {
   return !exp && typeof exp != "undefined" && exp != 0;
 }
@@ -22,7 +22,7 @@ let formRender = {
       tel: formRender.target_form.tel.value,
       homepage: formRender.target_form.homepage.value
     };
-    let this_md5 = md5(JSON.stringify(table));
+    let this_md5 = MD5(JSON.stringify(table));
 
     if (isNull(formRender.last_md5)) {
       formRender.last_md5 = this_md5;

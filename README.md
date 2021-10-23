@@ -6,7 +6,7 @@
 
 ## 用法
 
-在`public`文件夹下使用`python3 -m http.server 3000`或使用`npm start`后在`localhost:3000`打开
+使用`npm start`后在`localhost:3000`打开
 
 两个文本框内输入数,回车后就会出现相乘的结果
 

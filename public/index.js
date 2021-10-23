@@ -6,20 +6,22 @@ const Storage = {
     db: new Dexie("PersonInfoDatabase"),
     init_db: function () {
         this.db.version(1).stores({
-            person: "id,firstname,lastname,gender,birthday,email,tel,homepage"
+            user: "id,firstname,lastname,gender,birthday,email,tel,homepage"
         })
     },
-    saveOne: function (md5_id, table) {
-        return this.db.transaction('rw', this.db.person, async () => {
+    saveOne: async function (md5_id, table) {
+        table.id = md5_id
+        console.log(table)
+        let res = await this.db.transaction('rw', this.db.user, async () => {
             // Make sure we have something in DB:
-            table.id = md5_id
-            await this.db.person.add(table)
+            await this.db.user.add(table)
         })
+        return res
     },
-    loadAll: function () {
-        return this.db.transaction('rw', this.db.person, async () => {
-            if ((await this.db.person.count()) > 0) {
-                let result = await this.db.person.toArray()
+    loadAll: async function () {
+        return await this.db.transaction('rw', this.db.user, async () => {
+            if ((await this.db.user.count()) > 0) {
+                let result = await this.db.user.toArray()
                 return result
             } else {
                 return false
@@ -37,11 +39,14 @@ let formRender = {
     last_md5: null,
     target_form: document.getElementById("test_form"),
     bindEvent: function () {
-        this.target_form.onsubmit = this.onSubmit
+        this.target_form.onsubmit = () => {
+            this.onSubmit()
+            return false
+        }
         this.target_form.onreset = this.onReset
         console.log("bind form")
     },
-    onSubmit: function () {
+    onSubmit: async function () {
         let table = {
             gender: formRender.target_form.gender.value,
             firstname: formRender.target_form.firstname.value,
@@ -53,7 +58,7 @@ let formRender = {
         }
         let this_md5
         try {
-            this_md5 = MD5(JSON.stringify(table))
+            this_md5 = MD5(JSON.stringify(table)).toString()
         } catch (err) {
             console.log(err)
             return false
@@ -61,7 +66,13 @@ let formRender = {
         if (isNull(formRender.last_md5)) {
             formRender.last_md5 = this_md5
             console.log("first table")
-            Storage.saveOne(this_md5, table)
+            try {
+                console.log(table)
+                await Storage.saveOne(this_md5, table)
+            } catch (err) {
+                console.log(err)
+            }
+
         } else {
             if (this_md5 !== formRender.last_md5) {
                 console.log("new table")
@@ -84,7 +95,7 @@ let showRender = {
     table_body: document.getElementById("rows"),
     template: document.querySelector('#table_template'),
     bindEvent: function () {
-        this.show_button.onclick = this.onClick
+        this.show_button.onclick = () => this.onClick()
         console.log("bind show")
     },
     renderRow: function (table) {
@@ -107,28 +118,29 @@ let showRender = {
         let rendered_content = document.importNode(showRender.template.content, true)
         return rendered_content
     },
-    onClick: function () {
-        let tables_promise = Storage.loadAll();
-        tables_promise.then(result => {
+    onClick: async function () {
+        try {
+            let result = await Storage.loadAll()
             if (result) {
                 if (showRender.table_body.childNodes.length > 0) {
-                    showRender.table_body.innerHTML = "";
+                    showRender.table_body.innerHTML = ""
                 }
                 for (let table of result) {
-                    let row = showRender.renderRow(table);
-                    showRender.table_body.appendChild(row);
+                    let row = showRender.renderRow(table)
+                    showRender.table_body.appendChild(row)
                 }
             } else {
-                alert("no storage at all");
+                alert("no storage at all")
             }
-        }).catch(e => {
-            alert(e.stack || e);
-        });
+        } catch (err) {
+            alert(err.stack || err)
+        }
     }
 }
 
 let main = () => {
     console.log("main")
+    Storage.init_db();
     formRender.bindEvent()
     showRender.bindEvent()
 }

@@ -1,0 +1,13 @@
+{
+    "name": "localstorage-cookie",
+    "version": "0.0.1",
+    "description": "simple tools",
+    "author": "huangsizhe",
+    "license": "MIT",
+    "devDependencies": {
+        "live-server": "^1.2.1"
+    },
+    "scripts": {
+        "start": "./node_modules/.bin/live-server --port=3000 public"
+    }
+}

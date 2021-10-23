@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>测试cookie</title>
+    <script type="module" src="index.js" async="async"></script>
+</head>
+<body>
+    <main>
+        <form id="test_form">
+            <fieldset>
+                <legend>Person Info</legend>
+                <p>Gender:</p>
+                <input type="radio" name="gender" value="male" checked>Male
+                <br>
+                <input type="radio" name="gender" value="female">Female
+                <br>
+                <p>First name:<input type="text" name="firstname" minlength=2 maxlength=10></p>
+                <br>
+                <p>Last name:<input type="text" name="lastname" minlength=2 maxlength=10></p>
+                <br>
+                <p>Birthday:<input type="date" name=birthday min="1960-01-01" max="2019-02-22"></p>
+                <br>
+                <p>Email:<input type="email" name=email></p>
+                <br>
+                <p>Tel:<input type="tel" name=tel></p>
+                <br>
+                <p>Home Page:<input type="url" name=homepage></p>
+                <br>
+                <input type="reset" value="Reset" accesskey="r" />
+                <input type="submit" value="Submit" accesskey="s" />
+            </fieldset>
+        </form>
+        <button id="show">Show Table List</button>
+        <table border="1">
+            <caption>已有用户</caption>
+            <thead>
+                <tr>
+                    <th >用户id</th>
+                    <th scope="col">First name</th>
+                    <th scope="col">Last name</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Birthday</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Tel</th>
+                    <th scope="col">Home Page</th>
+
+                </tr>
+            </thead>
+            <tbody id="rows">
+            </tbody>
+        </table>
+
+    </main>
+    <template id="table_template">
+        <tr>
+            <th scope="row" class="id"></th>
+            <td class="firstname"></td>
+            <td class="lastname"></td>
+            <td class="gender"></td>
+            <td class="birthday"></td>
+            <td class="email"></td>
+            <td class="tel"></td>
+            <td class="homepage"></td>
+        </tr>
+    </template>
+</body>
+</html>

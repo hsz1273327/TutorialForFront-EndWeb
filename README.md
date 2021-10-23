@@ -2,4 +2,4 @@
 
 ## 项目主旨
 
-本项目介绍如何使用webstorage,以`localStorage`为例
+本项目介绍如何使用`Dexie`调用indexDB.

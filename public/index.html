@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Shared worker</title>
+  <link rel="stylesheet" href="style.css" type="text/css">
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+  <script src="index.js" async="async"></script>
+</head>
+
+<body>
+  <main>
+    <h1>tfjs-matrix-mul</h1>
+    <div class="controls" tabindex="0">
+      <form>
+        <div>
+          <label for="n">n: </label>
+          <input type="text" id="n" value="4">
+        </div>
+        <div>
+          <label for="m">m: </label>
+          <input type="text" id="m" value="4">
+        </div>
+        <input type="submit" value=计算>
+      </form>
+      <p id="result">结果: 0</p>
+    </div>
+  </main>
+
+</body>
+
+</html>

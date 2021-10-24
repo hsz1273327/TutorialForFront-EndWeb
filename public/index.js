@@ -1,5 +1,6 @@
 'use strict'
 
+const RECORD_MIME_TYPES = [ 'video/webm;codecs=vp8', 'video/webm;codecs=vp9' ]
 /**
  * 录像用的前端项目
  */
@@ -12,11 +13,36 @@ class RecordApplication {
      * @public {Array[HTMLElement]} selectors - 保存所有的输入输出设备元素
      */
     constructor () {
+        // 展示
         this.videoElement = document.querySelector('video')
+        /// 输入输出选择
         this.audioInputSelect = document.querySelector('select#audioSource')
         this.audioOutputSelect = document.querySelector('select#audioOutput')
         this.videoSelect = document.querySelector('select#videoSource')
         this.selectors = [ this.audioInputSelect, this.audioOutputSelect, this.videoSelect ]
+        // 保存
+
+        // this.mediaSource = new MediaSource()
+        this.mediaRecorder = null
+        this.recordedBlobs = []
+        this.lastrecordedBlobs = null
+        // this.sourceBuffer = null
+        this.opr = false // 当它设置为true时点击录制无效
+        this.current_mime_type = null
+        this.last_mime_type = null
+
+        this.mimetype_selected = document.querySelector('#mimetype_selected')
+        //// 按钮
+        this.MimetypeSelect = document.querySelector('select#videoMineType')
+        this.RecordButton = document.querySelector('#record')
+        this.downloadButton = document.querySelector('#download')
+        // 截图
+        this.canvas = document.querySelector('canvas')
+        this.canvas.width = 480
+        this.canvas.height = 360
+        this.canvas.hidden = true
+        // 按钮
+        this.snapButton = document.querySelector('#snap')
         this.bindEvent()
     }
     /**
@@ -26,6 +52,9 @@ class RecordApplication {
         this.audioInputSelect.onchange = () => this.display()
         this.audioOutputSelect.onchange = () => this.changeAudioDestination()
         this.videoSelect.onchange = () => this.display()
+        this.RecordButton.onclick = () => this.record()
+        this.snapButton.onclick = () => this.snapshot()
+        this.downloadButton.onclick = () => this.download()
     }
     /**
      * 初始化页面
@@ -34,10 +63,110 @@ class RecordApplication {
         try {
             let media_device_infos = await navigator.mediaDevices.enumerateDevices()
             this.renderDevices(media_device_infos)
+            this.renderMimetype()
         } catch (error) {
             console.log('navigator.getUserMedia error: ', error)
         }
     }
+
+    async record () {
+        if (this.opr) {
+            alert("now is starting/stoping record, please wait a while then try again!")
+        } else {
+            this.opr = true
+            if (this.RecordButton.value === "false") {
+                this.start_record()
+            } else {
+                this.stop_record()
+            }
+            this.opr = false
+        }
+    }
+    start_record () {
+        let options = {
+            mimeType: this.MimetypeSelect.value
+        }
+        this.mediaRecorder = new MediaRecorder(window[ "stream" ], options)
+        this.current_mime_type = this.MimetypeSelect.value
+        this.mediaRecorder.onstop = event => console.log('Recorder stopped: ', event)
+        this.mediaRecorder.ondataavailable = event => {
+            if (event.data && event.data.size > 0) {
+                this.recordedBlobs.push(event.data)
+            }
+        }
+        this.mediaRecorder.start(10)
+        this.renderStart()
+    }
+    renderStart () {
+        this.RecordButton.value = "true"
+        while (this.RecordButton.firstChild) {
+            this.RecordButton.removeChild(this.RecordButton.firstChild)
+        }
+        let span = document.createElement('span')
+        span.setAttribute("class", "icon iconfont icon-tingzhi")
+        this.RecordButton.appendChild(span)
+        this.snapButton.hidden = false
+        this.MimetypeSelect.hidden = true
+        this.downloadButton.hidden = true
+        this.mimetype_selected.textContent = `MimeType: ${ this.current_mime_type } for download`
+        this.mimetype_selected.hidden = false
+    }
+    stop_record () {
+        this.mediaRecorder.stop()
+        this.lastrecordedBlobs = this.recordedBlobs
+        this.recordedBlobs = []
+
+        this.last_mime_type = this.current_mime_type
+        this.current_mime_type = null
+        console.log('Recorded Blobs: ', this.lastrecordedBlobs)
+        this.renderStop()
+    }
+    renderStop () {
+        this.RecordButton.value = "false"
+        while (this.RecordButton.firstChild) {
+            this.RecordButton.removeChild(this.RecordButton.firstChild)
+        }
+        let span = document.createElement('span')
+        span.setAttribute("class", "icon iconfont icon-luzhi")
+        this.RecordButton.appendChild(span)
+        this.snapButton.hidden = true
+        this.MimetypeSelect.hidden = false
+        this.downloadButton.hidden = false
+        this.mimetype_selected.textContent = `MimeType: ${ this.last_mime_type } for download`
+        this.mimetype_selected.hidden = false
+    }
+
+    download () {
+        if (this.lastrecordedBlobs.length === 0) {
+            alert("already downloaded")
+        } else {
+            let mimetype = this.last_mime_type.split(";")[ 0 ]
+            let blob = new Blob(this.lastrecordedBlobs, {
+                type: mimetype
+            })
+            let data = window.URL.createObjectURL(blob)
+            let suffix = "." + mimetype.split("/")[ 1 ]
+            let filename = new Date().toISOString() + suffix
+            this.savefile(data, filename)
+        }
+    }
+    savefile (data, filename) {
+        let save_link = document.createElement('a')
+        save_link.href = data
+        save_link.download = filename
+
+        let event = document.createEvent('MouseEvents')
+        event.initEvent("click", true, false)
+        save_link.dispatchEvent(event)
+    }
+    snapshot () {
+        this.canvas.getContext('2d').drawImage(this.videoElement, 0, 0, this.canvas.width, this.canvas.height)
+        let img_png_src = this.canvas.toDataURL("image/png")
+        let imgData = img_png_src.replace("image/png", 'image/octet-stream')
+        let filename = new Date().toISOString() + ".png"
+        this.savefile(imgData, filename)
+    }
+
     /**
      * 将指定的输出音频设备放入指定媒体元素
      * @param {HTMLElement} element - 要重置的video元素
@@ -131,7 +260,25 @@ class RecordApplication {
     setStream (stream) {
         window[ "stream" ] = stream // make stream available to console
         this.videoElement.srcObject = stream
-        // Refresh button list in case labels have become available
+    }
+    renderMimetype () {
+        while (this.MimetypeSelect.firstChild) {
+            this.MimetypeSelect.removeChild(this.MimetypeSelect.firstChild)
+        }
+        for (let mimetype of RECORD_MIME_TYPES) {
+            if (MediaRecorder.isTypeSupported(mimetype)) {
+                let option = document.createElement('option')
+                option.value = mimetype
+                option.text = mimetype
+                this.MimetypeSelect.appendChild(option)
+            } else {
+                console.log(`recorder unsupport ${ mimetype }`)
+            }
+        }
+        this.snapButton.hidden = true
+        this.downloadButton.hidden = true
+        this.mimetype_selected.hidden = true
+        this.MimetypeSelect.hidden = false
     }
     /**
      * 通过媒体设备信息来构造媒体选择页面

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>捕捉屏幕</title>
+    <title>录像</title>
     <link rel="icon" sizes="192x192" href="webrtc-icon-192x192.png">
     <link href="style.css" rel="stylesheet" type="text/css" />
     <link href="https://at.alicdn.com/t/font_1067578_54hyfq64fhc.css" rel="stylesheet" type="text/css" />
@@ -31,9 +31,31 @@
                 </select>
             </div>
             </br>
+
+            <form>
+                <legend>
+                    录制选项
+                </legend>
+                <fieldset>
+                    <label for="videoMineType">视频格式: </label><select id="videoMineType">
+                    </select>
+                    <button id="record" type="button" value=false>
+                        <span class="icon iconfont icon-luzhi"></span>
+                    </button>
+                    <p id="mimetype_selected"></p>
+                    <button id="download" type="button">
+                        <span class="icon iconfont icon-xiazai"></span>
+                    </button>
+                    <button id="snap" type="button">
+                        <span class="icon iconfont icon-cut"></span>
+                    </button>
+                </fieldset>
+            </form>
             <video id="video" playsinline autoplay></video>
             <p class="small"><b>注意:</b> 如果听到混响声,则说明麦克风正在获取你的输出,请降低音量或将麦克风远离扬声器/耳机</p>
+            <canvas></canvas>
         </div>
+    </main>
 </body>
 
 </html>

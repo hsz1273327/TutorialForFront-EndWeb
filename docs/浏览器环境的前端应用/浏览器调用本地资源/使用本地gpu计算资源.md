@@ -1,4 +1,4 @@
-# 使用本地GPU的计算资源
+# 使用本地GPU的计算资源(过时)
 
 [webgl](https://developer.mozilla.org/zh-CN/docs/Web/API/WebGL_API)是浏览器上的opengl,它可以直接操作gpu进行运算渲染,然后渲染到canvas或者其他什么上面
 
@@ -8,7 +8,7 @@ google在2018年开源了他们基于webgl的前端高性能计算框架`tensorf
 
 ## 前端项目使用tfjs进行矩阵计算
 
-这个项目在[C2-S6-P1](https://github.com/TutorialForJavascript/frontend-basic/tree/master/code/C2/S6/P1)
+这个项目在[浏览器环境-浏览器调用本地资源-使用本地GPU的计算资源-matrix](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E8%B0%83%E7%94%A8%E6%9C%AC%E5%9C%B0%E8%B5%84%E6%BA%90-%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0GPU%E7%9A%84%E8%AE%A1%E7%AE%97%E8%B5%84%E6%BA%90-matrix)
 
 这个项目只使用了tfjs的`matMul`接口.通常用tfjs做运算的流程是这样:
 
@@ -16,19 +16,20 @@ google在2018年开源了他们基于webgl的前端高性能计算框架`tensorf
 2. 控制张量对象计算过程
 3. 使用`.array()`接口从gpu中取出计算结果
 4. 使用`tf.dispose(a)`或者`a.dispose()`手动释放张量内存,也可以使用
+
     ```js
     const y = tf.tidy(() => {
     const result = a.square().log().neg()
     return result
     })
     ```
+
     来回收一个函数中执行过程中产生的所有`Tensor`
     而这个`result`的值也就是这个y的值,注意这种方式无法返回Promise.
 
 需要注意由于从gpu取出计算结果是一个异步的过程.
 
 tfjs的接口可以在<https://js.tensorflow.org/api/latest/>找到,但拿前端训练数据实在是有点不现实.常规来说还是做做矩阵运算靠谱一些.
-
 
 ```js
 class matMulApplication {
@@ -116,7 +117,6 @@ main()
 
 <!-- 我们用tfjs更多的当然是希望可以使用在其他平台上训练好的模型做一些机器学习的应用.
 在后面两个例子中我们会分别介绍如何使用keras和TensorFlow本体训练tfjs可以调用的模型,以及如何使用tfjs调用这些模型. -->
-
 
 <!-- ## 使用keras训练好的模型
 <https://www.tensorflow.org/js/tutorials/conversion/import_keras>

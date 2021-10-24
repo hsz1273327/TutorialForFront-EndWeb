@@ -81,19 +81,44 @@ class RecordApplication {
         let videoSource = this.videoSelect.value
         let constraints = {
             audio: {
+                //deviceId: audioSource && audioSource !== "Local Display" ? {
                 deviceId: audioSource ? {
                     exact: audioSource
                 } : undefined
             },
             video: {
-                deviceId: videoSource ? {
+                deviceId: videoSource && videoSource !== "Local Display" ? {
                     exact: videoSource
                 } : undefined
             }
         }
         try {
-            let media_stream = await navigator.mediaDevices.getUserMedia(constraints)
-            this.setStream(media_stream)
+            let input_media_stream = await navigator.mediaDevices.getUserMedia(constraints)
+            if (videoSource === "Local Display") {
+                // if (videoSource === "Local Display" || audioSource === "Local Display") {
+                let display_media_stream = await navigator.mediaDevices.getDisplayMedia({
+                    video: true
+                })
+                // let display_media_stream = await navigator.mediaDevices.getDisplayMedia({
+                //     video: true,
+                //     audio: true
+                // })
+                // if (audioSource === "Local Display"){
+                //     let input_audio_tracks = input_media_stream.getAudioTracks()
+                //     input_audio_tracks.forEach((x)=>input_media_stream.removeTrack(x))
+                //     let display_audio_tracks = display_media_stream.getAudioTracks()
+                //     console.log(display_audio_tracks)
+                //     display_audio_tracks.forEach((x)=>input_media_stream.addTrack(x))
+                // }
+                if (videoSource === "Local Display") {
+                    let input_video_tracks = input_media_stream.getVideoTracks()
+                    input_video_tracks.forEach(x => input_media_stream.removeTrack(x))
+                    let display_video_tracks = display_media_stream.getVideoTracks()
+                    console.log(display_video_tracks)
+                    display_video_tracks.forEach(x => input_media_stream.addTrack(x))
+                }
+            }
+            this.setStream(input_media_stream)
             await this.init_render()
         } catch (error) {
             console.log('navigator.getUserMedia error: ', error)
@@ -103,7 +128,7 @@ class RecordApplication {
      * 通过流数据获取流对应的媒体设备信息
      * @param {MediaStream} stream 
      */
-    async setStream (stream) {
+    setStream (stream) {
         window[ "stream" ] = stream // make stream available to console
         this.videoElement.srcObject = stream
         // Refresh button list in case labels have become available
@@ -142,6 +167,15 @@ class RecordApplication {
                     console.log('Some other kind of source/device: ', deviceInfo)
             }
         }
+        // let audio_display_option = document.createElement('option')
+        // audio_display_option.value = "Local Display"
+        // audio_display_option.text = "Local Display"
+        // this.audioInputSelect.appendChild(audio_display_option)
+
+        let video_display_option = document.createElement('option')
+        video_display_option.value = "Local Display"
+        video_display_option.text = "Local Display"
+        this.videoSelect.appendChild(video_display_option)
     }
 }
 /**

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>捕捉音频视频流</title>
+    <link rel="icon" sizes="192x192" href="webrtc-icon-192x192.png">
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="https://at.alicdn.com/t/font_1067578_54hyfq64fhc.css" rel="stylesheet" type="text/css" />
+    <script type="module" src="index.js" async="async"></script>
+</head>
+
+<body>
+    <main>
+        <div id="container">
+            <h1> WebRTC samples<span>选择输出的设备</span></h1>
+            <p>使用<code>mediaDevices.enumerateDevices()</code>获取可用的音频/视频输入资源,以及输出设备,然后使用<code>deviceId</code>指定
+                要使用的资源给<code>getUserMedia()</code></p>
+
+            <div class="select">
+                <label for="audioSource">音频输入: </label><select id="audioSource"></select>
+            </div>
+            </br>
+            <div class="select">
+                <label for="audioOutput">音频输出: </label><select id="audioOutput"></select>
+            </div>
+            </br>
+            <div class="select">
+                <label for="videoSource">视频输入: </label><select id="videoSource"></select>
+            </div>
+            </br>
+            <video id="video" playsinline autoplay></video>
+            <p class="small"><b>注意:</b> 如果听到混响声,则说明麦克风正在获取你的输出,请降低音量或将麦克风远离扬声器/耳机</p>
+        </div>
+</body>
+</html>

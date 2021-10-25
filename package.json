@@ -1,33 +1,13 @@
 {
-    "name": "C2-S1",
+    "name": "filesystem",
     "version": "0.0.1",
     "description": "simple tools",
     "author": "huangsizhe",
     "license": "MIT",
     "devDependencies": {
-        "babel-cli": "^6.26.0",
-        "babel-polyfill": "^6.26.0",
-        "babel-preset-env": "^1.7.0",
-        "babel-register": "^6.26.0",
-        "eslint": "^5.12.1",
-        "live-server": "^1.2.1",
-        "mocha": "^5.2.0",
-        "nyc": "^13.1.0"
-    },
-    "babel": {
-        "presets": [
-            [
-                "env",
-                {
-                    "targets": {
-                        "browsers": "> 5%"
-                    }
-                }
-            ]
-        ]
+        "live-server": "^1.2.1"
     },
     "scripts": {
-        "start": "./node_modules/.bin/live-server --port=3000 public",
-        "build": "./node_modules/.bin/babel src -d public",
+        "start": "./node_modules/.bin/live-server --port=3000 public"
     }
 }

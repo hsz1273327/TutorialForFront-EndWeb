@@ -47,7 +47,6 @@ HTTP协议无法做到服务器主动推送信息,但有一种变通方法:
 + `onmessage`,当有消息推送来时触发
 + `onopen`,当连接建立成功时触发
 
-
 我们的`onmessage`注册的回调函数参数为`MessageEvent`,它有如下字段:
 
 + `data` 消息数据

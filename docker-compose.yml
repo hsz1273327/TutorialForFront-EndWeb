@@ -1,0 +1,6 @@
+version: '3.6'
+services:
+  ws-helloworld:
+    image: hsz1273327/js-server:websocket_c0
+    ports:
+      - 4000:3000

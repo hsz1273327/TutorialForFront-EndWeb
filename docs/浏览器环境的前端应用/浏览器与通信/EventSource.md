@@ -30,7 +30,7 @@ HTTP协议无法做到服务器主动推送信息,但有一种变通方法:
 
 本质上来讲这种通信就是以流信息的方式完成一次用时很长的下载.可以看出EventSource需要服务端支持流数据作为响应,而且一旦建立起这个连接这个连接是无法复用的.
 
-SSE发送时就是一个很普通的GET方法的请求,只是它的header中需要定义`content-type`为`text/event-stream`
+服务端处理SSE的消息也是相当简单,就和处理`GET`请求一样,只是它的header中需要定义`content-type`为`text/event-stream`
 
 而在数据序列化方面,sse则是一个非常简单的协议:
 

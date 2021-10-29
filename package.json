@@ -1,0 +1,17 @@
+{
+  "name": "test_sse",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "simple tools",
+  "author": "huangsizhe",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.11.0",
+    "koa-router": "^7.4.0",
+    "koa-sse-stream": "^0.2.0",
+    "koa-static": "^5.0.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}

@@ -14,15 +14,17 @@
 
     一次连接只用验证一次用户,大大减小了验权的频率.
 
-对websocket原理感兴趣的可以看下我[js后端的ws服务器攻略](https://tutorialforjavascript.github.io/%E4%BD%BF%E7%94%A8Javascript%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1/Websocket%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1.html)
+对websocket原理感兴趣的可以看下[前面的对应文章](https://blog.hszofficial.site/TutorialForFront-EndWeb/#/Javascript/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8/%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1/Websocket%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1)
+
+在浏览器中websockets不受cors限制,因此一般我们会更加强调它的用户级别安全性.我们通常会在连接建立时就要求先发送用户的令牌来进行校验(一般是jwt)
 
 ## websockets api使用示例
 
-这个例子的代码在[C3-S2](https://github.com/TutorialForJavascript/frontend-basic/tree/master/code/C3/S2)
+这个例子的代码在[浏览器环境-浏览器与通信-ws分支](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%80%9A%E4%BF%A1-ws)
 
 前端项目可以直接通过浏览器的[websockets api](https://developer.mozilla.org/zh-CN/docs/Web/API/Websockets_API)来直接和后端的ws服务器建立连接.
 
-本例复用'js后端的ws服务器'篇中的例子[helloworld](https://github.com/TutorialForJavascript/js-server/tree/master/code/Websocket%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1/C0)作为后端,
+本例复用[之前文章中的例子](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8-%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1-wshello)作为后端,
 我们来基于这个构建一个前端例子.
 
 由于后端我们已经有一个docker镜像,我们可以直接使用docker启动它.
@@ -31,64 +33,63 @@
 
 + index.js
 
-```js
-class WebsocketApp {
-    constructor() {
-        this.ws = new WebSocket("ws://localhost:4000")
-        this.container = document.querySelector("main")
-        this.button = document.querySelector("main button")
-        this.bind_event()
-        console.log("init")
-    }
-    bind_event() {
-        this.button.onclick = () => this.onClick()
-        // 注意这里和node中ws框架下不一致,事件监听接口的命名规则和其他前端事件一样.
-        this.ws.onclose = () => {
-            console.log('disconnected');
+    ```js
+    class WebsocketApp {
+        constructor() {
+            this.ws = new WebSocket("ws://localhost:4000")
+            this.container = document.querySelector("main")
+            this.button = document.querySelector("main button")
+            this.bind_event()
+            console.log("init")
         }
-        this.ws.onmessage = (message_event) => this.onMessage(message_event)
-        console.log("bind")
+        bind_event() {
+            this.button.onclick = () => this.onClick()
+            // 注意这里和node中ws框架下不一致,事件监听接口的命名规则和其他前端事件一样.
+            this.ws.onclose = () => {
+                console.log('disconnected');
+            }
+            this.ws.onmessage = (message_event) => this.onMessage(message_event)
+            console.log("bind")
+        }
+        onClick() {
+            this.ws.send('helloworld')
+        }
+        onMessage(message_event) {
+            // 注意这里和node中ws框架下不一致,数据放在event.data中
+            console.log(message_event.data)
+            let content = message_event.data
+            let p = document.createElement("p")
+            p.innerText = content
+            this.container.appendChild(p)
+        }
     }
-    onClick() {
-        this.ws.send('helloworld')
-    }
-    onMessage(message_event) {
-        // 注意这里和node中ws框架下不一致,数据放在event.data中
-        console.log(message_event.data)
-        let content = message_event.data
-        let p = document.createElement("p")
-        p.innerText = content
-        this.container.appendChild(p)
-    }
-}
 
-function main() {
-    let app = new WebsocketApp()
-}
-main()
-```
+    function main() {
+        let app = new WebsocketApp()
+    }
+    main()
+    ```
 
 + index.html
 
-```js
-<!DOCTYPE html>
-<html>
+    ```html
+    <!DOCTYPE html>
+    <html>
 
-<head>
-  <meta charset="utf-8">
-  <title>websocket demo</title>
-  <link rel="stylesheet" href="style.css" type="text/css">
-  <script src="index.js" async="async"></script>
-</head>
+    <head>
+    <meta charset="utf-8">
+    <title>websocket demo</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <script src="index.js" async="async"></script>
+    </head>
 
-<body>
-  <main>
-    <button>点击请求</button>
-  </main>
-</body>
+    <body>
+    <main>
+        <button>点击请求</button>
+    </main>
+    </body>
 
-</html>
-```
+    </html>
+    ```
 
-
-
+前端websocket对象用法和后端基本上风格一致.

@@ -5,7 +5,7 @@ let footer = document.createElement("footer")
 let button = document.querySelector("main button")
 
 async function get_profiles (url) {
-    let response = await fetch(url,{"mode": "no-cors"})
+    let response = await fetch(url, { "mode": "no-cors" })
     if (response.status === 200) {
         return await response.json()
     } else {

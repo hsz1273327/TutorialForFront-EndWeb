@@ -6,9 +6,10 @@
 
 ## 用法
 
-1. `npm run frontend-build`编译前端代码
-2. `npm run backend-start`执行后端服务
-3. `npm run frontend-start`执行前端服务
+1. `npm run backend-start`执行后端服务
+2. `npm run start`执行前端服务
+
+在本地4000端口可以正常使用页面,3000端口则会报错
 
 ## 使用范围
 

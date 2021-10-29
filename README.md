@@ -1,12 +1,14 @@
-# axio示例代码
+# 跨域请求示例代码
 
 ## 项目主旨
 
-本项目是个helloworld性质的东西,使用axio来作为请求数据的依赖.
+本项目是个helloworld性质的东西,用于演示跨域请求
 
 ## 用法
 
-在`public`文件夹下双击`index.html`打开.本项目会抓取github上最近注册的用户数据,并展示到页面上.
+1. `npm run frontend-build`编译前端代码
+2. `npm run backend-start`执行后端服务
+3. `npm run frontend-start`执行前端服务
 
 ## 使用范围
 

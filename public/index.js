@@ -1,24 +1,24 @@
-'use strict'
+"use strict"
+
+let url = 'http://localhost:4000/test'
+let footer = document.createElement("footer")
+let button = document.querySelector("main button")
 
 async function get_profiles (url) {
-    let response = await axios.get(url)
+    let response = await fetch(url,{"mode": "no-cors"})
     if (response.status === 200) {
-        return response.data
+        return await response.json()
     } else {
         throw `http error: ${ response.status }`
     }
 }
 
-async function main () {
-    let url = 'https://api.github.com/users'
-    let footer = document.createElement("footer")
+async function render () {
     try {
-        let profiles = await get_profiles(url)
-        for (let profile of profiles) {
-            let greeting = document.createElement('p')
-            greeting.textContent = `greeting ${ profile.login }, here is footer!`
-            footer.appendChild(greeting)
-        }
+        let profile = await get_profiles(url)
+        let greeting = document.createElement('p')
+        greeting.textContent = profile.message
+        footer.appendChild(greeting)
     } catch (e) {
         let errorMessage = document.createElement('p')
         errorMessage.textContent = e
@@ -28,4 +28,4 @@ async function main () {
     }
 }
 
-main()
+button.onclick = () => render()

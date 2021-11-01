@@ -27,6 +27,7 @@
         * [时间日期对象](Javascript/ECMAScript/时间日期对象.md)
         * [Reflect和Proxy](Javascript/ECMAScript/Reflect和Proxy.md)
         * [并行计算](Javascript/ECMAScript/并行计算.md)
+        * [WebAssembly(待完善)](Javascript/ECMAScript/WebAssembly.md)
     * [TypeScript](Javascript/TypeScript/README.md)
         * [类型系统](Javascript/TypeScript/类型系统.md)
         * [枚举](Javascript/TypeScript/枚举.md)

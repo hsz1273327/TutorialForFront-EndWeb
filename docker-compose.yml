@@ -1,0 +1,25 @@
+version: '2.4'
+services:
+  grpc_web_proxy:
+    image: envoyproxy/envoy:v1.17.0
+    depends_on:
+      - grpc-api
+    ports:
+      - 8000:8000
+    networks:
+      - rest_test
+    logging:
+      options:
+          max-size: "10m"
+          max-file: "3"
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml
+    command: /usr/local/bin/envoy -c /etc/envoy/envoy.yaml -l trace --log-path /tmp/envoy_info.log
+
+  grpc-api:
+    image: hsz1273327/js-server:grpc_c0
+    networks:
+      - rest_test
+
+networks:
+  rest_test:

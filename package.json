@@ -1,0 +1,23 @@
+{
+    "name": "test_grpc-web",
+    "version": "0.0.1",
+    "description": "可以选择捕获屏幕",
+    "author": "huangsizhe",
+    "license": "MIT",
+    "devDependencies": {
+        "@grpc/grpc-js": "~1.1.8",
+        "@grpc/proto-loader": "~0.5.4",
+        "async": "~1.5.2",
+        "google-protobuf": "~3.14.0",
+        "grpc-web": "~1.3.0",
+        "lodash": "~4.17.0",
+        "webpack": "~4.43.0",
+        "webpack-cli": "~3.3.11",
+        "live-server": "^1.2.1"
+    },
+    "scripts": {
+        "start": "./node_modules/.bin/live-server --port=3000 dist",
+        "build": "npx webpack src/main.js",
+        "build_pb": "protoc -I=schema square_service.proto --js_out=import_style=commonjs:src --grpc-web_out=import_style=commonjs,mode=grpcwebtext:src"
+    }
+}

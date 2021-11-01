@@ -44,7 +44,7 @@ let connection = new RTCPeerConnection([configuration])
 
 国内可用的免费stun有:
 
-```
+```txt
 stun:stun1.l.google.com:19302
 stun:stun2.l.google.com:19302
 stun:stun3.l.google.com:19302
@@ -87,14 +87,11 @@ stun:stun.xten.com
 `onsignalingstatechange`|当`RTCPeerConnection.signalingState`的值更改时,作为调用`setLocalDescription()`或`setRemoteDescription()`的结果将发送此事件.
 `ontrack`|当创建了新的传入`MediaStreamTrack`并与已在连接时添加到该组接收器的`RTCRtpReceiver`对象相关联时会发送此事件
 
-
 我们要让两端可以通信,除了要建立连接,还要在同一个频道,RTCPeerConnection的实例的`.createDataChannel(channelname[,option])`方法就是用来创建频道,一般都是在本机端创建频道,频道可以有
 
 `.onopen`和`.onclose`两个事件绑定
 
 而另一机那端则是并不需要,但一般要设置`ondatachannel`来确认通道建立成功.
-
-
 
 接着我们需要两个端点都有有`icecandidate`,就用刚才的事件绑定`onicecandidate`:
 
@@ -124,7 +121,6 @@ localConnection.setLocalDescription(offer)
 
 ![webrtc的传输结构](img/webrtc.png)
 
-
 总结下webrtc的连接建立顺序:
 
 1. 创建端点`RTCPeerConnection`
@@ -134,11 +130,9 @@ localConnection.setLocalDescription(offer)
 5. 对面接收到本机offer后将之设为`RemoteDescription`,然后在创建`answer`,并设为`LocalDescription`,之后再将`answer`通过发信服务器发送回本机
 6. 或得到`answer`后将之设置为本机的`RemoteDescription`
 
-
 ### 通过发信服务器建立连接
 
-本例在[C3-S4](https://github.com/TutorialForJavascript/frontend-basic/tree/master/code/C3/S4)
-
+本例在[浏览器环境-浏览器与通信-webrtc分支](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%80%9A%E4%BF%A1-webrtc)
 
 我们可以用websocket来建立发信服务器.一个发信服务器应该有如下几个接口:
 
@@ -147,7 +141,6 @@ localConnection.setLocalDescription(offer)
 + `candidate`:用来交换`candidate`
 
 而这个业务流程应该是:
-
 
 1. 用户A通过接口candidate发现用户B在线
 2. 用户A通过发信服务向其发送一个offer

@@ -1,0 +1,19 @@
+{
+    "name": "file",
+    "version": "1.0.0",
+    "description": "datachannel_test",
+    "main": "index.js",
+    "author": "hsz",
+    "license": "GPL-3.0",
+    "dependencies": {
+        "crypto-js": "^3.1.9-1",
+        "socket.io": "^1.7.2",
+        "webrtc-adapter": "^3.1.2"
+    },
+    "scripts": {
+        "start": "python server/app.py",
+        "start-msg": "./node_modules/.bin/live-server --port=3000 message/public",
+        "start-file": "./node_modules/.bin/live-server --port=3000 file/public",
+        "start-media": "./node_modules/.bin/live-server --port=3000 media/public"
+    }
+}

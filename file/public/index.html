@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>WebRTC Demo--file</title>
+
+
+	<link rel="stylesheet" href="main.css">
+	<script src="https://cdn.bootcss.com/socket.io/1.7.2/socket.io.min.js"></script>
+	<script src="https://cdn.bootcss.com/crypto-js/3.1.9/crypto-js.min.js"></script>
+	<script src="index.js"></script>
+</head>
+
+<body>
+	<div id="page-wrapper">
+		<h1>WebSockets Demo</h1>
+
+		<div  id="ws-room">
+			<div id="ws-status" >Connecting...</div>
+			<ul id="room-info"></ul>
+			<form id="room-form" class="message-form" action="#" method="post">
+				<input id="username" placeholder="username" required></input>
+				<input id="room" placeholder="roomname" required></input>
+				<button type="submit">Send info</button>
+				<button type="button" id="create_room">Create room</button>
+				<button type="button" id="leave_room">Close room</button>
+			</form>
+		</div>
+
+		<div id="channel">
+			<div id="channel-status">not in channel...</div>
+			<ul id="messages"></ul>
+			<form id="channel-form" class="message-form" action="#" method="post">
+				<input type="file" id="files" name="files[]" multiple />
+				<button type="button" id="submit">Send message</button>
+				<button type="button" id="leave_channel">Close channel</button>
+			</form>
+			<div class="progress">
+	          <div class="label">Send progress: </div>
+	          <progress id="sendProgress" max="0" value="0"></progress>
+	        </div>
+
+	        <div class="progress">
+	          <div class="label">Receive progress: </div>
+	          <progress id="receiveProgress" max="0" value="0"></progress>
+	        </div>
+
+			<div id="bitrate"></div>
+	        <a id="download"></a>
+		</div>
+	</div>
+
+</body>
+
+</html>

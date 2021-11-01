@@ -1,0 +1,21 @@
+{
+  "name": "front_end",
+  "version": "1.0.0",
+  "description": "socketio_test",
+  "main": "index.js",
+  "scripts": {
+    "tsc": "node_modules/.bin/tsc ",
+    "start": "node_modules/.bin/http-server -p 4000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "hsz",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@types/socket.io-client": "^1.4.29",
+    "http-server": "^0.9.0",
+    "typescript": "^2.1.5"
+  },
+  "dependencies": {
+    "socket.io": "^1.7.2"
+  }
+}

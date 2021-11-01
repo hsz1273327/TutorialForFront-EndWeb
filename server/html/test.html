@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>WebSockets Demo</title>
+
+	<link rel="stylesheet" href="style.css">
+	<script src="node_modules/socket.io-client/dist/socket.io.min.js"></script>
+</head>
+
+<body>
+	<div id="page-wrapper">
+		<h1>WebSockets Demo</h1>
+
+		<div id="status">Connecting...</div>
+
+		<ul id="messages"></ul>
+
+		<form id="message-form" action="#" method="post">
+			<textarea id="username" placeholder="Write your username here..." required></textarea>
+			<textarea id="room" placeholder="Write your roomname here..." required></textarea>
+			<button type="submit">Send info</button>
+			<button type="button" id="create_room">create_room</button>
+			<button type="button" id="join_room">join_room</button>
+			<button type="button" id="close">Close Connection</button>
+		</form>
+	</div>
+
+	<script src="js/app.js"></script>
+</body>
+
+</html>

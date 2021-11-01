@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>WebRTC Demo-stream</title>
+	<link rel="stylesheet" href="main.css">
+	<script src="https://cdn.bootcss.com/socket.io/1.7.2/socket.io.min.js"></script>
+	<script type="module" src="index.js" async="async"></script>
+</head>
+
+<body>
+	<div id="page-wrapper">
+		<h1>WebSockets Demo</h1>
+
+		<div id="ws-room">
+			<div id="ws-status">Connecting...</div>
+			<ul id="room-info"></ul>
+			<form id="room-form" class="message-form" action="#" method="post">
+				<input id="username" placeholder="username" required></input>
+				<input id="room" placeholder="roomname" required></input>
+				<button type="submit">Send info</button>
+				<button type="button" id="create_room">Create room</button>
+				<button type="button" id="leave_room">Close room</button>
+			</form>
+		</div>
+
+		<div id="channel">
+			<div id="channel-status">not in channel...</div>
+			<ul id="messages"></ul>
+			<form id="channel-form" class="message-form" action="#" method="post">
+				<p>
+					localVideo
+				</p>
+				<video id="localVideo" autoplay muted></video>
+				<p>
+					remoteVideo
+				</p>
+				<video id="remoteVideo" autoplay></video>
+				<button type="button" id="leave_channel">Close channel</button>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

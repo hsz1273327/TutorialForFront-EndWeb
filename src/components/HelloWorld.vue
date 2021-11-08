@@ -56,22 +56,22 @@
   </div>
 </template>
 
+
 <script lang="ts">
 import { defineComponent } from "vue";
+import { debounce } from "lodash-es";
 export default defineComponent({
   name: "HelloWorld",
 });
 </script>
 
 <script setup lang="ts">
-import { ref, Ref } from "vue";
-
+import { ref, onUnmounted } from "vue";
 interface Person {
   name: string | null;
   gender: string | null;
   phone: number | null;
 }
-
 const props = defineProps<{
   msg: string;
 }>();
@@ -101,8 +101,7 @@ const friends = ref<Person[]>([
     phone: 123444,
   },
 ]);
-
-function SaveToFriendsList() {
+function _SaveToFriendsList() {
   let newfriend: Person = {
     name: friend_name.value,
     gender: friend_gender.value,
@@ -110,9 +109,12 @@ function SaveToFriendsList() {
   };
   friends.value.push(newfriend);
   friend_name.value = "";
-  friend_gender.value = "";
+  friend_gender.value = "female";
   friend_phone.value = 0;
 }
+
+const SaveToFriendsList = debounce(_SaveToFriendsList, 500);
+onUnmounted(() => SaveToFriendsList.cancel());
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

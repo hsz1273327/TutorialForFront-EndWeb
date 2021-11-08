@@ -2,7 +2,7 @@
   <div class="hello">
     <h1>hello {{ msg }}</h1>
     <p>Welcome to Your Vue.js + TypeScript App</p>
-    <a v-bind:href="url">baidu...</a>
+    <a v-bind:href="url"> to {{ host }}</a>
     <table border="1">
       <caption>
         我的好友
@@ -57,7 +57,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, Ref, onUnmounted } from "vue";
+import {
+  defineComponent,
+  ref,
+  Ref,
+  onUnmounted,
+  computed,
+  ComputedRef,
+} from "vue";
 import { debounce } from "lodash-es";
 interface Person {
   name: string;
@@ -67,6 +74,7 @@ interface Person {
 
 interface SetupReturn {
   url: Ref<string>;
+  host: ComputedRef<string>;
   friend_name: Ref<string>;
   friend_gender: Ref<string>;
   friend_phone: Ref<number>;
@@ -81,6 +89,9 @@ export default defineComponent({
   },
   setup(): SetupReturn {
     const url = ref("http://www.baidu.com");
+    const host = computed(() =>
+      url.value.replaceAll("http://", "").replaceAll("https://", "")
+    );
     const friend_name = ref<string>("");
     const friend_gender = ref<string>("male");
     const friend_phone = ref<number>(0);
@@ -121,6 +132,7 @@ export default defineComponent({
     onUnmounted(() => SaveToFriendsList.cancel());
     return {
       url,
+      host,
       friend_name,
       friend_gender,
       friend_phone,

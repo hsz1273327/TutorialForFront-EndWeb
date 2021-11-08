@@ -2,7 +2,7 @@
   <div class="hello">
     <h1>hello {{ msg }}</h1>
     <p>Welcome to Your Vue.js + TypeScript App</p>
-    <a v-bind:href="url">baidu...</a>
+    <a v-bind:href="url"> to {{ host }}</a>
     <table border="1">
       <caption>
         我的好友
@@ -103,6 +103,11 @@ export default defineComponent({
   unmounted() {
     // 移除组件时，取消定时器
     Reflect.get(this, "SaveToFriendsList").cancel();
+  },
+  computed:{
+    host():string{
+      return this.url.replaceAll("http://","").replaceAll("https://","")
+    }
   },
   data(): DataReturn {
     return {

@@ -74,6 +74,9 @@ interface DataReturn {
 }
 
 export default defineComponent({
+  props: {
+    msg: String
+  },
   name: "HelloWorld",
   methods: {
     SaveToFriendsList: function () {
@@ -118,13 +121,9 @@ export default defineComponent({
       ],
     };
   }
+})
 </script>
 
-<script setup lang="ts">
-const props = defineProps<{
-  msg: string;
-}>()
-</script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">

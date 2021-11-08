@@ -124,6 +124,11 @@ function _SaveToFriendsList() {
 
 const SaveToFriendsList = debounce(_SaveToFriendsList, 500);
 onUnmounted(() => SaveToFriendsList.cancel());
+
+defineExpose({
+  host,
+  friends
+})
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

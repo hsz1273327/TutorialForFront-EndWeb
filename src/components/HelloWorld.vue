@@ -88,6 +88,7 @@ export default defineComponent({
   props: {
     msg: String,
   },
+  expose:["friends","host"],
   setup(): SetupReturn {
     const url = ref("http://www.baidu.com");
     const host = computed(() =>

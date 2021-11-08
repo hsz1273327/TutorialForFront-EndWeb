@@ -57,20 +57,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, Ref } from "vue";
+import { defineComponent, ref, Ref, onUnmounted } from "vue";
+import { debounce } from "lodash-es";
 interface Person {
-  name: string | null;
-  gender: string | null;
-  phone: number | null;
+  name: string;
+  gender: string;
+  phone: number;
 }
 
-interface DataReturn {
+interface SetupReturn {
   url: Ref<string>;
   friend_name: Ref<string>;
   friend_gender: Ref<string>;
   friend_phone: Ref<number>;
   friends: Ref<Person[]>;
-  SaveToFriendsList: ()=>void;
+  SaveToFriendsList: () => void;
 }
 
 export default defineComponent({
@@ -78,10 +79,10 @@ export default defineComponent({
   props: {
     msg: String,
   },
-  setup(): DataReturn {
+  setup(): SetupReturn {
     const url = ref("http://www.baidu.com");
     const friend_name = ref<string>("");
-    const friend_gender = ref<string>("");
+    const friend_gender = ref<string>("male");
     const friend_phone = ref<number>(0);
     const friends = ref<Person[]>([
       {
@@ -105,7 +106,7 @@ export default defineComponent({
         phone: 123444,
       },
     ]);
-    const SaveToFriendsList = () => {
+    const _SaveToFriendsList = () => {
       let newfriend: Person = {
         name: friend_name.value,
         gender: friend_gender.value,
@@ -116,13 +117,15 @@ export default defineComponent({
       friend_gender.value = "";
       friend_phone.value = 0;
     };
+    const SaveToFriendsList = debounce(_SaveToFriendsList, 500);
+    onUnmounted(() => SaveToFriendsList.cancel());
     return {
       url,
       friend_name,
       friend_gender,
       friend_phone,
       friends,
-      SaveToFriendsList
+      SaveToFriendsList,
     };
   },
 });

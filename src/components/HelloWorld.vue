@@ -104,10 +104,10 @@ export default defineComponent({
     // 移除组件时，取消定时器
     Reflect.get(this, "SaveToFriendsList").cancel();
   },
-  computed:{
-    host():string{
-      return this.url.replaceAll("http://","").replaceAll("https://","")
-    }
+  computed: {
+    host(): string {
+      return this.url.replaceAll("http://", "").replaceAll("https://", "");
+    },
   },
   data(): DataReturn {
     return {
@@ -138,6 +138,13 @@ export default defineComponent({
         },
       ],
     };
+  },
+  watch: {
+    friend_name(val, oldVal) {
+      if (oldVal!=""){
+        alert("拼错了?")
+      }
+    },
   },
 });
 </script>

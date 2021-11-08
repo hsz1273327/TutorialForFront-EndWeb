@@ -59,7 +59,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { debounce } from "lodash-es";
+
 export default defineComponent({
   name: "HelloWorld",
 });
@@ -67,6 +67,7 @@ export default defineComponent({
 
 <script setup lang="ts">
 import { ref, onUnmounted } from "vue";
+import { debounce } from "lodash-es";
 interface Person {
   name: string | null;
   gender: string | null;
@@ -77,7 +78,7 @@ const props = defineProps<{
 }>();
 const url = ref("http://www.baidu.com");
 const friend_name = ref<string>("");
-const friend_gender = ref<string>("");
+const friend_gender = ref<string>("male");
 const friend_phone = ref<number>(0);
 const friends = ref<Person[]>([
   {
@@ -109,7 +110,7 @@ function _SaveToFriendsList() {
   };
   friends.value.push(newfriend);
   friend_name.value = "";
-  friend_gender.value = "female";
+  friend_gender.value = "male";
   friend_phone.value = 0;
 }
 

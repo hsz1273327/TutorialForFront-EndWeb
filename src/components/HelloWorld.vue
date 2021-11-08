@@ -64,6 +64,7 @@ import {
   onUnmounted,
   computed,
   ComputedRef,
+  watch,
 } from "vue";
 import { debounce } from "lodash-es";
 interface Person {
@@ -93,6 +94,11 @@ export default defineComponent({
       url.value.replaceAll("http://", "").replaceAll("https://", "")
     );
     const friend_name = ref<string>("");
+    watch(friend_name, (val, oldVal) => {
+      if (oldVal != "") {
+        alert("拼错了?");
+      }
+    });
     const friend_gender = ref<string>("male");
     const friend_phone = ref<number>(0);
     const friends = ref<Person[]>([

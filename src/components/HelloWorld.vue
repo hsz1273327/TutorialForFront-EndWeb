@@ -79,6 +79,7 @@ export default defineComponent({
     msg: String,
   },
   name: "HelloWorld",
+  expose:["friends","host"],
   methods: {
     saveToFriendsList: function () {
       let newfriend: Person = {

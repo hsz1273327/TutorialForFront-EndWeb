@@ -57,78 +57,63 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, Ref } from "vue";
+import { defineComponent } from "vue";
+export default defineComponent({
+  name: "HelloWorld",
+});
+</script>
+
+<script setup lang="ts">
+import { ref, Ref } from "vue";
+
 interface Person {
   name: string | null;
   gender: string | null;
   phone: number | null;
 }
 
-interface DataReturn {
-  url: Ref<string>;
-  friend_name: Ref<string>;
-  friend_gender: Ref<string>;
-  friend_phone: Ref<number>;
-  friends: Ref<Person[]>;
-  SaveToFriendsList: ()=>void;
+const props = defineProps<{
+  msg: string;
+}>();
+const url = ref("http://www.baidu.com");
+const friend_name = ref<string>("");
+const friend_gender = ref<string>("");
+const friend_phone = ref<number>(0);
+const friends = ref<Person[]>([
+  {
+    name: "joker",
+    gender: "male",
+    phone: 123454,
+  },
+  {
+    name: "king",
+    gender: "male",
+    phone: 128454,
+  },
+  {
+    name: "queen",
+    gender: "male",
+    phone: 163454,
+  },
+  {
+    name: "knight",
+    gender: "female",
+    phone: 123444,
+  },
+]);
+
+function SaveToFriendsList() {
+  let newfriend: Person = {
+    name: friend_name.value,
+    gender: friend_gender.value,
+    phone: friend_phone.value,
+  };
+  friends.value.push(newfriend);
+  friend_name.value = "";
+  friend_gender.value = "";
+  friend_phone.value = 0;
 }
-
-export default defineComponent({
-  name: "HelloWorld",
-  props: {
-    msg: String,
-  },
-  setup(): DataReturn {
-    const url = ref("http://www.baidu.com");
-    const friend_name = ref<string>("");
-    const friend_gender = ref<string>("");
-    const friend_phone = ref<number>(0);
-    const friends = ref<Person[]>([
-      {
-        name: "joker",
-        gender: "male",
-        phone: 123454,
-      },
-      {
-        name: "king",
-        gender: "male",
-        phone: 128454,
-      },
-      {
-        name: "queen",
-        gender: "male",
-        phone: 163454,
-      },
-      {
-        name: "knight",
-        gender: "female",
-        phone: 123444,
-      },
-    ]);
-    const SaveToFriendsList = () => {
-      let newfriend: Person = {
-        name: friend_name.value,
-        gender: friend_gender.value,
-        phone: friend_phone.value,
-      };
-      friends.value.push(newfriend);
-      friend_name.value = "";
-      friend_gender.value = "";
-      friend_phone.value = 0;
-    };
-    return {
-      url,
-      friend_name,
-      friend_gender,
-      friend_phone,
-      friends,
-      SaveToFriendsList
-    };
-  },
-});
 </script>
-
-
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">

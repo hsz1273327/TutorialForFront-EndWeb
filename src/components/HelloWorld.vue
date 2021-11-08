@@ -57,46 +57,59 @@
 </template>
 
 <script lang="ts">
+import { debounce } from "lodash-es";
 import { defineComponent } from "vue";
 
 interface Person {
-  name: string | null;
-  gender: string | null;
-  phone: number | null;
+  name: string;
+  gender: string;
+  phone: number;
 }
 
 interface DataReturn {
   url: string;
-  friend_name: string | null;
-  friend_gender: string | null;
-  friend_phone: number | null;
+  friend_name: string;
+  friend_gender: string;
+  friend_phone: number;
   friends: Person[];
 }
 
 export default defineComponent({
   props: {
-    msg: String
+    msg: String,
   },
   name: "HelloWorld",
   methods: {
-    SaveToFriendsList: function () {
+    saveToFriendsList: function () {
       let newfriend: Person = {
         name: this.friend_name,
         gender: this.friend_gender,
         phone: this.friend_phone,
       };
       this.friends.push(newfriend);
-      this.friend_name = null;
-      this.friend_gender = null;
-      this.friend_phone = null;
+      this.friend_name = "";
+      this.friend_gender = "male";
+      this.friend_phone = 0;
     },
+  },
+  created() {
+    // 用 Lodash 的防抖函数
+    Reflect.set(
+      this,
+      "SaveToFriendsList",
+      debounce(this.saveToFriendsList, 500)
+    );
+  },
+  unmounted() {
+    // 移除组件时，取消定时器
+    Reflect.get(this, "SaveToFriendsList").cancel();
   },
   data(): DataReturn {
     return {
       url: "http://www.baidu.com",
-      friend_name: null,
-      friend_gender: null,
-      friend_phone: null,
+      friend_name: "",
+      friend_gender: "male",
+      friend_phone: 0,
       friends: [
         {
           name: "joker",
@@ -120,8 +133,8 @@ export default defineComponent({
         },
       ],
     };
-  }
-})
+  },
+});
 </script>
 
 

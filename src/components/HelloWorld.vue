@@ -114,7 +114,7 @@ export default defineComponent({
       };
       friends.value.push(newfriend);
       friend_name.value = "";
-      friend_gender.value = "";
+      friend_gender.value = "male";
       friend_phone.value = 0;
     };
     const SaveToFriendsList = debounce(_SaveToFriendsList, 500);

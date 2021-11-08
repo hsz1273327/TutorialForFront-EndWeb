@@ -2,7 +2,7 @@
   <div class="hello">
     <h1>hello {{ msg }}</h1>
     <p>Welcome to Your Vue.js + TypeScript App</p>
-    <a v-bind:href="url">baidu...</a>
+    <a v-bind:href="url"> to {{ host }}</a>
     <table border="1">
       <caption>
         我的好友
@@ -66,7 +66,7 @@ export default defineComponent({
 </script>
 
 <script setup lang="ts">
-import { ref, onUnmounted } from "vue";
+import { ref, onUnmounted, computed } from "vue";
 import { debounce } from "lodash-es";
 interface Person {
   name: string | null;
@@ -77,6 +77,9 @@ const props = defineProps<{
   msg: string;
 }>();
 const url = ref("http://www.baidu.com");
+const host = computed(() =>
+  url.value.replaceAll("http://", "").replaceAll("https://", "")
+);
 const friend_name = ref<string>("");
 const friend_gender = ref<string>("male");
 const friend_phone = ref<number>(0);

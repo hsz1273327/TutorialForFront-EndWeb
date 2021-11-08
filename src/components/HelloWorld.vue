@@ -55,11 +55,6 @@
     </form>
   </div>
 </template>
-<script setup lang="ts">
-const props = defineProps<{
-  msg: string;
-}>();
-</script>
 
 <script lang="ts">
 import { defineComponent, ref, Ref } from "vue";
@@ -75,29 +70,20 @@ interface DataReturn {
   friend_gender: Ref<string>;
   friend_phone: Ref<number>;
   friends: Ref<Person[]>;
+  SaveToFriendsList: ()=>void;
 }
 
 export default defineComponent({
   name: "HelloWorld",
-  methods: {
-    SaveToFriendsList: function () {
-      let newfriend: Person = {
-        name: this.friend_name,
-        gender: this.friend_gender,
-        phone: this.friend_phone,
-      };
-      this.friends.push(newfriend);
-      this.friend_name = null;
-      this.friend_gender = null;
-      this.friend_phone = null;
-    },
+  props: {
+    msg: String,
   },
   setup(): DataReturn {
     const url = ref("http://www.baidu.com");
-    const friend_name = ref("");
-    const friend_gender = ref("");
-    const friend_phone = ref(0);
-    const friend = ref([
+    const friend_name = ref<string>("");
+    const friend_gender = ref<string>("");
+    const friend_phone = ref<number>(0);
+    const friends = ref<Person[]>([
       {
         name: "joker",
         gender: "male",
@@ -119,12 +105,24 @@ export default defineComponent({
         phone: 123444,
       },
     ]);
+    const SaveToFriendsList = () => {
+      let newfriend: Person = {
+        name: friend_name.value,
+        gender: friend_gender.value,
+        phone: friend_phone.value,
+      };
+      friends.value.push(newfriend);
+      friend_name.value = "";
+      friend_gender.value = "";
+      friend_phone.value = 0;
+    };
     return {
       url,
       friend_name,
       friend_gender,
       friend_phone,
-      friend,
+      friends,
+      SaveToFriendsList
     };
   },
 });

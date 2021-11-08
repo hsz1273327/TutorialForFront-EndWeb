@@ -22,3 +22,6 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+cp /nas-recommend/samh/model/recall/queryembedding/query_embedding-samh-comic-77 /nas-recommend/test/models/online_recall/dssm
+

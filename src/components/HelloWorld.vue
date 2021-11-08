@@ -55,10 +55,14 @@
     </form>
   </div>
 </template>
+<script setup lang="ts">
+const props = defineProps<{
+  msg: string;
+}>();
+</script>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-
+import { defineComponent, ref, Ref } from "vue";
 interface Person {
   name: string | null;
   gender: string | null;
@@ -66,11 +70,11 @@ interface Person {
 }
 
 interface DataReturn {
-  url: string;
-  friend_name: string | null;
-  friend_gender: string | null;
-  friend_phone: number | null;
-  friends: Person[];
+  url: Ref<string>;
+  friend_name: Ref<string>;
+  friend_gender: Ref<string>;
+  friend_phone: Ref<number>;
+  friends: Ref<Person[]>;
 }
 
 export default defineComponent({
@@ -88,43 +92,45 @@ export default defineComponent({
       this.friend_phone = null;
     },
   },
-  data(): DataReturn {
+  setup(): DataReturn {
+    const url = ref("http://www.baidu.com");
+    const friend_name = ref("");
+    const friend_gender = ref("");
+    const friend_phone = ref(0);
+    const friend = ref([
+      {
+        name: "joker",
+        gender: "male",
+        phone: 123454,
+      },
+      {
+        name: "king",
+        gender: "male",
+        phone: 128454,
+      },
+      {
+        name: "queen",
+        gender: "male",
+        phone: 163454,
+      },
+      {
+        name: "knight",
+        gender: "female",
+        phone: 123444,
+      },
+    ]);
     return {
-      url: "http://www.baidu.com",
-      friend_name: null,
-      friend_gender: null,
-      friend_phone: null,
-      friends: [
-        {
-          name: "joker",
-          gender: "male",
-          phone: 123454,
-        },
-        {
-          name: "king",
-          gender: "male",
-          phone: 128454,
-        },
-        {
-          name: "queen",
-          gender: "male",
-          phone: 163454,
-        },
-        {
-          name: "knight",
-          gender: "female",
-          phone: 123444,
-        },
-      ],
+      url,
+      friend_name,
+      friend_gender,
+      friend_phone,
+      friend,
     };
-  }
+  },
+});
 </script>
 
-<script setup lang="ts">
-const props = defineProps<{
-  msg: string;
-}>()
-</script>
+
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">

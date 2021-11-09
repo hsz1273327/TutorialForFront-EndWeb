@@ -79,7 +79,7 @@ export default defineComponent({
     msg: String,
   },
   name: "HelloWorld",
-  expose:["friends","host"],
+  expose: ["friends", "host"],
   methods: {
     saveToFriendsList: function () {
       let newfriend: Person = {
@@ -142,10 +142,14 @@ export default defineComponent({
   },
   watch: {
     friend_name(val, oldVal) {
-      if (oldVal!=""){
-        alert("拼错了?")
+      if (oldVal != "") {
+        alert("拼错了?");
       }
     },
+  },
+  updated: function () {
+    let now_len = this.friends.length;
+    console.log(`共有用户${now_len}人`);
   },
 });
 </script>

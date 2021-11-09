@@ -1,26 +1,27 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="hsz"/>
+  <img alt="Vue logo" src="./assets/logo.png" />
+  <HelloWorld msg="hsz" />
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent } from "vue";
+import HelloWorld from "./components/HelloWorld.vue";
 export default defineComponent({
-  name: 'app',
+  name: "app",
+  components: {
+    HelloWorld,
+  },
 });
-</script>
-
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 
 <style lang="stylus">
-#app
-  font-family Avenir, Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
-  margin-top 60px
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
 </style>

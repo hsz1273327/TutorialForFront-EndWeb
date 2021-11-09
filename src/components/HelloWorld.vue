@@ -147,10 +147,6 @@ export default defineComponent({
       }
     },
   },
-  updated: function () {
-    let now_len = this.friends.length;
-    console.log(`共有用户${now_len}人`);
-  },
 });
 </script>
 

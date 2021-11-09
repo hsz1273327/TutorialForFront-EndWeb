@@ -1,6 +1,6 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld :msg="message"
+  <HelloWorld :msg="message" @to-parent="recvFromChild"
     ><template v-slot:user_slot="slotProps"
       >这边是 {{ slotProps.user }}!</template
     ></HelloWorld
@@ -10,6 +10,9 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import HelloWorld from "./components/HelloWorld.vue";
+interface Evt {
+  msg: string;
+}
 export default defineComponent({
   name: "app",
   components: {
@@ -19,6 +22,11 @@ export default defineComponent({
     return {
       message: "hsz",
     };
+  },
+  methods: {
+    recvFromChild(evt: Evt) {
+      alert(evt.msg);
+    },
   },
 });
 </script>

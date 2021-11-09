@@ -2,6 +2,7 @@
   <div class="hello">
     <h1>hello {{ msg }}</h1>
     <slot :user="user" name="user_slot"> 默认的插槽数据 </slot>
+    <input type="button" value="Send message" @click="sendToParent" />
     <p>Welcome to Your Vue.js + TypeScript App</p>
     <a v-bind:href="url"> to {{ host }}</a>
     <table border="1">
@@ -83,6 +84,7 @@ export default defineComponent({
       default: "vue",
     },
   },
+  emits: ["toParent"],
   name: "HelloWorld",
   expose: ["friends", "host"],
   methods: {
@@ -96,6 +98,9 @@ export default defineComponent({
       this.friend_name = "";
       this.friend_gender = "male";
       this.friend_phone = 0;
+    },
+    sendToParent() {
+      this.$emit("toParent", { msg: "1234" });
     },
   },
   created() {

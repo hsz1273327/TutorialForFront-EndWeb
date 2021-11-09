@@ -1,6 +1,6 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="hsz"/>
+  <HelloWorld :msg="message"/>
 </template>
 
 <script lang="ts">
@@ -11,7 +11,10 @@ export default defineComponent({
 </script>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import HelloWorld from './components/HelloWorld.vue'
+
+const message = ref("hsz")
 </script>
 
 

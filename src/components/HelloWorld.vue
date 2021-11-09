@@ -73,9 +73,12 @@ interface Person {
   gender: string | null;
   phone: number | null;
 }
-const props = defineProps<{
-  msg: string;
-}>();
+interface Props {
+  msg?: string
+}
+const props = withDefaults(defineProps<Props>(), {
+  msg: "vue",
+});
 const url = ref("http://www.baidu.com");
 const host = computed(() =>
   url.value.replaceAll("http://", "").replaceAll("https://", "")
@@ -127,8 +130,8 @@ onUnmounted(() => SaveToFriendsList.cancel());
 
 defineExpose({
   host,
-  friends
-})
+  friends,
+});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

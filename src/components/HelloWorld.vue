@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <h1>hello {{ msg }}</h1>
+    <slot :user="user" name="user_slot"> 默认的插槽数据 </slot>
     <p>Welcome to Your Vue.js + TypeScript App</p>
     <a v-bind:href="url"> to {{ host }}</a>
     <table border="1">
@@ -127,7 +128,7 @@ function _SaveToFriendsList() {
 
 const SaveToFriendsList = debounce(_SaveToFriendsList, 500);
 onUnmounted(() => SaveToFriendsList.cancel());
-
+const user = ref("hsz")
 defineExpose({
   host,
   friends,

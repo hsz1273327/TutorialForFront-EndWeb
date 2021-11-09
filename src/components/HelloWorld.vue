@@ -76,7 +76,10 @@ interface DataReturn {
 
 export default defineComponent({
   props: {
-    msg: String,
+    msg: {
+      type: String,
+      default: "vue"
+    }
   },
   name: "HelloWorld",
   expose: ["friends", "host"],

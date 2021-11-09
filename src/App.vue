@@ -1,6 +1,6 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="hsz" />
+  <HelloWorld :msg="message" />
 </template>
 
 <script lang="ts">
@@ -11,6 +11,11 @@ export default defineComponent({
   components: {
     HelloWorld,
   },
+   data(){
+    return {
+      message: "hsz"
+    }
+  }
 });
 </script>
 

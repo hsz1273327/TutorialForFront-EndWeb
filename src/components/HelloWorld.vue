@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <h1>hello {{ msg }}</h1>
+    <slot :user="user" name="user_slot"> 默认的插槽数据 </slot>
     <p>Welcome to Your Vue.js + TypeScript App</p>
     <a v-bind:href="url"> to {{ host }}</a>
     <table border="1">
@@ -75,6 +76,7 @@ interface Person {
 
 interface SetupReturn {
   url: Ref<string>;
+  user: Ref<string>;
   host: ComputedRef<string>;
   friend_name: Ref<string>;
   friend_gender: Ref<string>;
@@ -94,6 +96,7 @@ export default defineComponent({
   expose: ["friends", "host"],
   setup(): SetupReturn {
     const url = ref("http://www.baidu.com");
+    const user = ref("hsz")
     const host = computed(() =>
       url.value.replaceAll("http://", "").replaceAll("https://", "")
     );
@@ -142,6 +145,7 @@ export default defineComponent({
     onUnmounted(() => SaveToFriendsList.cancel());
     return {
       url,
+      user,
       host,
       friend_name,
       friend_gender,

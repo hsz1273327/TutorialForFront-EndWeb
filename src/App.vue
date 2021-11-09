@@ -1,6 +1,10 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld :msg="message" />
+  <HelloWorld :msg="message">
+    <template v-slot:user_slot="slotProps"
+      >这边是 {{ slotProps.user }}!</template
+    >
+  </HelloWorld>
 </template>
 
 <script lang="ts">

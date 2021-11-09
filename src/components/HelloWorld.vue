@@ -3,6 +3,7 @@
     <h1>hello {{ msg }}</h1>
     <slot :user="user" name="user_slot"> 默认的插槽数据 </slot>
     <p>Welcome to Your Vue.js + TypeScript App</p>
+    <input type="button" value="Send message" @click="sendToParent" />
     <a v-bind:href="url"> to {{ host }}</a>
     <table border="1">
       <caption>
@@ -83,6 +84,7 @@ interface SetupReturn {
   friend_phone: Ref<number>;
   friends: Ref<Person[]>;
   SaveToFriendsList: () => void;
+  sendToParent: () => void;
 }
 
 export default defineComponent({
@@ -93,10 +95,11 @@ export default defineComponent({
       default: "vue",
     },
   },
+  emits:["toParent"],
   expose: ["friends", "host"],
-  setup(): SetupReturn {
+  setup(_, context): SetupReturn {
     const url = ref("http://www.baidu.com");
-    const user = ref("hsz")
+    const user = ref("hsz");
     const host = computed(() =>
       url.value.replaceAll("http://", "").replaceAll("https://", "")
     );
@@ -143,6 +146,10 @@ export default defineComponent({
     };
     const SaveToFriendsList = debounce(_SaveToFriendsList, 500);
     onUnmounted(() => SaveToFriendsList.cancel());
+    let { emit } = context;
+    const sendToParent = () => {
+      emit("toParent", { msg: "1234" });
+    };
     return {
       url,
       user,
@@ -152,6 +159,7 @@ export default defineComponent({
       friend_phone,
       friends,
       SaveToFriendsList,
+      sendToParent,
     };
   },
 });

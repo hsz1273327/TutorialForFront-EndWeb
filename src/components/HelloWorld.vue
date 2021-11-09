@@ -86,9 +86,12 @@ interface SetupReturn {
 export default defineComponent({
   name: "HelloWorld",
   props: {
-    msg: String,
+    msg: {
+      type: String,
+      default: "vue",
+    },
   },
-  expose:["friends","host"],
+  expose: ["friends", "host"],
   setup(): SetupReturn {
     const url = ref("http://www.baidu.com");
     const host = computed(() =>

@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <h1>hello {{ msg }}</h1>
+    <slot :user="user" name="user_slot"> 默认的插槽数据 </slot>
     <p>Welcome to Your Vue.js + TypeScript App</p>
     <a v-bind:href="url"> to {{ host }}</a>
     <table border="1">
@@ -68,6 +69,7 @@ interface Person {
 
 interface DataReturn {
   url: string;
+  user: string;
   friend_name: string;
   friend_gender: string;
   friend_phone: number;
@@ -78,8 +80,8 @@ export default defineComponent({
   props: {
     msg: {
       type: String,
-      default: "vue"
-    }
+      default: "vue",
+    },
   },
   name: "HelloWorld",
   expose: ["friends", "host"],
@@ -116,6 +118,7 @@ export default defineComponent({
   data(): DataReturn {
     return {
       url: "http://www.baidu.com",
+      user: "hsz",
       friend_name: "",
       friend_gender: "male",
       friend_phone: 0,

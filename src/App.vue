@@ -1,6 +1,10 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld :msg="message" />
+  <HelloWorld :msg="message"
+    ><template v-slot:user_slot="slotProps"
+      >这边是 {{ slotProps.user }}!</template
+    ></HelloWorld
+  >
 </template>
 
 <script lang="ts">
@@ -11,11 +15,11 @@ export default defineComponent({
   components: {
     HelloWorld,
   },
-   data(){
+  data() {
     return {
-      message: "hsz"
-    }
-  }
+      message: "hsz",
+    };
+  },
 });
 </script>
 

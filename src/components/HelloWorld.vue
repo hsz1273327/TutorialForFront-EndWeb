@@ -3,6 +3,7 @@
     <h1>hello {{ msg }}</h1>
     <slot :user="user" name="user_slot"> 默认的插槽数据 </slot>
     <p>Welcome to Your Vue.js + TypeScript App</p>
+    <input type="button" value="Send message" @click="sendToParent" />
     <a v-bind:href="url"> to {{ host }}</a>
     <table border="1">
       <caption>
@@ -75,7 +76,7 @@ interface Person {
   phone: number | null;
 }
 interface Props {
-  msg?: string
+  msg?: string;
 }
 const props = withDefaults(defineProps<Props>(), {
   msg: "vue",
@@ -128,11 +129,15 @@ function _SaveToFriendsList() {
 
 const SaveToFriendsList = debounce(_SaveToFriendsList, 500);
 onUnmounted(() => SaveToFriendsList.cancel());
-const user = ref("hsz")
+const user = ref("hsz");
 defineExpose({
   host,
   friends,
 });
+const emit = defineEmits(["toParent"]);
+function sendToParent() {
+  emit("toParent", { msg: "1234" });
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

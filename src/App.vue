@@ -8,6 +8,7 @@
       >这边是 {{ slotProps.user }}!</template
     ></HelloWorld
   >
+  <p>foo: {{ foo }}</p>
 </template>
 
 <script lang="ts">
@@ -18,7 +19,7 @@ export default defineComponent({
 </script>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, provide, readonly } from "vue";
 import HelloWorld from "./components/HelloWorld.vue";
 interface Evt {
   msg: string;
@@ -31,6 +32,11 @@ const child_msg = ref("");
 watch(child_msg, (val, oldVal) => {
   alert(`子组件改变了父组件 child_msg:${val}`);
 });
+
+const foo = ref("foo");
+const updateFoo = (value: string) => (foo.value = value);
+provide("foo", readonly(foo));
+provide("updateFoo", updateFoo);
 </script>
 
 

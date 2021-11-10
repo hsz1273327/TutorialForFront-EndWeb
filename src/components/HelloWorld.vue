@@ -9,6 +9,9 @@
       :value="childMsg"
       @change="$emit('update:childMsg', $event.target.value)"
     />
+    <br />
+    填入foo
+    <input :value="foo" @change="updateFoo($event.target.value)" />
     <a v-bind:href="url"> to {{ host }}</a>
     <table border="1">
       <caption>
@@ -73,7 +76,7 @@ export default defineComponent({
 </script>
 
 <script setup lang="ts">
-import { ref, onUnmounted, computed, watch } from "vue";
+import { ref, onUnmounted, computed, watch, inject } from "vue";
 import { debounce } from "lodash-es";
 interface Person {
   name: string | null;
@@ -144,6 +147,8 @@ const emit = defineEmits(["toParent", "update:childMsg"]);
 function sendToParent() {
   emit("toParent", { msg: "1234" });
 }
+const foo = inject("foo");
+const updateFoo = inject("updateFoo");
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

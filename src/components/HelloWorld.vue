@@ -8,6 +8,9 @@
       :value="childMsg"
       @change="$emit('update:childMsg', $event.target.value)"
     />
+    <br />
+    填入foo
+    <input :value="childMsg" @change="updateFoo($event.target.value)" />
     <p>Welcome to Your Vue.js + TypeScript App</p>
     <a v-bind:href="url"> to {{ host }}</a>
     <table border="1">
@@ -92,6 +95,7 @@ export default defineComponent({
       type: String,
     },
   },
+  inject: ["foo", "updateFoo"],
   emits: ["toParent", "update:childMsg"],
   name: "HelloWorld",
   expose: ["friends", "host"],
@@ -112,6 +116,7 @@ export default defineComponent({
     },
   },
   created() {
+    console.log(`Injected property: ${Reflect.get(this, "foo").value}`); // > Injected property: 5
     // 用 Lodash 的防抖函数
     Reflect.set(
       this,

@@ -1,14 +1,18 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld :msg="message" @to-parent="recvFromChild" v-model:childMsg="child_msg"
+  <HelloWorld
+    :msg="message"
+    @to-parent="recvFromChild"
+    v-model:childMsg="child_msg"
     ><template v-slot:user_slot="slotProps"
       >这边是 {{ slotProps.user }}!</template
     ></HelloWorld
   >
+  <p>foo: {{ foo }}</p>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
 import HelloWorld from "./components/HelloWorld.vue";
 interface Evt {
   msg: string;
@@ -18,10 +22,19 @@ export default defineComponent({
   components: {
     HelloWorld,
   },
+  provide() {
+    return {
+      foo: computed(() => this.foo),
+      updateFoo: (value: string) => {
+        this.foo = value;
+      },
+    };
+  },
   data() {
     return {
       message: "hsz",
       child_msg: "",
+      foo: "foo",
     };
   },
   methods: {

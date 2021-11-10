@@ -4,11 +4,14 @@
     <slot :user="user" name="user_slot"> 默认的插槽数据 </slot>
     <p>Welcome to Your Vue.js + TypeScript App</p>
     <input type="button" value="Send message" @click="sendToParent" />
-    <br/>
+    <br />
     <input
-        :value="childMsg"
-        @change="$emit('update:childMsg', $event.target.value)"
-      />
+      :value="childMsg"
+      @change="$emit('update:childMsg', $event.target.value)"
+    />
+    <br />
+    填入foo
+    <input :value="foo" @change="updateFoo($event.target.value)" />
     <a v-bind:href="url"> to {{ host }}</a>
     <table border="1">
       <caption>
@@ -72,6 +75,7 @@ import {
   computed,
   ComputedRef,
   watch,
+  inject,
 } from "vue";
 import { debounce } from "lodash-es";
 interface Person {
@@ -90,6 +94,8 @@ interface SetupReturn {
   friends: Ref<Person[]>;
   SaveToFriendsList: () => void;
   sendToParent: () => void;
+  foo: string;
+  updateFoo: (value: string) => void;
 }
 
 export default defineComponent({
@@ -158,6 +164,8 @@ export default defineComponent({
     const sendToParent = () => {
       emit("toParent", { msg: "1234" });
     };
+    const foo = <string>inject("foo");
+    const updateFoo = <(value: string) => void>inject("updateFoo");
     return {
       url,
       user,
@@ -168,6 +176,8 @@ export default defineComponent({
       friends,
       SaveToFriendsList,
       sendToParent,
+      foo,
+      updateFoo,
     };
   },
 });

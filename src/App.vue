@@ -1,6 +1,6 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld :msg="message" @to-parent="recvFromChild"
+  <HelloWorld :msg="message" @to-parent="recvFromChild" v-model:childMsg="child_msg"
     ><template v-slot:user_slot="slotProps"
       >这边是 {{ slotProps.user }}!</template
     ></HelloWorld
@@ -21,11 +21,17 @@ export default defineComponent({
   data() {
     return {
       message: "hsz",
+      child_msg: "",
     };
   },
   methods: {
     recvFromChild(evt: Evt) {
       alert(evt.msg);
+    },
+  },
+  watch: {
+    child_msg: function (val, oldVal) {
+      alert(`子组件改变了父组件 child_msg:${val}`);
     },
   },
 });

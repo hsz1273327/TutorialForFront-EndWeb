@@ -3,6 +3,11 @@
     <h1>hello {{ msg }}</h1>
     <slot :user="user" name="user_slot"> 默认的插槽数据 </slot>
     <input type="button" value="Send message" @click="sendToParent" />
+    <br />
+    <input
+      :value="childMsg"
+      @change="$emit('update:childMsg', $event.target.value)"
+    />
     <p>Welcome to Your Vue.js + TypeScript App</p>
     <a v-bind:href="url"> to {{ host }}</a>
     <table border="1">
@@ -83,8 +88,11 @@ export default defineComponent({
       type: String,
       default: "vue",
     },
+    childMsg: {
+      type: String,
+    },
   },
-  emits: ["toParent"],
+  emits: ["toParent", "update:childMsg"],
   name: "HelloWorld",
   expose: ["friends", "host"],
   methods: {

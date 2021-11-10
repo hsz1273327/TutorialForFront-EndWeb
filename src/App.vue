@@ -1,6 +1,10 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld :msg="message" @to-parent="recvFromChild">
+  <HelloWorld
+    :msg="message"
+    @to-parent="recvFromChild"
+    v-model:childMsg="child_msg"
+  >
     <template v-slot:user_slot="slotProps"
       >这边是 {{ slotProps.user }}!</template
     >
@@ -9,7 +13,7 @@
 
 <script lang="ts">
 import HelloWorld from "./components/HelloWorld.vue";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watch } from "vue";
 interface Evt {
   msg: string;
 }
@@ -23,8 +27,13 @@ export default defineComponent({
     const recvFromChild = function (evt: Evt) {
       alert(evt.msg);
     };
+    const child_msg = ref("");
+    watch(child_msg, (val, oldVal) => {
+      alert(`子组件改变了父组件 child_msg:${val}`);
+    });
     return {
       message,
+      child_msg,
       recvFromChild,
     };
   },

@@ -4,6 +4,11 @@
     <slot :user="user" name="user_slot"> 默认的插槽数据 </slot>
     <p>Welcome to Your Vue.js + TypeScript App</p>
     <input type="button" value="Send message" @click="sendToParent" />
+    <br/>
+    <input
+        :value="childMsg"
+        @change="$emit('update:childMsg', $event.target.value)"
+      />
     <a v-bind:href="url"> to {{ host }}</a>
     <table border="1">
       <caption>
@@ -94,8 +99,11 @@ export default defineComponent({
       type: String,
       default: "vue",
     },
+    childMsg: {
+      type: String,
+    },
   },
-  emits:["toParent"],
+  emits: ["toParent", "update:childMsg"],
   expose: ["friends", "host"],
   setup(_, context): SetupReturn {
     const url = ref("http://www.baidu.com");

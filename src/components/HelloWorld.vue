@@ -10,7 +10,7 @@
     />
     <br />
     填入foo
-    <input :value="childMsg" @change="updateFoo($event.target.value)" />
+    <input :value="foo" @change="updateFoo($event.target.value)" />
     <p>Welcome to Your Vue.js + TypeScript App</p>
     <a v-bind:href="url"> to {{ host }}</a>
     <table border="1">

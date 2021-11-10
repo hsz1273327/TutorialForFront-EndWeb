@@ -4,6 +4,11 @@
     <slot :user="user" name="user_slot"> 默认的插槽数据 </slot>
     <p>Welcome to Your Vue.js + TypeScript App</p>
     <input type="button" value="Send message" @click="sendToParent" />
+    <br />
+    <input
+      :value="childMsg"
+      @change="$emit('update:childMsg', $event.target.value)"
+    />
     <a v-bind:href="url"> to {{ host }}</a>
     <table border="1">
       <caption>
@@ -77,6 +82,7 @@ interface Person {
 }
 interface Props {
   msg?: string;
+  childMsg?: string;
 }
 const props = withDefaults(defineProps<Props>(), {
   msg: "vue",
@@ -134,7 +140,7 @@ defineExpose({
   host,
   friends,
 });
-const emit = defineEmits(["toParent"]);
+const emit = defineEmits(["toParent", "update:childMsg"]);
 function sendToParent() {
   emit("toParent", { msg: "1234" });
 }

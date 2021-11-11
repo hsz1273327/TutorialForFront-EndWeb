@@ -1,0 +1,24 @@
+{
+    "name": "hero-tutorial-api",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "start": "node api_server"
+    },
+    "dependencies": {
+        "commander": "^8.3.0",
+        "koa": "^2.13.4",
+        "koa-body": "^4.2.0",
+        "koa-pino-logger": "^3.0.0",
+        "koa-router": "^10.1.1",
+        "koa-sse-stream": "^0.2.0",
+        "koa2-cors": "^2.0.6",
+        "pg": "^8.7.1",
+        "pg-hstore": "^2.3.4",
+        "pino": "^7.2.0",
+        "redis": "^3.1.2",
+        "sequelize": "^6.9.0",
+        "sequelize-automate": "^1.2.2"
+    }
+}

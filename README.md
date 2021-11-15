@@ -1,3 +1,3 @@
-# dev分支
+# Vue only-view
 
-用于提供一个空的开发分支给其他例子分支作为基础
+展示vue使用element-plus组件库构造view

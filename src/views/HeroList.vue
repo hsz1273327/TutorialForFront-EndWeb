@@ -1,5 +1,10 @@
 <template>
   <div class="hero-list">
+    <el-breadcrumb separator="/">
+      <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
+      <el-breadcrumb-item>hero</el-breadcrumb-item>
+    </el-breadcrumb>
+    <el-divider></el-divider>
     <el-row type="flex" justify="center">
       <h2>Hero List</h2>
     </el-row>
@@ -42,6 +47,9 @@ export default defineComponent({
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import {
+  ElBreadcrumb,
+  ElBreadcrumbItem,
+  ElDivider,
   ElRow,
   ElTag,
   ElInput,

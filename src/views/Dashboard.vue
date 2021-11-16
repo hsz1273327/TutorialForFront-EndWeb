@@ -20,7 +20,18 @@ export default {
 </script>
 <script setup lang="ts">
 import { ref } from "vue";
-import { DefaultHeros } from "../const";
-import { ElCol, ElRow, ElCard } from "element-plus";
-const heros = ref(Object.assign([], DefaultHeros));
+import { DefaultHeros, HeroInterface } from "../const";
+import {
+  ElCol,
+  ElRow,
+  ElCard,
+} from "element-plus";
+const heros = ref(
+  Object.assign(
+    [],
+    DefaultHeros.sort(
+      (a: HeroInterface, b: HeroInterface) => b.score - a.score
+    ).slice(0, 4)
+  )
+);
 </script>

@@ -5,7 +5,7 @@
     </el-row>
     <el-row :gutter="1" type="flex" justify="space-around">
       <template v-for="item in heros" :key="item.id">
-        <el-col span="4">
+        <el-col :span="4">
           <el-card shadow="hover">{{ item.name }}</el-card>
         </el-col>
       </template>

@@ -1,3 +1,3 @@
-# Vue only-view
+# Vue router
 
-展示vue使用element-plus组件库构造view
+展示vue使用Vue router路由库构串联各个view

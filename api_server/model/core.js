@@ -1,10 +1,9 @@
 import Sequelize from 'sequelize'
 
 const Heros = [ {
-
-    "name": "隐者之紫",
-    "score": 20,
-    "quality": {
+    name: "隐者之紫",
+    score: 50,//30+20
+    quality: {
         "破坏力": 20,
         "速度": 20,
         "射程距离": 20,
@@ -12,10 +11,11 @@ const Heros = [ {
         "精密度": 20,
         "成长性": 20,
     }
-}, {
-    "name": "红色魔术师",
-    "score": 75,
-    "quality": {
+},
+{
+    name: "红色魔术师",
+    score: 75,//43+32
+    quality: {
         "破坏力": 60,
         "速度": 40,
         "射程距离": 40,
@@ -23,10 +23,11 @@ const Heros = [ {
         "精密度": 40,
         "成长性": 40,
     }
-}, {
-    "name": "白金之星",
-    "score": 95,
-    "quality": {
+},
+{
+    name: "白金之星",
+    score: 160,//77+83
+    quality: {
         "破坏力": 100,
         "速度": 100,
         "射程距离": 20,
@@ -34,10 +35,11 @@ const Heros = [ {
         "精密度": 100,
         "成长性": 60,
     }
-}, {
-    "name": "法皇",
-    "score": 75,
-    "quality": {
+},
+{
+    name: "法皇",
+    score: 75,//53+32
+    quality: {
         "破坏力": 60,
         "速度": 60,
         "射程距离": 40,
@@ -45,10 +47,11 @@ const Heros = [ {
         "精密度": 40,
         "成长性": 40,
     }
-}, {
-    "name": "银色战车",
-    "score": 70,
-    "quality": {
+},
+{
+    name: "银色战场",
+    score: 70,//60+10
+    quality: {
         "破坏力": 60,
         "速度": 80,
         "射程距离": 20,
@@ -56,7 +59,7 @@ const Heros = [ {
         "精密度": 60,
         "成长性": 60,
     }
-} ]
+},]
 export class Connection {
     constructor () {
         this.TABLES = new Map()

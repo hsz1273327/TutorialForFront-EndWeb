@@ -19,19 +19,12 @@ export default {
 };
 </script>
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed } from "vue";
+import { useStore } from "vuex";
 import { DefaultHeros, HeroInterface } from "../const";
-import {
-  ElCol,
-  ElRow,
-  ElCard,
-} from "element-plus";
-const heros = ref(
-  Object.assign(
-    [],
-    DefaultHeros.sort(
-      (a: HeroInterface, b: HeroInterface) => b.score - a.score
-    ).slice(0, 4)
-  )
-);
+import { ElCol, ElRow, ElCard } from "element-plus";
+const store = useStore();
+console.log(Object.keys(store.getters));
+const heros = computed(() => store.getters["herolist/top4Heros"]);
+console.log(heros.value);
 </script>

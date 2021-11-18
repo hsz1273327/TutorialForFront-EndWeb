@@ -38,6 +38,7 @@ export default defineComponent({
 </script>
 <script setup lang="ts">
 import { ref, computed } from "vue";
+import { useStore } from "vuex";
 import {
   ElBreadcrumb,
   ElBreadcrumbItem,
@@ -51,6 +52,7 @@ import {
 } from "element-plus";
 import { QualityInterface } from "../const";
 const random100 = () => Math.floor(Math.random() * 100 + 1);
+const store = useStore();
 const _defaultHeroInfo = {
   name: "",
   score: 0,
@@ -66,6 +68,9 @@ const _defaultHeroInfo = {
 const hero = ref(Object.assign({}, _defaultHeroInfo));
 const submitHero = () => {
   console.log(hero.value);
+  store.dispatch("herolist/AppendHero", {
+    heroObj: hero.value,
+  });
 };
 const resetForm = () => {
   hero.value = Object.assign({}, _defaultHeroInfo);
@@ -97,12 +102,6 @@ const option = computed(() => {
     "成长性",
   ];
   return {
-    // title: {
-    //   text: "英雄属性",
-    // },
-    // legend: {
-    //   data: [hero.value.name],
-    // },
     radar: {
       // shape: 'circle',
       indicator: heroattrs.map((i) => ({ name: i, max: 100 })),

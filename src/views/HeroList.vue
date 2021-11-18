@@ -44,8 +44,9 @@ export default defineComponent({
 });
 </script>
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 import {
   ElBreadcrumb,
   ElBreadcrumbItem,
@@ -59,11 +60,15 @@ import {
 } from "element-plus";
 import { DefaultHeros } from "../const";
 const router = useRouter();
-const heros = ref(Object.assign([], DefaultHeros));
+const store = useStore();
+const heros = computed(() => store.getters["herolist/allHeros"]);
 const handleEdit = (index: any, row: any) => {
   router.push(`/herodetail/${row.id}`);
 };
 const handleDelete = (index: any, row: any) => {
   console.log(index, row);
+  store.dispatch("herolist/DeleteHero", {
+    heroID: row.id,
+  });
 };
 </script>

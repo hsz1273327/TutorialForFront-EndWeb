@@ -7,7 +7,7 @@ export interface QualityInterface {
     "成长性": number,
 }
 export interface HeroInterface {
-    id: number,
+    id?: number,
     name: string,
     score: number,
     quality: QualityInterface,

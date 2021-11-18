@@ -44,6 +44,8 @@ export default defineComponent({
 </script>
 <script setup lang="ts">
 import { ref, provide, computed } from "vue";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 import {
   ElBreadcrumb,
   ElBreadcrumbItem,
@@ -56,25 +58,25 @@ import {
 } from "element-plus";
 import { THEME_KEY } from "vue-echarts";
 import { DefaultHeros } from "../const";
-import { useRouter } from "vue-router";
 
+const store = useStore();
 const router = useRouter();
 interface Props {
   id: number;
 }
 const props = defineProps<Props>();
-const _hero = DefaultHeros.filter((ele) => ele.id == props.id);
-if (_hero.length != 1) {
-  alert(`id ${props.id} not found`);
-  throw `id ${props.id} not found`;
-}
-const hero = ref(_hero[0]);
+const _hero = store.getters["herolist/getHero"](props.id);
+const hero = ref(_hero);
 const submitHero = () => {
   console.log(hero.value);
+  store.dispatch("herolist/UpdateHero", {
+    heroID: props.id,
+    source: hero.value,
+  });
 };
 const goBack = () => router.back();
-provide(THEME_KEY, "light");
 
+provide(THEME_KEY, "light");
 const option = computed(() => {
   const heroattrs = [
     "破坏力",
@@ -85,14 +87,7 @@ const option = computed(() => {
     "成长性",
   ];
   return {
-    // title: {
-    //   text: "英雄属性",
-    // },
-    // legend: {
-    //   data: [hero.value.name],
-    // },
     radar: {
-      // shape: 'circle',
       indicator: heroattrs.map((i) => ({ name: i, max: 100 })),
     },
     series: [

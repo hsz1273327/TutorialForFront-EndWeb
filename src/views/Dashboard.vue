@@ -24,7 +24,6 @@ import { useStore } from "vuex";
 import { DefaultHeros, HeroInterface } from "../const";
 import { ElCol, ElRow, ElCard } from "element-plus";
 const store = useStore();
-console.log(Object.keys(store.getters));
 const heros = computed(() => store.getters["herolist/top4Heros"]);
 console.log(heros.value);
 </script>

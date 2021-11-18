@@ -1,0 +1,18 @@
+version: "2.4"
+services:
+  rds:
+    image: redis:alpine
+
+  pg:
+    image: postgres:alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
+
+  hero-tutorial-api:
+    build: hsz1273327/hero-tutorial-api:latest
+    depends_on:
+      - rds
+      - pg
+    mem_limit: 500m
+    ports:
+      - "5000:5000"

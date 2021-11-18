@@ -1,6 +1,7 @@
 import Ajv from "ajv"
 import { ActionContext } from "vuex"
-import { HeroInterface, DefaultHeros } from "../../const"
+import { HeroInterface } from "../../const"
+import { RemoteURL } from "../utils"
 //heroSchema hero对象的schema
 const heroSchema = {
     "type": "object",
@@ -74,7 +75,7 @@ interface StatusInterface {
 }
 
 const state: StatusInterface = {
-    heros: Object.assign([], DefaultHeros)
+    heros: []
 }
 
 // getters
@@ -105,7 +106,9 @@ const getters = {
         }
     }
 }
-
+interface SyncHerosPayloadInterface {
+    heros: HeroInterface[]
+}
 interface AppendHeroPayloadInterface {
     heroObj: HeroInterface
 }
@@ -120,6 +123,10 @@ interface UpdateHeroPayloadInterface {
 
 // mutations 定义对数据状态的操作
 const mutations = {
+    syncHeros(state: StatusInterface, payload: SyncHerosPayloadInterface) {
+        state.heros = payload.heros
+        console.log(payload.heros)
+    },
     appendHero(state: StatusInterface, payload: AppendHeroPayloadInterface) {
         let id = counter()
         let hero = Object.assign(payload.heroObj, { id })
@@ -142,19 +149,90 @@ const mutations = {
 
 // actions 定义业务逻辑
 const actions = {
-    AppendHero(context: ActionContext<StatusInterface, any>, payload: AppendHeroPayloadInterface) {
+    async SyncHeros(context: ActionContext<StatusInterface, any>) {
+        let res = await fetch(`${RemoteURL}/api/hero`, {
+            method: 'GET'
+        })
+        if (!res.ok) {
+            if (res.status === 403) {
+                let resjson = await res.json()
+                console.error(resjson.Message)
+            } else {
+                let restext = await res.text()
+                console.error(restext)
+            }
+            return
+        }
+        let herosinfo = await res.json()
+        let heros = herosinfo.result
+        context.commit('syncHeros', { heros })
+    },
+    async AppendHero(context: ActionContext<StatusInterface, any>, payload: AppendHeroPayloadInterface) {
         let heroObj = payload.heroObj
         let validated = heroValidate(heroObj)
         if (validated) {
+            let res = await fetch(`${RemoteURL}/api/hero`,
+                {
+                    method: 'POST',
+                    body: JSON.stringify(heroObj),
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    })
+                })
+            if (!res.ok) {
+                if (res.status === 403) {
+                    let resjson = await res.json()
+                    console.error(resjson.Message)
+                } else {
+                    let restext = await res.text()
+                    console.error(restext)
+                }
+                return
+            }
             context.commit('appendHero', payload)
         } else {
             console.error(`添加hero失败,验证错误`)
         }
     },
-    UpdateHero(context: ActionContext<StatusInterface, any>, payload: UpdateHeroPayloadInterface) {
+    async UpdateHero(context: ActionContext<StatusInterface, any>, payload: UpdateHeroPayloadInterface) {
+        let res = await fetch(`${RemoteURL}/api/hero/${payload.heroID}`,
+            {
+                method: 'PUT',
+                body: JSON.stringify(payload.source),
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                })
+            })
+        if (!res.ok) {
+            if (res.status === 403) {
+                let resjson = await res.json()
+                console.error(resjson.Message)
+            } else {
+                let restext = await res.text()
+                console.error(restext)
+            }
+            return
+        }
         context.commit('updateHero', payload)
     },
-    DeleteHero(context: ActionContext<StatusInterface, any>, payload: DeleteHeroPayloadInterface) {
+    async DeleteHero(context: ActionContext<StatusInterface, any>, payload: DeleteHeroPayloadInterface) {
+        let res = await fetch(`${RemoteURL}/api/hero/${payload.heroID}`,
+            {
+                method: 'DELETE',
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                })
+            })
+        if (!res.ok) {
+            if (res.status === 403) {
+                let resjson = await res.json()
+                console.error(resjson.Message)
+            } else {
+                let restext = await res.text()
+                console.error(restext)
+            }
+            return
+        }
         context.commit('deleteHero', payload)
     },
 }

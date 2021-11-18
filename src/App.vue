@@ -48,6 +48,9 @@ import HeroDetail from "./views/HeroDetail.vue";
 import HeroList from "./views/HeroList.vue";
 import NewHero from "./views/NewHero.vue";
 import { ref } from "vue";
+import { useStore } from "vuex";
+const store = useStore();
+store.dispatch("herolist/SyncHeros")
 </script>
 
 <style>

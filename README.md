@@ -1,3 +1,3 @@
 # Vue remote-api
 
-展示vue使用Vue router路由库构串联各个view
+展示vue与远端api服务交互

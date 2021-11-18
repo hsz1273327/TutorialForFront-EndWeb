@@ -103,7 +103,6 @@ const getters = {
         } else {
             return []
         }
-
     }
 }
 

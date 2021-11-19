@@ -43,7 +43,7 @@ export default defineComponent({
 });
 </script>
 <script setup lang="ts">
-import { ref, provide, computed } from "vue";
+import { ref, provide, computed, onMounted, Ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import {
@@ -57,7 +57,7 @@ import {
   ElButton,
 } from "element-plus";
 import { THEME_KEY } from "vue-echarts";
-import { DefaultHeros } from "../const";
+import { HeroInterface } from "../const";
 
 const store = useStore();
 const router = useRouter();
@@ -65,8 +65,24 @@ interface Props {
   id: number;
 }
 const props = defineProps<Props>();
-const _hero = store.getters["herolist/getHero"](props.id);
-const hero = ref(_hero);
+const hero: Ref<HeroInterface> = ref({
+  id: 0,
+  name: "",
+  score: 0,
+  quality: {
+    破坏力: 0,
+    速度: 0,
+    射程距离: 0,
+    持久力: 0,
+    精密度: 0,
+    成长性: 0,
+  },
+});
+onMounted(async () => {
+  await store.dispatch("herolist/GetCurrentHero", { heroID: props.id });
+  hero.value = Object.assign({}, store.getters["herolist/getCurrentHero"]);
+});
+
 const submitHero = () => {
   console.log(hero.value);
   store.dispatch("herolist/UpdateHero", {

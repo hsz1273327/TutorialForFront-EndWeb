@@ -6,10 +6,18 @@ export interface QualityInterface {
     "精密度": number,
     "成长性": number,
 }
-export interface HeroInterface {
-    id?: number,
+interface HeroBaseInterface {
     name: string,
     score: number,
+}
+export interface HeroDescInterface extends HeroBaseInterface{
+    id: number,
+}
+export interface HeroInterface extends HeroDescInterface {
+    quality: QualityInterface,
+}
+
+export interface NewHeroQueryInterface extends HeroBaseInterface {
     quality: QualityInterface,
 }
 // 6项均值+10~100的能力评分

@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import herolist from './modules/herolist'
+import menu from './modules/menu'
 
 const debug = process.env.NODE_ENV !== 'production'
 
@@ -11,7 +12,8 @@ export default createStore({
   actions: {
   },
   modules: {
-    herolist
+    herolist,
+    menu
   },
   strict: debug
 })

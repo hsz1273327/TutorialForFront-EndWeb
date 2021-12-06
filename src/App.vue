@@ -7,7 +7,13 @@
             <h1>英雄指南</h1>
           </el-row>
           <el-row :gutter="10" type="flex" justify="center">
-            <el-menu class="el-menu-demo" mode="horizontal" router>
+            <el-menu
+              :default-active="activeIndex"
+              class="el-menu-demo"
+              mode="horizontal"
+              router
+              @select="changeIndex"
+            >
               <el-menu-item index="/">仪表盘</el-menu-item>
               <el-menu-item index="/herolist">英雄列表</el-menu-item>
               <el-menu-item index="/newhero">创建英雄</el-menu-item>
@@ -17,7 +23,13 @@
         </header>
       </el-header>
       <el-main>
-        <router-view />
+        <router-view v-slot="{ Component }">
+          <transition name="component-fade" mode="out-in">
+            <keep-alive :max="3">
+              <component :is="Component" />
+            </keep-alive>
+          </transition>
+        </router-view>
       </el-main>
     </el-container>
   </div>
@@ -43,11 +55,44 @@ import Dashboard from "./views/Dashboard.vue";
 import HeroDetail from "./views/HeroDetail.vue";
 import HeroList from "./views/HeroList.vue";
 import NewHero from "./views/NewHero.vue";
-import { onUnmounted } from "vue";
+import { ElNotification } from "element-plus";
+import { h } from "vue";
+import { onUnmounted, computed } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
-store.dispatch("herolist/SyncHeros")
-const task = setInterval(() => store.dispatch("herolist/SyncHeros"), 15000);
+store.dispatch("menu/loadCurrrentIndex");
+const activeIndex = computed(() => store.getters["menu/activeIndex"]);
+const changeIndex = (index: string) => {
+  store.dispatch("menu/changeCurrrentIndex", {
+    current_index: index,
+  });
+};
+store.dispatch("herolist/SyncHeros");
+const task = setInterval(
+  () =>
+    store
+      .dispatch("herolist/SyncHeros")
+      .then(() => {
+        if (!store.getters["herolist/networkStatus"]) {
+          ElNotification({
+            title: "Title",
+            message: h("i", { style: "color: teal" }, "网络已联通"),
+          });
+          store.commit("herolist/switchNetworkStatus");
+        }
+      })
+      .catch((err) => {
+        if (store.getters["herolist/networkStatus"]) {
+          ElNotification({
+            title: "Title",
+            message: h("i", { style: "color: teal" }, "网络问题未能同步数据"),
+          });
+          store.commit("herolist/switchNetworkStatus");
+        }
+      }),
+  2000
+);
+
 onUnmounted(() => clearInterval(task));
 </script>
 
@@ -59,5 +104,14 @@ onUnmounted(() => clearInterval(task));
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.component-fade-enter-active,
+.component-fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.component-fade-enter-from,
+.component-fade-leave-to {
+  opacity: 0;
 }
 </style>

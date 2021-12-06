@@ -37,8 +37,9 @@ export default defineComponent({
 });
 </script>
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, Ref, watch } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 import {
   ElBreadcrumb,
   ElBreadcrumbItem,
@@ -49,11 +50,13 @@ import {
   ElButton,
   ElForm,
   ElFormItem,
+  ElMessage,
 } from "element-plus";
-import { QualityInterface } from "../const";
+import { QualityInterface, NewHeroQueryInterface } from "../const";
+const router = useRouter();
 const random100 = () => Math.floor(Math.random() * 100 + 1);
 const store = useStore();
-const _defaultHeroInfo = {
+const _defaultHeroInfo: NewHeroQueryInterface = {
   name: "",
   score: 0,
   quality: {
@@ -65,15 +68,33 @@ const _defaultHeroInfo = {
     成长性: 0,
   },
 };
-const hero = ref(Object.assign({}, _defaultHeroInfo));
-const submitHero = () => {
-  console.log(hero.value);
-  store.dispatch("herolist/AppendHero", {
-    heroObj: hero.value,
-  });
+let _cache: string | null = sessionStorage.getItem("create_hero_cache");
+const hero: Ref<NewHeroQueryInterface> = ref(
+  Object.assign({}, _cache ? JSON.parse(_cache) : _defaultHeroInfo)
+);
+watch(hero, (newValue: Ref<NewHeroQueryInterface>) => {
+  sessionStorage.setItem("create_hero_cache", JSON.stringify(newValue.value));
+});
+const submitHero = async () => {
+  try {
+    await store.dispatch("herolist/AppendHero", {
+      heroObj: hero.value,
+    });
+    sessionStorage.removeItem("create_hero_cache");
+    router.back();
+  } catch (err) {
+    if (typeof err === "string") {
+      ElMessage({
+        showClose: true,
+        message: err,
+        type: "error",
+      });
+    }
+  }
 };
 const resetForm = () => {
   hero.value = Object.assign({}, _defaultHeroInfo);
+  sessionStorage.removeItem("create_hero_cache");
 };
 const randomHeroQuality = () => {
   hero.value.quality = {

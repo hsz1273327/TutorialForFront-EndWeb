@@ -57,6 +57,7 @@ import {
   ElButton,
   ElTable,
   ElTableColumn,
+  ElMessage,
 } from "element-plus";
 import { DefaultHeros } from "../const";
 const router = useRouter();
@@ -65,10 +66,19 @@ const heros = computed(() => store.getters["herolist/allHeros"]);
 const handleEdit = (index: any, row: any) => {
   router.push(`/herodetail/${row.id}`);
 };
-const handleDelete = (index: any, row: any) => {
-  console.log(index, row);
-  store.dispatch("herolist/DeleteHero", {
-    heroID: row.id,
-  });
+const handleDelete = async (index: any, row: any) => {
+  try {
+    await store.dispatch("herolist/DeleteHero", {
+      heroID: row.id,
+    });
+  } catch (err) {
+    if (typeof err === "string") {
+      ElMessage({
+        showClose: true,
+        message: err,
+        type: "error",
+      });
+    }
+  }
 };
 </script>

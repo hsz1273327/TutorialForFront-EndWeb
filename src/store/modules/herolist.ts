@@ -58,28 +58,22 @@ const ajv = new Ajv()
 //heroValidate hero的schema校验器
 const heroValidate = ajv.compile(heroSchema)
 
-// const Counter = () => {
-//     let count = 0
-//     return () => {
-//         count += 1
-//         return count
-//     }
-// }
-// let counter = Counter()
-
 
 interface StatusInterface {
     heros: HeroDescInterface[],
-    currentHero: HeroInterface | null
+    currentHero: HeroInterface | null,
+    networkOK: boolean
 }
 
 const state: StatusInterface = {
     heros: [],
-    currentHero: null
+    currentHero: null,
+    networkOK: true
 }
 
 // getters
 const getters = {
+
     getCurrentHero: (state: StatusInterface): HeroInterface | null => {
         return state.currentHero
     },
@@ -93,6 +87,9 @@ const getters = {
         } else {
             return []
         }
+    },
+    networkStatus: (state: StatusInterface) => {
+        return state.networkOK
     }
 }
 interface SyncHerosPayloadInterface {
@@ -104,11 +101,15 @@ interface CacheCurrentHeroInterface {
 
 // mutations 定义对数据状态的操作
 const mutations = {
+
     syncHeros(state: StatusInterface, payload: SyncHerosPayloadInterface) {
         state.heros = payload.heros
     },
     cacheCurrentHero(state: StatusInterface, payload: CacheCurrentHeroInterface) {
         state.currentHero = payload.currentHero
+    },
+    switchNetworkStatus(state: StatusInterface) {
+        state.networkOK = !state.networkOK
     }
 }
 interface QueryCurrentHeroInterface {
@@ -123,6 +124,7 @@ interface UpdateHeroPayloadInterface extends QueryCurrentHeroInterface {
 }
 // actions 定义业务逻辑
 const actions = {
+
     async SyncHeros(context: ActionContext<StatusInterface, any>) {
         let res = await fetch(`${RemoteURL}/api/hero`, {
             method: 'GET'
@@ -130,10 +132,10 @@ const actions = {
         if (!res.ok) {
             if (res.status === 403) {
                 let resjson = await res.json()
-                console.error(resjson.Message)
+                throw resjson.Message
             } else {
                 let restext = await res.text()
-                console.error(restext)
+                throw restext
             }
             return
         }
@@ -142,31 +144,64 @@ const actions = {
         context.commit('syncHeros', { heros })
     },
     async GetCurrentHero(context: ActionContext<StatusInterface, any>, payload: QueryCurrentHeroInterface) {
-        let res = await fetch(`${RemoteURL}/api/hero/${payload.heroID}`, {
-            method: 'GET'
-        })
-        if (!res.ok) {
-            if (res.status === 403) {
-                let resjson = await res.json()
-                console.error(resjson.Message)
-            } else {
-                let restext = await res.text()
-                console.error(restext)
+        if (context.state.networkOK) {
+            let res = await fetch(`${RemoteURL}/api/hero/${payload.heroID}`, {
+                method: 'GET'
+            })
+            if (!res.ok) {
+                if (res.status === 403) {
+                    let resjson = await res.json()
+                    throw resjson.Message
+                } else {
+                    let restext = await res.text()
+                    throw restext
+                }
+                return
             }
-            return
+            let herosinfo = await res.json()
+            let currentHero = herosinfo.result
+            context.commit('cacheCurrentHero', { currentHero })
+        } else {
+            throw "无法连接到服务器"
         }
-        let herosinfo = await res.json()
-        let currentHero = herosinfo.result
-        context.commit('cacheCurrentHero', { currentHero })
     },
     async AppendHero(context: ActionContext<StatusInterface, any>, payload: AppendHeroPayloadInterface) {
-        let heroObj = payload.heroObj
-        let validated = heroValidate(heroObj)
-        if (validated) {
-            let res = await fetch(`${RemoteURL}/api/hero`,
+        if (context.state.networkOK) {
+            let heroObj = payload.heroObj
+            let validated = heroValidate(heroObj)
+            if (validated) {
+                let res = await fetch(`${RemoteURL}/api/hero`,
+                    {
+                        method: 'POST',
+                        body: JSON.stringify(heroObj),
+                        headers: new Headers({
+                            'Content-Type': 'application/json'
+                        })
+                    })
+                if (!res.ok) {
+                    if (res.status === 403) {
+                        let resjson = await res.json()
+                        throw resjson.Message
+                    } else {
+                        let restext = await res.text()
+                        throw restext
+                    }
+                    return
+                }
+                context.dispatch("SyncHeros")
+            } else {
+                console.error(`添加hero失败,验证错误`)
+            }
+        } else {
+            throw "无法连接到服务器"
+        }
+    },
+    async UpdateHero(context: ActionContext<StatusInterface, any>, payload: UpdateHeroPayloadInterface) {
+        if (context.state.networkOK) {
+            let res = await fetch(`${RemoteURL}/api/hero/${payload.heroID}`,
                 {
-                    method: 'POST',
-                    body: JSON.stringify(heroObj),
+                    method: 'PUT',
+                    body: JSON.stringify(payload.source),
                     headers: new Headers({
                         'Content-Type': 'application/json'
                     })
@@ -174,59 +209,43 @@ const actions = {
             if (!res.ok) {
                 if (res.status === 403) {
                     let resjson = await res.json()
-                    console.error(resjson.Message)
+                    throw resjson.Message
                 } else {
                     let restext = await res.text()
-                    console.error(restext)
+                    throw restext
+                }
+                return
+            }
+            await context.dispatch("GetCurrentHero", { heroID: payload.heroID })
+            context.dispatch("SyncHeros")
+        } else {
+            throw "无法连接到服务器"
+        }
+    },
+    async DeleteHero(context: ActionContext<StatusInterface, any>, payload: QueryCurrentHeroInterface) {
+        if (context.state.networkOK) {
+            let res = await fetch(`${RemoteURL}/api/hero/${payload.heroID}`,
+                {
+                    method: 'DELETE',
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    })
+                })
+            if (!res.ok) {
+                if (res.status === 403) {
+                    let resjson = await res.json()
+                    throw resjson.Message
+                } else {
+                    let restext = await res.text()
+                    throw restext
                 }
                 return
             }
             context.dispatch("SyncHeros")
         } else {
-            console.error(`添加hero失败,验证错误`)
+            throw "无法连接到服务器"
         }
-    },
-    async UpdateHero(context: ActionContext<StatusInterface, any>, payload: UpdateHeroPayloadInterface) {
-        let res = await fetch(`${RemoteURL}/api/hero/${payload.heroID}`,
-            {
-                method: 'PUT',
-                body: JSON.stringify(payload.source),
-                headers: new Headers({
-                    'Content-Type': 'application/json'
-                })
-            })
-        if (!res.ok) {
-            if (res.status === 403) {
-                let resjson = await res.json()
-                console.error(resjson.Message)
-            } else {
-                let restext = await res.text()
-                console.error(restext)
-            }
-            return
-        }
-        await context.dispatch("GetCurrentHero", { heroID: payload.heroID })
-        context.dispatch("SyncHeros")
-    },
-    async DeleteHero(context: ActionContext<StatusInterface, any>, payload: QueryCurrentHeroInterface) {
-        let res = await fetch(`${RemoteURL}/api/hero/${payload.heroID}`,
-            {
-                method: 'DELETE',
-                headers: new Headers({
-                    'Content-Type': 'application/json'
-                })
-            })
-        if (!res.ok) {
-            if (res.status === 403) {
-                let resjson = await res.json()
-                console.error(resjson.Message)
-            } else {
-                let restext = await res.text()
-                console.error(restext)
-            }
-            return
-        }
-        context.dispatch("SyncHeros")
+
     },
 }
 

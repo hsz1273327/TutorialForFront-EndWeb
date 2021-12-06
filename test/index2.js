@@ -1,7 +1,7 @@
 import WebSocket from 'ws'
 
 
-const ws = new WebSocket('ws://localhost:3000/channel?id=2')
+const ws = new WebSocket('ws://localhost:3000/channel/2')
 ws.on('open', () => {
     ws.send(JSON.stringify({
         event: 'publish',

@@ -1,11 +1,17 @@
 import WebSocket from 'ws'
 
-const ws = new WebSocket('ws://localhost:3000/channel?id=1')
+const ws = new WebSocket('ws://localhost:3000/channel/1')
 ws.on('open', () => {
     ws.send(JSON.stringify({
         event: 'publish',
         message: 'hsz'
     }))
+    setTimeout(() => {
+        console.log("申请关闭")
+        ws.send(JSON.stringify({
+            event: 'close'
+        }))
+    }, 5000)
 })
 ws.on('message', (message) => {
     let data = null
@@ -38,5 +44,5 @@ ws.on('message', (message) => {
 
 })
 ws.on('close', () => {
-    console.log('disconnected');
+    console.log('disconnected')
 })

@@ -1,13 +1,50 @@
+import Koa from 'koa'
+import route from 'koa-route'
+import websockify from 'koa-websocket'
 import WebSocket from 'ws'
-import http from 'http'
-import url from 'url'
-import {
-    URLSearchParams
-} from 'url'
 
-const server = http.createServer()
+const app = websockify(new Koa())
+let CHANNEL_WS_INDEX = new Map()// channelid-> set(ws)
+let WS_CHANNEL_INDEX = new Map() // ws-> set(channelid)
 
-const onMessage = wws => ws => message => {
+const Publish = (channel_id, msg) => {
+    let wss = CHANNEL_WS_INDEX.get(channel_id)
+    for (let ws of wss) {
+        ws.send(msg)
+    }
+}
+
+const RemoveWs = (ws) => {
+    let channels = WS_CHANNEL_INDEX.get(ws)
+    for (let channel of channels) {
+        let wss = CHANNEL_WS_INDEX.get(channel)
+        wss.delete(ws)
+    }
+    WS_CHANNEL_INDEX.delete(ws)
+    ws.close()
+}
+const AddToChannel = (ws, index_id) => {
+    if (CHANNEL_WS_INDEX.has(index_id)) {
+        let wss = CHANNEL_WS_INDEX.get(index_id)
+        wss.add(ws)
+        CHANNEL_WS_INDEX.set(index_id, wss)
+    } else {
+        let wss = new Set()
+        wss.add(ws)
+        CHANNEL_WS_INDEX.set(index_id, wss)
+    }
+    if (WS_CHANNEL_INDEX.has(ws)) {
+        let channels = WS_CHANNEL_INDEX.get(ws)
+        channels.add(index_id)
+        WS_CHANNEL_INDEX.set(ws, channels)
+    } else {
+        let channels = new Set()
+        channels.add(index_id)
+        WS_CHANNEL_INDEX.set(ws, channels)
+    }
+}
+
+const onMessage = channel_id => ws => message => {
     console.log('received: %s', message)
     let data = null
     try {
@@ -24,14 +61,14 @@ const onMessage = wws => ws => message => {
     switch (data.event) {
         case "close":
             {
-                ws.close()
+                RemoveWs(ws)
             }
             break
         case "publish":
             {
-                ws.publish(JSON.stringify({
+                Publish(channel_id, JSON.stringify({
                     event: "message",
-                    message: `${data.message} subscribed this channel`
+                    message: `${ data.message } subscribed this channel`
                 }))
             }
             break
@@ -42,58 +79,22 @@ const onMessage = wws => ws => message => {
     }
 }
 
-let CHANNELS = new Map()
 
-server.on('upgrade', (request, socket, head) => {
-    const url_p = url.parse(request.url)
-    const pathname = url_p.pathname
-    const params = new URLSearchParams(url_p.query)
-    if (pathname === '/channel') {
-        if (params.get("id")) {
-            let channel_id = params.get("id")
-            let wss = null
-            if (CHANNELS.get(channel_id)) {
-                wss = CHANNELS.get(channel_id)
-            } else {
-                wss = new WebSocket.Server({
-                    noServer: true
-                })
-                wss.cid = channel_id
-                wss.on('connection', ws => {
-                    ws.publish = message => {
-                        wss.clients.forEach(client => {
-                            if (client !== ws && client.readyState === WebSocket.OPEN) {
-                                client.send(message)
-                                console.log(`send message ${message}`)
-                            }else{
-                                console.log(`client status ${client.readyState}`)
-                            }
-                        })
-                    }
-                    ws.on('message', onMessage(wss)(ws))
-                })
-                CHANNELS.set(channel_id, wss)
-            }
-            wss.handleUpgrade(request, socket, head, ws => {
-                wss.emit('connection', ws, request)
-                console.log(`emit channel ${channel_id}`)
-            })
-        } else {
-            socket.destroy()
-            console.log("destory socket")
-        }
-
-    } else {
-        socket.destroy()
-        console.log("destory socket")
-    }
-});
-
+// Using routes
+app.ws.use(route.all('/channel/:index_id', async function (ctx, index_id) {
+    console.log(`get in channel ${ index_id }`)
+    AddToChannel(ctx.websocket, index_id)
+    console.log("AddToChannel ok")
+    ctx.websocket.send(JSON.stringify({ event: "message", message: "hello" }))
+    ctx.websocket.on('message', onMessage(index_id)(ctx.websocket))
+}))
 setInterval(() => {
-    for (let [key, value] of CHANNELS.entries()) {
-        if (value.clients.filter(client => client.readyState === WebSocket.OPEN).length === 0) {
-            CHANNELS.delete(key)
+    for (let client of app.ws.server.clients) {
+        if (client.readyState === WebSocket.CLOSED){
+            RemoveWs(client)
         }
     }
 }, 300000)
-server.listen(3000)
+
+console.log("serve start @ localhost:3000")
+app.listen(3000)

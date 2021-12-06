@@ -7,13 +7,16 @@
     "license": "MIT",
     "devDependencies": {
         "mocha": "^9.1.0",
-        "nyc": "^13.3.0"
-    },
-    "dependencies": {
-        "ws": "^8.2.0"
+        "nyc": "^13.3.0",
+        "ws": "^8.3.0"
     },
     "scripts": {
         "start": "node src/index.js",
         "test": "./node_modules/.bin/nyc --reporter=text ./node_modules/.bin/mocha"
+    },
+    "dependencies": {
+        "koa": "^2.13.4",
+        "koa-route": "^3.2.0",
+        "koa-websocket": "^6.0.0"
     }
 }

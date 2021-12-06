@@ -679,3 +679,116 @@ wss.on('connection', ws => {
     ```
 
 当然了这两种管理用户的方式也是正交的,我们完全可以结合使用.如何结合有兴趣的可以自己尝试.
+
+## 在koa中使用websocket
+
+很多时候我们的项目都是由http服务慢慢迁移到websocket的,因此我们需要知道如何在koa中使用websocket.要实现这一目标我们需要使用中间件[koa-websocket](https://github.com/kudos/koa-websocket)
+
+我们修改例子C6,让它在koa中得到实现.这部分的例子在[C8](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8-%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1-wschannel-koa).
+
+C6的实现方式我们没法在koa中使用,我们需要手动维护一个频道列表,可以通过channelid获取到其中的连接,也可以用id找到它所在的channel.
+
+```js
+import Koa from 'koa'
+import route from 'koa-route'
+import websockify from 'koa-websocket'
+import WebSocket from 'ws'
+
+const app = websockify(new Koa())
+let CHANNEL_WS_INDEX = new Map()// channelid-> set(ws)
+let WS_CHANNEL_INDEX = new Map() // ws-> set(channelid)
+
+const Publish = (channel_id, msg) => {
+    let wss = CHANNEL_WS_INDEX.get(channel_id)
+    for (let ws of wss) {
+        ws.send(msg)
+    }
+}
+
+const RemoveWs = (ws) => {
+    let channels = WS_CHANNEL_INDEX.get(ws)
+    for (let channel of channels) {
+        let wss = CHANNEL_WS_INDEX.get(channel)
+        wss.delete(ws)
+    }
+    WS_CHANNEL_INDEX.delete(ws)
+    ws.close()
+}
+const AddToChannel = (ws, index_id) => {
+    if (CHANNEL_WS_INDEX.has(index_id)) {
+        let wss = CHANNEL_WS_INDEX.get(index_id)
+        wss.add(ws)
+        CHANNEL_WS_INDEX.set(index_id, wss)
+    } else {
+        let wss = new Set()
+        wss.add(ws)
+        CHANNEL_WS_INDEX.set(index_id, wss)
+    }
+    if (WS_CHANNEL_INDEX.has(ws)) {
+        let channels = WS_CHANNEL_INDEX.get(ws)
+        channels.add(index_id)
+        WS_CHANNEL_INDEX.set(ws, channels)
+    } else {
+        let channels = new Set()
+        channels.add(index_id)
+        WS_CHANNEL_INDEX.set(ws, channels)
+    }
+}
+
+const onMessage = channel_id => ws => message => {
+    console.log('received: %s', message)
+    let data = null
+    try {
+        data = JSON.parse(message)
+    } catch (error) {
+        ws.send('message is not json')
+        return
+    }
+
+    if (!data || !data.event) {
+        ws.send('no event')
+        return
+    }
+    switch (data.event) {
+        case "close":
+            {
+                RemoveWs(ws)
+            }
+            break
+        case "publish":
+            {
+                Publish(channel_id, JSON.stringify({
+                    event: "message",
+                    message: `${ data.message } subscribed this channel`
+                }))
+            }
+            break
+        default:
+            {
+                ws.send('unkonwn command')
+            }
+    }
+}
+
+
+// Using routes
+app.ws.use(route.all('/channel/:index_id', async function (ctx, index_id) {
+    console.log(`get in channel ${ index_id }`)
+    AddToChannel(ctx.websocket, index_id)
+    console.log("AddToChannel ok")
+    ctx.websocket.send(JSON.stringify({ event: "message", message: "hello" }))
+    ctx.websocket.on('message', onMessage(index_id)(ctx.websocket))
+}))
+setInterval(() => {
+    for (let client of app.ws.server.clients) {
+        if (client.readyState === WebSocket.CLOSED){
+            RemoveWs(client)
+        }
+    }
+}, 300000)
+
+console.log("serve start @ localhost:3000")
+app.listen(3000)
+```
+
+`app.ws.server`将会绑定为一个`WebSocket.Server`对象,而`ctx.websocket`则是一个WebSocket连接对象.我们只是借用koa这个框架搭建一个http服务,用`koa-websocket`自动化`upgrade`而已.

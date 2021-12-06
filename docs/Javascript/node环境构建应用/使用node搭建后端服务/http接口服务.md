@@ -124,6 +124,58 @@ ctx也提供了几个特殊对象方便我们构造响应.
 
 关于跨域的问题我写在[前端部分](https://tutorialforjavascript.github.io/web%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/%E5%89%8D%E7%AB%AF%E6%A6%82%E8%A7%88/%E5%89%8D%E7%AB%AF%E5%BA%94%E7%94%A8%E4%B8%8E%E9%80%9A%E4%BF%A1/ajax%E5%8F%8A%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF.html),有兴趣的可以看下.
 
+## sse
+
+koa可以通过[koa-sse-stream](https://github.com/yklykl530/koa-sse)中间件来支持sse
+
+```js
+const Koa = require('koa');
+const compress = require('koa-compress');
+const sse = require('koa-sse-stream');
+ 
+ 
+const app = new Koa();
+// !!attention : if you use compress, sse must use after compress 
+app.use(compress())
+ 
+app.use(sse({
+    maxClients: 5000,
+    pingInterval: 30000
+}));
+ 
+app.use(async (ctx) => {
+    // ctx.sse is a writable stream and has extra method 'send'
+    ctx.sse.send('a notice');
+    ctx.sse.sendEnd();
+});
+```
+
+通常我们会将它单独注册在需要的url最后一层以防止被滥用:
+
+```js
+Router.get('/stream', sse({
+    maxClients: 5000,
+    pingInterval: 30000
+}), handdler)
+```
+
+它提供了两个接口:
+
++ `send(data, encoding, callback)`用于发送消息
++ `sendEnd(data, encoding, callback)`用于发送消息并关闭连接
+  
+他们的参数都一样
+
++ `data`用于定义发送除去的内容,可以是字符串或者object:
+    + 如果是字符串则相当于发送了一个`data:`为这个值的消息;
+    + 如果是object则这个object可以有4个字段
+        + `data`,负责填充`data:`,可以是字符串或者object,如果是object会被解析为json字符串
+        + `event`,负责填充`event:`,只能是字符串
+        + `id`,负责填充`id:`,只能是int型
+        + `retry`,负责填充`retry:`,重连重试次数,只能是int型
++ `encoding`没有作用
++ `callback`可以定义执行完发送后的回调函数,注意这个函数的签名是`()=>void`
+
 ## 一个完整例子
 
 我们用例子[C2](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/node%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA%E5%BA%94%E7%94%A8-%E4%BD%BF%E7%94%A8node%E6%90%AD%E5%BB%BA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1-httpcomplete)来封装一个服务资源--Notification. 这个Notification包含如下字段:

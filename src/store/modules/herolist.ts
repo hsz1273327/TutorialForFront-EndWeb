@@ -101,7 +101,6 @@ interface CacheCurrentHeroInterface {
 
 // mutations 定义对数据状态的操作
 const mutations = {
-
     syncHeros(state: StatusInterface, payload: SyncHerosPayloadInterface) {
         state.heros = payload.heros
     },
@@ -124,7 +123,40 @@ interface UpdateHeroPayloadInterface extends QueryCurrentHeroInterface {
 }
 // actions 定义业务逻辑
 const actions = {
-
+    SyncHerosBySSE(context: ActionContext<StatusInterface, any>) {
+        function initEventSource(url = "http://localhost:5000/stream") {
+            let evtSource = new EventSource(url, { withCredentials: true })
+            evtSource.addEventListener("sync", (e: any) => {
+                console.log(JSON.parse(e.data))
+            })
+            evtSource.addEventListener("create", (e: any) => {
+                console.log(JSON.parse(e.data))
+            })
+            evtSource.addEventListener("update", (e: any) => {
+                console.log(e.data)
+            })
+            evtSource.addEventListener("delete", (e: any) => {
+                console.log(JSON.parse(e.data))
+            })
+            evtSource.addEventListener("error", (e: any) => {
+                console.log(JSON.parse(e.data))
+            })
+            evtSource.onerror = function (e: any) {
+                if (e.readyState == EventSource.CLOSED) {
+                    console.log("Connection lost. reconnect...")
+                    evtSource.close();
+                    initEventSource()
+                } else {
+                    console.log('error', e);
+                    evtSource.close();
+                }
+            }
+            evtSource.onopen = function (e) {
+                console.log('sse reconnected', e);
+            }
+        }
+        initEventSource()
+    },
     async SyncHeros(context: ActionContext<StatusInterface, any>) {
         let res = await fetch(`${RemoteURL}/api/hero`, {
             method: 'GET'

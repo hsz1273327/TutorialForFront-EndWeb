@@ -67,6 +67,7 @@ const changeIndex = (index: string) => {
     current_index: index,
   });
 };
+store.dispatch("herolist/SyncHerosBySSE"); //<-debug
 store.dispatch("herolist/SyncHeros");
 const task = setInterval(
   () =>

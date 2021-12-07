@@ -23,7 +23,8 @@ const HeroListWsStream = {
             }
         }
         try {
-            let data = await connection.get_table("Hero").findAll(find_par)
+            let _data = await connection.get_table("Hero").findAll(find_par)
+            let data = _data.map((i) => ({ id: i.id, name: i.name, score: i.score }))
             ctx.websocket.send(JSON.stringify({ event: "sync", data }))
             sub.subscribe()
         } catch (error) {

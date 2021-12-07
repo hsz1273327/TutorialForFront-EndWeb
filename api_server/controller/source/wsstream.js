@@ -1,18 +1,18 @@
 import connection from '../../model/index.js'
 import { sub } from '../../pubsub.js'
 
-const HeroListStream = {
+const HeroListWsStream = {
     async get (ctx) {
-        ctx.sse.on('close', (...args) => {
-            sub.unsubscribe()
-        })
+
+        // `ctx` is the regular koa context created from the `ws` onConnection `socket.upgradeReq` object.
+        // the websocket is added to the context on `ctx.websocket`.
         let find_par = {
             attributes: [ 'id', 'name', 'score' ],
             order: [ [ 'updatedAt', 'DESC' ] ],
         }
         sub.onMessage = (channel, message) => {
             let data = JSON.parse(message)
-            ctx.sse.send({ event: data.event, data: data.hero })
+            ctx.websocket.send(JSON.stringify({ event: data.event, data: data.hero }))
         }
         sub.options = {
             onSubscribe: function (channel, count) {
@@ -24,14 +24,15 @@ const HeroListStream = {
         }
         try {
             let data = await connection.get_table("Hero").findAll(find_par)
-            ctx.sse.send({ event: "sync", data })
+            ctx.websocket.send(JSON.stringify({ event: "sync", data }))
             sub.subscribe()
         } catch (error) {
-            ctx.sse.sendEnd({
+            ctx.websocket.send(JSON.stringify({
                 event: "error",
                 data: error
-            })
+            }))
+            ctx.websocket.close()
         }
     }
 }
-export default HeroListStream
+export default HeroListWsStream

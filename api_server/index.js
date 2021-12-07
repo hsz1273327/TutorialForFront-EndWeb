@@ -4,6 +4,7 @@ import bind_config from './config.js'
 import connect from './model/index.js'
 import { pub, sub } from './pubsub.js'
 import app from './app.js'
+import { InitWS } from './wsapp.js'
 
 function main (argv) {
     let config = cmd(argv)(bind_config)
@@ -22,8 +23,9 @@ function main (argv) {
             return false
         }
     }).then(() => {
+        let wsapp = InitWS(app)
         log.info(`server start @ ${ app.config.get("HOST") }:${ app.config.get("PORT") }`)
-        app.listen(app.config.get("PORT"), app.config.get("HOST"))
+        wsapp.listen(app.config.get("PORT"), app.config.get("HOST"))
     })
 
 

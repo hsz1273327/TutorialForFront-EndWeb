@@ -14,3 +14,5 @@ services:
       - rds
       - pg
     mem_limit: 500m
+    ports:
+      - "5000:5000"

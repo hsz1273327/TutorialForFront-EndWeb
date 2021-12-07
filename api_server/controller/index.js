@@ -6,6 +6,7 @@ import Main from './source/main.js'
 import HeroList from './source/herolist.js'
 import HeroProfile from './source/heroprofile.js'
 import HeroListStream from './source/stream.js'
+import HeroListWsStream from './source/wsstream.js'
 
 let apiRouter = new Router()
 
@@ -20,5 +21,6 @@ apiRouter.get('/stream', sse({
     pingInterval: 30000
 }), HeroListStream.get)
 
-
-export default apiRouter
+let wsRouter = new Router()
+wsRouter.get('/ws',HeroListWsStream.get)
+export { apiRouter, wsRouter }

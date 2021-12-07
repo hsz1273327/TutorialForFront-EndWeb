@@ -1,1 +1,1 @@
-docker buildx build --platform linux/amd64,linux/arm64 -t hsz1273327/hero-tutorial-api:0.1.0 -t hsz1273327/hero-tutorial-api:latest --push .
+docker buildx build --platform linux/amd64,linux/arm64 -t hsz1273327/hero-tutorial-api:0.2.0 -t hsz1273327/hero-tutorial-api:latest --push .

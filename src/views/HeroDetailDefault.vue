@@ -115,16 +115,16 @@ const option = computed(() => {
 onBeforeRouteLeave(async (to, from) => {
   await store.dispatch("herolist/UncacheCurrentHero");
 });
-try {
-  await store.dispatch("herolist/GetCurrentHero", { heroID: props.id });
-  hero.value = Object.assign({}, store.getters["herolist/getCurrentHero"]);
-  if (!store.getters["herolist/networkStatus"]) {
-    store.commit("herolist/switchNetworkStatus");
-  }
-} catch (err) {
-  if (store.getters["herolist/networkStatus"]) {
-    store.commit("herolist/switchNetworkStatus");
-  }
-  throw err;
-}
+// try {
+await store.dispatch("herolist/GetCurrentHero", { heroID: props.id });
+hero.value = Object.assign({}, store.getters["herolist/getCurrentHero"]);
+// if (!store.getters["herolist/networkStatus"]) {
+//   store.commit("herolist/switchNetworkStatus");
+// }
+// } catch (err) {
+//   // if (store.getters["herolist/networkStatus"]) {
+//   //   store.commit("herolist/switchNetworkStatus");
+//   // }
+//   throw err;
+// }
 </script>

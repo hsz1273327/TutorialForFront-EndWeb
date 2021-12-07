@@ -60,45 +60,33 @@ import HeroList from "./views/HeroList.vue";
 import NewHero from "./views/NewHero.vue";
 import { ElNotification } from "element-plus";
 import { h } from "vue";
-import { onUnmounted, computed } from "vue";
+import { computed, watch, ComputedRef } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
 store.dispatch("menu/loadCurrrentIndex");
 const activeIndex = computed(() => store.getters["menu/activeIndex"]);
-const online = computed(() => store.getters["herolist/networkStatus"]);
+const online: ComputedRef<boolean> = computed(
+  () => store.getters["herolist/networkStatus"]
+);
+watch(online, (newValue: boolean) => {
+  if (newValue) {
+    ElNotification({
+      title: "网络已联通",
+      message: h("i", { style: "color: teal" }, "网络已联通"),
+    });
+  } else {
+    ElNotification({
+      title: "网络未通",
+      message: h("i", { style: "color: teal" }, "网络已断开"),
+    });
+  }
+});
 const changeIndex = (index: string) => {
   store.dispatch("menu/changeCurrrentIndex", {
     current_index: index,
   });
 };
 store.dispatch("herolist/SyncHerosBySSE"); //<-debug
-store.dispatch("herolist/SyncHeros");
-const task = setInterval(
-  () =>
-    store
-      .dispatch("herolist/SyncHeros")
-      .then(() => {
-        if (!store.getters["herolist/networkStatus"]) {
-          ElNotification({
-            title: "网络已联通",
-            message: h("i", { style: "color: teal" }, "网络已联通"),
-          });
-          store.commit("herolist/switchNetworkStatus");
-        }
-      })
-      .catch((err) => {
-        if (store.getters["herolist/networkStatus"]) {
-          ElNotification({
-            title: "网络未通",
-            message: h("i", { style: "color: teal" }, String(err)),
-          });
-          store.commit("herolist/switchNetworkStatus");
-        }
-      }),
-  2000
-);
-
-onUnmounted(() => clearInterval(task));
 </script>
 
 <style>

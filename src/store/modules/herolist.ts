@@ -1,7 +1,9 @@
 import Ajv from "ajv"
 import { ActionContext } from "vuex"
 import { HeroInterface, HeroDescInterface, NewHeroQueryInterface } from "../../const"
+import { ElNotification } from "element-plus";
 import { RemoteURL } from "../utils"
+import ReconnectingEventSource from "reconnecting-eventsource"
 //heroSchema hero对象的schema
 const heroSchema = {
     "type": "object",
@@ -112,6 +114,9 @@ const mutations = {
     },
     switchNetworkStatus(state: StatusInterface) {
         state.networkOK = !state.networkOK
+    },
+    updateNetworkStatus(state: StatusInterface, payload: boolean) {
+        state.networkOK = payload
     }
 }
 interface QueryCurrentHeroInterface {
@@ -128,18 +133,46 @@ interface UpdateHeroPayloadInterface extends QueryCurrentHeroInterface {
 const actions = {
     SyncHerosBySSE(context: ActionContext<StatusInterface, any>) {
         function initEventSource(url = "http://localhost:5000/stream") {
-            let evtSource = new EventSource(url, { withCredentials: true })
+            let evtSource = new ReconnectingEventSource(url, { withCredentials: true, max_retry_time: 5000, })
             evtSource.addEventListener("sync", (e: any) => {
                 console.log(JSON.parse(e.data))
+                context.commit('syncHeros', { heros: JSON.parse(e.data) })
             })
             evtSource.addEventListener("create", (e: any) => {
-                console.log(JSON.parse(e.data))
+                let newhero = JSON.parse(e.data)
+                let heros = context.getters["allHeros"]
+                let heroset = new Set(heros)
+                heroset.add(newhero)
+                context.commit('syncHeros', { heros: [...heroset] })
             })
             evtSource.addEventListener("update", (e: any) => {
-                console.log(e.data)
+                let updatehero: HeroDescInterface = JSON.parse(e.data)
+                let heros: HeroDescInterface[] = context.getters["allHeros"]
+                let heroset = new Set(heros)
+                for (let h of heroset) {
+                    if (h.id == updatehero.id) {
+                        h.name = updatehero.name
+                        h.score = updatehero.score
+                        break
+                    }
+                }
+                context.commit('syncHeros', { heros: [...heroset] })
             })
             evtSource.addEventListener("delete", (e: any) => {
-                console.log(JSON.parse(e.data))
+                let updatehero = JSON.parse(e.data)
+                let heros: HeroDescInterface[] = context.getters["allHeros"]
+                let heroset = new Set(heros)
+                let needtodel: HeroDescInterface | null = null
+                for (let h of heroset) {
+                    if (h.id == updatehero.id) {
+                        needtodel = h
+                        break
+                    }
+                }
+                if (needtodel) {
+                    heroset.delete(needtodel)
+                }
+                context.commit('syncHeros', { heros: [...heroset] })
             })
             evtSource.addEventListener("error", (e: any) => {
                 console.log(JSON.parse(e.data))
@@ -147,14 +180,19 @@ const actions = {
             evtSource.onerror = function (e: any) {
                 if (e.readyState == EventSource.CLOSED) {
                     console.log("Connection lost. reconnect...")
-                    evtSource.close();
-                    initEventSource()
+                    context.commit("updateNetworkStatus", false)
+
+                    // evtSource.close();
+                    // initEventSource()
                 } else {
+                    console.log("Connection get error lost. reconnect...")
+                    context.commit("updateNetworkStatus", false)
                     console.log('error', e);
-                    evtSource.close();
+                    // evtSource.close();
                 }
             }
-            evtSource.onopen = function (e) {
+            evtSource.onopen = function (e: any) {
+                context.commit("updateNetworkStatus", true)
                 console.log('sse reconnected', e);
             }
         }

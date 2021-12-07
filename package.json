@@ -11,6 +11,7 @@
     "core-js": "^3.6.5",
     "echarts": "^5.2.2",
     "element-plus": "^1.0.2-beta.28",
+    "reconnecting-eventsource": "^1.1.1",
     "vue": "^3.0.0",
     "vue-echarts": "^6.0.0",
     "vue-router": "^4.0.0-0",

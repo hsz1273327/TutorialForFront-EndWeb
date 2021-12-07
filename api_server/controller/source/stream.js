@@ -26,9 +26,10 @@ const HeroListStream = {
         }
         try {
             let _data = await connection.get_table("Hero").findAll(find_par)
-            console.log(data)
+            console.log(_data)
             let data = _data.map((i) => ({ id: i.id, name: i.name, score: i.score }))
-            ctx.sse.send({ event: "sync", data })
+            ctx.sse.send({ event: "sync", data: data })
+            console.log(data)
             sub.subscribe()
         } catch (error) {
             ctx.sse.sendEnd({

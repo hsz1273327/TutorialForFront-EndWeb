@@ -127,7 +127,7 @@ const actions = {
         function initEventSource(url = "http://localhost:5000/stream") {
             let evtSource = new EventSource(url, { withCredentials: true })
             evtSource.addEventListener("sync", (e: any) => {
-                console.log(e.data)
+                console.log(e)
             })
             evtSource.addEventListener("create", (e: any) => {
                 console.log(JSON.parse(e.data))

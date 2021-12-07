@@ -110,3 +110,37 @@ main()
 ```
 
 当收到消息后我们就会将id为`local_time`的p标签中的内容用收到的内容填充.
+
+## 带自动重连的sse
+
+sse虽然也有重连功能,但正常的`EventSource`仅在根本无法访问服务器时才重新连接,而如果到达服务器并响应错误(例如500状态)则`EventSource`将停止重新连接.我们可以使用[reconnecting-eventsource](https://github.com/fanout/reconnecting-eventsource).这个项目目前还没有typescript支持,不过我们可以使用如下文件让typescript正常使用
+
++ `reconnecting-eventsource.d.ts`
+
+    ```ts
+    declare module 'reconnecting-eventsource' {
+        export interface Configuration extends EventSourceInit {
+            // the maximum time to wait before attempting to reconnect in ms, default `3000`
+            // note: wait time is randomised to prevent all clients from attempting to reconnect simultaneously
+            max_retry_time: number;
+        }
+
+        export default class ReconnectingEventSource {
+            readonly url: string;
+            readonly readyState: number;
+            max_retry_time: number;
+
+            constructor(url: string, configuration?: Configuration);
+
+            onopen: EventSource['onopen'];
+            onerror: EventSource['onerror'];
+            onmessage: EventSource['onmessage'];
+
+            close(): void;
+            addEventListener(inType: string, callback: (event: MessageEvent) => void): void;
+            removeEventListener(inType: string, callback: (event: MessageEvent) => void): void;
+        }
+    };
+    ```
+
+用这个库和`EventSource`只是在参数上有一点不一样,可以使用`max_retry_time`字段来设置自动重连的最大间隔时间.默认为`3000`也就是`3s`

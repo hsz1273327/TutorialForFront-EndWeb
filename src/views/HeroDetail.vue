@@ -14,7 +14,7 @@
       >返回</el-button
     >
     <!-- <suspense > -->
-    <suspense @fallback="fallback">
+    <suspense>
       <template #default>
         <HeroDetailDefault :id="id" />
       </template>
@@ -41,6 +41,7 @@ import {
   ElButton,
   ElLoading,
   ElMessage,
+  ElEmpty,
 } from "element-plus";
 import { useRouter } from "vue-router";
 
@@ -49,11 +50,5 @@ interface Props {
   id: number;
 }
 const props = defineProps<Props>();
-const fallback = () =>
-  ElMessage({
-    showClose: true,
-    message: "网络错误",
-    type: "error",
-  });
 const goBack = () => router.back();
 </script>

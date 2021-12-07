@@ -21,15 +21,15 @@
 
 + 首页仪表盘
 
-![首页仪表盘](source/heroes-dashboard-1.png)
+![首页仪表盘](../source/heroes-dashboard-1.png)
 
 + 英雄列表
 
-![英雄列表](source/heroes-list-2.png)
+![英雄列表](../source/heroes-list-2.png)
 
 + 英雄详情
 
-![英雄详情](source/hero-details-1.png)
+![英雄详情](../source/hero-details-1.png)
 
 我们会增加一个页面`创建英雄`以让这个项目更加丰富
 

@@ -29,8 +29,8 @@ export default defineComponent({
 });
 </script>
 <script setup lang="ts">
-import { ref, provide, computed, onMounted, Ref } from "vue";
-import { useRouter } from "vue-router";
+import { ref, provide, computed, onUnmounted, Ref, h } from "vue";
+import { useRouter, onBeforeRouteLeave } from "vue-router";
 import { useStore } from "vuex";
 import {
   ElRow,
@@ -39,6 +39,7 @@ import {
   ElInput,
   ElButton,
   ElMessage,
+  ElNotification,
 } from "element-plus";
 import { THEME_KEY } from "vue-echarts";
 import { HeroInterface } from "../const";
@@ -111,7 +112,27 @@ const option = computed(() => {
     ],
   };
 });
-
-await store.dispatch("herolist/GetCurrentHero", { heroID: props.id });
-hero.value = Object.assign({}, store.getters["herolist/getCurrentHero"]);
+onBeforeRouteLeave(async (to, from) => {
+  await store.dispatch("herolist/UncacheCurrentHero");
+});
+try {
+  await store.dispatch("herolist/GetCurrentHero", { heroID: props.id });
+  hero.value = Object.assign({}, store.getters["herolist/getCurrentHero"]);
+  if (!store.getters["herolist/networkStatus"]) {
+    ElNotification({
+      title: "网络已联通",
+      message: h("i", { style: "color: teal" }, "网络已联通"),
+    });
+    store.commit("herolist/switchNetworkStatus");
+  }
+} catch (err) {
+  if (store.getters["herolist/networkStatus"]) {
+    ElNotification({
+      title: "网络未通",
+      message: h("i", { style: "color: teal" }, String(err)),
+    });
+    store.commit("herolist/switchNetworkStatus");
+  }
+  throw err;
+}
 </script>

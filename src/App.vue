@@ -4,7 +4,10 @@
       <el-header height="120">
         <header>
           <el-row :gutter="10" type="flex" justify="center">
-            <h1>英雄指南</h1>
+            <h1>
+              英雄指南<i v-if="online" class="el-icon-link"></i>
+              <i v-else class="el-icon-loading"></i>
+            </h1>
           </el-row>
           <el-row :gutter="10" type="flex" justify="center">
             <el-menu
@@ -25,7 +28,7 @@
       <el-main>
         <router-view v-slot="{ Component }">
           <transition name="component-fade" mode="out-in">
-            <keep-alive :max="3">
+            <keep-alive :max="3" exclude="HeroDetail">
               <component :is="Component" />
             </keep-alive>
           </transition>
@@ -62,6 +65,7 @@ import { useStore } from "vuex";
 const store = useStore();
 store.dispatch("menu/loadCurrrentIndex");
 const activeIndex = computed(() => store.getters["menu/activeIndex"]);
+const online = computed(() => store.getters["herolist/networkStatus"]);
 const changeIndex = (index: string) => {
   store.dispatch("menu/changeCurrrentIndex", {
     current_index: index,
@@ -76,7 +80,7 @@ const task = setInterval(
       .then(() => {
         if (!store.getters["herolist/networkStatus"]) {
           ElNotification({
-            title: "Title",
+            title: "网络已联通",
             message: h("i", { style: "color: teal" }, "网络已联通"),
           });
           store.commit("herolist/switchNetworkStatus");
@@ -85,8 +89,8 @@ const task = setInterval(
       .catch((err) => {
         if (store.getters["herolist/networkStatus"]) {
           ElNotification({
-            title: "Title",
-            message: h("i", { style: "color: teal" }, "网络问题未能同步数据"),
+            title: "网络未通",
+            message: h("i", { style: "color: teal" }, String(err)),
           });
           store.commit("herolist/switchNetworkStatus");
         }

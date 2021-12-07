@@ -12,8 +12,6 @@ const HeroListStream = {
         }
         sub.onMessage = (channel, message) => {
             let data = JSON.parse(message)
-            console.log("$$$$$$$$$")
-            console.log(data)
             ctx.sse.send({ event: data.event, data: JSON.stringify(data.hero) })
         }
         sub.options = {

@@ -119,18 +119,10 @@ try {
   await store.dispatch("herolist/GetCurrentHero", { heroID: props.id });
   hero.value = Object.assign({}, store.getters["herolist/getCurrentHero"]);
   if (!store.getters["herolist/networkStatus"]) {
-    ElNotification({
-      title: "网络已联通",
-      message: h("i", { style: "color: teal" }, "网络已联通"),
-    });
     store.commit("herolist/switchNetworkStatus");
   }
 } catch (err) {
   if (store.getters["herolist/networkStatus"]) {
-    ElNotification({
-      title: "网络未通",
-      message: h("i", { style: "color: teal" }, String(err)),
-    });
     store.commit("herolist/switchNetworkStatus");
   }
   throw err;

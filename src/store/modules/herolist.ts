@@ -148,12 +148,13 @@ const actions = {
             evtSource.addEventListener("update", (e: any) => {
                 let updatehero: HeroDescInterface = JSON.parse(e.data)
                 let heros: HeroDescInterface[] = context.getters["allHeros"]
-                let heroset = new Set(heros)
-                for (let h of heroset) {
+                let _heroset = new Set(heros)
+                let heroset = new Set()
+                for (let h of _heroset) {
                     if (h.id == updatehero.id) {
-                        h.name = updatehero.name
-                        h.score = updatehero.score
-                        break
+                        heroset.add(Object.assign({}, updatehero))
+                    } else {
+                        heroset.add(Object.assign({}, h))
                     }
                 }
                 context.commit('syncHeros', { heros: [...heroset] })
@@ -198,24 +199,7 @@ const actions = {
         }
         initEventSource()
     },
-    async SyncHeros(context: ActionContext<StatusInterface, any>) {
-        let res = await fetch(`${RemoteURL}/api/hero`, {
-            method: 'GET'
-        })
-        if (!res.ok) {
-            if (res.status === 403) {
-                let resjson = await res.json()
-                throw resjson.Message
-            } else {
-                let restext = await res.text()
-                throw restext
-            }
-            return
-        }
-        let herosinfo = await res.json()
-        let heros = herosinfo.result
-        context.commit('syncHeros', { heros })
-    },
+ 
     async GetCurrentHero(context: ActionContext<StatusInterface, any>, payload: QueryCurrentHeroInterface) {
         if (context.state.networkOK) {
             let res = await fetch(`${RemoteURL}/api/hero/${payload.heroID}`, {
@@ -264,7 +248,7 @@ const actions = {
                     }
                     return
                 }
-                context.dispatch("SyncHeros")
+                // context.dispatch("SyncHeros")
             } else {
                 console.error(`添加hero失败,验证错误`)
             }
@@ -293,7 +277,6 @@ const actions = {
                 return
             }
             await context.dispatch("GetCurrentHero", { heroID: payload.heroID })
-            context.dispatch("SyncHeros")
         } else {
             throw "无法连接到服务器"
         }
@@ -317,7 +300,7 @@ const actions = {
                 }
                 return
             }
-            context.dispatch("SyncHeros")
+            // context.dispatch("SyncHeros")
         } else {
             throw "无法连接到服务器"
         }

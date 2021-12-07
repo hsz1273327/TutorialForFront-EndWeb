@@ -14,7 +14,7 @@ const HeroListStream = {
             let data = JSON.parse(message)
             console.log("$$$$$$$$$")
             console.log(data)
-            ctx.sse.send({ event: data.event, data: data.hero })
+            ctx.sse.send({ event: data.event, data: JSON.stringify(data.hero) })
         }
         sub.options = {
             onSubscribe: function (channel, count) {
@@ -26,10 +26,8 @@ const HeroListStream = {
         }
         try {
             let _data = await connection.get_table("Hero").findAll(find_par)
-            console.log(_data)
             let data = _data.map((i) => ({ id: i.id, name: i.name, score: i.score }))
-            ctx.sse.send({ event: "sync", data: data })
-            console.log(data)
+            ctx.sse.send({ event: "sync", data: JSON.stringify(data) })
             sub.subscribe()
         } catch (error) {
             ctx.sse.sendEnd({

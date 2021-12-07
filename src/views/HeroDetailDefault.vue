@@ -29,8 +29,8 @@ export default defineComponent({
 });
 </script>
 <script setup lang="ts">
-import { ref, provide, computed, onMounted, Ref, h } from "vue";
-import { useRouter } from "vue-router";
+import { ref, provide, computed, onUnmounted, Ref, h } from "vue";
+import { useRouter, onBeforeRouteLeave } from "vue-router";
 import { useStore } from "vuex";
 import {
   ElRow,
@@ -112,7 +112,9 @@ const option = computed(() => {
     ],
   };
 });
-
+onBeforeRouteLeave(async (to, from) => {
+  await store.dispatch("herolist/UncacheCurrentHero");
+});
 try {
   await store.dispatch("herolist/GetCurrentHero", { heroID: props.id });
   hero.value = Object.assign({}, store.getters["herolist/getCurrentHero"]);
@@ -131,5 +133,6 @@ try {
     });
     store.commit("herolist/switchNetworkStatus");
   }
+  throw err;
 }
 </script>

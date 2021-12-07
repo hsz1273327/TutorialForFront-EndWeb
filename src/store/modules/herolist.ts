@@ -108,6 +108,9 @@ const mutations = {
     cacheCurrentHero(state: StatusInterface, payload: CacheCurrentHeroInterface) {
         state.currentHero = payload.currentHero
     },
+    uncacheCurrentHero(state: StatusInterface) {
+        state.currentHero = null
+    },
     switchNetworkStatus(state: StatusInterface) {
         state.networkOK = !state.networkOK
     }
@@ -164,6 +167,9 @@ const actions = {
         } else {
             throw "无法连接到服务器"
         }
+    },
+    UncacheCurrentHero(context: ActionContext<StatusInterface, any>) {
+        context.commit('uncacheCurrentHero')
     },
     async AppendHero(context: ActionContext<StatusInterface, any>, payload: AppendHeroPayloadInterface) {
         if (context.state.networkOK) {

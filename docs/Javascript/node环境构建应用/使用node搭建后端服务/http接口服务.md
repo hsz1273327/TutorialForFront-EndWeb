@@ -169,7 +169,7 @@ Router.get('/stream', sse({
 + `data`用于定义发送除去的内容,可以是字符串或者object:
     + 如果是字符串则相当于发送了一个`data:`为这个值的消息;
     + 如果是object则这个object可以有4个字段
-        + `data`,负责填充`data:`,可以是字符串或者object,如果是object会被解析为json字符串
+        + `data`,负责填充`data:`,只能是字符串
         + `event`,负责填充`event:`,只能是字符串
         + `id`,负责填充`id:`,只能是int型
         + `retry`,负责填充`retry:`,重连重试次数,只能是int型

@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "module": "system",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "outDir": "./app/js",
+        "sourceMap": true
+    },
+    "include": [
+        "src/ts/*"
+    ]
+}

@@ -100,3 +100,4 @@
     * [构建PWA应用](浏览器环境的前端应用/构建PWA应用/README.md)
 
 * [chrome扩展](chrome扩展/README.md)
+    * [chrome扩展](chrome扩展/chrome扩展/README.md)

@@ -7,6 +7,7 @@ web前端技术狭义上说就是针对桌面端的网页制作技术,也就是�
 3. 桌面端基于electron的客户端开发(html,css,javascript和electron特有api以及一些node服务器技术)
 4. 移动端小程序开发(javascript和不同平台特有api)
 5. 移动端原生程序开发(javascript和不同平台特有api)
+6. 以太坊web3.0协议开发
 
 本文会先介绍核心的javascript,html,css,然后从上面介绍的5个方向上一一介绍如何开发.
 

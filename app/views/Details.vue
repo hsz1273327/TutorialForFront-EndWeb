@@ -1,6 +1,6 @@
 <template>
   <Page>
-    <ActionBar v-if="flick" :title="flick.title" />
+    <ActionBar :title="flick.title" />
     <ScrollView height="100%">
       <StackLayout>
         <Image margin="0" stretch="aspectFill" :src="flick.image" />
@@ -29,15 +29,36 @@
 
 <script lang="ts">
 import Vue from "nativescript-vue";
-import { FlickService } from "../models/Flick";
-const flickService = new FlickService();
-
+import { GetFlickById, FlickDetail } from "../models/Flick";
+interface Data {
+  flick: FlickDetail;
+}
 export default Vue.extend({
-  props: ["id"],
-  data() {
+  props: {
+    id: Number,
+  },
+  data(): Data {
     return {
-      flick: flickService.getFlickById(this.id),
+      flick: {
+        id: 0,
+        genre: "",
+        title: "",
+        image: "",
+        url: "",
+        description: "",
+        details: [],
+      },
     };
+  },
+  computed: {
+    hasContent() {
+      return this.flick ? true : false;
+    },
+  },
+  mounted: function () {
+    GetFlickById(this.id).then((res) => {
+      this.flick = res;
+    });
   },
 });
 </script>

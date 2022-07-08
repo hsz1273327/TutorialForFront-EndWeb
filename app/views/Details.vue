@@ -5,7 +5,7 @@
       <StackLayout>
         <Image margin="0" stretch="aspectFill" :src="flick.image" />
         <StackLayout padding="10 20">
-          <StackLayout v-for="detail in flick.details" :key="detail.id">
+          <StackLayout v-for="(detail, index) in flick.details" :key="index">
             <Label
               marginTop="15"
               fontSize="16"

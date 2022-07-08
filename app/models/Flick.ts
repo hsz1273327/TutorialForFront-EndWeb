@@ -1,13 +1,13 @@
 import Sqlite from "nativescript-sqlite";
 const debug = process.env.NODE_ENV !== 'production';
-
+//FlickModel flick列表中的信息样式
 interface FlickModel {
   id: number
   title: string
   image: string
   description: string
 }
-
+//FlickDetail flick详情信息样式
 interface FlickDetail {
   id: number
   genre: string
@@ -20,7 +20,7 @@ interface FlickDetail {
     body: string
   }[]
 }
-
+//flicks 待存储的数据
 const flicks: FlickDetail[] = [
   {
     id: 1,
@@ -116,6 +116,7 @@ const DB_NAME = "MyCoolApp.sqlite"
 const TABLE_NAME = "flicks"
 let DB = null
 
+//Init 初始化数据模型和数据库
 async function Init() {
   if (debug && Sqlite.exists(DB_NAME)) {
     console.log(`debug mode delete db ${DB_NAME}!`);
@@ -160,13 +161,14 @@ async function Init() {
     }
   }
 }
-
+//Close 关闭数据库
 async function Close() {
   if (DB) {
     await DB.close()
+    console.log("db Closed")
   }
 }
-
+//GetFlicks 获取flicks库存列表
 async function GetFlicks(): Promise<FlickModel[]> {
   const QueryListSQL = `
   SELECT id,title,image,description
@@ -185,7 +187,7 @@ async function GetFlicks(): Promise<FlickModel[]> {
   }
   return res
 }
-
+//GetFlickById 通过id查找flick详情
 async function GetFlickById(id: number): Promise<FlickDetail> {
   console.log(`GetFlickById get id ${id}`)
   const QuerySQL = `

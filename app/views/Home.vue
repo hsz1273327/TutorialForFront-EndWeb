@@ -42,14 +42,15 @@
 
 <script lang="ts">
 import Vue from "nativescript-vue";
-import { FlickService } from "../models/Flick";
+import { GetFlicks,FlickModel } from "../models/Flick";
 import Details from "./Details.vue";
-const flickService = new FlickService();
-
+interface Data {
+  flicks: FlickModel[];
+}
 export default Vue.extend({
-  data() {
+  data():Data {
     return {
-      flicks: flickService.getFlicks(),
+      flicks: [],
     };
   },
   methods: {
@@ -59,6 +60,11 @@ export default Vue.extend({
         props: { id },
       });
     },
+  },
+  created: function () {
+    GetFlicks().then((res) => {
+      this.flicks = res;
+    });
   },
 });
 </script>

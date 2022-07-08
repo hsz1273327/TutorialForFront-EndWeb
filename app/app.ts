@@ -1,5 +1,6 @@
 import Vue from 'nativescript-vue'
 import Home from './views/Home.vue'
+import { Init,Close } from './models/Flick'
 
 declare let __DEV__: boolean;
 
@@ -8,4 +9,10 @@ Vue.config.silent = !__DEV__
 
 new Vue({
   render: (h) => h('frame', [h(Home)]),
+  created: function () {
+    Init()
+  },
+  beforeDestroy: function (){
+    Close()
+  }
 }).$start()

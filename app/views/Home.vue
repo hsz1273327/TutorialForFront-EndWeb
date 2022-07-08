@@ -1,10 +1,6 @@
 <template>
   <Page>
-    <!-- <ActionBar>
-      <Label text="Home" />
-    </ActionBar> -->
-
-    <ActionBar title="NativeFlix 测试" />
+    <ActionBar title="NativeFlix" />
     <ListView
       height="100%"
       separatorColor="transparent"
@@ -41,23 +37,15 @@
         </GridLayout>
       </v-template>
     </ListView>
-
-    <!-- <GridLayout>
-      <Label class="info">
-        <FormattedString>
-          <Span class="fas" text.decode="&#xf135; " />
-          <Span :text="message" />
-        </FormattedString>
-      </Label>
-    </GridLayout> -->
   </Page>
 </template>
 
 <script lang="ts">
 import Vue from "nativescript-vue";
-import FlickService from "../services/FlickService";
+import { FlickService } from "../models/Flick";
 import Details from "./Details.vue";
 const flickService = new FlickService();
+
 export default Vue.extend({
   data() {
     return {

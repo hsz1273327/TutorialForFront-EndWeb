@@ -22,3 +22,5 @@ _book
 dist
 coverage
 .nyc_output
+platforms
+hooks

@@ -149,11 +149,11 @@ ns create myCoolApp --ts --vue
 + `app.ts`|`app.js`,项目入口文件
 + `app.scss`|`app.css`,项目的全局样式定义
 + `fonts/`,项目使用的字体文件
-+ `components/`,存放vue组件,通常我会习惯将其改名为`views/`
++ `components/`,存放vue组件,通常我会习惯增加一个`views/`文件夹存放以`Page`标签为最外层标签的页面视图定义文件,而`components/`中则是存放非`Page`标签的组件组合
 + `assets/`,应用中使用到的静态资源,主要是图片这类
 + `models/`,应用的的数据模型,一般本地数据的管理会放这里
-+ `store`,定义状态,一般是vuex使用,用于管理界面内部状态
-+ `apis`,定义访问外部接口数据的行为,有时会和`models`合并
++ `store/`,定义状态,一般是vuex使用,用于管理界面内部状态
++ `apis/`,定义访问外部接口数据的行为,有时会和`models`合并
 `
 
 #### 正式开始helloworld

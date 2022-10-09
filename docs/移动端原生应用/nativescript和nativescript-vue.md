@@ -55,15 +55,18 @@ nativescript安装分为两步:
 
 可以用`ns doctor ios`检查ios环境是否可用,用`ns doctor android`测试android环境是否可用
 
+### nativescript和node的关系
+
+nativescript借助webpack打包,它会将js代码编译为对应平台上runtime支持的程序.因此可以理解为编译期在开编译机的node上执行,而运行时则在目标设备的runtime上,与node无关.因此我们需要注意很多依赖node标准库的库是无法直接在nativescript上使用的,反而因为浏览器上没有node环境中的标准库,所以不少可以使用.下面列举常用功能可用的库:
+
++ id生成: [pure-uuid](https://github.com/rse/pure-uuid)
++ 数字签名,hash,加密: [crypto-js](https://github.com/brix/crypto-js)
++ jwt:[jwt-decode](https://github.com/auth0/jwt-decode)
+
 ### nativescript-vue的相关组件
 
 + 页面元素组件,nativescript-vue原生组件可以在<https://nativescript-vue.org/cn/docs/elements/layouts/absolute-layout/>页面查看.
-+ 设备接口组件,多以插件的形式存在,官方插件可以在<https://docs.nativescript.org/plugins/>这里看到,第三方插件可以在<https://market.nativescript.org/>中查找.不过注意第三方插件良莠不齐,最好先去看看他们的源码和下载量.找到需要的插件后,在项目下执行`ns plugin add <插件名>`就可以安装到项目了.比较有用的插件包括:
-    + [nativescript-sqlite](https://github.com/NathanaelA/nativescript-sqlite/blob/master/src/README.md),提供sqlite支持的插件,可以使用项目[MarcSchaetz/-types-nativescript-sqlite](https://github.com/MarcSchaetz/-types-nativescript-sqlite)中的类型声明文件
-    + [@nativescript-community/ble](https://github.com/nativescript-community/ble),提供蓝牙支持的插件
-    + [nativescript-webrtc-plugin](https://github.com/triniwiz/nativescript-webrtc),提供webrtc支持的插件
-    + [nativescript-local-notifications](https://github.com/EddyVerbruggen/nativescript-local-notifications),提供提醒支持
-    + [nativescript-qr-generator](https://github.com/erodriguezh/nsplugins),提供QR(二维码的生成功能)
++ 设备接口组件,多以插件的形式存在,官方插件可以在<https://docs.nativescript.org/plugins/>这里看到,社区维护的插件可以在<https://github.com/orgs/nativescript-community/repositories?type=all>下找到,另外还有一个比较大的组件集合<https://github.com/nstudio>.第三方插件可以在插件市场<https://market.nativescript.org/>中查找,注意第三方插件良莠不齐,最好先去看看他们的源码和下载量.当然也有不少插件其实是个人维护,就只能在github上搜关键字查找了.找到需要的插件后,在项目下执行`ns plugin add <插件名>`就可以安装到项目了.
 
 ### nativescript-vue与vue的关系
 

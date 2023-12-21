@@ -72,47 +72,24 @@ nativescript借助webpack打包,它会将js代码编译为对应平台上runtime
 
 ### nativescript-vue与vue的关系
 
-`nativescript-vue`其实和`vue`本体没什么关系,它只是使用vue2语法来写构造原生界面而已.具体来说
+`nativescript-vue`其实和`vue`本体没什么关系,它只是使用vue语法来写构造原生界面而已.具体来说,`nativescript-vue v2`使用`vue 2`语法;`nativescript-vue v3`使用`vue 3`语法.不过`nativescript-vue v3`目前还beta测试,并不完善.
+
+在使用上还有如下不同
 
 + 使用的基础标签不同,`vue`是用的是html标准标签,`nativescript-vue`则是使用`nativescript-vue`封装的`nativescript`标签
 + `nativescript-vue`官方在实验性的适配`vue-router`,因此目前无法支持`vue-router`,只能使用内置的[manual-routing方式](https://nativescript-vue.org/en/docs/routing/manual-routing/)
-+ `nativescript-vue`只能使用`vuex 3`(最高版本3.6.2)
++ `nativescript-vue v2`只能使用`vuex 3`(最高版本3.6.2)
 + `nativescript-vue`通过插件调用移动端上的设备,而vue走浏览器的html5接口
+
+我们这篇文章为了一致性依然使用`nativescript-vue v3`,需要注意由于现在还不是稳定版本,本文的一些内容可能是有问题的,建议等等.
 
 ### 周边工具与设置
 
-nativescript-vue也提供了一些工具方便开发:
+nativescript-vue v3可以使用vue 3的相关工具辅助开发,主要包括
 
-+ `devtools`,用于观察组件树,方便调试,作用类似vue中的chrome插件`vuejs devtools`(亲测无用)
-
-    ```bash
-    npm install --save @vue/devtools@^5.3.4 @triniwiz/nativescript-toasty @triniwiz/nativescript-socketio@4.0.1 nativescript-vue-devtools
-    ```
-
-    使用方法:
-
-    1. 在入口文件中导入devtools模块(亲测无法使用)
-
-        ```ts
-        import VueDevtools from 'nativescript-vue-devtools'
-        Vue.use(VueDevtools)
-        ```
-
-    2. 运行devtools
-
-        ```bash
-        npx vue-devtools
-        ```
-
-    3. 重建并运行您的应用程序
-
-        ```bash
-        rm -rf platforms
-        ns run android --bundle | ns run ios --bundle
-        ```
-
-+ vscode插件`NativeScript`,个人感觉不及命令行直接输入方便,可以不装
-+ vscode插件`NativeScript-Vue Snippets`,可以识别`NativeScript-Vue`中的标签,用于提供代码模板
++ [vuejs-devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd),chrome插件,用于调试页面
++ [Vue Language Features (Volar)](https://github.com/vuejs/language-tools.git),vscode上vue 3的辅助开发工具
++ [TypeScript Vue Plugin (Volar)](https://github.com/vuejs/language-tools.git),vscode上vue 3的typescript辅助开发工具
 
 如果你使用ts开发,可能会出现报错`无法使用 JSX,除非提供了 “--jsx“ 标志。ts(17004)`,这种需要修改`tsconfig.json`配置文件增加一项配置.
 
@@ -134,13 +111,13 @@ nativescript-vue也提供了一些工具方便开发:
 首先我们先用命令行工具构造一个项目模板
 
 ```bash
-ns create myCoolApp --ts --vue
+ns create myAwesomeApp --template @nativescript-vue/template-blank@beta
 ```
 
 上面的命令我们会创建一个名为`myCoolApp`的目录,其中就是我们项目的模板,这个项目将:
 
 + 使用typescript作为开发语言
-+ 使用vue 2作为开发框架
++ 使用vue 3作为开发框架,
 + 使用css或者scss作为样式表语言控制样式.
 
 其目录中会有一个名为`app`的目录,这就是我们源码存放的位置.另一个比较重要的文件夹是`App_Resources`,它用于控制打包后应用程序的配置,比如使用的图标等就是它控制的,另外如果有针对不同平台的原生代码也是放在这里,关于应用打包我们在本系列最后介绍.

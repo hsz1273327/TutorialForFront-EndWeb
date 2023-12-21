@@ -1,8 +1,8 @@
 import { NativeScriptConfig } from '@nativescript/core';
 
 export default {
-  id: 'org.nativescript.myCoolApp',
-  appPath: 'app',
+  id: 'org.nativescript.myAwesomeApp',
+  appPath: 'src',
   appResourcesPath: 'App_Resources',
   android: {
     v8Flags: '--expose_gc',

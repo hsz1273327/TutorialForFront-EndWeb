@@ -423,13 +423,15 @@ export { FlickModel, FlickService, NotfoundError }
 
 上面的例子已经足以展示如何使用nativescript-vue构造界面,但真正的原生应用光有界面往往是不够的,往往都需要可以调用一些设备上的工具.我们对它进行一些改动,让他使用本地sqlite管理数据,替代在代码中写死数据.sqlite是一个基于文件的关系数据库,使用SQL语言管理数据,该工具在智能手机时代之前就已经在各种功能机上被广泛使用,无论android还是iphone我们都可以用它管理应用数据.这个项目保存在[native-helloworld-plus](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/native-helloworld-plus)分支.
 
-我们需要修改的只有`model`层.主要也是修改`models`目录下的内容
+我们需要主要修改的只有`model`层.主要也是修改`models`目录下的内容
 
 + `models/Flick.ts`,我们改用sqlite保存数据,并提供了`Init`方法用于初始化数据库
 
     ```ts
     import Sqlite from "nativescript-sqlite";
+
     const debug = process.env.NODE_ENV !== 'production';
+
     //FlickModel flick列表中的信息样式
     interface FlickModel {
       id: number
@@ -437,6 +439,7 @@ export { FlickModel, FlickService, NotfoundError }
       image: string
       description: string
     }
+
     //FlickDetail flick详情信息样式
     interface FlickDetail {
       id: number
@@ -450,7 +453,7 @@ export { FlickModel, FlickService, NotfoundError }
         body: string
       }[]
     }
-    //flicks 待存储的数据
+
     const flicks: FlickDetail[] = [
       {
         id: 1,
@@ -476,7 +479,7 @@ export { FlickModel, FlickService, NotfoundError }
           {
             title: 'History',
             body:
-              'The Book of Mormon was conceived by Trey Parker, Matt Stone and Robert Lopez. Parker and Stone grew up in Colorado, and were familiar with The Church of Jesus Christ of Latter-day Saints and its members. They became friends at the University of Colorado Boulder and collaborated on a musical film, Cannibal! The Musical (1993), their first experience with movie musicals. In 1997, they created the TV series South Park for Comedy Central and in 1999, the musical film South Park: Bigger, Longer & Uncut. The two had first thought of a fictionalized Joseph Smith, religious leader and founder of the Latter Day Saint movement, while working on an aborted Fox series about historical characters. Their 1997 film, Orgazmo, and a 2003 episode of South Park, "All About Mormons", both gave comic treatment to Mormonism. Smith was also included as one of South Parks "Super Best Friends", a Justice League parody team of religious figures like Jesus and Buddha.'
+              `The Book of Mormon was conceived by Trey Parker, Matt Stone and Robert Lopez. Parker and Stone grew up in Colorado, and were familiar with The Church of Jesus Christ of Latter-day Saints and its members. They became friends at the University of Colorado Boulder and collaborated on a musical film, Cannibal! The Musical (1993), their first experience with movie musicals. In 1997, they created the TV series South Park for Comedy Central and in 1999, the musical film South Park: Bigger, Longer & Uncut. The two had first thought of a fictionalized Joseph Smith, religious leader and founder of the Latter Day Saint movement, while working on an aborted Fox series about historical characters. Their 1997 film, Orgazmo, and a 2003 episode of South Park, "All About Mormons", both gave comic treatment to Mormonism. Smith was also included as one of South Parks "Super Best Friends", a Justice League parody team of religious figures like Jesus and Buddha.`
           },
           {
             title: 'Development',
@@ -533,10 +536,7 @@ export { FlickModel, FlickService, NotfoundError }
           },
           {
             title: 'Background',
-            body: `A reading was held in 2012, featuring Kelli Barret as Anya (Anastasia), Aaron Tveit as Dmitry, Patrick Page as Vladimir, and Angela Lansbury as the Empress Maria. A workshop was held on June 12, 2015, in New York City, and included Elena Shaddow as Anya, Ramin Karimloo as Gleb Vaganov, a new role, and Douglas Sills as Vlad.
-          The original stage production of Anastasia premiered at the Hartford Stage in Hartford, Connecticut on May 13, 2016 (previews). The show was directed by Darko Tresnjak and choreography by Peggy Hickey, with Christy Altomare and Derek Klena starring as Anya and Dmitry, respectively.
-          Director Tresnjak explained: "We have kept, I think, six songs from the movie, but there are 16 new numbers. We have kept the best parts of the animated movie, but it really is a new musical." The musical also adds characters not in the film. Additionally, Act 1 is set in Russia and Act 2 in Paris, "which was everything modern Soviet Russia was not: free, expressive, creative, no barriers," according to McNally.
-          The musical also omits the supernatural elements from the original film, including the character of Rasputin and his musical number "In the Dark of the Night", (although that song’s melody is repurposed in the new number "Stay, I Pray You"), and introduces instead a new villain called Gleb, a general for the Bolsheviks who receives orders to kill Anya.`
+            body: `A reading was held in 2012, featuring Kelli Barret as Anya (Anastasia), Aaron Tveit as Dmitry, Patrick Page as Vladimir, and Angela Lansbury as the Empress Maria. A workshop was held on June 12, 2015, in New York City, and included Elena Shaddow as Anya, Ramin Karimloo as Gleb Vaganov, a new role, and Douglas Sills as Vlad.The original stage production of Anastasia premiered at the Hartford Stage in Hartford, Connecticut on May 13, 2016 (previews). The show was directed by Darko Tresnjak and choreography by Peggy Hickey, with Christy Altomare and Derek Klena starring as Anya and Dmitry, respectively.Director Tresnjak explained: "Weve kept, I think, six songs from the movie, but there are 16 new numbers. Weve kept the best parts of the animated movie, but it really is a new musical." The musical also adds characters not in the film. Additionally, Act 1 is set in Russia and Act 2 in Paris, "which was everything modern Soviet Russia was not: free, expressive, creative, no barriers" according to McNally.The musical also omits the supernatural elements from the original film, including the character of Rasputin and his musical number "In the Dark of the Night", although that songs melody is repurposed in the new number "Stay, I Pray You", and introduces instead a new villain called Gleb, a general for the Bolsheviks who receives orders to kill Anya.`
           }
         ]
       }
@@ -549,7 +549,6 @@ export { FlickModel, FlickService, NotfoundError }
     //Init 初始化数据模型和数据库
     async function Init() {
       if (debug && Sqlite.exists(DB_NAME)) {
-        // 如果是编译环境不是production则每次检查如果数据库已经存在就删除
         console.log(`debug mode delete db ${DB_NAME}!`);
         Sqlite.deleteDatabase(DB_NAME);
       }
@@ -570,19 +569,23 @@ export { FlickModel, FlickService, NotfoundError }
                 details TEXT
             );`
             await DB.execSQL(CreateTableSQL);
-            let InsertDataSQL = `INSERT INTO  ${TABLE_NAME} (id,genre,title,image,url,description,details) VALUES`
-            let values = []
+            // let InsertDataSQL = `INSERT INTO  ${TABLE_NAME} (id,genre,title,image,url,description,details) VALUES`
+            // let values = []
             for (let flick of flicks) {
+              let InsertDataSQL = `INSERT INTO  ${TABLE_NAME} (id,genre,title,image,url,description,details) VALUES`
+              // let values = []
               let detailjson = JSON.stringify(flick.details)
               let v = ` (${flick.id}, '${flick.genre}', '${flick.title}', '${flick.image}', '${flick.url}','${flick.description}','${detailjson}' )`
-              values.push(v)
-            }
-            InsertDataSQL += values.join(",")
-            InsertDataSQL += ";"
-            try {
-              await DB.execSQL(InsertDataSQL);
-            } catch (err) {
-              console.error(`batch insert flick  into ${DB_NAME} get error ${err.message}`);
+              InsertDataSQL +=  v
+              InsertDataSQL += ";"
+              try {
+                console.log(` insert flick ${flick.id} into ${DB_NAME}`);
+                // console.log(InsertDataSQL);
+                await DB.execSQL(InsertDataSQL);
+              } catch (err) {
+                console.error(`insert flick ${flick.id} into ${DB_NAME} get error`);
+                console.error(InsertDataSQL);
+              }
             }
           } catch (err) {
             console.error(`create table get error ${err.message}`);
@@ -596,14 +599,19 @@ export { FlickModel, FlickService, NotfoundError }
     async function Close() {
       if (DB) {
         await DB.close()
+        console.log("db Closed")
       }
     }
+
+
+
     //GetFlicks 获取flicks库存列表
     async function GetFlicks(): Promise<FlickModel[]> {
       const QueryListSQL = `
       SELECT id,title,image,description
       FROM ${TABLE_NAME}
       `
+      console.log(`GetFlicks query sql ${QueryListSQL}`)
       let rows = await DB.all(QueryListSQL)
       let res: FlickModel[] = []
       for (let row of rows) {
@@ -615,6 +623,7 @@ export { FlickModel, FlickService, NotfoundError }
         }
         res.push(info)
       }
+      console.log(`GetFlicks get result ${res}`)
       return res
     }
     //GetFlickById 通过id查找flick详情
@@ -657,59 +666,25 @@ export { FlickModel, FlickService, NotfoundError }
     安装好后只要导入即可
 
 
-+ `app.ts`,我们在`created`和`beforeDestroy`挂载点分别挂载初始化函数和关闭函数
+
++ `views/Home.vue`,我们在挂载home页面节点前执行数据库初始化和加载数据的操作,在取消挂载节点后执行数据库的关闭函数,同时改用异步方式从数据库中获取数据
 
     ```ts
     ...
-    import { Init,Close } from './models/Flick'
-
+    import { Init,Close,GetFlicks,FlickModel } from './models/Flick'
     ...
-
-    new Vue({
-      ...
-      created: function () {
-        Init()
-      },
-      beforeDestroy: function (){
-        Close()
-      }
-    }).$start()
-    ```
-
-+ `views/Home.vue`,我们改用异步方式从数据库中获取数据
-
-    ```vue
-    <template>
+    const flicks = ref<FlickModel[]>([]);
     ...
-    </template>
+    onBeforeMount(() => {
+      Init().then((res) => {
+        return GetFlicks()
+      }).then((res) => {
+        flicks.value = res;
+      });
+    })
 
-    <script lang="ts">
+    onUnmounted(() => Close())
     ...
-    import { GetFlicks,FlickModel } from "../models/Flick";
-    ...
-    interface Data {
-      flicks: FlickModel[];
-    }
-    export default Vue.extend({
-      data():Data {
-        return {
-          flicks: [],
-        };
-      },
-      methods: {
-        ...
-      },
-      created: function () {
-        GetFlicks().then((res) => {
-          this.flicks = res;
-        });
-      },
-    });
-    </script>
-
-    <style scoped lang="scss">
-    ...
-    </style>
     ```
 
 + `views/Details.vue`类似的也是改用异步方式从数据库中获取详情

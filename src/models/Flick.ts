@@ -1,5 +1,7 @@
 import Sqlite from "nativescript-sqlite";
+
 const debug = process.env.NODE_ENV !== 'production';
+
 //FlickModel flick列表中的信息样式
 interface FlickModel {
   id: number
@@ -7,6 +9,7 @@ interface FlickModel {
   image: string
   description: string
 }
+
 //FlickDetail flick详情信息样式
 interface FlickDetail {
   id: number
@@ -20,7 +23,7 @@ interface FlickDetail {
     body: string
   }[]
 }
-//flicks 待存储的数据
+
 const flicks: FlickDetail[] = [
   {
     id: 1,
@@ -46,7 +49,7 @@ const flicks: FlickDetail[] = [
       {
         title: 'History',
         body:
-          'The Book of Mormon was conceived by Trey Parker, Matt Stone and Robert Lopez. Parker and Stone grew up in Colorado, and were familiar with The Church of Jesus Christ of Latter-day Saints and its members. They became friends at the University of Colorado Boulder and collaborated on a musical film, Cannibal! The Musical (1993), their first experience with movie musicals. In 1997, they created the TV series South Park for Comedy Central and in 1999, the musical film South Park: Bigger, Longer & Uncut. The two had first thought of a fictionalized Joseph Smith, religious leader and founder of the Latter Day Saint movement, while working on an aborted Fox series about historical characters. Their 1997 film, Orgazmo, and a 2003 episode of South Park, "All About Mormons", both gave comic treatment to Mormonism. Smith was also included as one of South Parks "Super Best Friends", a Justice League parody team of religious figures like Jesus and Buddha.'
+          `The Book of Mormon was conceived by Trey Parker, Matt Stone and Robert Lopez. Parker and Stone grew up in Colorado, and were familiar with The Church of Jesus Christ of Latter-day Saints and its members. They became friends at the University of Colorado Boulder and collaborated on a musical film, Cannibal! The Musical (1993), their first experience with movie musicals. In 1997, they created the TV series South Park for Comedy Central and in 1999, the musical film South Park: Bigger, Longer & Uncut. The two had first thought of a fictionalized Joseph Smith, religious leader and founder of the Latter Day Saint movement, while working on an aborted Fox series about historical characters. Their 1997 film, Orgazmo, and a 2003 episode of South Park, "All About Mormons", both gave comic treatment to Mormonism. Smith was also included as one of South Parks "Super Best Friends", a Justice League parody team of religious figures like Jesus and Buddha.`
       },
       {
         title: 'Development',
@@ -103,10 +106,7 @@ const flicks: FlickDetail[] = [
       },
       {
         title: 'Background',
-        body: `A reading was held in 2012, featuring Kelli Barret as Anya (Anastasia), Aaron Tveit as Dmitry, Patrick Page as Vladimir, and Angela Lansbury as the Empress Maria. A workshop was held on June 12, 2015, in New York City, and included Elena Shaddow as Anya, Ramin Karimloo as Gleb Vaganov, a new role, and Douglas Sills as Vlad.
-      The original stage production of Anastasia premiered at the Hartford Stage in Hartford, Connecticut on May 13, 2016 (previews). The show was directed by Darko Tresnjak and choreography by Peggy Hickey, with Christy Altomare and Derek Klena starring as Anya and Dmitry, respectively.
-      Director Tresnjak explained: "We have kept, I think, six songs from the movie, but there are 16 new numbers. We have kept the best parts of the animated movie, but it really is a new musical." The musical also adds characters not in the film. Additionally, Act 1 is set in Russia and Act 2 in Paris, "which was everything modern Soviet Russia was not: free, expressive, creative, no barriers," according to McNally.
-      The musical also omits the supernatural elements from the original film, including the character of Rasputin and his musical number "In the Dark of the Night", (although that song’s melody is repurposed in the new number "Stay, I Pray You"), and introduces instead a new villain called Gleb, a general for the Bolsheviks who receives orders to kill Anya.`
+        body: `A reading was held in 2012, featuring Kelli Barret as Anya (Anastasia), Aaron Tveit as Dmitry, Patrick Page as Vladimir, and Angela Lansbury as the Empress Maria. A workshop was held on June 12, 2015, in New York City, and included Elena Shaddow as Anya, Ramin Karimloo as Gleb Vaganov, a new role, and Douglas Sills as Vlad.The original stage production of Anastasia premiered at the Hartford Stage in Hartford, Connecticut on May 13, 2016 (previews). The show was directed by Darko Tresnjak and choreography by Peggy Hickey, with Christy Altomare and Derek Klena starring as Anya and Dmitry, respectively.Director Tresnjak explained: "Weve kept, I think, six songs from the movie, but there are 16 new numbers. Weve kept the best parts of the animated movie, but it really is a new musical." The musical also adds characters not in the film. Additionally, Act 1 is set in Russia and Act 2 in Paris, "which was everything modern Soviet Russia was not: free, expressive, creative, no barriers" according to McNally.The musical also omits the supernatural elements from the original film, including the character of Rasputin and his musical number "In the Dark of the Night", although that songs melody is repurposed in the new number "Stay, I Pray You", and introduces instead a new villain called Gleb, a general for the Bolsheviks who receives orders to kill Anya.`
       }
     ]
   }
@@ -139,19 +139,23 @@ async function Init() {
             details TEXT
         );`
         await DB.execSQL(CreateTableSQL);
-        let InsertDataSQL = `INSERT INTO  ${TABLE_NAME} (id,genre,title,image,url,description,details) VALUES`
-        let values = []
+        // let InsertDataSQL = `INSERT INTO  ${TABLE_NAME} (id,genre,title,image,url,description,details) VALUES`
+        // let values = []
         for (let flick of flicks) {
+          let InsertDataSQL = `INSERT INTO  ${TABLE_NAME} (id,genre,title,image,url,description,details) VALUES`
+          // let values = []
           let detailjson = JSON.stringify(flick.details)
           let v = ` (${flick.id}, '${flick.genre}', '${flick.title}', '${flick.image}', '${flick.url}','${flick.description}','${detailjson}' )`
-          values.push(v)
-        }
-        InsertDataSQL += values.join(",")
-        InsertDataSQL += ";"
-        try {
-          await DB.execSQL(InsertDataSQL);
-        } catch (err) {
-          console.error(`batch insert flick  into ${DB_NAME} get error ${err.message}`);
+          InsertDataSQL +=  v
+          InsertDataSQL += ";"
+          try {
+            console.log(` insert flick ${flick.id} into ${DB_NAME}`);
+            // console.log(InsertDataSQL);
+            await DB.execSQL(InsertDataSQL);
+          } catch (err) {
+            console.error(`insert flick ${flick.id} into ${DB_NAME} get error`);
+            console.error(InsertDataSQL);
+          }
         }
       } catch (err) {
         console.error(`create table get error ${err.message}`);
@@ -168,12 +172,16 @@ async function Close() {
     console.log("db Closed")
   }
 }
+
+
+
 //GetFlicks 获取flicks库存列表
 async function GetFlicks(): Promise<FlickModel[]> {
   const QueryListSQL = `
   SELECT id,title,image,description
   FROM ${TABLE_NAME}
   `
+  console.log(`GetFlicks query sql ${QueryListSQL}`)
   let rows = await DB.all(QueryListSQL)
   let res: FlickModel[] = []
   for (let row of rows) {
@@ -185,6 +193,7 @@ async function GetFlicks(): Promise<FlickModel[]> {
     }
     res.push(info)
   }
+  console.log(`GetFlicks get result ${res}`)
   return res
 }
 //GetFlickById 通过id查找flick详情
@@ -216,3 +225,4 @@ async function GetFlickById(id: number): Promise<FlickDetail> {
 }
 
 export { FlickModel, FlickDetail, Init, Close, GetFlicks, GetFlickById }
+

@@ -126,17 +126,18 @@ ns create myAwesomeApp --template @nativescript-vue/template-blank@beta
 
 #### 源码结构
 
-通常app目录下会有如下文件/文件夹
+通常`src`目录就是我们的源码目录,开发行为基本都在这个目录下进行.其中会有如下文件/文件夹
 
 + `app.ts`|`app.js`,项目入口文件
 + `app.scss`|`app.css`,项目的全局样式定义
 + `fonts/`,项目使用的字体文件
-+ `components/`,存放vue组件,通常我会习惯增加一个`views/`文件夹存放以`Page`标签为最外层标签的页面视图定义文件,而`components/`中则是存放非`Page`标签的组件组合
++ `components/`,存放vue组件,
++ `views/`文件夹存放以`Frame`,`Page`,标签为最外层标签的页面视图定义文件,而`components/`中则是存放用于复用的组件组合
 + `assets/`,应用中使用到的静态资源,主要是图片这类
 + `models/`,应用的的数据模型,一般本地数据的管理会放这里
 + `store/`,定义状态,一般是vuex使用,用于管理界面内部状态
 + `apis/`,定义访问外部接口数据的行为,有时会和`models`合并
-`
+
 
 #### 正式开始helloworld
 
@@ -145,37 +146,15 @@ ns create myAwesomeApp --template @nativescript-vue/template-blank@beta
 ##### 入口文件`app.ts`
 
 ```typescript
-import Vue from 'nativescript-vue'
-import Home from './views/Home.vue'
+import { createApp } from 'nativescript-vue';
+import Home from './views/Home.vue';
 
-declare let __DEV__: boolean;
 
-Vue.config.silent = !__DEV__
-
-new Vue({
-  render: (h) => h('frame', [h(Home)]),
-}).$start()
+createApp(Home).start();
 
 ```
 
-其中
-
-```ts
-
-declare let __DEV__: boolean;
-
-Vue.config.silent = !__DEV__
-```
-
-用于声明对执行环境的判断,此处用于在执行`ns build <platform>`时设置`--env.production`后取消vue的log.
-
-```ts
-new Vue({
-  render: (h) => h('frame', [h(Home)]),
-}).$start()
-```
-
-则是应用的启动入口.在nativescript-vue中我们并不需要`index.html`这样的界面入口,直接一个vue的根实例即可.
+在nativescript-vue中我们并不需要`index.html`这样的界面入口,直接一个vue的根实例即可.
 
 ##### 数据定义`models/Flick.ts`
 
@@ -195,6 +174,13 @@ interface FlickModel {
     title: string
     body: string
   }[]
+}
+
+class NotfoundError extends Error {
+  constructor(message: string) {
+    super(message); // (1)
+    this.name = this.constructor.name;
+  }
 }
 
 class FlickService {
@@ -281,9 +267,9 @@ class FlickService {
         {
           title: 'Background',
           body: `A reading was held in 2012, featuring Kelli Barret as Anya (Anastasia), Aaron Tveit as Dmitry, Patrick Page as Vladimir, and Angela Lansbury as the Empress Maria. A workshop was held on June 12, 2015, in New York City, and included Elena Shaddow as Anya, Ramin Karimloo as Gleb Vaganov, a new role, and Douglas Sills as Vlad.
-          The original stage production of Anastasia premiered at the Hartford Stage in Hartford, Connecticut on May 13, 2016 (previews). The show was directed by Darko Tresnjak and choreography by Peggy Hickey, with Christy Altomare and Derek Klena starring as Anya and Dmitry, respectively.
-          Director Tresnjak explained: "We've kept, I think, six songs from the movie, but there are 16 new numbers. We've kept the best parts of the animated movie, but it really is a new musical." The musical also adds characters not in the film. Additionally, Act 1 is set in Russia and Act 2 in Paris, "which was everything modern Soviet Russia was not: free, expressive, creative, no barriers," according to McNally.
-          The musical also omits the supernatural elements from the original film, including the character of Rasputin and his musical number "In the Dark of the Night", (although that song’s melody is repurposed in the new number "Stay, I Pray You"), and introduces instead a new villain called Gleb, a general for the Bolsheviks who receives orders to kill Anya.`
+            The original stage production of Anastasia premiered at the Hartford Stage in Hartford, Connecticut on May 13, 2016 (previews). The show was directed by Darko Tresnjak and choreography by Peggy Hickey, with Christy Altomare and Derek Klena starring as Anya and Dmitry, respectively.
+            Director Tresnjak explained: "We've kept, I think, six songs from the movie, but there are 16 new numbers. We've kept the best parts of the animated movie, but it really is a new musical." The musical also adds characters not in the film. Additionally, Act 1 is set in Russia and Act 2 in Paris, "which was everything modern Soviet Russia was not: free, expressive, creative, no barriers," according to McNally.
+            The musical also omits the supernatural elements from the original film, including the character of Rasputin and his musical number "In the Dark of the Night", (although that song’s melody is repurposed in the new number "Stay, I Pray You"), and introduces instead a new villain called Gleb, a general for the Bolsheviks who receives orders to kill Anya.`
         }
       ]
     }
@@ -293,103 +279,74 @@ class FlickService {
     return this.flicks
   }
 
-  getFlickById(id: number): FlickModel | undefined {
-    return this.flicks.find(flick => flick.id === id) || undefined
+  getFlickById(id: number): FlickModel {
+    let result = this.flicks.find(flick => flick.id === id)
+    if (result) {
+      return result
+    }
+    throw new NotfoundError("id not found")
   }
 }
 
-export { FlickModel, FlickService }
+export { FlickModel, FlickService, NotfoundError }
 ```
 
 与之相关的是`assets`文件夹下的图片资源
 
 ##### 视图`views`
 
-+ `views/Home.vue`
++ `views/Home.vue`,入口视图,打开应用后第一个看到的页面,它必须以`Frame`标签作为最外层标签.我们的`Vue`相关的工具都需要从`nativescript-vue`这个库中导入.同时`nativescript-vue`也提供过了导航使用的`Manual Routing`接口,比如`$navigateTo`
 
     ```vue
-    <template>
-      <Page>
-        <ActionBar title="NativeFlix" />
-        <ListView
-          height="100%"
-          separatorColor="transparent"
-          for="item in flicks"
-          @itemTap="onFlickTap"
-        >
-          <v-template>
-            <GridLayout
-              height="280"
-              borderRadius="10"
-              class="bg-secondary"
-              rows="*, auto, auto"
-              columns="*"
-              margin="5 10"
-              padding="0"
-            >
-              <image row="0" margin="0" stretch="aspectFill" :src="item.image" />
-              <label
-                row="1"
-                margin="10 10 0 10"
-                fontWeight="700"
-                class="text-primary"
-                fontSize="18"
-                :text="item.title"
-              />
-              <label
-                row="2"
-                margin="0 10 10 10"
-                class="text-secondary"
-                fontSize="14"
-                textWrap="true"
-                :text="item.description"
-              />
-            </GridLayout>
-          </v-template>
-        </ListView>
-      </Page>
-    </template>
-
-    <script lang="ts">
-    import Vue from "nativescript-vue";
-    import { FlickService } from "../models/Flick";
-    import Details from "./Details.vue";
+    <script lang="ts" setup>
+    import {
+      ref,
+      $navigateTo,
+    } from 'nativescript-vue';
+    import Details from './Details.vue';
+    import { FlickService, FlickModel } from "../models/Flick";
     const flickService = new FlickService();
+    const flicks = ref(flickService.getFlicks());
 
-    export default Vue.extend({
-      data() {
-        return {
-          flicks: flickService.getFlicks(),
-        };
-      },
-      methods: {
-        onFlickTap(args) {
-          const id = args.item.id;
-          this.$navigateTo(Details, {
-            props: { id },
-          });
-        },
-      },
-    });
+    function onFlickTap(item: FlickModel) {
+      const id = item.id;
+      $navigateTo(Details, {
+        props: { id },
+      });
+    }
     </script>
 
-    <style scoped lang="scss">
-    @import "@nativescript/theme/scss/variables/blue";
+    <template>
+      <Frame>
+        <Page>
+          <ActionBar title="NativeFlix" />
+          <ListView height="100%" separatorColor="transparent" :items="flicks">
+            <template #default="{ item }">
+              <GridLayout height="280" borderRadius="10" class="bg-secondary" rows="*, auto, auto" columns="*" margin="5 10"
+                padding="0" @tap="onFlickTap(item)">
+                <image row="0" margin="0" stretch="aspectFill" :src="item.image" />
+                <label row="1" margin="10 10 0 10" fontWeight="700" class="text-primary" fontSize="18" :text="item.title" />
+                <label row="2" margin="0 10 10 10" class="text-secondary" fontSize="14" textWrap="true"
+                  :text="item.description" />
+              </GridLayout>
+            </template>
+          </ListView>
+        </Page>
+      </Frame>
+    </template>
 
-    // Custom styles
-    .fas {
-      @include colorize($color: accent);
-    }
-
-    .info {
-      font-size: 20;
-      horizontal-align: center;
-      vertical-align: center;
-    }
+    <style>
+    /* .info {
+        font-size: 20;
+      } */
     </style>
     ```
 
-+ `views/Details.vue`
+    它在应用中会被渲染为下图这样的页面
+
+    ![helloworld-home](./imgs/helloworld-home.png)
+
++ `views/Details.vue`,详情页
 
     ```vue
     <template>
@@ -437,6 +394,10 @@ export { FlickModel, FlickService }
     </script>
     ```
 
+    它在应用中会被渲染为下图这样的页面
+
+    ![helloworld-detail](./imgs/helloworld-detail.png)
+
 可以看到一个nativescript-vue的组件依然是经典的vue3段式.
 
 + `template`段管组件结构
@@ -445,13 +406,18 @@ export { FlickModel, FlickService }
 
 + `style`段管样式
 
-`script`和`style`基本和经典的vue2没有区别,主要区别在`template`段.
+`script`和`style`基本和经典的vue3没有区别,主要区别在`template`段.
 
-`template`段中最主要的是标签.注意,和浏览器环境并不一样,在浏览器中vue里用的标签都是平等的,但在nativescript-vue中有个特殊的标签`<Page>`.它必须在一个组件的最外层,表示这个Vue组件是一个页面.我们只可以用非`<Page>`标签封装自定义组件(虽然一般也不用).
+`template`段中最主要的是标签.注意,和浏览器环境并不一样,在浏览器中vue里用的标签都是平等的,但在nativescript-vue中有两个特殊的标签
 
-标签`<ListView>`及其中的子节点使用了`for`属性而没有使用`v-for`,并不是说nativescript-vue不支持`v-for`,而是标签`<ListView>`的针对循环的一个优化.`v-for`会在页面上有多少渲染多少,而标签`<ListView>`的`for`属性则类似懒加载,当前页面展示到哪里就会渲染到哪里.
++ `<Frame>`.它必须在入口页面的最外层,
++ `<Page>`.它必须在一个组件的最外层,表示这个Vue组件是一个页面.我们只可以用非`<Page>`标签封装自定义组件(虽然一般也不用).
 
-而从`Home`页面跳转至`Details`页面我们使用的是`this.$navigateTo(Details, {props: { id }});`接口,这也是目前唯一支持的[manual-routing方法](https://nativescript-vue.org/cn/docs/routing/manual-routing/)的常用模式
+除此之外我们还看到了使用标签`<ListView>`渲染一个列表中的元素,使用`:items="flicks"`指定要遍历的列表,然后用下面的`<template #default="{ item }">`标签将每个元素的值放到变量`item`中.
+
+这里没有使用`v-for`并不是说nativescript-vue不支持`v-for`,而是标签`<ListView>`的针对循环的一个优化.`v-for`会在页面上有多少渲染多少,而标签`<ListView>`则类似懒加载,当前页面展示到哪里就会渲染到哪里.
+
+而从`Home`页面跳转至`Details`页面我们使用的是`$navigateTo(Details, {props: { id }});`接口,这也是目前唯一支持的[manual-routing方法](https://nativescript-vue.org/cn/docs/routing/manual-routing/)的常用模式
 
 ### hello world plus
 
@@ -682,7 +648,13 @@ export { FlickModel, FlickService }
     export { FlickModel, FlickDetail, Init, Close, GetFlicks, GetFlickById }
     ```
 
-    在nativescript-vue中我们使用sqlite需要借助插件[nativescript-sqlite](https://github.com/NathanaelA/nativescript-sqlite/blob/master/src/README.md),安装好后只要导入即可
+    在nativescript-vue中我们使用sqlite需要借助插件[nativescript-sqlite](https://github.com/NathanaelA/nativescript-sqlite/blob/master/src/README.md),安装使用命令
+
+    ```bash
+    tns plugin add nativescript-sqlite
+    ```
+
+    安装好后只要导入即可
 
 
 + `app.ts`,我们在`created`和`beforeDestroy`挂载点分别挂载初始化函数和关闭函数

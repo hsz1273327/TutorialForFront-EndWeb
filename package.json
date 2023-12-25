@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@nativescript-community/ui-material-bottomnavigationbar": "^7.2.26",
     "@nativescript-community/ui-material-core": "^7.2.26",
     "@nativescript-community/ui-material-tabs": "^7.2.26",
     "@nativescript/core": "~8.6.1",

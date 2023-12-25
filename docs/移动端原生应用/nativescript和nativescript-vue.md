@@ -65,10 +65,21 @@ nativescript借助webpack打包,它会将js代码编译为对应平台上runtime
 + 数字签名,hash,加密: [crypto-js](https://github.com/brix/crypto-js)
 + jwt:[jwt-decode](https://github.com/auth0/jwt-decode)
 
-### nativescript-vue的相关组件
+### nativescript的相关ui组件
 
-+ 页面元素组件,nativescript-vue原生组件可以在<https://nativescript-vue.org/cn/docs/elements/layouts/absolute-layout/>页面查看.
-+ 设备接口组件,多以插件的形式存在,官方插件可以在<https://docs.nativescript.org/plugins/>这里看到,社区维护的插件可以在<https://github.com/orgs/nativescript-community/repositories?type=all>下找到,另外还有一个比较大的组件集合<https://github.com/nstudio>.第三方插件可以在插件市场<https://market.nativescript.org/>中查找,注意第三方插件良莠不齐,最好先去看看他们的源码和下载量.当然也有不少插件其实是个人维护,就只能在github上搜关键字查找了.找到需要的插件后,在项目下执行`ns plugin add <插件名>`就可以安装到项目了.
+nativescript本身就可以用于写移动端原生应用,官方本就提供了[足够使用的原生组件](https://docs.nativescript.org/ui/).这套基本组件中最有用的就是容器组件以及[list-view](https://docs.nativescript.org/ui/list-view),需要注意在`nativescript-vue`中它的用法和`nativescript`中有点区别,我们下面的例子中会介绍.
+
+其他具体组件个人认为社区组件库更加好用,其中个人比较推荐[nativescript-community/ui-material](https://github.com/nativescript-community/ui-material-components).
+
+### nativescript的功能性插件
+
+设备接口组件等功能性组件多以插件的形式存在.官方插件可以在<https://docs.nativescript.org/plugins/>这里看到,社区维护的插件可以在<https://github.com/orgs/nativescript-community/repositories?type=all>下找到,另外还有一个比较大的组件集合<https://github.com/nstudio>.第三方插件可以在插件市场<https://market.nativescript.org/>中查找,注意第三方插件良莠不齐,最好先去看看他们的源码和下载量.当然也有不少插件其实是个人维护,就只能在github上搜关键字查找了.找到需要的插件后,在项目下执行`ns plugin add <插件名>`就可以安装到项目了.
+
+### nativescript-vue和nativescript的关系
+
+`nativescript-vue`实际上可以看做是在`nativescript`之上的一个语法层,它让我们可以使用vue.js语法写`nativescript`程序,因此它可以使用大多数的`nativescript`插件.
+
+也就是说`nativescript`提供runtime,组件,项目管理工具等各种让程序可以跑起来的元素,而`nativescript-vue`提供vue.js的语法让我们可以通过编程将这些元素组合起来成为应用.
 
 ### nativescript-vue与vue的关系
 
@@ -665,8 +676,6 @@ export { FlickModel, FlickService, NotfoundError }
 
     安装好后只要导入即可
 
-
-
 + `views/Home.vue`,我们在挂载home页面节点前执行数据库初始化和加载数据的操作,在取消挂载节点后执行数据库的关闭函数,同时改用异步方式从数据库中获取数据
 
     ```ts
@@ -728,3 +737,16 @@ export { FlickModel, FlickService, NotfoundError }
     });
     </script>
     ```
+
+## 应用的调试
+
+我们可以使用命令行工具`ns debug android|ios`在模拟器或链接的设备中调试指定平台的应用.它实际执行了如下步骤
+
+1. `build`,编译应用
+2. `deploy`,查找到对应平台有没有可用的连好的设备,如果没有则查看有没有启动的对应平台模拟器,如果还没有就启动对应平台的默认模拟器,然后将编译好的应用部署到其中
+3. `launch`,在部署的设备中启动应用
+4. 启动一个`vue devtools`的websocket服务用于debug
+
+## 应用的打包
+
+`ns build <platform>`可以单独用于打包应用,默认打包出来时debug模式,如果要打包用于发行的应用版本,可以使用`ns build --release <platform>`.注意应用的发行本身还涉及到各种权限,审核问题,我们在系列最后会详细介绍如何在android和ios上发行应用.

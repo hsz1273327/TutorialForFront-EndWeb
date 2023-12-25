@@ -9,6 +9,8 @@
           <StackLayout v-for="detail in flick.details" :key="detail.title">
             <Label marginTop="15" fontSize="16" fontWeight="700" class="text-primary" textWrap="true"
               :text="detail.title" />
+            <Label class="mdi" :text="delete_icon"></Label> 
+            <Label class="fontello" :text="manage_icon"></Label> 
             <Label fontSize="14" class="text-secondary" textWrap="true" :text="detail.body" />
           </StackLayout>
         </StackLayout>
@@ -42,4 +44,7 @@ onMounted(() => {
     flick.value = res;
   })
 })
+
+const delete_icon = ref("\uf154")
+const manage_icon = ref("\ue80c")
 </script>

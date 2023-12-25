@@ -1,7 +1,5 @@
 import { createApp } from 'nativescript-vue';
-import Home from './views/Home.vue';
-// import { Init,Close } from './models/Flick'
+// import Home from './views/Main_simple.vue';
+import Home from './views/Main_simple_mf.vue';
 
-// Init()
 createApp(Home).start();
-// Close()

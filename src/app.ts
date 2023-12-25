@@ -4,7 +4,8 @@ import TabsPlugin from '@nativescript-community/ui-material-tabs/vue';
 
 // import Home from './views/Main_simple.vue';
 //import Home from './views/Main_simple_mf.vue';
-import Home from './views/Main_material_tabs.vue';
+// import Home from './views/Main_material_tabs.vue';
+import Home from './views/Main_sb.vue';
 
 if (global.isIOS) {
     themer.setPrimaryColor('#bff937');

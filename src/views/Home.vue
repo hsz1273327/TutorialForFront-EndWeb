@@ -12,6 +12,7 @@
             <label row="1" margin="10 10 0 10" fontWeight="700" class="text-primary" fontSize="18" :text="item.title" />
             <label row="2" margin="0 10 10 10" class="text-secondary" fontSize="14" textWrap="true"
               :text="item.description" />
+            
           </GridLayout>
         </template>
       </ListView>
@@ -51,8 +52,4 @@ onUnmounted(() => Close())
 </script>
 
 
-<style>
-/* .info {
-    font-size: 20;
-  } */
-</style>
+

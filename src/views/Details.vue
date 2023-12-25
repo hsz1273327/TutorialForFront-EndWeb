@@ -11,7 +11,8 @@
               :text="detail.title" />
             <Label class="mdi" :text="delete_icon"></Label> 
             <Label class="fontello" :text="manage_icon"></Label> 
-            <Label fontSize="14" class="text-secondary" textWrap="true" :text="detail.body" />
+            <!-- <Label fontSize="14" class="text-secondary" textWrap="true" :text="detail.body" /> -->
+            <Label fontSize="14" class="info" textWrap="true" :text="detail.body" />
           </StackLayout>
         </StackLayout>
       </StackLayout>
@@ -48,3 +49,10 @@ onMounted(() => {
 const delete_icon = ref("\uf154")
 const manage_icon = ref("\ue80c")
 </script>
+
+<style>
+.info {
+  font-family: SmileySans-Oblique;
+  font-size: 20;
+}
+</style>

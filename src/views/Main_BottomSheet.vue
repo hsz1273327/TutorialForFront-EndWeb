@@ -28,7 +28,7 @@ function onButtonTap(evt: TapGestureEventData) {
             canCloseBottomSheet: true,
             defaultIndex: defaultIndex.value,
         },
-        closeCallback: (...args: any) => {
+        closeCallback: (...args: any[]) => {
             console.log("bottom sheet closed", args);
             defaultIndex.value = args[0][0][1];
         },

@@ -1,4 +1,4 @@
-import { createApp, registerElement } from 'nativescript-vue';
+import { createApp } from 'nativescript-vue';
 import { themer } from '@nativescript-community/ui-material-core';
 import TabsPlugin from '@nativescript-community/ui-material-tabs/vue';
 import BottomNavigationBar from '@nativescript-community/ui-material-bottomnavigationbar/vue'

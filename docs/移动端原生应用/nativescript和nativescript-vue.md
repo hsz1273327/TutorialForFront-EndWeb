@@ -367,41 +367,25 @@ export { FlickModel, FlickService, NotfoundError }
           <StackLayout>
             <Image margin="0" stretch="aspectFill" :src="flick.image" />
             <StackLayout padding="10 20">
-              <StackLayout v-for="detail in flick.details" :key="detail.id">
-                <Label
-                  marginTop="15"
-                  fontSize="16"
-                  fontWeight="700"
-                  class="text-primary"
-                  textWrap="true"
-                  :text="detail.title"
-                />
-                <Label
-                  fontSize="14"
-                  class="text-secondary"
-                  textWrap="true"
-                  :text="detail.body"
-                />
+              <StackLayout v-for="detail in flick.details" :key="detail.title">
+                <Label marginTop="15" fontSize="16" fontWeight="700" class="text-primary" textWrap="true"
+                  :text="detail.title" />
+                <Label fontSize="14" class="text-secondary" textWrap="true" :text="detail.body" />
               </StackLayout>
             </StackLayout>
           </StackLayout>
         </ScrollView>
       </Page>
     </template>
+    <script lang="ts" setup>
+    import { ref, defineProps } from 'nativescript-vue';
 
-    <script lang="ts">
-    import Vue from "nativescript-vue";
+
     import { FlickService } from "../models/Flick";
     const flickService = new FlickService();
+    const props = defineProps(['id'])
 
-    export default Vue.extend({
-      props: ["id"],
-      data() {
-        return {
-          flick: flickService.getFlickById(this.id),
-        };
-      },
-    });
+    const flick = ref(flickService.getFlickById(props.id));
     </script>
     ```
 

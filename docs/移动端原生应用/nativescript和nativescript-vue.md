@@ -114,28 +114,32 @@ nativescript-vue v3可以使用vue 3的相关工具辅助开发,主要包括
 }
 ```
 
-### hello world
+### nativescript-vue加载插件
 
-惯例的我们来一个hello world项目开始我们的学习,我们依然使用vue语法.这个项目来自官网,主要是让我们大致对native-script-vue的用法有个直观认识.
-本项目最终代码在[native-helloworld](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/native-helloworld)
+插件在入口`app.ts`中加载,一般两种使用加载方式:
 
-首先我们先用命令行工具构造一个项目模板
++ `use(模块)`方法,一般完成度比较高的插件都是这种加载方式,通常是如下模式
 
-```bash
-ns create myAwesomeApp --template @nativescript-vue/template-blank@beta
-```
+    ```ts
+    import { createApp } from 'nativescript-vue';
+    import 插件模块名 from '插件模块地址'
 
-上面的命令我们会创建一个名为`myCoolApp`的目录,其中就是我们项目的模板,这个项目将:
+    createApp(根组件).use(插件模块名).start()
+    ```
 
-+ 使用typescript作为开发语言
-+ 使用vue 3作为开发框架,
-+ 使用css或者scss作为样式表语言控制样式.
+    由于`.use(插件模块名)`返回的是应用对象本身,因此可以用pipeline的写法一个一个加载插件模块
 
-其目录中会有一个名为`app`的目录,这就是我们源码存放的位置.另一个比较重要的文件夹是`App_Resources`,它用于控制打包后应用程序的配置,比如使用的图标等就是它控制的,另外如果有针对不同平台的原生代码也是放在这里,关于应用打包我们在本系列最后介绍.
++ `registerElement`方法,通常没法用`use`方法的就是用`registerElement`方法,`nativescript-vue`提供了`registerElement`接口,我们可以用它结合`required`加载插件模块,模式如下
 
-我们可以先什么都不做,执行`ns debug android`来编译下现在的项目.正常的话就会跳出android的默认simulator,并开始编译项目,当编译完成后模拟器中就会跳出app的界面.
+    ```ts
+    import { createApp, registerElement } from 'nativescript-vue';
+    import 插件模块名 from '插件模块地址'
+    ...
+    registerElement('插件模块名', () => require('插件模块地址').插件模块组件对象);
+    createApp(根组件).start()
+    ```
 
-#### 源码结构
+## 项目源码结构
 
 通常`src`目录就是我们的源码目录,开发行为基本都在这个目录下进行.其中会有如下文件/文件夹
 
@@ -174,7 +178,26 @@ nativescript开发原生移动端应用的工作流大致分为如下步骤:
 
 本文将介绍整个流程,但在学习阶段主要就是执行1,2两步
 
-## 正式开始helloworld
+## 正式开始的helloworld
+
+惯例的我们来一个hello world项目开始我们的学习,我们依然使用vue语法.这个项目来自官网,主要是让我们大致对native-script-vue的用法有个直观认识.
+本项目最终代码在[native-helloworld](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/native-helloworld)
+
+首先我们先用命令行工具构造一个项目模板
+
+```bash
+ns create myAwesomeApp --template @nativescript-vue/template-blank@beta
+```
+
+上面的命令我们会创建一个名为`myAwesomeApp`的目录,其中就是我们项目的模板,这个项目将:
+
++ 使用typescript作为开发语言
++ 使用vue 3作为开发框架,
++ 使用css或者scss作为样式表语言控制样式.
+
+其目录中会有一个名为`app`的目录,这就是我们源码存放的位置;另一个比较重要的文件夹是`App_Resources`,它用于控制打包后应用程序的配置,比如使用的图标等就是它控制的,另外如果有针对不同平台的原生代码也是放在这里,关于应用打包我们在本系列最后介绍.
+
+我们可以先什么都不做,执行`ns debug android`来编译下现在的项目.正常的话就会跳出android的默认simulator,并开始编译项目,当编译完成后模拟器中就会跳出app的界面.
 
 首先我们来看整体看下每一个文件
 
@@ -186,7 +209,6 @@ import Home from './views/Home.vue';
 
 
 createApp(Home).start();
-
 ```
 
 在nativescript-vue中我们并不需要`index.html`这样的界面入口,直接一个vue的根实例即可.

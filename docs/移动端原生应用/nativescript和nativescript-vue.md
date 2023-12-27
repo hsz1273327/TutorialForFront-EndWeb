@@ -149,12 +149,36 @@ ns create myAwesomeApp --template @nativescript-vue/template-blank@beta
 + `store/`,定义状态,一般是vuex使用,用于管理界面内部状态
 + `apis/`,定义访问外部接口数据的行为,有时会和`models`合并
 
+## nativescript的开发工作流
 
-#### 正式开始helloworld
+nativescript开发原生移动端应用有别于网页开发.网页本质上是一个指导渲染的脚本,真正的客户端是浏览器,网页开发好后只要放到服务端的http服务器上即可,而原生应用本质上是个完整的客户端.由于这个发布上的区别也就造成了开发工作流上的区别
+
+nativescript开发原生移动端应用的工作流大致分为如下步骤:
+
+1. 本地开发,在本文语境下就是使用`nativescript-vue`做开发
+2. 本地调试,使用`ns debug ios|android`.它实际执行了如下步骤
+
+   1. `build`,编译应用
+   2. `deploy`,查找到对应平台有没有可用的连好的设备,如果没有则查看有没有启动的对应平台模拟器,如果还没有就启动对应平台的默认模拟器,然后将编译好的应用部署到其中
+   3. `launch`,在部署的设备中启动应用
+   4. 启动一个`vue devtools`的websocket服务用于debug
+3. 1,2两步循环直至基本满意
+4. 真实设备测试,需要弄几台不同型号的android和ios设备,启动usb调试模式后用usb连接开发应用的电脑,之后使用`ns device`查看是否可以识别
+    + android启动usb调试模式: 这个看品牌,一些品牌可以直接进入调试模式设置,通常在`设置 > 系统 >USB调试`,如果找不到可以去`设置 > 系统 > 关于手机 > 版本号(连续点击7次)`,此时会出现提示`提示已进入开发者模式`,返回到系统页面一般就可以找到
+    + ios启动usb调试模式:通常在`设置>开发者`
+5. 4如果不满意再回归3重新开发调试,直至满意
+6. 在不同的应用平台注册,申请发布权限
+7. 打包发布
+    + ios: 使用命令`ns appstore`查看iTunes中的该项目信息,使用`ns appstore upload`上传
+    + android: 如果海外发布可以尝试发布到[google play](https://play.google.com/apps/publish/),国内的话各家有各家的平台,嫌麻烦也可以直接`ns build --release android`拿到应用apk后挂github让人下载.
+
+本文将介绍整个流程,但在学习阶段主要就是执行1,2两步
+
+## 正式开始helloworld
 
 首先我们来看整体看下每一个文件
 
-##### 入口文件`app.ts`
+### 入口文件`app.ts`
 
 ```typescript
 import { createApp } from 'nativescript-vue';
@@ -167,7 +191,7 @@ createApp(Home).start();
 
 在nativescript-vue中我们并不需要`index.html`这样的界面入口,直接一个vue的根实例即可.
 
-##### 数据定义`models/Flick.ts`
+### 数据定义`models/Flick.ts`
 
 这个例子我们并没有连接外部数据.数据就定义在这个位置.
 
@@ -304,7 +328,7 @@ export { FlickModel, FlickService, NotfoundError }
 
 与之相关的是`assets`文件夹下的图片资源
 
-##### 视图`views`
+### 视图`views`
 
 + `views/Home.vue`,入口视图,打开应用后第一个看到的页面,它必须以`Frame`标签作为最外层标签.我们的`Vue`相关的工具都需要从`nativescript-vue`这个库中导入.同时`nativescript-vue`也提供过了导航使用的`Manual Routing`接口,比如`$navigateTo`
 
@@ -414,7 +438,7 @@ export { FlickModel, FlickService, NotfoundError }
 
 而从`Home`页面跳转至`Details`页面我们使用的是`$navigateTo(Details, {props: { id }});`接口,这也是目前唯一支持的[manual-routing方法](https://nativescript-vue.org/cn/docs/routing/manual-routing/)的常用模式
 
-### hello world plus
+## hello world plus
 
 上面的例子已经足以展示如何使用nativescript-vue构造界面,但真正的原生应用光有界面往往是不够的,往往都需要可以调用一些设备上的工具.我们对它进行一些改动,让他使用本地sqlite管理数据,替代在代码中写死数据.sqlite是一个基于文件的关系数据库,使用SQL语言管理数据,该工具在智能手机时代之前就已经在各种功能机上被广泛使用,无论android还是iphone我们都可以用它管理应用数据.这个项目保存在[native-helloworld-plus](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/native-helloworld-plus)分支.
 
@@ -721,16 +745,3 @@ export { FlickModel, FlickService, NotfoundError }
     });
     </script>
     ```
-
-## 应用的调试
-
-我们可以使用命令行工具`ns debug android|ios`在模拟器或链接的设备中调试指定平台的应用.它实际执行了如下步骤
-
-1. `build`,编译应用
-2. `deploy`,查找到对应平台有没有可用的连好的设备,如果没有则查看有没有启动的对应平台模拟器,如果还没有就启动对应平台的默认模拟器,然后将编译好的应用部署到其中
-3. `launch`,在部署的设备中启动应用
-4. 启动一个`vue devtools`的websocket服务用于debug
-
-## 应用的打包
-
-`ns build <platform>`可以单独用于打包应用,默认打包出来时debug模式,如果要打包用于发行的应用版本,可以使用`ns build --release <platform>`.注意应用的发行本身还涉及到各种权限,审核问题,我们在系列最后会详细介绍如何在android和ios上发行应用.

@@ -1,5 +1,5 @@
 <template>
-    <Page actionBarHidden="true">
+    <Page actionBarHidden="true" id="Page2">
         <StackLayout>
             <Label text="Page 2"></Label>
         </StackLayout>

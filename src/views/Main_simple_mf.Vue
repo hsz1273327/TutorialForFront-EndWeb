@@ -1,6 +1,6 @@
 <template>
-  <Frame>
-    <Page actionBarHidden="true">
+  <Frame id="root">
+    <Page actionBarHidden="true" id="PageRoot">
       <TabView selectedIndex="0" selectedTabTextColor="#e57373" @selectedIndexChange="tabChangeHandler">
         <TabViewItem title="Tab 1">
           <Frame id="home-frame">

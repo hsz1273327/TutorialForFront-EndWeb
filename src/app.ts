@@ -7,13 +7,13 @@ import { install as installBottomsheet } from "@nativescript-community/ui-materi
 import DrawerPlugin from '@nativescript-community/ui-drawer/vue3'
 import { install as installUIDrawer} from '@nativescript-community/ui-drawer';
 
-// import Home from './views/Main_simple.Vue';
-// import Home from './views/Main_simple_mf.Vue';
-// import Home from './views/Main_material_tabs.Vue';
+// import Home from './views/Main_simple.vue';
+import Home from './views/Main_simple_mf.vue';
+// import Home from './views/Main_material_tabs.vue';
 // import Home from './views/Main_sb.Vue';
 // import Home from './views/Main_MDBottomNavigationBar.vue';
 // import Home from './views/Main_BottomSheet.vue'
-import Home from './views/Main_ui-drawer.vue'
+// import Home from './views/Main_ui-drawer.vue'
 if (global.isIOS) {
     themer.setPrimaryColor('#bff937');
     themer.setAccentColor('#ff8a39');

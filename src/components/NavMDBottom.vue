@@ -1,50 +1,48 @@
 <template>
     <MDBottomNavigationBar activeColor="#e57373" badgeColor="#1976d2" selectedTabIndex="0"
         @tabSelected="onBottomNavigationTabSelected">
-        <MDBottomNavigationTab title="Home" />
-        <MDBottomNavigationTab title="Page1" />
-        <MDBottomNavigationTab title="Page2" />
+        <template v-for="item in pages">
+            <MDBottomNavigationTab :title=item.title />
+        </template>
     </MDBottomNavigationBar>
 </template>
     
 <script lang="ts" setup>
-import { $navigateTo } from "nativescript-vue";
+import { defineProps, ref } from 'nativescript-vue'
 import { TabSelectedEventData } from "@nativescript-community/ui-material-bottomnavigationbar";
-import HomePage from "../views/HomePage.vue";
-import Page1 from "../views/Page1.vue";
-import Page2 from "../views/Page2.vue";
+import { useRouter } from "router-vue-native";
+// get router
+const router = useRouter();
+// interface PageMap {
+//     "title": string
+//     "path": string
+// }
+// interface Props {
+//     "frameId": string
+//     // "pages": PageMap[]
+// }
+
+// const props = defineProps<Props>()
+const pages = ref([{
+    "title": "Home",
+    "path": "/"
+}, {
+    "title": "Page1",
+    "path": "/page1"
+}, {
+    "title": "Page2",
+    "path": "/page2"
+}])
 
 function onBottomNavigationTabSelected(args: TabSelectedEventData) {
-    console.log("!!!!!");
-    console.log(args.oldIndex);
-    console.log(args.newIndex);
-    switch (args.newIndex) {
-        case 0:
+    try {
+        let path = pages.value[args.newIndex].path
+        router.push(path,
             {
-                $navigateTo(HomePage, {
-                    transition: { name: "fade" },
-                    frame: "main-frame",
-                });
-            }
-            break;
-        case 1:
-            {
-                $navigateTo(Page1, {
-                    transition: { name: "fade" },
-                    frame: "main-frame",
-                });
-            }
-            break;
-        case 2:
-            {
-                $navigateTo(Page2, {
-                    transition: { name: "fade" },
-                    frame: "main-frame",
-                });
-            }
-            break;
-        default:
-            console.log(`unknown index ${args.newIndex}`);
+                frame: "main-frame"
+            })
+    } catch (e) {
+        console.log(`unknown index ${args.newIndex}`);
     }
 }
 </script>

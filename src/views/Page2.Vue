@@ -9,5 +9,5 @@
 <script lang="ts" setup>
 import { onMounted } from "nativescript-vue";
 
-onMounted(() => console.log("&&&&mounted page2 frame"))
+onMounted(() => console.log("&&&&mounted page2"))
 </script>

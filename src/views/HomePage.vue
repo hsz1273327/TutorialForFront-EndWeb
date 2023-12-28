@@ -5,9 +5,10 @@
         </StackLayout>
     </Page>
 </template>
-    
+
 <script lang="ts" setup>
 import { onMounted } from "nativescript-vue";
 
-onMounted(() => console.log("&&&&mounted home frame"))
+
+onMounted(() => console.log("&&&&mounted mainpage"))
 </script>

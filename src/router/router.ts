@@ -31,12 +31,24 @@ const router = createRouter(
         routeBackFallbackPath: "/",
         routeToCallback: (toRouteItem, options) => {
             console.log(`to ${toRouteItem.path}`)
-            console.log(`option route ${options.context}`)
-
-
         }
     }
 );
+
+router.beforeEach((to,from) => {
+    // For example, verify per route access rules
+    console.log(`beforeEach to ${to.path} event ${to.resolveOnEvent}`)
+    if (from){
+        console.log(`beforeEach to ${from.path}`)
+    }
+  });
+
+router.afterEach((to,from)=>{
+    console.log(`afterEach to ${to.path} event ${to.resolveOnEvent}`)
+    if (from){
+        console.log(`afterEach to ${from.path}`)
+    }
+})
 
 export {
     router

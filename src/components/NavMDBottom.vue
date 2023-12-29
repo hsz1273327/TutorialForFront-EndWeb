@@ -8,21 +8,11 @@
 </template>
     
 <script lang="ts" setup>
-import { defineProps, ref } from 'nativescript-vue'
+import { ref } from 'nativescript-vue'
 import { TabSelectedEventData } from "@nativescript-community/ui-material-bottomnavigationbar";
 import { useRouter } from "router-vue-native";
 // get router
 const router = useRouter();
-// interface PageMap {
-//     "title": string
-//     "path": string
-// }
-// interface Props {
-//     "frameId": string
-//     // "pages": PageMap[]
-// }
-
-// const props = defineProps<Props>()
 const pages = ref([{
     "title": "Home",
     "path": "/"

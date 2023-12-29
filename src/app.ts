@@ -14,12 +14,4 @@ if (global.isIOS) {
 
 let app = createApp(Home).use(router).use(BottomNavigationBar)
 
-if (app.mixin){
-    console.log("has mixin")
-    app.mixin({
-        data: () => ({
-            PAGE_ENTER_TIME: Date.now()
-        }),
-    })
-}
 app.start();

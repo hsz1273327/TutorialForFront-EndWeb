@@ -24,11 +24,11 @@ import {
   ref,
   $navigateTo,
   onBeforeMount,
-  onUnmounted,
 } from 'nativescript-vue';
 import Details from './Details.vue';
-import { Init, Close, GetFlicks, FlickModel } from "../models/Flick";
+// import { Init, Close, GetFlicks, FlickModel } from "../models/Flick";
 
+import { Init, GetFlicks, FlickModel } from "../models/Flick_json";
 const flicks = ref<FlickModel[]>([]);
 
 function onFlickTap(item: FlickModel) {
@@ -43,11 +43,11 @@ onBeforeMount(() => {
     return GetFlicks()
   }).then((res) => {
     flicks.value = res;
-  });
+  }).catch((e) => { console.log(`get error ${e}`) });
 })
 
 
-onUnmounted(() => Close())
+// onUnmounted(() => Close())
 </script>
 
 

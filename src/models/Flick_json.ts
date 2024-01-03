@@ -1,4 +1,5 @@
-import { knownFolders, File, path } from '@nativescript/core'
+import { knownFolders, File, path} from '@nativescript/core'
+import init_data from '../data/flick.json'
 
 const debug = process.env.NODE_ENV !== 'production';
 
@@ -24,12 +25,29 @@ interface FlickDetail {
   }[]
 }
 
-const data_path = path.join(knownFolders.currentApp().path, "data/flick.json")
+// const data_path = path.join(knownFolders.currentApp().path, "data")
+const datafile_path = path.join(knownFolders.currentApp().path, "data/flick.json")
+//Init 初始化数据模型和数据库
+async function Init() {
+  if (debug && File.exists(datafile_path)) {
+    console.log(`debug mode delete datafile ${datafile_path}!`);
+    await File.fromPath(datafile_path).remove()
+  }
+  if (File.exists(datafile_path)) {
+    console.log(`check datafile ${datafile_path} ok!`);
+  } else {
+    let f = File.fromPath(datafile_path)
+    await f.writeText(JSON.stringify(init_data))
+  }
+}
 
 //GetFlicks 获取flicks库存列表
 async function GetFlicks(): Promise<FlickModel[]> {
+  if (!File.exists(datafile_path)) {
+    throw "datafile_path not found"
+  }
 
-  let f = File.fromPath(data_path)
+  let f = File.fromPath(datafile_path)
   let content = await f.readText()
   let rows: FlickDetail[] = JSON.parse(content)
   let res: FlickModel[] = []
@@ -48,7 +66,10 @@ async function GetFlicks(): Promise<FlickModel[]> {
 //GetFlickById 通过id查找flick详情
 async function GetFlickById(id: number): Promise<FlickDetail> {
   console.log(`GetFlickById get id ${id}`)
-  let f = File.fromPath(data_path)
+  if (!File.exists(datafile_path)) {
+    throw "datafile_path not found"
+  }
+  let f = File.fromPath(datafile_path)
   let content = await f.readText()
   let rows: FlickDetail[] = JSON.parse(content)
   let _row = rows.filter((x) => x.id === id)
@@ -59,5 +80,5 @@ async function GetFlickById(id: number): Promise<FlickDetail> {
   return res
 }
 
-export { FlickModel, FlickDetail, GetFlicks, GetFlickById }
+export { Init, FlickModel, FlickDetail, GetFlicks, GetFlickById }
 

@@ -20,7 +20,7 @@
 
 <script lang="ts" setup>
 import { ref, defineProps, onMounted, computed } from 'nativescript-vue';
-import { GetFlickById, FlickDetail } from "../models/Flick";
+import { GetFlickById, FlickDetail } from "../models/Flick_json";
 
 // import { FlickService } from "../models/Flick";
 // const flickService = new FlickService();

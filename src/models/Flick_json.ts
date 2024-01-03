@@ -31,14 +31,14 @@ async function GetFlicks(): Promise<FlickModel[]> {
 
   let f = File.fromPath(data_path)
   let content = await f.readText()
-  let rows = JSON.parse(content)
+  let rows: FlickDetail[] = JSON.parse(content)
   let res: FlickModel[] = []
   for (let row of rows) {
     let info = {
-      id: row[0],
-      title: row[1],
-      image: row[2],
-      description: row[3],
+      id: row.id,
+      title: row.title,
+      image: row.image,
+      description: row.description,
     }
     res.push(info)
   }
@@ -48,30 +48,16 @@ async function GetFlicks(): Promise<FlickModel[]> {
 //GetFlickById 通过id查找flick详情
 async function GetFlickById(id: number): Promise<FlickDetail> {
   console.log(`GetFlickById get id ${id}`)
-  const QuerySQL = `
-  SELECT 
-    id,
-    genre,
-    title,
-    image,
-    url,
-    description,
-    details
-  FROM ${TABLE_NAME}
-  WHERE id = ${id}
-  `
-  let row = await DB.get(QuerySQL)
-  let res: FlickDetail = {
-    id: row[0],
-    genre: row[1],
-    title: row[2],
-    image: row[3],
-    url: row[4],
-    description: row[5],
-    details: JSON.parse(row[6])
+  let f = File.fromPath(data_path)
+  let content = await f.readText()
+  let rows: FlickDetail[] = JSON.parse(content)
+  let _row = rows.filter((x) => x.id === id)
+  if (_row.length === 0) {
+    throw "not found"
   }
+  let res = _row[0]
   return res
 }
 
-export { FlickModel, FlickDetail, Init, Close, GetFlicks, GetFlickById }
+export { FlickModel, FlickDetail, GetFlicks, GetFlickById }
 

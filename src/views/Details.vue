@@ -23,28 +23,12 @@
 
 <script lang="ts" setup>
 import { ref, defineProps, onMounted, computed } from 'nativescript-vue';
-import { GetFlickById, FlickDetail } from "../models/Flick";
 
-// import { FlickService } from "../models/Flick";
-// const flickService = new FlickService();
+import { FlickService } from "../models/Flick";
+const flickService = new FlickService();
 const props = defineProps(['id'])
 
-const flick = ref<FlickDetail>({
-  id: 0,
-  genre: "",
-  title: "",
-  image: "",
-  url: "",
-  description: "",
-  details: [],
-})
-
-const hasContent = computed(() => flick ? true : false)
-onMounted(() => {
-  GetFlickById(props.id).then((res) => {
-    flick.value = res;
-  })
-})
+const flick = ref(flickService.getFlickById(props.id));
 
 const delete_icon = ref("\uf154")
 const manage_icon = ref("\ue80c")

@@ -2,7 +2,7 @@
     <Frame>
         <Page>
             <GridLayout rows="auto,*">
-                <Button text="change" @tap="onButtonTap" row="0" id="change-btn" />
+                <MDButton rippleColor="blue" @tap="onButtonTap" text="change"  row="0" id="change-btn"/>
                 <Frame id="main-frame" row="1">
                     <HomePage />
                 </Frame>

@@ -13,8 +13,8 @@ import { install as installUIDrawer} from '@nativescript-community/ui-drawer';
 // import Home from './views/Main_material_tabs.vue';
 // import Home from './views/Main_sb.vue';
 // import Home from './views/Main_MDBottomNavigationBar.vue';
-// import Home from './views/Main_BottomSheet.vue'
-import Home from './views/Main_ui-drawer.vue'
+import Home from './views/Main_BottomSheet.vue'
+// import Home from './views/Main_ui-drawer.vue'
 if (global.isIOS) {
     themer.setPrimaryColor('#bff937');
     themer.setAccentColor('#ff8a39');

@@ -1,8 +1,12 @@
 <template>
     <Frame>
         <Page>
+            <ActionBar title="My App">
+                <GridLayout columns="auto, *" width="100%">
+                    <MDButton rippleColor="blue" @tap="onButtonTap" text="change"  row="0" id="change-btn"/>
+                </GridLayout>
+            </ActionBar>
             <GridLayout rows="auto,*">
-                <MDButton rippleColor="blue" @tap="onButtonTap" text="change"  row="0" id="change-btn"/>
                 <Frame id="main-frame" row="1">
                     <HomePage />
                 </Frame>
@@ -30,7 +34,11 @@ function onButtonTap(evt: TapGestureEventData) {
         },
         closeCallback: (...args: any[]) => {
             console.log("bottom sheet closed", args);
-            defaultIndex.value = args[0][0][1];
+            try{
+                defaultIndex.value = args[0][0][1];
+            }catch (e){
+                defaultIndex.value = 0
+            }
         },
     });
 }

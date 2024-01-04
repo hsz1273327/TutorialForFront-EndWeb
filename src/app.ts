@@ -9,8 +9,8 @@ import Home from './views/Main.vue'
 
 installMixins();
 if (global.isIOS) {
-    themer.setPrimaryColor('#3F51B5');
-    themer.setAccentColor('#65ADF1');
+    themer.setPrimaryColor('#bff937');
+    themer.setAccentColor('#ff8a39');
     themer.setSecondaryColor('#a830d7');
 }
 

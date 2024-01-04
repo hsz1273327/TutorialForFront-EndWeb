@@ -1,14 +1,3 @@
-<script lang="ts" setup>
-import { ref, defineProps } from 'nativescript-vue';
-
-
-import { FlickService } from "../models/Flick";
-const flickService = new FlickService();
-const props = defineProps(['id'])
-
-const flick = ref(flickService.getFlickById(props.id));
-</script>
-
 <template>
   <Page>
     <ActionBar v-if="flick" :title="flick.title" />
@@ -26,3 +15,14 @@ const flick = ref(flickService.getFlickById(props.id));
     </ScrollView>
   </Page>
 </template>
+
+<script lang="ts" setup>
+import { ref, defineProps } from 'nativescript-vue';
+
+
+import { FlickService } from "../models/Flick";
+const flickService = new FlickService();
+const props = defineProps(['id'])
+
+const flick = ref(flickService.getFlickById(props.id));
+</script>

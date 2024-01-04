@@ -1,21 +1,3 @@
-<script lang="ts" setup>
-import {
-  ref,
-  $navigateTo,
-} from 'nativescript-vue';
-import Details from './Details.vue';
-import { FlickService, FlickModel } from "../models/Flick";
-const flickService = new FlickService();
-const flicks = ref(flickService.getFlicks());
-
-function onFlickTap(item: FlickModel) {
-  const id = item.id;
-  $navigateTo(Details, {
-    props: { id },
-  });
-}
-</script>
-
 <template>
   <Frame>
     <Page>
@@ -34,6 +16,24 @@ function onFlickTap(item: FlickModel) {
     </Page>
   </Frame>
 </template>
+
+<script lang="ts" setup>
+import {
+  ref,
+  $navigateTo,
+} from 'nativescript-vue';
+import Details from './Details.vue';
+import { FlickService, FlickModel } from "../models/Flick";
+const flickService = new FlickService();
+const flicks = ref(flickService.getFlicks());
+
+function onFlickTap(item: FlickModel) {
+  const id = item.id;
+  $navigateTo(Details, {
+    props: { id },
+  });
+}
+</script>
 
 <style>
 /* .info {

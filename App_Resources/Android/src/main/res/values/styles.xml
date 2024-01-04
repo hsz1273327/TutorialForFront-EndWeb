@@ -2,15 +2,13 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- theme to use FOR launch screen-->
-    <style name="LaunchScreenThemeBase" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="LaunchScreenThemeBase" parent="Theme.Material3.Light.NoActionBar">
         <item name="toolbarStyle">@style/NativeScriptToolbarStyle</item>
-
         <item name="colorPrimary">@color/ns_primary</item>
+        <item name="colorSecondary">@color/ns_secondary</item>
         <item name="colorPrimaryDark">@color/ns_primaryDark</item>
         <item name="colorAccent">@color/ns_accent</item>
-
         <item name="android:windowBackground">@drawable/splash_screen</item>
-
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
@@ -19,10 +17,11 @@
     </style>
 
     <!-- theme to use AFTER launch screen is loaded-->
-    <style name="AppThemeBase" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppThemeBase" parent="Theme.Material3.Light.NoActionBar">
         <item name="toolbarStyle">@style/NativeScriptToolbarStyle</item>
 
         <item name="colorPrimary">@color/ns_primary</item>
+         <item name="colorSecondary">@color/ns_secondary</item>
         <item name="colorPrimaryDark">@color/ns_primaryDark</item>
         <item name="colorAccent">@color/ns_accent</item>
     </style>

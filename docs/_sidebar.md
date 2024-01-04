@@ -105,7 +105,7 @@
 * [移动端原生应用](移动端原生应用/README.md)
     * [nativescript和nativescript-vue](移动端原生应用/nativescript和nativescript-vue.md)
     * [UI组件](移动端原生应用/UI组件/README.md)
-        * [资源设置](移动端原生应用/资源设置.md)
+        * [资源设置](移动端原生应用/UI组件/资源设置.md)
         * [页面样式](移动端原生应用/UI组件/页面样式.md)
         * [应用的页面构成](移动端原生应用/UI组件/应用的页面构成.md)
         * [行为事件和事件绑定](移动端原生应用/UI组件/行为事件和事件绑定.md)

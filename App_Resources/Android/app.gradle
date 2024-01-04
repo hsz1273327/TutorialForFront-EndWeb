@@ -5,8 +5,12 @@ dependencies {
 
 android {
   compileSdkVersion 33
-  buildToolsVersion "33"
+  buildToolsVersion '33'
   // ndkVersion ""
+  compileOptions {
+    targetCompatibility 1.8
+    sourceCompatibility 1.8
+  }
 
   defaultConfig {
     minSdkVersion 23
@@ -14,12 +18,12 @@ android {
 
     // Version Information
     versionCode 1
-    versionName "1.0.0"
-    
+    versionName '1.0.0'
+
     generatedDensities = []
   }
 
   aaptOptions {
-    additionalParameters "--no-version-vectors"
+    additionalParameters '--no-version-vectors'
   }
 }

@@ -7,8 +7,8 @@ import { install as installBottomsheet } from "@nativescript-community/ui-materi
 import DrawerPlugin from '@nativescript-community/ui-drawer/vue3'
 import { install as installUIDrawer} from '@nativescript-community/ui-drawer';
 
-// import Home from './views/Main_simple.vue';
-import Home from './views/Main_simple_mf.vue';
+import Home from './views/Main_simple.vue';
+// import Home from './views/Main_simple_mf.vue';
 // import Home from './views/Main_material_tabs.vue';
 // import Home from './views/Main_sb.Vue';
 // import Home from './views/Main_MDBottomNavigationBar.vue';

@@ -1,5 +1,3 @@
-
-
 <template>
   <Frame>
     <Page>
@@ -12,7 +10,6 @@
             <label row="1" margin="10 10 0 10" fontWeight="700" class="text-primary" fontSize="18" :text="item.title" />
             <label row="2" margin="0 10 10 10" class="text-secondary" fontSize="14" textWrap="true"
               :text="item.description" />
-            
           </GridLayout>
         </template>
       </ListView>
@@ -24,13 +21,11 @@
 import {
   ref,
   $navigateTo,
-  onBeforeMount,
-  onUnmounted,
 } from 'nativescript-vue';
 import Details from './Details.vue';
-import { Init, Close, GetFlicks, FlickModel } from "../models/Flick";
-
-const flicks = ref<FlickModel[]>([]);
+import { FlickService, FlickModel } from "../models/Flick";
+const flickService = new FlickService();
+const flicks = ref(flickService.getFlicks());
 
 function onFlickTap(item: FlickModel) {
   const id = item.id;
@@ -38,18 +33,4 @@ function onFlickTap(item: FlickModel) {
     props: { id },
   });
 }
-
-onBeforeMount(() => {
-  Init().then((res) => {
-    return GetFlicks()
-  }).then((res) => {
-    flicks.value = res;
-  });
-})
-
-
-onUnmounted(() => Close())
 </script>
-
-
-

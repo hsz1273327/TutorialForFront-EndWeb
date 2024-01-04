@@ -40,3 +40,12 @@ ActionBar {
   font-family: 'Fa V4compatibility', 'fa-v4compatibility';
   font-weight: 400;
 }
+
+
+
+.material-label-normal {
+  elevation: 12;
+  dynamicElevationOffset: 12;
+  rippleColor: #65adf1;
+  rippleColorAlpha: 0.5;
+}

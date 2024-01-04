@@ -1,4 +1,3 @@
-
 <template>
   <Page>
     <ActionBar v-if="flick" :title="flick.title" />
@@ -9,45 +8,22 @@
           <StackLayout v-for="detail in flick.details" :key="detail.title">
             <Label marginTop="15" fontSize="16" fontWeight="700" class="text-primary" textWrap="true"
               :text="detail.title" />
-            <Label class="mdi" :text="delete_icon"></Label> 
-            <Label class="fontello" :text="manage_icon"></Label> 
-            <!-- <Label fontSize="14" class="text-secondary" textWrap="true" :text="detail.body" /> -->
-            <Label fontSize="14" class="info" textWrap="true" :text="detail.body" />
+            <Label fontSize="14" class="text-secondary" textWrap="true" :text="detail.body" />
           </StackLayout>
         </StackLayout>
       </StackLayout>
     </ScrollView>
   </Page>
 </template>
-
-
 <script lang="ts" setup>
-import { ref, defineProps, onMounted, computed } from 'nativescript-vue';
-import { GetFlickById, FlickDetail } from "../models/Flick";
+import { ref, defineProps } from 'nativescript-vue';
 
-// import { FlickService } from "../models/Flick";
-// const flickService = new FlickService();
+
+import { FlickService } from "../models/Flick";
+const flickService = new FlickService();
 const props = defineProps(['id'])
 
-const flick = ref<FlickDetail>({
-  id: 0,
-  genre: "",
-  title: "",
-  image: "",
-  url: "",
-  description: "",
-  details: [],
-})
-
-const hasContent = computed(() => flick ? true : false)
-onMounted(() => {
-  GetFlickById(props.id).then((res) => {
-    flick.value = res;
-  })
-})
-
-const delete_icon = ref("\uf154")
-const manage_icon = ref("\ue80c")
+const flick = ref(flickService.getFlickById(props.id));
 </script>
 
 <style>

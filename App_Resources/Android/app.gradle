@@ -1,25 +1,26 @@
 // You can add your native dependencies here
 dependencies {
-//  implementation 'androidx.multidex:multidex:2.0.1'
+  //  implementation 'androidx.multidex:multidex:2.0.1'
+  implementation 'com.google.android.material:material:1.8.0'
 }
 
 android {
   compileSdkVersion 33
-  buildToolsVersion "33"
+  buildToolsVersion '33'
   // ndkVersion ""
 
   defaultConfig {
     minSdkVersion 23
-    targetSdkVersion 33
+    targetSdkVersion 30
 
     // Version Information
     versionCode 1
-    versionName "1.0.0"
-    
+    versionName '1.0.0'
+
     generatedDensities = []
   }
 
   aaptOptions {
-    additionalParameters "--no-version-vectors"
+    additionalParameters '--no-version-vectors'
   }
 }

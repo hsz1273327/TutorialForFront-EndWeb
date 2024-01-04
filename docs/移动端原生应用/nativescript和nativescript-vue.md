@@ -401,7 +401,8 @@ export { FlickModel, FlickService, NotfoundError }
 
     它在应用中会被渲染为下图这样的页面
 
-    ![helloworld-home](./imgs/helloworld-home.png)
+    + android
+    ![helloworld-home](./imgs/helloworld-home_android.png)
 
 + `views/Details.vue`,详情页
 
@@ -437,7 +438,9 @@ export { FlickModel, FlickService, NotfoundError }
 
     它在应用中会被渲染为下图这样的页面
 
-    ![helloworld-detail](./imgs/helloworld-detail.png)
+    + android
+
+    ![helloworld-detail](./imgs/helloworld-detail_android.png)
 
 可以看到一个nativescript-vue的组件依然是经典的vue3段式.
 

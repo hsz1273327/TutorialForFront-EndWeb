@@ -65,15 +65,19 @@ nativescript借助webpack打包,它会将js代码编译为对应平台上runtime
 + 数字签名,hash,加密: [crypto-js](https://github.com/brix/crypto-js)
 + jwt:[jwt-decode](https://github.com/auth0/jwt-decode)
 
-### nativescript的相关ui组件
+### nativescript的组件与插件
 
-nativescript本身就可以用于写移动端原生应用,官方本就提供了[足够使用的原生组件](https://docs.nativescript.org/ui/).这套基本组件中最有用的就是容器组件以及[list-view](https://docs.nativescript.org/ui/list-view),需要注意在`nativescript-vue`中它的用法和`nativescript`中有点区别,我们下面的例子中会介绍.
+nativescript支持插件化开发,这也就为社区提供了土壤,官方自己有维护[标准UI组件库](https://docs.nativescript.org/ui/)和一些功能插件,他们试图实现让移动端开发也有类似web开发的相近工具这一理念分散在整个`nativescript-core`中.
 
-其他具体组件个人认为社区组件库更加好用,其中个人比较推荐[nativescript-community/ui-material](https://github.com/nativescript-community/ui-material-components).
+而第三方也提供了大量优秀的插件,他们有的是UI组件,有的是功能性插件.比较推荐的第三方插件组织(个人)包括
 
-### nativescript的功能性插件
++ [nativescript-community](https://github.com/nativescript-community/)目前依然比较活跃的组织,插件基本都能用.
++ [triniwiz](https://github.com/triniwiz/nativescript-plugins)nativescript的开发者之一,提供了不少好用的插件,但也有不少年久失修了
++ [nstudio](https://github.com/nstudio/nativescript-plugins),一个挺活跃的组织,提供的很多都是接外部服务的插件
 
-设备接口组件等功能性组件多以插件的形式存在.官方插件可以在<https://docs.nativescript.org/plugins/>这里看到,社区维护的插件可以在<https://github.com/orgs/nativescript-community/repositories?type=all>下找到,另外还有一个比较大的组件集合<https://github.com/nstudio>.第三方插件可以在插件市场<https://market.nativescript.org/>中查找,注意第三方插件良莠不齐,最好先去看看他们的源码和下载量.当然也有不少插件其实是个人维护,就只能在github上搜关键字查找了.找到需要的插件后,在项目下执行`ns plugin add <插件名>`就可以安装到项目了.
+### 插件的安装
+
+官方插件可以在<https://docs.nativescript.org/plugins/>这里看到,社区维护的插件则需要自己去找,建议先在上面提供的三个地方找,如果没有满足需求的再去官方的插件市场<https://market.nativescript.org/>中查找,再找不到就去github上搜索碰下运气.注意第三方插件良莠不齐,最好先去看看他们的源码更新时间和下载量,长期没更新的通常都不太行,当然最终还是要跑下给的例子试试.找到需要的插件后,在项目下执行`ns plugin add <插件名>`就可以安装到项目了.
 
 ### nativescript-vue和nativescript的关系
 

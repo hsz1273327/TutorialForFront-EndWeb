@@ -24,11 +24,14 @@ import {
   ref,
   $navigateTo,
   onBeforeMount,
+  onUnmounted
 } from 'nativescript-vue';
 import Details from './Details.vue';
-// import { Init, Close, GetFlicks, FlickModel } from "../models/Flick";
+// import { Init, GetFlicks, FlickModel } from "../models/Flick_json";
+// import { Init, GetFlicks, FlickModel } from "../models/Flick_ApplicationSettings";
+import { Init, Close,  GetFlicks, FlickModel } from "../models/Flick_CouchDB";
 
-import { Init, GetFlicks, FlickModel } from "../models/Flick_json";
+// import { Init, Close, GetFlicks, FlickModel } from "../models/Flick_sqlite";
 const flicks = ref<FlickModel[]>([]);
 
 function onFlickTap(item: FlickModel) {
@@ -39,15 +42,16 @@ function onFlickTap(item: FlickModel) {
 }
 
 onBeforeMount(() => {
-  Init().then((res) => {
-    return GetFlicks()
-  }).then((res) => {
-    flicks.value = res;
-  }).catch((e) => { console.log(`get error ${e}`) });
+  try {
+    Init()
+    let res = GetFlicks()
+    flicks.value = res
+  } catch (e) {
+    console.log(`get error ${e}`)
+  }
 })
 
-
-// onUnmounted(() => Close())
+onUnmounted(() => Close())
 </script>
 
 

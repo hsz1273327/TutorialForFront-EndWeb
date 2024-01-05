@@ -20,10 +20,11 @@
 
 <script lang="ts" setup>
 import { ref, defineProps, onMounted, computed } from 'nativescript-vue';
-import { GetFlickById, FlickDetail } from "../models/Flick_json";
+// import { GetFlickById, FlickDetail } from "../models/Flick_json";
+// import { GetFlickById, FlickDetail } from "../models/Flick_ApplicationSettings";
+import { GetFlickById, FlickDetail } from "../models/Flick_CouchDB";
+// import { GetFlickById, FlickDetail } from "../models/Flick_sqlite";
 
-// import { FlickService } from "../models/Flick";
-// const flickService = new FlickService();
 const props = defineProps(['id'])
 
 const flick = ref<FlickDetail>({
@@ -38,8 +39,7 @@ const flick = ref<FlickDetail>({
 
 const hasContent = computed(() => flick ? true : false)
 onMounted(() => {
-  GetFlickById(props.id).then((res) => {
-    flick.value = res;
-  })
+  let res = GetFlickById(props.id)
+  flick.value = res;
 })
 </script>

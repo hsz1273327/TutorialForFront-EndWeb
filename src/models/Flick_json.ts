@@ -60,12 +60,12 @@ async function GetFlicks(): Promise<FlickModel[]> {
     }
     res.push(info)
   }
-  console.log(`GetFlicks get result ${res}`)
+  console.log(`JSON GetFlicks get result ${res}`)
   return res
 }
 //GetFlickById 通过id查找flick详情
 async function GetFlickById(id: number): Promise<FlickDetail> {
-  console.log(`GetFlickById get id ${id}`)
+  console.log(`JSON GetFlickById get id ${id}`)
   if (!File.exists(datafile_path)) {
     throw "datafile_path not found"
   }

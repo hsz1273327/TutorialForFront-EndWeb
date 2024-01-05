@@ -26,41 +26,42 @@ interface FlickDetail {
   }[]
 }
 const DB_NAME = "MyCoolApp"
-const database = new CouchBase(DB_NAME);
-const IDS = []
+let database = new CouchBase(DB_NAME);
 
 //Init 初始化数据模型和数据库
 function Init() {
-  const rows = database.query({
+  let rows = database.query({
     select: [], // Leave empty to query for all
-    from: 'DB_NAME', // Omit or set null to use current db
+    from: DB_NAME, // Omit or set null to use current db
   })
+  
   if (debug && rows.length > 0) {
     console.log(`debug mode delete database ${DB_NAME}!`);
-    database.destroyDatabase()
+    let keys = Object.keys(rows[0])
+    console.log(`************get rows keys ${keys} id ${rows[0].id}`)
+    for (let row of rows){
+      database.deleteDocument(row.id)
+    }
+    // database.destroyDatabase()
   }
   if (rows.length > 0) {
     console.log(`check database ${DB_NAME} ok!`);
   } else {
     const flicks: FlickDetail[] = init_data
     for (let flick of flicks) {
+      // let id = flick.id
       let documentId = database.createDocument(flick);
-      database.updateDocument(documentId, {
-        id: documentId,
-      });
+      console.log(`********** init documentId ${documentId}`)
     }
   }
 }
 
 //GetFlicks 获取flicks库存列表
-async function GetFlicks(): Promise<FlickModel[]> {
-  if (!File.exists(datafile_path)) {
-    throw "datafile_path not found"
-  }
-
-  let f = File.fromPath(datafile_path)
-  let content = await f.readText()
-  let rows: FlickDetail[] = JSON.parse(content)
+function GetFlicks(): FlickModel[] {
+  let rows: FlickDetail[] = database.query({
+    select: [], // Leave empty to query for all
+    from: DB_NAME, // Omit or set null to use current db
+  })
   let res: FlickModel[] = []
   for (let row of rows) {
     let info = {
@@ -71,25 +72,19 @@ async function GetFlicks(): Promise<FlickModel[]> {
     }
     res.push(info)
   }
-  console.log(`GetFlicks get result ${res}`)
+  console.log(`CouchDB GetFlicks get result ${res}`)
   return res
 }
 //GetFlickById 通过id查找flick详情
-async function GetFlickById(id: number): Promise<FlickDetail> {
-  console.log(`GetFlickById get id ${id}`)
-  if (!File.exists(datafile_path)) {
-    throw "datafile_path not found"
-  }
-  let f = File.fromPath(datafile_path)
-  let content = await f.readText()
-  let rows: FlickDetail[] = JSON.parse(content)
-  let _row = rows.filter((x) => x.id === id)
-  if (_row.length === 0) {
-    throw "not found"
-  }
-  let res = _row[0]
+function GetFlickById(id: string): FlickDetail {
+  console.log(`CouchDB GetFlickById get id ${id}`)
+  let res = database.getDocument(id)
   return res
 }
 
-export { Init, FlickModel, FlickDetail, GetFlicks, GetFlickById }
+function Close() {
+  database.close()
+}
+
+export { Init, Close, FlickModel, FlickDetail, GetFlicks, GetFlickById }
 

@@ -7,7 +7,6 @@
     "@nativescript-community/sqlite": "^3.4.2",
     "@nativescript/core": "~8.6.1",
     "@triniwiz/nativescript-couchbase": "^1.4.0",
-    "nativescript-couchbase-plugin": "^0.9.6",
     "nativescript-sqlite": "^2.8.6",
     "nativescript-vue": "3.0.0-beta.11"
   },

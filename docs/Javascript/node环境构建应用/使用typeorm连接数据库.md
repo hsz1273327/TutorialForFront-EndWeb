@@ -72,7 +72,7 @@ export const AppDataSource = new DataSource({
 
 + `type`是必填的,可选范围为"mysql", "postgres", "cockroachdb", "sap", "spanner", "mariadb", "sqlite", "cordova", "react-native", "nativescript", "sqljs", "oracle", "mssql", "mongodb", "aurora-mysql", "aurora-postgres", "expo", "better-sqlite3", "capacitor".
 
-+ `entities`用来注册声明好的映射的对象,可以指定类名或者声明文件的路径等.
++ `entities`,必填,用来注册声明好的映射的对象,可以指定类名或者声明文件的路径等.只有被注册的`entity`才会有用
 
 + `poolSize`用来设置连接池大小,DataSource也是支持连接池的.
 
@@ -127,7 +127,7 @@ AppDataSource.initialize()
     }))
     ```
 
-<!-- ## 使用风格
+## 使用风格
 
 `typeorm`支持两种风格的使用方式
 
@@ -135,22 +135,22 @@ AppDataSource.initialize()
 
 + `Active Record`
 
-这两种风格在映射对象声明和请求处理上并不一致. -->
+这两种风格在映射对象声明和请求处理上并不一致.
 
-<!-- ### Active Record风格
+### Active Record风格
 
-即使用`entity`对象作为操作主体.整体思路是以`BaseEntity`为基类构造`entity`类,然后每次用的时候就使用`entity`类或其实例执行对应方法即可.`entity`对象会使用默认的`DataSource`执行请求
+所谓Active Record即使用`entity`对象作为操作主体.整体思路是以`BaseEntity`为基类构造`entity`类,然后每次用的时候就使用`entity`类或其实例执行对应方法即可.`entity`对象会使用默认的`DataSource`执行请求
 
 #### 映射对象声明
 
 
-#### 请求处理 -->
+#### 请求处理 
 
-## Data Mapper风格
+### Data Mapper风格
 
 所谓Data Mapper风格即使用`AppDataSource`中构造的`Repository`作为操作主体,`entity`类作为参数.这种风格是typeorm最主要的接口风格.其优点是连接管理和`entity`定义解构,
 
-### 映射对象声明
+#### 映射对象声明
 
 
-### 请求处理
+#### 请求处理

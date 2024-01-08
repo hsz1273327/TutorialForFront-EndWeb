@@ -22,3 +22,7 @@ _book
 dist
 coverage
 .nyc_output
+# NativeScript
+hooks/
+node_modules/
+platforms/

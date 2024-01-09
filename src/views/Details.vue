@@ -23,7 +23,8 @@ import { ref, defineProps, onMounted, computed } from 'nativescript-vue';
 // import { GetFlickById, FlickDetail } from "../models/Flick_json";
 // import { GetFlickById, FlickDetail } from "../models/Flick_ApplicationSettings";
 // import { GetFlickById, FlickDetail } from "../models/Flick_CouchDB";
-import { GetFlickById, FlickDetail } from "../models/Flick_sqlite";
+// import { GetFlickById, FlickDetail } from "../models/Flick_sqlite";
+import { GetFlickById, FlickDetail } from "../models/Flick_orm";
 
 const props = defineProps(['id'])
 

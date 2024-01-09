@@ -7,7 +7,8 @@
     "@nativescript-community/sqlite": "^3.4.2",
     "@nativescript/core": "~8.6.1",
     "nativescript-sqlite": "^2.8.6",
-    "nativescript-vue": "3.0.0-beta.11"
+    "nativescript-vue": "3.0.0-beta.11",
+    "typeorm": "^0.3.19"
   },
   "devDependencies": {
     "@nativescript/android": "8.6.2",

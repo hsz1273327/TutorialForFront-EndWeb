@@ -30,7 +30,8 @@ import Details from './Details.vue';
 // import { Init, GetFlicks, FlickModel } from "../models/Flick_json";
 // import { Init, GetFlicks, FlickModel } from "../models/Flick_ApplicationSettings";
 // import { Init, Close,  GetFlicks, FlickModel } from "../models/Flick_CouchDB";
-import { Init, Close, GetFlicks, FlickModel } from "../models/Flick_sqlite";
+// import { Init, Close, GetFlicks, FlickModel } from "../models/Flick_sqlite";
+import { Init, Close, GetFlicks, FlickModel } from "../models/Flick_orm";
 
 const flicks = ref<FlickModel[]>([]);
 

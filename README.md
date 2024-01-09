@@ -4,9 +4,8 @@
 
 ## 用法
 
-+ `npm run build`将源码编译到server文件夹
-+ `npm start`启动服务
-+ `npm run test`测试接口
++ `npm run build`将源码编译到dist文件夹
++ `npm start`执行应用
 
 ## 注意
 

@@ -8,16 +8,13 @@
     "devDependencies": {
         "@types/node": "^20.10.7",
         "mocha": "^9.1.0",
-        "nyc": "^13.3.0",
-        "tsconfig-paths": "^4.2.0"
+        "nyc": "^13.3.0"
     },
     "dependencies": {
         "reflect-metadata": "^0.2.1",
         "specifier-resolution-node": "^1.1.1",
         "sqlite3": "^5.1.7",
-        "tsx": "^4.7.0",
-        "typeorm": "^0.3.19",
-        "vite-node": "^1.1.3"
+        "typeorm": "^0.3.19"
     },
     "scripts": {
         "start": "node --import=specifier-resolution-node/register dist/index.js",

@@ -46,9 +46,74 @@ npm install -g typescript
 
     需要注意编译器如果不做额外设置默认只会编译后缀为`.ts/.tsx/.d.ts`的源码,如果在`compilerOptions`中设置了字段`allowJs`为true,则还可以包含`.js和.jsx`.
 
-## typescript执行环境
+下面是几个常见环境下的编译项配置
 
-[ts-node](https://github.com/TypeStrong/ts-node)是typescript的一个解释器,同时其子模块`ts-node/register`类似`@babel/register`也提供运行时支持.使用ts-node我们就可以直接执行ts源码不用编译了.但和`@babel/node`的问题一样,我们不应该在生产环境使用它.
+### node环境
+
+目前node会出现`import`的模块必须指定后缀的情况,但ts编译后并不会指定后缀,我们需要安装`specifier-resolution-node`模块,`npm`安装后使用node的`--import=specifier-resolution-node/register`参数就可以解决这个问题
+
++ `package.json`
+
+    ```json
+    {
+        ...
+        "type": "module",
+        ...
+        "devDependencies": {
+            "@types/node": "^20.10.7",
+            ...
+        },
+        "dependencies": {
+            "specifier-resolution-node": "^1.1.1",
+        },
+        "scripts": {
+            "start": "node --import=specifier-resolution-node/register dist/index.js",
+            "build": "tsc"
+        }
+        ...
+    }
+    ```
+
++ `tsconfig.json`
+
+    ```json
+    {
+        "compilerOptions": {
+            // "strict": true,
+            "target": "esnext",
+            "module": "esnext",
+            "moduleResolution": "node",
+            "lib": [
+                "esnext"
+            ],
+            "sourceMap": true,
+            "noEmitHelpers": true,
+            "importHelpers": true,
+            "baseUrl": ".",
+            "paths": {
+                "~/*": [
+                    "src/*"
+                ],
+                "@/*": [
+                    "src/*"
+                ]
+            },
+            "allowSyntheticDefaultImports": true,
+            "esModuleInterop": true,
+            "experimentalDecorators": true,
+            "emitDecoratorMetadata": true,
+            "skipLibCheck": true,
+            "outDir": "dist",
+        },
+        "include": [
+            "src/**/*"
+        ],
+        "exclude": [
+            "node_modules",
+            "**/*.spec.ts"
+        ]
+    }
+    ```
 
 ## 编译操作
 
@@ -57,14 +122,13 @@ npm install -g typescript
 ```json
 {...
     "scripts":{
-        "start":"./node_modules/.bin/ts-node src/index.js",
-        "build": "./node_modules/.bin/tsc"
+        "build": "tsc"
      },
  ...
 }
 ```
 
-只有使用命令`npm start`即可执行项目,`npm run build`即可编译项目
+`npm run build`即可编译项目
 
 ## helloworld
 
@@ -73,7 +137,7 @@ npm install -g typescript
 我们init项目,然后再安装环境:
 
 ```bash
-npm install --save-dev typescript ts-node
+npm install --save-dev typescript
 
 npm install --save @types/node
 ```
@@ -87,7 +151,7 @@ npm install --save @types/node
     "description": "js演示工具集",
     "main": "bin/index.js",
     "scripts": {
-        "start": "./node_modules/.bin/ts-node src/index.ts",
+        "start":"node --import=specifier-resolution-node/register dist/index.js",
         "build": "./node_modules/.bin/tsc"
     },
     "repository": {
@@ -104,7 +168,6 @@ npm install --save @types/node
     },
     "homepage": "https://github.com/hszofficial/js-toolchain-exp#readme",
     "devDependencies": {
-        "ts-node": "^8.6.2",
         "typescript": "^3.7.5"
     },
     "dependencies": {

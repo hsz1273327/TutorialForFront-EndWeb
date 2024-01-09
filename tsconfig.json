@@ -1,13 +1,30 @@
 {
     "compilerOptions": {
-        "module": "CommonJS",
-        "lib": ["DOM","ES2018"],
-        "target": "ES5",
-        "noImplicitAny": true,
-        "removeComments": true,
-        "preserveConstEnums": true,
+        // "strict": true,
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "lib": [
+            "esnext"
+        ],
+        "sourceMap": true,
+        "noEmitHelpers": true,
+        "importHelpers": true,
+        "baseUrl": ".",
+        "paths": {
+            "~/*": [
+                "src/*"
+            ],
+            "@/*": [
+                "src/*"
+            ]
+        },
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "skipLibCheck": true,
         "outDir": "dist",
-        "sourceMap": true
     },
     "include": [
         "src/**/*"

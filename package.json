@@ -1,11 +1,12 @@
 {
-    "name": "js-toolchain-exp",
+    "name": "ts-toolchain-helloworld",
+    "type": "module",
     "version": "1.0.0",
     "description": "js演示工具集",
-    "main": "bin/index.js",
+    "main": "dist/index.js",
     "scripts": {
-        "start": "./node_modules/.bin/ts-node src/index.ts",
-        "build": "./node_modules/.bin/tsc"
+        "start": "node --import=specifier-resolution-node/register dist/index.js",
+        "build": "tsc"
     },
     "repository": {
         "type": "git",
@@ -21,10 +22,9 @@
     },
     "homepage": "https://github.com/hszofficial/js-toolchain-exp#readme",
     "devDependencies": {
-        "ts-node": "^8.6.2",
-        "typescript": "^3.7.5"
+        "@types/node": "^20.10.7"
     },
     "dependencies": {
-        "@types/node": "^13.7.1"
+        "specifier-resolution-node": "^1.1.1"
     }
 }

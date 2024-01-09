@@ -21,3 +21,8 @@ _book
 .LSOverride
 coverage
 .nyc_output
+dist
+hooks/
+node_modules/
+platforms/
+*.db

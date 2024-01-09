@@ -1,5 +1,5 @@
 import { openOrCreate, deleteDatabase } from "@nativescript-community/sqlite"
-import { knownFolders, File, path } from '@nativescript/core'
+import { knownFolders, path } from '@nativescript/core'
 import init_data from '../data/flick.json'
 const debug = process.env.NODE_ENV !== 'production'
 

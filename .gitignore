@@ -25,3 +25,4 @@ coverage
 platforms
 hooks
 *.log
+*.db

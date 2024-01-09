@@ -29,9 +29,9 @@ import {
 import Details from './Details.vue';
 // import { Init, GetFlicks, FlickModel } from "../models/Flick_json";
 // import { Init, GetFlicks, FlickModel } from "../models/Flick_ApplicationSettings";
-import { Init, Close,  GetFlicks, FlickModel } from "../models/Flick_CouchDB";
+// import { Init, Close,  GetFlicks, FlickModel } from "../models/Flick_CouchDB";
+import { Init, Close, GetFlicks, FlickModel } from "../models/Flick_sqlite";
 
-// import { Init, Close, GetFlicks, FlickModel } from "../models/Flick_sqlite";
 const flicks = ref<FlickModel[]>([]);
 
 function onFlickTap(item: FlickModel) {
@@ -41,14 +41,28 @@ function onFlickTap(item: FlickModel) {
   });
 }
 
+// onBeforeMount(() => {
+//   try {
+//     Init()
+//     let res = GetFlicks()
+//     flicks.value = res
+//   } catch (e) {
+//     console.log(`get error ${e}`)
+//   }
+// })
+
+
 onBeforeMount(() => {
-  try {
-    Init()
-    let res = GetFlicks()
+  Init().then(() => {
+    return GetFlicks()
+  }).then((res) => {
     flicks.value = res
-  } catch (e) {
-    console.log(`get error ${e}`)
-  }
+  }).catch(
+    (e) => {
+      console.log(`get error ${e}`)
+    }
+
+  )
 })
 
 onUnmounted(() => Close())

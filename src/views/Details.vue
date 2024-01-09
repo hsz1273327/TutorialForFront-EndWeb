@@ -48,6 +48,5 @@ onMounted(() => {
   }).catch((e) => {
     console.log(`GetFlickById get error ${e}`)
   })
-
 })
 </script>

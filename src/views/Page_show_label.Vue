@@ -13,11 +13,13 @@
             </Label>
             <HTMLLabel fontSize="50" fontFamily="Cabin Sketch,res/cabinsketch" width="100%" paddingTop="5" color="#336699"
                 textWrap="true" :html="htmlText" verticalAlignment="top" />
-
-            <!-- Clickable Link Usage -->
-            <HTMLLabel html="<a href='https://www.baidu.com'>Open Baidu.com</a>" linkColor="pink" linkUnderline="false"
-                fontFamily="OpenSans" fontSize="16" margin="2 5 5 5" textWrap="true" @linkTap="onLinkTap($event)">
-            </HTMLLabel>
+            <CanvasLabel id="canvaslabel" fontSize="10" color="white" backgroundColor="darkgray">
+                <CGroup fontSize="18" verticalAlignment="middle" paddingLeft="20">
+                    <CSpan :text="line('canvaslabel')" fontWeight="bold" />
+                    <CSpan :text="line('next line')" color="#ccc" fontSize="16" />
+                </CGroup>
+                <CSpan text="end" color="lightgray" fontSize="14" textAlignment="right" paddingRight="20" paddingTop="4" />
+            </CanvasLabel>
         </StackLayout>
     </Page>
 </template>
@@ -26,7 +28,8 @@
 import { ref } from "nativescript-vue";
 
 const htmlText = ref("this is a <br>html<br> label")
-function onLinkTap(args) {
-    console.log(args.link)
+
+function line(row: string): string {
+    return `${row}\n`
 }
 </script>

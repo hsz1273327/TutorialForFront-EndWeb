@@ -1,11 +1,8 @@
-import { deleteDatabase } from "@nativescript-community/sqlite"
-import { DataSource } from 'typeorm/browser';
-import { installMixins } from '@nativescript-community/sqlite/typeorm';
+import { createConnection,Connection } from '@nativescript-community/typeorm/browser';
 import { knownFolders, path } from '@nativescript/core'
 import init_data from '../data/flick.json'
 import { Flick } from './entity/Flick'
 
-installMixins();
 
 const debug = process.env.NODE_ENV !== 'production'
 //FlickModel flick列表中的信息样式
@@ -33,7 +30,8 @@ const flicks: FlickDetail[] = init_data
 const DB_NAME = "MyCoolApp.sqlite"
 const TABLE_NAME = "flicks"
 const db_path = path.join(knownFolders.currentApp().path, DB_NAME)
-let AppDataSource: DataSource = null
+let AppDataSource: Connection = null
+// let connection = null
 let inited = false
 
 //Init 初始化数据模型和数据库
@@ -45,37 +43,37 @@ async function Init() {
     type: 'nativescript' as any,
     database: db_path,
     synchronize: true,
-    entities: [Flick]
+    entities: [Flick],
   }
-  AppDataSource = new DataSource(options)
-  await AppDataSource.initialize()
-  Flick.useDataSource(AppDataSource)
+  AppDataSource = await createConnection(options)
+  await AppDataSource.synchronize(false);
+  console.log("********************Init conn ok")
   if (debug) {
     await Flick.clear()
   }
   let contained = await Flick.count()
+  console.log(`********************Init count ok ${contained}`)
   if (contained == 0) {
-    AppDataSource.transaction(async (transactionalEntityManager) => {
-      for (let flick of flicks) {
-        let row = new Flick()
-        row.id = flick.id
-        row.genre = flick.genre
-        row.title = flick.title
-        row.image = flick.image
-        row.url = flick.url
-        row.description = flick.description
-        row.details = JSON.stringify(flick.details)
-        await transactionalEntityManager.save(row)
-      }
-    })
+    for (let flick of flicks) {
+      let row = new Flick()
+      row.id = flick.id
+      row.genre = flick.genre
+      row.title = flick.title
+      row.image = flick.image
+      row.url = flick.url
+      row.description = flick.description
+      row.details = JSON.stringify(flick.details)
+      await row.save()
+    }
   }
   inited = true
+  console.log(`********************Init ok`)
   return AppDataSource
 }
 //Close 关闭数据库
 async function Close() {
   if (AppDataSource) {
-    await AppDataSource.destroy()
+    await AppDataSource.close()
     console.log("db Closed")
   }
 }
@@ -85,11 +83,8 @@ async function Close() {
 //GetFlicks 获取flicks库存列表
 async function GetFlicks(): Promise<FlickModel[]> {
 
-  let rows = await Flick.find({
-    order: {
-      id: 'DESC',
-    },
-  })
+  let rows = await Flick.find({})
+  console.log(`***************GetFlicks get ${rows.length}`)
   let res: FlickModel[] = rows.map((row) => {
     return {
       id: row.id,

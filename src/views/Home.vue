@@ -1,5 +1,3 @@
-
-
 <template>
   <Frame>
     <Page>
@@ -28,7 +26,7 @@ import {
 } from 'nativescript-vue';
 import Details from './Details.vue';
 // import { Init, GetFlicks, FlickModel } from "../models/Flick_json";
-// import { Init, GetFlicks, FlickModel } from "../models/Flick_ApplicationSettings";
+//import { Init, GetFlicks, FlickModel } from "../models/Flick_ApplicationSettings";
 // import { Init, Close,  GetFlicks, FlickModel } from "../models/Flick_CouchDB";
 // import { Init, Close, GetFlicks, FlickModel } from "../models/Flick_sqlite";
 import { Init, Close, GetFlicks, FlickModel } from "../models/Flick_orm";
@@ -42,6 +40,7 @@ function onFlickTap(item: FlickModel) {
   });
 }
 
+// // for Flick_json and Flick_ApplicationSettings
 // onBeforeMount(() => {
 //   try {
 //     Init()
@@ -52,7 +51,7 @@ function onFlickTap(item: FlickModel) {
 //   }
 // })
 
-
+//for other
 onBeforeMount(() => {
   Init().then(() => {
     return GetFlicks()

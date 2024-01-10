@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, PrimaryColumn } from 'typeorm/browser';
+import { BaseEntity, Column, Entity, PrimaryColumn } from '@nativescript-community/typeorm/browser';
 
 
 @Entity()

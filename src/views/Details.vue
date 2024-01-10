@@ -1,4 +1,3 @@
-
 <template>
   <Page>
     <ActionBar v-if="flick" :title="flick.title" />
@@ -39,10 +38,12 @@ const flick = ref<FlickDetail>({
 })
 
 const hasContent = computed(() => flick ? true : false)
+// // for Flick_json and Flick_ApplicationSettings
 // onMounted(() => {
 //   let res = GetFlickById(props.id)
 //   flick.value = res
 // })
+//for other
 onMounted(() => {
   GetFlickById(props.id).then((res) => {
     flick.value = res;

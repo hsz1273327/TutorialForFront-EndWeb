@@ -4,14 +4,31 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
-    "lib": ["esnext", "WebWorker"],
+    "lib": [
+      "esnext",
+      "WebWorker",
+      "dom"
+    ],
     "sourceMap": true,
     "noEmitHelpers": true,
     "importHelpers": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["src/*"],
-      "@/*": ["src/*"]
+      "~/*": [
+        "src/*"
+      ],
+      "@/*": [
+        "src/*"
+      ],
+      "*": [
+        "./node_modules/*"
+      ],
+      "tns-core-modules": [
+        "./node_modules/@nativescript/core"
+      ],
+      "tns-core-modules/*": [
+        "./node_modules/@nativescript/core/*"
+      ],
     },
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -24,6 +41,12 @@
     "target": 3,
     "lib": "nativescript-vue"
   },
-  "include": ["src", "types"],
-  "exclude": ["node_modules", "platforms"]
+  "include": [
+    "src",
+    "types"
+  ],
+  "exclude": [
+    "node_modules",
+    "platforms"
+  ]
 }

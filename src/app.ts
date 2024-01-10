@@ -1,13 +1,16 @@
-import { createApp } from 'nativescript-vue';
+import { createApp,registerElement } from 'nativescript-vue';
 import { themer } from '@nativescript-community/ui-material-core';
-import ActivityIndicatorPlugin from '@nativescript-community/ui-material-activityindicator/vue';
+import { enableIOSDTCoreText,Label as HTMLLabel } from '@nativescript-community/ui-label';
 
-import Home from './views/Page_show_status.vue'
+registerElement('HTMLLabel', () => HTMLLabel);
+
+import Home from './views/Page_show_label.vue'
 
 if (global.isIOS) {
     themer.setPrimaryColor('#bff937');
     themer.setAccentColor('#ff8a39');
     themer.setSecondaryColor('#a830d7');
+    enableIOSDTCoreText();
 }
 
-createApp(Home).use(ActivityIndicatorPlugin).start();
+createApp(Home).start();

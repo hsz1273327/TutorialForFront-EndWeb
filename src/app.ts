@@ -15,12 +15,11 @@ registerElement('Gif', () => Gif);
 //import Home from './views/Page_show_label.vue'
 import Home from './views/Page_show_image.vue'
 
-
 if (global.isIOS) {
     themer.setPrimaryColor('#bff937');
     themer.setAccentColor('#ff8a39');
     themer.setSecondaryColor('#a830d7');
-    enableIOSDTCoreText();
+    enableIOSDTCoreText()
 }
 
 createApp(Home).use(CanvasLabel).use(ImageModulePlugin).use(CanvasSVG).start();

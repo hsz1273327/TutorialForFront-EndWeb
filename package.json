@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@nativescript-community/arraybuffers": "^1.1.5",
+    "@nativescript-community/text": "^1.5.37",
     "@nativescript-community/ui-canvas": "^4.6.13",
     "@nativescript-community/ui-canvaslabel": "^1.2.16",
     "@nativescript-community/ui-image": "^4.3.27",

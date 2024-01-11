@@ -12,8 +12,8 @@ imageInitialize({isDownsampleEnabled: true});
 registerElement('HTMLLabel', () => HTMLLabel);
 registerElement('Gif', () => Gif);
 
-//import Home from './views/Page_show_label.vue'
-import Home from './views/Page_show_image.vue'
+import Home from './views/Page_show_label.vue'
+//import Home from './views/Page_show_image.vue'
 
 if (global.isIOS) {
     themer.setPrimaryColor('#bff937');
@@ -23,3 +23,5 @@ if (global.isIOS) {
 }
 
 createApp(Home).use(CanvasLabel).use(ImageModulePlugin).use(CanvasSVG).start();
+
+// createApp(Home).use(ImageModulePlugin).use(CanvasSVG).start();

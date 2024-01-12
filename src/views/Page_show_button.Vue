@@ -15,13 +15,13 @@
                 <MDFloatingActionButton rippleColor="blue" src="res://fa_plus" @tap="onActionTap"
                     @doubleTap="onActionDoubleTap" @longPress="onActionLongPress" />
 
-                <fab rippleColor="blue" :text="iconUnicode('\uf067')" @tap="onActionTap" class="fas fab-button"></fab>
+                <fab rippleColor="blue" :text="iconUnicode('\uf215')" class="mdi" @tap="onActionTap" ></fab>
 
-                <MDSpeedDial :text="iconUnicode('\uf067')" buttonClass="fas" horizontalAlignment="right">
-                    <MDSpeedDialItem :text="iconUnicode('\uf1eb')" title="test1" buttonClass="fas" @tap="onActionTap" />
-                    <MDSpeedDialItem :text="iconUnicode('\uf7d9')" title="test2" buttonClass="fas" @tap="onActionTap" />
-                    <MDSpeedDialItem :text="iconUnicode('\uf027')" title="test3" buttonClass="fas" @tap="onActionTap" />
-                    <MDSpeedDialItem :text="iconUnicode('\uf492')" title="test4" buttonClass="fas" backgroundColor="orange"
+                <MDSpeedDial :text="iconUnicode('\uf207')" buttonClass="mdi" horizontalAlignment="right">
+                    <MDSpeedDialItem :text="iconUnicode('\uf35b')" title="test1" buttonClass="mdi" @tap="onActionTap" />
+                    <MDSpeedDialItem :text="iconUnicode('\uf35e')" title="test2" buttonClass="mdi" @tap="onActionTap" />
+                    <MDSpeedDialItem :text="iconUnicode('\uf362')" title="test3" buttonClass="mdi" @tap="onActionTap" />
+                    <MDSpeedDialItem :text="iconUnicode('\uf34e')" title="test4" buttonClass="mdi" backgroundColor="orange"
                         @tap="onActionTap" />
                 </MDSpeedDial>
             </StackLayout>

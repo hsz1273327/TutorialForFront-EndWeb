@@ -5,9 +5,16 @@ import FloatingActionButtonPlugin from '@nativescript-community/ui-material-floa
 import speeddialPlugin from '@nativescript-community/ui-material-speeddial/vue';
 import CheckBoxPlugin from '@nativescript-community/ui-checkbox/vue';
 import DateTimePickerPlugin from "@nativescript/datetimepicker/vue";
+import SliderPlugin from '@nativescript-community/ui-material-slider/vue';
+import SekkBarPlugin from '@nativescript-community/ui-range-seek-bar/vue'
+import TextFieldPlugin from '@nativescript-community/ui-material-textfield/vue'
 
 // import Home from './views/Page_show_button.vue'
-import Home from './views/Page_show_choose.vue'
+// import Home from './views/Page_show_choose.vue'
+// import Home from './views/Page_show_choose_time.vue'
+// import Home from './views/Page_show_slider.vue'
+import Home from './views/Page_show_text.vue'
+
 
 registerElement(
     'Fab',
@@ -19,4 +26,4 @@ if (global.isIOS) {
     themer.setSecondaryColor('#a830d7');
 }
 
-createApp(Home).use(ButtonPlugin).use(FloatingActionButtonPlugin).use(speeddialPlugin).use(CheckBoxPlugin).use(DateTimePickerPlugin).start();
+createApp(Home).use(ButtonPlugin).use(FloatingActionButtonPlugin).use(speeddialPlugin).use(CheckBoxPlugin).use(DateTimePickerPlugin).use(SliderPlugin).use(SekkBarPlugin).use(TextFieldPlugin).start();

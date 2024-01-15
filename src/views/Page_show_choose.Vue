@@ -11,8 +11,6 @@
                 <template v-for="(item, index)  in  listOfItems " :key="index">
                     <check-box :text="item" :checked="isChecked[index]" @checkedChange="isChecked[index] = $event.value" />
                 </template>
-                <DatePicker v-model="selectedDate" />
-                <TimePicker v-model="selectedTime" />
             </StackLayout>
         </Page>
     </Frame>
@@ -37,8 +35,5 @@ const isChecked = ref([false, false, false, false])
 watch(isChecked, (newValue) => {
     console.log(`isChecked changed to ${newValue}`)
 }, { deep: true, immediate: true })
-
-
-const selectedDate = ref(Date.now())
 
 </script>

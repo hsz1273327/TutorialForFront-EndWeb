@@ -1,10 +1,9 @@
 import { createApp, registerElement } from 'nativescript-vue';
 import { themer } from '@nativescript-community/ui-material-core';
+import WebViewPlugin from '@nativescript-community/ui-webview/vue';
 
-
-import Home from './views/Page_show_html.vue'
 // import Home from './views/Page_show_webview.vue'
-// import Home from './views/Page_show_ui_webview.vue'
+import Home from './views/Page_show_awebview.vue'
 
 
 if (global.isIOS) {
@@ -13,4 +12,4 @@ if (global.isIOS) {
     themer.setSecondaryColor('#a830d7');
 }
 
-createApp(Home).start();
+createApp(Home).use(WebViewPlugin).start();

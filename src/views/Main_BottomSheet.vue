@@ -2,9 +2,31 @@
     <Frame>
         <Page>
             <ActionBar title="My App">
-                <GridLayout columns="auto, *" width="100%">
-                    <MDButton rippleColor="blue" @tap="onButtonTap" text="change"  row="0" id="change-btn"/>
-                </GridLayout>
+                <template v-if="isIOS">
+                    <NavigationButton text="Back" />
+                    <!-- <ActionItem :icon="fontback" ios.position="right" class="mdi" /> -->
+                    <SearchBar hint="Search..." />
+                    <!-- <ActionItem :icon="fontsearch" ios.position="left" class="mdi" /> -->
+                    <ActionItem :icon="fontshare" ios.position="left" class="mdi" />
+                    <ActionItem :icon="fontmessage" ios.position="left" class="mdi" />
+                    <ActionItem android.position="left">
+                        <NSImg :src="src_account_login" roundAsCircle="true" stretch=fitCenter></NSImg>
+                    </ActionItem>
+                    <!-- <ActionItem :icon="fontaccount" ios.position="left" class="mdi" /> -->
+                </template>
+                <template v-else>
+                    <NavigationButton android.systemIcon="ic_menu_back" />
+                    <!-- <ActionItem :icon="fontback" android.position="actionBar" class="mdi" /> -->
+                    <SearchBar hint="Search..." />
+
+                    <!-- <ActionItem :icon="fontsearch" android.position="actionBar" class="mdi" /> -->
+                    <ActionItem :icon="fontshare" android.position="actionBar" class="mdi" />
+                    <ActionItem :icon="fontmessage" android.position="actionBar" class="mdi" />
+                    <ActionItem android.position="actionBar">
+                        <NSImg :src="src_account_login" roundAsCircle="true" stretch=fitCenter></NSImg>
+                    </ActionItem>
+                    <!-- <ActionItem :icon="fontaccount" android.position="actionBar" class="mdi" /> -->
+                </template>
             </ActionBar>
             <GridLayout rows="auto,*">
                 <Frame id="main-frame" row="1">
@@ -22,7 +44,14 @@ import HomePage from "./HomePage.vue";
 import NavSegmentedBar from "../components/NavSegmentedBar.vue";
 import { useBottomSheet } from "@nativescript-community/ui-material-bottomsheet/vue3";
 
+const isIOS = ref(global.isIOS)
 const { showBottomSheet } = useBottomSheet()
+const fontback = "font://\uf2fa"
+const fontsearch = "font://\uf1c3"
+const fontshare = "font://\uf35b"
+const fontmessage = "font://\uf15a"
+const fontaccount = "font://\uf207"
+const src_account_login = "https://img.duoziwang.com/2021/04/08101559830055.jpg"
 
 const defaultIndex = ref(0)
 function onButtonTap(evt: TapGestureEventData) {
@@ -34,9 +63,9 @@ function onButtonTap(evt: TapGestureEventData) {
         },
         closeCallback: (...args: any[]) => {
             console.log("bottom sheet closed", args);
-            try{
+            try {
                 defaultIndex.value = args[0][0][1];
-            }catch (e){
+            } catch (e) {
                 defaultIndex.value = 0
             }
         },

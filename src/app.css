@@ -7,10 +7,13 @@ ActionBar {
   color: white;
 }
 
-
+/* .action-item {
+  font-size: 'large'
+} */
 .mdi {
   font-family: 'Material Design Icons', 'Material-Design-Iconic-Font';
   font-weight: 400;
+  font-size: 24;
 }
 
 .fontello {

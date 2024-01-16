@@ -7,6 +7,8 @@ import { install as installBottomsheet } from "@nativescript-community/ui-materi
 import ButtonPlugin from '@nativescript-community/ui-material-button/vue';
 import DrawerPlugin from '@nativescript-community/ui-drawer/vue3'
 import { install as installUIDrawer} from '@nativescript-community/ui-drawer';
+import ImageModulePlugin from '@nativescript-community/ui-image/vue';
+import { initialize as imageInitialize} from '@nativescript-community/ui-image';
 
 // import Home from './views/Main_simple.vue';
 // import Home from './views/Main_simple_mf.vue';
@@ -22,4 +24,5 @@ if (global.isIOS) {
 }
 installBottomsheet();
 installUIDrawer()
-createApp(Home).use(TabsPlugin).use(BottomNavigationBar).use(ButtonPlugin).use(BottomSheetPlugin).use(DrawerPlugin).start();
+imageInitialize({isDownsampleEnabled: true});
+createApp(Home).use(TabsPlugin).use(BottomNavigationBar).use(ButtonPlugin).use(BottomSheetPlugin).use(DrawerPlugin).use(ImageModulePlugin).start();

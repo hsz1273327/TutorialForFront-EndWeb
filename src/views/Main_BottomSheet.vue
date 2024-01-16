@@ -5,8 +5,8 @@
                 <template v-if="isIOS">
                     <NavigationButton text="Back" />
                     <!-- <ActionItem :icon="fontback" ios.position="right" class="mdi" /> -->
-                    <SearchBar hint="Search..." />
-                    <!-- <ActionItem :icon="fontsearch" ios.position="left" class="mdi" /> -->
+                    <!-- <SearchBar hint="Search..." /> -->
+                    <ActionItem :icon="fontsearch" ios.position="left" class="mdi" />
                     <ActionItem :icon="fontshare" ios.position="left" class="mdi" />
                     <ActionItem :icon="fontmessage" ios.position="left" class="mdi" />
                     <ActionItem android.position="left">
@@ -17,10 +17,10 @@
                 <template v-else>
                     <NavigationButton android.systemIcon="ic_menu_back" />
                     <!-- <ActionItem :icon="fontback" android.position="actionBar" class="mdi" /> -->
-                    <SearchBar hint="Search..." />
+                    <!-- <SearchBar hint="Search..." /> -->
 
-                    <!-- <ActionItem :icon="fontsearch" android.position="actionBar" class="mdi" /> -->
-                    <ActionItem :icon="fontshare" android.position="actionBar" class="mdi" />
+                    <ActionItem :icon="fontsearch" android.position="actionBar" class="mdi" />
+                    <ActionItem :icon="fontshare" android.position="actionBar" class="mdi" @Tap="onButtonTap"/>
                     <ActionItem :icon="fontmessage" android.position="actionBar" class="mdi" />
                     <ActionItem android.position="actionBar">
                         <NSImg :src="src_account_login" roundAsCircle="true" stretch=fitCenter></NSImg>
@@ -41,7 +41,7 @@
 import { ref } from "nativescript-vue";
 import { TapGestureEventData } from "@nativescript/core/ui/gestures";
 import HomePage from "./HomePage.vue";
-import NavSegmentedBar from "../components/NavSegmentedBar.vue";
+import ShareSegmentedBar from "../components/ShareSegmentedBar.vue";
 import { useBottomSheet } from "@nativescript-community/ui-material-bottomsheet/vue3";
 
 const isIOS = ref(global.isIOS)
@@ -55,7 +55,7 @@ const src_account_login = "https://img.duoziwang.com/2021/04/08101559830055.jpg"
 
 const defaultIndex = ref(0)
 function onButtonTap(evt: TapGestureEventData) {
-    showBottomSheet(NavSegmentedBar, {
+    showBottomSheet(ShareSegmentedBar, {
         dismissOnBackgroundTap: true,
         props: {
             canCloseBottomSheet: true,

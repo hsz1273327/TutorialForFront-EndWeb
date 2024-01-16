@@ -3,25 +3,25 @@
         <Page>
             <ActionBar title="My App">
                 <template v-if="isIOS">
-                    <NavigationButton text="Back" />
-                    <!-- <ActionItem :icon="fontback" ios.position="right" class="mdi" /> -->
+                    <!-- <NavigationButton :text="iconback" /> -->
+                    <ActionItem :icon="fontback" ios.position="left" class="mdi-ab" />
                     <!-- <SearchBar hint="Search..." /> -->
-                    <ActionItem :icon="fontsearch" ios.position="left" class="mdi" />
-                    <ActionItem :icon="fontshare" ios.position="left" class="mdi" />
-                    <ActionItem :icon="fontmessage" ios.position="left" class="mdi" />
-                    <ActionItem android.position="left">
-                        <NSImg :src="src_account_login" roundAsCircle="true" stretch=fitCenter></NSImg>
+                    <ActionItem :icon="fontsearch" ios.position="left" class="mdi-ab" />
+                    <ActionItem :icon="fontshare" ios.position="right" class="mdi-ab" @Tap="onButtonTap"/>
+                    <ActionItem :icon="fontmessage" ios.position="right" class="mdi-ab" />
+                    <ActionItem ios.position="right" >
+                        <NSImg :src="src_account_login" roundAsCircle="true" stretch=fitCenter class="avatar" ></NSImg>
                     </ActionItem>
-                    <!-- <ActionItem :icon="fontaccount" ios.position="left" class="mdi" /> -->
+                    <!-- <ActionItem :icon="fontaccount" ios.position="right" class="mdi" /> -->
                 </template>
                 <template v-else>
                     <NavigationButton android.systemIcon="ic_menu_back" />
                     <!-- <ActionItem :icon="fontback" android.position="actionBar" class="mdi" /> -->
                     <!-- <SearchBar hint="Search..." /> -->
 
-                    <ActionItem :icon="fontsearch" android.position="actionBar" class="mdi" />
-                    <ActionItem :icon="fontshare" android.position="actionBar" class="mdi" @Tap="onButtonTap"/>
-                    <ActionItem :icon="fontmessage" android.position="actionBar" class="mdi" />
+                    <ActionItem :icon="fontsearch" android.position="actionBar" class="mdi-ab" />
+                    <ActionItem :icon="fontshare" android.position="actionBar" class="mdi-ab" @Tap="onButtonTap"/>
+                    <ActionItem :icon="fontmessage" android.position="actionBar" class="mdi-ab" />
                     <ActionItem android.position="actionBar">
                         <NSImg :src="src_account_login" roundAsCircle="true" stretch=fitCenter></NSImg>
                     </ActionItem>
@@ -47,6 +47,7 @@ import { useBottomSheet } from "@nativescript-community/ui-material-bottomsheet/
 const isIOS = ref(global.isIOS)
 const { showBottomSheet } = useBottomSheet()
 const fontback = "font://\uf2fa"
+const iconback = "\uf2fa"
 const fontsearch = "font://\uf1c3"
 const fontshare = "font://\uf35b"
 const fontmessage = "font://\uf15a"

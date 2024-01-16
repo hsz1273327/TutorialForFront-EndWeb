@@ -6,3 +6,5 @@
 
 `ns run ios`或`ns run android`
 
+
+https://github.com/PeterStaev/NativeScript-Drop-Down

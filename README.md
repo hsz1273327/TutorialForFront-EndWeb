@@ -5,6 +5,3 @@
 ## 使用方法
 
 `ns run ios`或`ns run android`
-
-
-https://github.com/PeterStaev/NativeScript-Drop-Down

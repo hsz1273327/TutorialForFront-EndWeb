@@ -1,9 +1,9 @@
 <template>
     <SegmentedBar selectedBackgroundColor="#e57373" :selectedIndex="defaultIndex" @selectedIndexChanged="onIndexSelected"
-        id="nav-segbar">
-        <SegmentedBarItem :title="icon_google" class="mdi" />
-        <SegmentedBarItem :title="icon_twitter" class="mdi" />
-        <SegmentedBarItem :title="icon_github" class="mdi" />
+        id="share-segbar">
+        <SegmentedBarItem :title="icon_google" class="mdi-ab" />
+        <SegmentedBarItem :title="icon_github" class="mdi-ab" />
+        <SegmentedBarItem :title="icon_twitter" class="mdi-ab" />
     </SegmentedBar>
 </template>
     
@@ -14,6 +14,9 @@ import { SelectedIndexChangedEventData } from "@nativescript/core/ui/segmented-b
 import { useBottomSheet } from "@nativescript-community/ui-material-bottomsheet/vue3";
 
 const { closeBottomSheet } = useBottomSheet()
+// const icon_google = ref("font://\uf34e")
+// const icon_github = ref("font://\uf345")
+// const icon_twitter = ref("font://\uf360")
 const icon_google = ref("\uf34e")
 const icon_github = ref("\uf345")
 const icon_twitter = ref("\uf360")

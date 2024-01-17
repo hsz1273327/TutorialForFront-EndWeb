@@ -41,13 +41,12 @@
 import { ref } from "nativescript-vue";
 import { TapGestureEventData } from "@nativescript/core/ui/gestures";
 import HomePage from "./HomePage.vue";
-import ShareSegmentedBar from "../components/ShareSegmentedBar.vue";
+import ShareBottomBar from "../components/ShareBottomBar.vue";
 import { useBottomSheet } from "@nativescript-community/ui-material-bottomsheet/vue3";
 
 const isIOS = ref(global.isIOS)
 const { showBottomSheet } = useBottomSheet()
 const fontback = "font://\uf2fa"
-const iconback = "\uf2fa"
 const fontsearch = "font://\uf1c3"
 const fontshare = "font://\uf35b"
 const fontmessage = "font://\uf15a"
@@ -56,7 +55,7 @@ const src_account_login = "https://img.duoziwang.com/2021/04/08101559830055.jpg"
 
 const defaultIndex = ref(0)
 function onButtonTap(evt: TapGestureEventData) {
-    showBottomSheet(ShareSegmentedBar, {
+    showBottomSheet(ShareBottomBar, {
         dismissOnBackgroundTap: true,
         props: {
             canCloseBottomSheet: true,

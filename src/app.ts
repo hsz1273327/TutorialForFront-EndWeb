@@ -1,6 +1,8 @@
-import { createApp } from 'nativescript-vue';
+import { createApp, registerElement } from 'nativescript-vue';
 import Home from './views/Home.vue';
 import { themer, installMixins } from '@nativescript-community/ui-material-core';
+import { BlurView } from '@nativescript-community/ui-blurview';
+registerElement('BlurView', () => BlurView)
 installMixins();
 if (global.isIOS) {
     themer.setPrimaryColor('#bff937');

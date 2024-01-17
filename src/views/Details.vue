@@ -9,7 +9,7 @@
           <StackLayout v-for="detail in flick.details" :key="detail.title">
             <Label marginTop="15" fontSize="16" fontWeight="700" class="text-primary" textWrap="true"
               :text="detail.title" />
-            <Label class="mdi" :text="delete_icon"></Label> 
+            <Label class="mdi icon-sp" :text="delete_icon"></Label> 
             <Label class="fontello" :text="manage_icon"></Label> 
             <!-- <Label fontSize="14" class="text-secondary" textWrap="true" :text="detail.body" /> -->
             <Label fontSize="14" class="info" textWrap="true" :text="detail.body" />
@@ -34,9 +34,13 @@ const delete_icon = ref("\uf154")
 const manage_icon = ref("\ue80c")
 </script>
 
-<style>
+<style scoped>
 .info {
   font-family: SmileySans-Oblique;
   font-size: 20;
+}
+.icon-sp {
+  color:rgb(255, 145, 0);
+  font-size: 24;
 }
 </style>

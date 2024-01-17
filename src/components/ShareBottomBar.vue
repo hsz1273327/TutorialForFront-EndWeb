@@ -1,9 +1,9 @@
 <template>
     <SegmentedBar selectedBackgroundColor="#e57373" :selectedIndex="defaultIndex" @selectedIndexChanged="onIndexSelected"
-        id="share-segbar">
-        <SegmentedBarItem :title="icon_google" class="mdi-ab" />
-        <SegmentedBarItem :title="icon_github" class="mdi-ab" />
-        <SegmentedBarItem :title="icon_twitter" class="mdi-ab" />
+        id="share-segbar" height="50" class="mdi">
+        <SegmentedBarItem :title="icon_google" class="mdi" height="50"/>
+        <SegmentedBarItem :title="icon_github" class="mdi-ab" height="50" />
+        <SegmentedBarItem :title="icon_twitter" class="mdi-ab" height="50"/>
     </SegmentedBar>
 </template>
     

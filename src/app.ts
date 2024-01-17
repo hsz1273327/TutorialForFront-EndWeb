@@ -1,8 +1,12 @@
 import { createApp, registerElement } from 'nativescript-vue';
-import Home from './views/Home.vue';
 import { themer, installMixins } from '@nativescript-community/ui-material-core';
-import { BlurView } from '@nativescript-community/ui-blurview';
-registerElement('BlurView', () => BlurView)
+import Theme from "@nativescript-community/css-theme";
+
+Theme.setMode(Theme.Dark)
+
+import Home from './views/Home.vue';
+// import Home from './views/tween.vue';
+
 installMixins();
 if (global.isIOS) {
     themer.setPrimaryColor('#bff937');

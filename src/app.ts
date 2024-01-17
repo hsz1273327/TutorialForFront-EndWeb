@@ -2,7 +2,7 @@ import { createApp, registerElement } from 'nativescript-vue';
 import { themer, installMixins } from '@nativescript-community/ui-material-core';
 import Theme from "@nativescript-community/css-theme";
 
-Theme.setMode(Theme.Dark)
+Theme.setMode(Theme.Auto)
 
 import Home from './views/Home.vue';
 // import Home from './views/tween.vue';

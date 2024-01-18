@@ -6,7 +6,7 @@
         <Image margin="0" stretch="aspectFill" :src="flick.image" />
         <StackLayout padding="10 20">
           <StackLayout v-for="detail in flick.details" :key="detail.title">
-            <Label marginTop="15" fontSize="16" fontWeight="700" class="text-primary" textWrap="true"
+            <Label marginTop="15" fontSize="16" fontWeight="700" class="text-primary ios:ios-info android:android-info" textWrap="true"
               :text="detail.title" />
             <Label fontSize="14" class="text-secondary" textWrap="true" :text="detail.body" />
           </StackLayout>
@@ -26,9 +26,20 @@ const props = defineProps(['id'])
 const flick = ref(flickService.getFlickById(props.id));
 </script>
 
-<style>
-.info {
+<style scoped>
+/* .info {
   font-family: SmileySans-Oblique;
-  font-size: 20;
+  color: #FFB6C1;
+} */
+
+.ios-info {
+  font-family: SmileySans-Oblique;
+  color: #007aff;
 }
+
+.android-info {
+  font-family: SmileySans-Oblique;
+  color: #4caf50;
+}
+
 </style>

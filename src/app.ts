@@ -1,6 +1,7 @@
 import { createApp, registerElement } from 'nativescript-vue';
 import { themer, installMixins } from '@nativescript-community/ui-material-core';
 import Theme from "@nativescript-community/css-theme";
+import nsPlatform from "@vulksoft/nativescript-platform-css"
 
 Theme.setMode(Theme.Auto)
 

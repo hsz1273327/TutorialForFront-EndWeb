@@ -1,13 +1,15 @@
 <template>
   <Page>
-    <ActionBar v-if="flick" :title="flick.title" />
+    <ActionBar v-if="flick" :title="flick.title">
+    </ActionBar>
     <ScrollView height="100%">
       <StackLayout>
         <Image margin="0" stretch="aspectFill" :src="flick.image" />
         <StackLayout padding="10 20">
           <StackLayout v-for="detail in flick.details" :key="detail.title">
-            <Label marginTop="15" fontSize="16" fontWeight="700" class="text-primary text-center ios:text-blue-600 android:text-red-300 bg-blue-200 rounded-full" textWrap="true"
-              :text="detail.title" />
+            <Label marginTop="15" fontSize="16" fontWeight="700"
+              class="text-primary text-center ios:text-blue-600 android:text-red-300 dark:text-green-600 bg-blue-200 ns. rounded-full"
+              textWrap="true" :text="detail.title" />
             <Label fontSize="14" class="text-secondary" textWrap="true" :text="detail.body" />
           </StackLayout>
         </StackLayout>
@@ -17,12 +19,11 @@
 </template>
 <script lang="ts" setup>
 import { ref, defineProps } from 'nativescript-vue';
-
-
+import { TapGestureEventData } from "@nativescript/core/ui/gestures";
+import Theme from "@nativescript-community/css-theme";
 import { FlickService } from "../models/Flick";
 const flickService = new FlickService();
 const props = defineProps(['id'])
-
 const flick = ref(flickService.getFlickById(props.id));
 </script>
 
@@ -31,7 +32,8 @@ const flick = ref(flickService.getFlickById(props.id));
   font-family: SmileySans-Oblique;
   color: #FFB6C1;
 } */
-
+/*   */
+/*  dark:text-green-600  */
 .ios-info {
   font-family: SmileySans-Oblique;
   color: #007aff;
@@ -41,5 +43,4 @@ const flick = ref(flickService.getFlickById(props.id));
   font-family: SmileySans-Oblique;
   color: #4caf50;
 }
-
 </style>

@@ -18,6 +18,7 @@ module.exports = {
     plugin(function ({ addVariant }) {
       addVariant('android', '.ns-android &')
       addVariant('ios', '.ns-ios &')
+      addVariant('dark','.ns-dark &')
     }), ],
   corePlugins: {
     preflight: false, // disables browser-specific resets

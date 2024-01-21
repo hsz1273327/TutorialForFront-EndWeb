@@ -18,7 +18,7 @@
     "@nativescript/types": "~8.6.1",
     "@nativescript/webpack": "~5.0.0",
     "@types/node": "~17.0.21",
-    "tailwindcss": "^3.1.8",
+    "tailwindcss": "3.1.8",
     "typescript": "^5.2.2"
   }
 }

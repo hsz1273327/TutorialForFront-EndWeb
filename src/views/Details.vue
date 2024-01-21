@@ -6,7 +6,7 @@
         <Image margin="0" stretch="aspectFill" :src="flick.image" />
         <StackLayout padding="10 20">
           <StackLayout v-for="detail in flick.details" :key="detail.title">
-            <Label marginTop="15" fontSize="16" fontWeight="700" class="text-primary ios:ios-info android:android-info" textWrap="true"
+            <Label marginTop="15" fontSize="16" fontWeight="700" class="text-primary text-center ios:text-blue-600 android:text-red-300 bg-blue-200 rounded-full" textWrap="true"
               :text="detail.title" />
             <Label fontSize="14" class="text-secondary" textWrap="true" :text="detail.body" />
           </StackLayout>

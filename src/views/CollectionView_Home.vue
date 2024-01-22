@@ -1,19 +1,28 @@
 <template>
     <frame>
-        <Page actionBarHidden="true">
-            <CollectionView :items="itemList" colWidth="50%" rowHeight="100" 
-            @itemTap="tapItem" 
-            @loadMoreItems="moreItems"
-            @dataPopulated="dataPopulated"
-            @itemReorderStarting="itemReorderStarting"
-            @scroll="scroll"
-            >
-                <template #default="{ item }">
-                    <StackLayout :backgroundColor="item.color">
-                        <Label :text="item.name" />
-                    </StackLayout>
+        <Page>
+            <ActionBar title="My App">
+                <template v-if="isIOS">
+                    <ActionItem :icon="fontRefresh" ios.position="left" class="mdi-ab" @tap="refresh" />
+                    <ActionItem :icon="fonttoTop" ios.position="left" class="mdi-ab" @tap="toTop" />
                 </template>
-            </CollectionView>
+                <template v-else>
+                    <ActionItem :icon="fontRefresh" android.position="actionBar" class="mdi-ab" @tap="refresh" />
+                    <ActionItem :icon="fonttoTop" android.position="actionBar" class="mdi-ab" @tap="toTop" />
+                </template>
+            </ActionBar>
+            <PullToRefresh @refresh="refresh">
+                <CollectionView ref="collection" :items="itemList" colWidth="50%" rowHeight="100" @itemTap="tapItem"
+                    @loadMoreItems="moreItems" @dataPopulated="dataPopulated" @itemReorderStarting="itemReorderStarting"
+                    @scroll="scroll">
+                    <template #default="{ item }">
+                        <StackLayout :backgroundColor="item.color">
+                            <Label :text="item.name" />
+                        </StackLayout>
+                    </template>
+                </CollectionView>
+            </PullToRefresh>
+
         </Page>
     </frame>
 </template>
@@ -22,6 +31,11 @@ import { ref } from "nativescript-vue";
 import { ObservableArray, EventData } from '@nativescript/core';
 import { CollectionViewItemEventData } from "@nativescript-community/ui-collectionview"
 
+const collection = ref()
+const isIOS = ref(global.isIOS)
+
+const fontRefresh = "font://\uf1b9"
+const fonttoTop = "font://\uf252"
 
 const itemList = ref(new ObservableArray([
     { name: 'TURQUOISE', color: '#1abc9c' },
@@ -46,19 +60,29 @@ const itemList = ref(new ObservableArray([
     { name: 'ASBESTOS', color: '#7f8c8d' }
 ]));
 
+function refresh(evt: EventData) {
+    // collection.value.refresh()
+    console.log(Object.keys(collection.value))
+    console.log("refresh ok")
+}
+
+function toTop(evt: EventData) {
+    collection.value.scrollToIndex(0, true)
+}
+
 function tapItem(evt: CollectionViewItemEventData) {
     console.log(`tap item with index ${evt.index}`)
 }
-function moreItems(evt: EventData){
+function moreItems(evt: EventData) {
     console.log(`load more items ${evt.eventName}`)
 }
-function itemReorderStarting(evt: EventData){
+function itemReorderStarting(evt: EventData) {
     console.log(`itemReorderStarting ${evt.eventName}`)
 }
-function dataPopulated(evt: EventData){
+function dataPopulated(evt: EventData) {
     console.log(`dataPopulated ${evt.eventName}`)
 }
-function scroll(evt: EventData){
+function scroll(evt: EventData) {
     console.log(`scroll ${evt.eventName}, ${Object.keys(evt)}`)
 }
 </script>

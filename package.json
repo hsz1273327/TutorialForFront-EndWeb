@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@nativescript-community/ui-collectionview": "^5.3.15",
     "@nativescript-community/ui-image": "^4.3.27",
     "@nativescript-community/ui-material-cardview": "^7.2.34",
     "@nativescript-community/ui-material-core": "^7.2.27",

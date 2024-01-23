@@ -12,13 +12,16 @@
                 </template>
             </ActionBar>
             <PullToRefresh @refresh="refresh">
-                <!-- <CollectionView ref="collection" :items="itemList" colWidth="50%" rowHeight="100" orientation="vertical" @itemTap="tapItem" -->
-                <CollectionView ref="collection" :items="itemList" colWidth="50%" rowHeight="100" orientation="horizontal" @itemTap="tapItem"
+                <CollectionView ref="collection" :items="itemList" colWidth="50%" layoutStyle="waterfall" @itemTap="tapItem"
                     @loadMoreItems="moreItems">
                     <template #default="{ item }">
-                        <StackLayout :backgroundColor="item.color">
-                            <Label :text="item.name" />
-                        </StackLayout>
+                        <GridLayout :height="randomHeight(item.color)" rows="*, auto" :backgroundColor="item.color"
+                            class="item">
+                            <StackLayout row="1" :backgroundColor="item.color">
+                                <Label row="1" :text="item.name" />
+                            </StackLayout>
+                        </GridLayout>
+
                     </template>
                 </CollectionView>
             </PullToRefresh>
@@ -81,5 +84,11 @@ function tapItem(evt: CollectionViewItemEventData) {
 }
 function moreItems(evt: EventData) {
     console.log(`load more items ${evt.eventName}`)
+}
+function randomHeight(color) {
+    if (parseInt(color.substr(1), 16) % 2 === 0) {
+        return 200;
+    }
+    return 150;
 }
 </script>

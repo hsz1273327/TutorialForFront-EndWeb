@@ -12,15 +12,14 @@
                 </template>
             </ActionBar>
             <PullToRefresh @refresh="refresh">
-                <!-- <CollectionView ref="collection" :items="itemList" colWidth="50%" rowHeight="100" orientation="vertical" @itemTap="tapItem" -->
-                <CollectionView ref="collection" :items="itemList" colWidth="50%" rowHeight="100" orientation="horizontal" @itemTap="tapItem"
-                    @loadMoreItems="moreItems">
+                <ListView ref="collection" height="100%" separatorColor="transparent" :items="itemList" colWidth="50%"
+                    rowHeight="100" @itemTap="tapItem" @loadMoreItems="moreItems">
                     <template #default="{ item }">
                         <StackLayout :backgroundColor="item.color">
                             <Label :text="item.name" />
                         </StackLayout>
                     </template>
-                </CollectionView>
+                </ListView>
             </PullToRefresh>
 
         </Page>
@@ -28,17 +27,18 @@
 </template>
 <script lang="ts" setup>
 import { ref } from "nativescript-vue";
-import { EventData } from '@nativescript/core';
-import { CollectionViewItemEventData } from "@nativescript-community/ui-collectionview"
+import { EventData, ItemEventData, ListView } from '@nativescript/core';
 import { PullToRefresh } from '@nativescript-community/ui-pulltorefresh'
-
-const collection = ref()
+const collection = ref<ListView>()
 const isIOS = ref(global.isIOS)
 
 const fontRefresh = "font://\uf1b9"
 const fonttoTop = "font://\uf252"
-// const itemList = ref(new ObservableArray([
-const itemList = ref([
+interface Card {
+    name: string
+    color: string
+}
+const itemList = ref<Card[]>([
     { name: 'TURQUOISE', color: '#1abc9c' },
     { name: 'EMERALD', color: '#2ecc71' },
     { name: 'PETER RIVER', color: '#3498db' },
@@ -61,7 +61,6 @@ const itemList = ref([
     { name: 'ASBESTOS', color: '#7f8c8d' }
 ]);
 
-
 const shuffle = (array: any[]) => {
     return array.slice().sort(() => Math.random() - 0.5);
 }
@@ -73,10 +72,10 @@ function refresh(evt: EventData) {
 }
 
 function toTop(evt: EventData) {
-    collection.value.$el.nativeView.scrollToIndex(0, true)
+    collection.value.$el.nativeView.scrollToIndex(0)
 }
 
-function tapItem(evt: CollectionViewItemEventData) {
+function tapItem(evt: ItemEventData) {
     console.log(`tap item with index ${evt.index}`)
 }
 function moreItems(evt: EventData) {

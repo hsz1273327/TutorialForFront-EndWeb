@@ -15,7 +15,7 @@
                 <ListView ref="collection" height="100%" separatorColor="transparent" :items="itemList" colWidth="50%"
                     rowHeight="100" @itemTap="tapItem" @loadMoreItems="moreItems">
                     <template #default="{ item }">
-                        <StackLayout :backgroundColor="item.color">
+                        <StackLayout :backgroundColor="item.color" height="100">
                             <Label :text="item.name" />
                         </StackLayout>
                     </template>

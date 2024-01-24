@@ -1,43 +1,46 @@
 <template>
-    <frame>
+    <frame id="main-frame">
         <Page>
             <ActionBar title="My App">
                 <template v-if="isIOS">
-                    <ActionItem :icon="fontRefresh" ios.position="left" class="mdi-ab" @tap="refresh" />
-                    <ActionItem :icon="fonttoTop" ios.position="left" class="mdi-ab" @tap="toTop" />
+                    <SearchBar hint="Search..." :text="searchPhrase" @submit="onSubmit" />
+                    <ActionItem :icon="fontSearch" ios.position="left" class="mdi-ab" @tap="toSearch" />
                 </template>
                 <template v-else>
-                    <ActionItem :icon="fontRefresh" android.position="actionBar" class="mdi-ab" @tap="refresh" />
-                    <ActionItem :icon="fonttoTop" android.position="actionBar" class="mdi-ab" @tap="toTop" />
+                    <SearchBar hint="Search..." :text="searchPhrase" @submit="onSubmit" />
+                    <ActionItem :icon="fontSearch" android.position="actionBar" class="mdi-ab" @tap="toSearch" />
                 </template>
             </ActionBar>
             <PullToRefresh @refresh="refresh">
-                <!-- <CollectionView ref="collection" :items="itemList" colWidth="50%" rowHeight="100" orientation="vertical" @itemTap="tapItem" -->
-                <CollectionView ref="collection" :items="itemList" colWidth="50%" rowHeight="100" orientation="horizontal"
-                    @itemTap="tapItem" @loadMoreItems="moreItems">
+                <CollectionView ref="collection" :items="itemList" colWidth="50%" layoutStyle="waterfall" @itemTap="tapItem"
+                    @loadMoreItems="moreItems">
                     <template #default="{ item }">
-                        <StackLayout :backgroundColor="item.color" height="100">
-                            <Label :text="item.name" />
-                        </StackLayout>
+                        <GridLayout :height="randomHeight(item.color)" rows="*, auto" :backgroundColor="item.color"
+                            class="item">
+                            <StackLayout row="1" :backgroundColor="item.color">
+                                <Label row="1" :text="item.name" />
+                            </StackLayout>
+                        </GridLayout>
                     </template>
                 </CollectionView>
             </PullToRefresh>
-
         </Page>
     </frame>
 </template>
 <script lang="ts" setup>
-import { ref } from "nativescript-vue";
-import { EventData } from '@nativescript/core';
+import { ref, $navigateTo } from "nativescript-vue";
+import { EventData, ObservableArray } from '@nativescript/core';
 import { CollectionViewItemEventData, CollectionView } from "@nativescript-community/ui-collectionview"
 import { PullToRefresh } from '@nativescript-community/ui-pulltorefresh'
+import Searchpage from "./Searchpage.vue";
 
 const collection = ref()
 const isIOS = ref(global.isIOS)
 
-const fontRefresh = "font://\uf1b9"
-const fonttoTop = "font://\uf252"
-const itemList = ref([
+const fontSearch = "font://\uf1c3"
+
+const itemList = ref(new ObservableArray([
+    // const itemList = ref([
     { name: 'TURQUOISE', color: '#1abc9c' },
     { name: 'EMERALD', color: '#2ecc71' },
     { name: 'PETER RIVER', color: '#3498db' },
@@ -58,7 +61,7 @@ const itemList = ref([
     { name: 'POMEGRANATE', color: '#c0392b' },
     { name: 'SILVER', color: '#bdc3c7' },
     { name: 'ASBESTOS', color: '#7f8c8d' }
-]);
+]))
 
 
 const shuffle = (array: any[]) => {
@@ -71,8 +74,15 @@ function refresh(evt: EventData) {
     pullRefresh.refreshing = false
 }
 
-function toTop(evt: EventData) {
-    (collection.value.$el.nativeView as CollectionView).scrollToIndex(0, true)
+function toSearch(evt: EventData) {
+    $navigateTo(
+        Searchpage,
+        {
+            transition: {
+                name: "fade"
+            },
+            frame: "main-frame"
+        })
 }
 
 function tapItem(evt: CollectionViewItemEventData) {
@@ -80,5 +90,26 @@ function tapItem(evt: CollectionViewItemEventData) {
 }
 function moreItems(evt: EventData) {
     console.log(`load more items ${evt.eventName}`)
+}
+function randomHeight(color) {
+    if (parseInt(color.substr(1), 16) % 2 === 0) {
+        return 200;
+    }
+    return 150;
+}
+// 搜索相关
+const searchPhrase = ref("")
+function onSubmit() {
+    $navigateTo(
+        Searchpage,
+        {
+            transition: {
+                name: "fade"
+            },
+            frame: "main-frame",
+            props: {
+                searchPhrase: "whatever"
+            }
+        })
 }
 </script>

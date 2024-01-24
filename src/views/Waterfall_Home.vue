@@ -12,8 +12,7 @@
                 </template>
             </ActionBar>
             <PullToRefresh @refresh="refresh">
-                <CollectionView ref="collection" :items="itemList" colWidth="50%" layoutStyle="waterfall" @itemTap="tapItem"
-                    @loadMoreItems="moreItems">
+                <CollectionView ref="collection" :items="itemList" colWidth="50%" @itemTap="tapItem" @loadMoreItems="moreItems"  layoutStyle="waterfall" orientation="vertical">
                     <template #default="{ item }">
                         <GridLayout :height="randomHeight(item.color)" rows="*, auto" :backgroundColor="item.color"
                             class="item">
@@ -24,24 +23,22 @@
                     </template>
                 </CollectionView>
             </PullToRefresh>
-
         </Page>
     </frame>
 </template>
 <script lang="ts" setup>
+// import { ObservableArray } from '@nativescript/core';
 import { ref } from "nativescript-vue";
 import { EventData } from '@nativescript/core';
-import { CollectionViewItemEventData, CollectionView } from "@nativescript-community/ui-collectionview"
+import { CollectionViewItemEventData } from "@nativescript-community/ui-collectionview"
 import { PullToRefresh } from '@nativescript-community/ui-pulltorefresh'
-
 const collection = ref()
 const isIOS = ref(global.isIOS)
-
 const fontRefresh = "font://\uf1b9"
 const fonttoTop = "font://\uf252"
-// const itemList = ref(new ObservableArray([
+
 const itemList = ref([
-    { name: 'TURQUOISE', color: '#1abc9c' },
+{ name: 'TURQUOISE', color: '#1abc9c' },
     { name: 'EMERALD', color: '#2ecc71' },
     { name: 'PETER RIVER', color: '#3498db' },
     { name: 'AMETHYST', color: '#9b59b6' },
@@ -63,8 +60,7 @@ const itemList = ref([
     { name: 'ASBESTOS', color: '#7f8c8d' }
 ]);
 
-
-const shuffle = (array: any[]) => {
+function shuffle (array: any[]) {
     return array.slice().sort(() => Math.random() - 0.5);
 }
 function refresh(evt: EventData) {
@@ -75,9 +71,9 @@ function refresh(evt: EventData) {
 }
 
 function toTop(evt: EventData) {
-    (collection.value.$el.nativeView as CollectionView).scrollToIndex(0, true)
+    collection.value.$el.nativeView.scrollToIndex(0, true)
+    // console.log(`toTop get ${Object.keys(collection.value.$el.nativeView.scrollToIndex)}`)
 }
-
 function tapItem(evt: CollectionViewItemEventData) {
     console.log(`tap item with index ${evt.index}`)
 }

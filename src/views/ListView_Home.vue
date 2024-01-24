@@ -29,7 +29,7 @@
 import { ref } from "nativescript-vue";
 import { EventData, ItemEventData, ListView } from '@nativescript/core';
 import { PullToRefresh } from '@nativescript-community/ui-pulltorefresh'
-const collection = ref<ListView>()
+const collection = ref()
 const isIOS = ref(global.isIOS)
 
 const fontRefresh = "font://\uf1b9"
@@ -65,14 +65,14 @@ const shuffle = (array: any[]) => {
     return array.slice().sort(() => Math.random() - 0.5);
 }
 function refresh(evt: EventData) {
-    let pullRefresh: PullToRefresh = evt.object
+    let pullRefresh = evt.object as PullToRefresh
     itemList.value = shuffle(itemList.value)
     console.log("refresh ok")
     pullRefresh.refreshing = false
 }
 
 function toTop(evt: EventData) {
-    collection.value.$el.nativeView.scrollToIndex(0)
+    (collection.value.$el.nativeView as ListView).scrollToIndex(0)
 }
 
 function tapItem(evt: ItemEventData) {

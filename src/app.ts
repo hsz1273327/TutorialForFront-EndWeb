@@ -6,10 +6,10 @@ import { initialize as imageInitialize } from '@nativescript-community/ui-image'
 import CollectionView from '@nativescript-community/ui-collectionview/vue3';
 import waterfallInstall from '@nativescript-community/ui-collectionview-waterfall';
 
-import Home from './views/ListView_Home.vue'
+
+// import Home from './views/ListView_Home.vue'
 // import Home from './views/CollectionView_Home.vue'
-// import Home from './views/Waterfall_Home.vue'
-// import Home from './views/Pager_Home.vue'
+import Home from './views/Waterfall_Home.vue'
 
 if (global.isIOS) {
   themer.setPrimaryColor('#bff937');
@@ -20,6 +20,7 @@ registerElement(
   'PullToRefresh',
   () => require('@nativescript-community/ui-pulltorefresh').PullToRefresh
 )
+
 imageInitialize({ isDownsampleEnabled: true });
 waterfallInstall();
 createApp(Home).use(CardViewPlugin).use(ImageModulePlugin).use(CollectionView).start();

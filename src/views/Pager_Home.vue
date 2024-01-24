@@ -3,21 +3,27 @@
         <Page>
             <ActionBar title="My App">
                 <template v-if="isIOS">
-                    <ActionItem :icon="fontRefresh" ios.position="left" class="mdi-ab" @tap="refresh" />
-                    <ActionItem :icon="fonttoTop" ios.position="left" class="mdi-ab" @tap="toTop" />
+                    <ActionItem :icon="fonttoHead" ios.position="left" class="mdi-ab" @tap="toHead" />
+                    <ActionItem :icon="fontplay" ios.position="left" class="mdi-ab" @tap="play" />
+                    <ActionItem :icon="fonttoTail" ios.position="left" class="mdi-ab" @tap="toTail" />
                 </template>
                 <template v-else>
-                    <ActionItem :icon="fontRefresh" android.position="actionBar" class="mdi-ab" @tap="refresh" />
-                    <ActionItem :icon="fonttoTop" android.position="actionBar" class="mdi-ab" @tap="toTop" />
+                    <ActionItem :icon="fonttoHead" android.position="actionBar" class="mdi-ab" @tap="toHead" />
+                    <ActionItem :icon="fonttoHead" android.position="actionBar" class="mdi-ab" @tap="toHead" />
+                    <ActionItem :icon="fonttoTail" android.position="actionBar" class="mdi-ab" @tap="toTail" />
                 </template>
             </ActionBar>
             <GridLayout class="page" rows="*,auto">
-                <Pager ref="pager" :items="items" height="100%" peaking="30" spacing="10" pagesCount="3">
-                    <v-template>
+                <Pager ref="pager" :items="itemList" height="100%" peaking="30" spacing="10" pagesCount="3" canGoRight="true"
+                    canGoLeft="true" circularMode="" true :autoPlay="autoPlay">
+                    <!-- <template #default="{ item }">
                         <GridLayout :backgroundColor="item.color">
-                            <Label :text="item.title" />
+                            <Label :text="item.name" />
                         </GridLayout>
-                    </v-template>
+                    </template> -->
+                    <GridLayout v-for="item in itemList" :backgroundColor="item.color">
+                            <Label :text="item.name" />
+                    </GridLayout>
                 </Pager>
             </GridLayout>
 
@@ -26,13 +32,17 @@
 </template>
 <script lang="ts" setup>
 import { ref } from "nativescript-vue";
-import { EventData, ItemEventData, ListView } from '@nativescript/core';
-import { PullToRefresh } from '@nativescript-community/ui-pulltorefresh'
-const collection = ref<ListView>()
+import { EventData } from '@nativescript/core';
+// import { Pager } from '@nativescript-community/ui-pager';
 const isIOS = ref(global.isIOS)
+const pager = ref()
 
-const fontRefresh = "font://\uf1b9"
-const fonttoTop = "font://\uf252"
+
+const fonttoHead = "font://\uf3b5"
+const fontplay = "font://\uf3aa"
+const fonttoTail = "font://\uf3b4"
+
+const autoPlay = ref(true)
 interface Card {
     name: string
     color: string
@@ -63,21 +73,17 @@ const itemList = ref<Card[]>([
 const shuffle = (array: any[]) => {
     return array.slice().sort(() => Math.random() - 0.5);
 }
-function refresh(evt: EventData) {
-    let pullRefresh: PullToRefresh = evt.object
-    itemList.value = shuffle(itemList.value)
-    console.log("refresh ok")
-    pullRefresh.refreshing = false
+function toHead(evt: EventData) {
+    pager.value.$el.nativeView.scrollToIndexAnimated(0, true)
 }
 
-function toTop(evt: EventData) {
-    collection.value.$el.nativeView.scrollToIndex(0)
+function play(evt: EventData) {
+    
 }
 
-function tapItem(evt: ItemEventData) {
-    console.log(`tap item with index ${evt.index}`)
+function toTail(evt: EventData) {
+    pager.value.$el.nativeView.scrollToIndexAnimated(itemList.value.length, true)
 }
-function moreItems(evt: EventData) {
-    console.log(`load more items ${evt.eventName}`)
-}
+
+
 </script>

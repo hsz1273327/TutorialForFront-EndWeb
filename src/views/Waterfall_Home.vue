@@ -21,7 +21,6 @@
                                 <Label row="1" :text="item.name" />
                             </StackLayout>
                         </GridLayout>
-
                     </template>
                 </CollectionView>
             </PullToRefresh>
@@ -32,7 +31,7 @@
 <script lang="ts" setup>
 import { ref } from "nativescript-vue";
 import { EventData } from '@nativescript/core';
-import { CollectionViewItemEventData } from "@nativescript-community/ui-collectionview"
+import { CollectionViewItemEventData, CollectionView } from "@nativescript-community/ui-collectionview"
 import { PullToRefresh } from '@nativescript-community/ui-pulltorefresh'
 
 const collection = ref()
@@ -69,14 +68,14 @@ const shuffle = (array: any[]) => {
     return array.slice().sort(() => Math.random() - 0.5);
 }
 function refresh(evt: EventData) {
-    let pullRefresh: PullToRefresh = evt.object
+    let pullRefresh = evt.object as PullToRefresh
     itemList.value = shuffle(itemList.value)
     console.log("refresh ok")
     pullRefresh.refreshing = false
 }
 
 function toTop(evt: EventData) {
-    collection.value.$el.nativeView.scrollToIndex(0, true)
+    (collection.value.$el.nativeView as CollectionView).scrollToIndex(0, true)
 }
 
 function tapItem(evt: CollectionViewItemEventData) {

@@ -11,27 +11,20 @@
                     <ActionItem :icon="fontSearch" android.position="actionBar" class="mdi-ab" @tap="toSearch" />
                 </template>
             </ActionBar>
-            <PullToRefresh @refresh="refresh">
-                <CollectionView ref="collection" :items="itemList" colWidth="50%" layoutStyle="waterfall" @itemTap="tapItem"
-                    @loadMoreItems="moreItems">
-                    <template #default="{ item }">
-                        <GridLayout :height="randomHeight(item.color)" rows="*, auto" :backgroundColor="item.color"
-                            class="item">
-                            <StackLayout row="1" :backgroundColor="item.color">
-                                <Label row="1" :text="item.name" />
-                            </StackLayout>
-                        </GridLayout>
-                    </template>
-                </CollectionView>
-            </PullToRefresh>
+            <ListView ref="collection" height="100%" separatorColor="transparent" :items="itemList" colWidth="50%"
+                rowHeight="100" @itemTap="tapItem" @loadMoreItems="moreItems">
+                <template #default="{ item }">
+                    <StackLayout :backgroundColor="item.color" height="100">
+                        <Label :text="item.name" />
+                    </StackLayout>
+                </template>
+            </ListView>
         </Page>
     </frame>
 </template>
 <script lang="ts" setup>
 import { ref, $navigateTo } from "nativescript-vue";
-import { EventData, ObservableArray } from '@nativescript/core';
-import { CollectionViewItemEventData, CollectionView } from "@nativescript-community/ui-collectionview"
-import { PullToRefresh } from '@nativescript-community/ui-pulltorefresh'
+import { EventData, ItemEventData, SearchBar } from '@nativescript/core';
 import Searchpage from "./Searchpage.vue";
 
 const collection = ref()
@@ -39,7 +32,7 @@ const isIOS = ref(global.isIOS)
 
 const fontSearch = "font://\uf1c3"
 
-const itemList = ref(new ObservableArray([
+const itemList = ref([
     // const itemList = ref([
     { name: 'TURQUOISE', color: '#1abc9c' },
     { name: 'EMERALD', color: '#2ecc71' },
@@ -61,18 +54,7 @@ const itemList = ref(new ObservableArray([
     { name: 'POMEGRANATE', color: '#c0392b' },
     { name: 'SILVER', color: '#bdc3c7' },
     { name: 'ASBESTOS', color: '#7f8c8d' }
-]))
-
-
-const shuffle = (array: any[]) => {
-    return array.slice().sort(() => Math.random() - 0.5);
-}
-function refresh(evt: EventData) {
-    let pullRefresh = evt.object as PullToRefresh
-    itemList.value = shuffle(itemList.value)
-    console.log("refresh ok")
-    pullRefresh.refreshing = false
-}
+])
 
 function toSearch(evt: EventData) {
     $navigateTo(
@@ -85,22 +67,20 @@ function toSearch(evt: EventData) {
         })
 }
 
-function tapItem(evt: CollectionViewItemEventData) {
+function tapItem(evt: ItemEventData) {
     console.log(`tap item with index ${evt.index}`)
 }
 function moreItems(evt: EventData) {
     console.log(`load more items ${evt.eventName}`)
 }
-function randomHeight(color) {
-    if (parseInt(color.substr(1), 16) % 2 === 0) {
-        return 200;
-    }
-    return 150;
-}
+
 // 搜索相关
 const searchPhrase = ref("")
-function onSubmit() {
-    $navigateTo(
+function onSubmit(evt: EventData) {
+    const searchBar = evt.object as SearchBar
+    console.log('Search for:', searchBar.text)
+    if (searchBar.text != ""){
+        $navigateTo(
         Searchpage,
         {
             transition: {
@@ -108,8 +88,18 @@ function onSubmit() {
             },
             frame: "main-frame",
             props: {
-                searchPhrase: "whatever"
+                searchPhrase: searchBar.text
             }
         })
+    }else{
+        $navigateTo(
+        Searchpage,
+        {
+            transition: {
+                name: "fade"
+            },
+            frame: "main-frame"
+        })
+    }
 }
 </script>

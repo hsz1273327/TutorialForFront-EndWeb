@@ -1,9 +1,5 @@
 import { createApp, registerElement } from 'nativescript-vue';
 import { themer } from '@nativescript-community/ui-material-core';
-import ImageModulePlugin from '@nativescript-community/ui-image/vue';
-import { initialize as imageInitialize } from '@nativescript-community/ui-image';
-import CollectionView from '@nativescript-community/ui-collectionview/vue3';
-import waterfallInstall from '@nativescript-community/ui-collectionview-waterfall';
 
 
 // import Home from './views/ListView_Home.vue'
@@ -15,11 +11,6 @@ if (global.isIOS) {
   themer.setAccentColor('#ff8a39');
   themer.setSecondaryColor('#a830d7');
 }
-registerElement(
-  'PullToRefresh',
-  () => require('@nativescript-community/ui-pulltorefresh').PullToRefresh
-)
 
-imageInitialize({ isDownsampleEnabled: true });
-waterfallInstall();
-createApp(Home).use(ImageModulePlugin).use(CollectionView).start();
+
+createApp(Home).start();

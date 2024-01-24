@@ -1,28 +1,22 @@
 <template>
     <Page actionBarHidden="true">
-        <SearchBar hint="Search..." :text="searchPhrase" @submit="onSubmit" />
-
-        <ListView ref="collection" height="100%" separatorColor="transparent" :items="itemList" colWidth="50%"
-            rowHeight="100" @itemTap="tapItem" @loadMoreItems="moreItems">
-            <template #default="{ item }">
-                <StackLayout :backgroundColor="item.color" height="100">
-                    <Label :text="item.name" />
-                </StackLayout>
-            </template>
-        </ListView>
-
+        <StackLayout>
+            <SearchBar :hint="searchhint" :text="search" @submit="onSubmit" />
+            <ListView height="100%" separatorColor="transparent" :items="itemList" colWidth="50%" rowHeight="100"
+                @itemTap="tapItem">
+                <template #default="{ item }">
+                    <StackLayout :backgroundColor="item.color" height="100">
+                        <Label :text="item.name" />
+                    </StackLayout>
+                </template>
+            </ListView>
+        </StackLayout>
     </Page>
 </template>
 <script lang="ts" setup>
 import { ref, defineProps } from "nativescript-vue";
-import { EventData } from '@nativescript/core';
-import { CollectionViewItemEventData, CollectionView } from "@nativescript-community/ui-collectionview"
-import { PullToRefresh } from '@nativescript-community/ui-pulltorefresh'
+import { EventData, ItemEventData } from '@nativescript/core';
 
-const collection = ref()
-const isIOS = ref(global.isIOS)
-
-const fontSearch = "font://\uf1c3"
 
 const candidates = [
     { name: 'PETER RIVER', color: '#3498db' },
@@ -54,23 +48,22 @@ const props = defineProps(["searchPhrase"])
 
 const random_choise = (arr: any[]) => arr.filter((x) => Math.random() > 0.5)
 let items = []
+let _searchhint = "Search..."
+let _search = ""
 if (props.searchPhrase) {
     items = random_choise(candidates)
+    _searchhint = props.searchPhrase
 } else {
     items = advs
 }
 const itemList = ref(items);
+const searchhint = ref(_searchhint);
+const search = ref(_search);
 
-
-function tapItem(evt: CollectionViewItemEventData) {
+function tapItem(evt: ItemEventData) {
     console.log(`tap item with index ${evt.index}`)
 }
-function moreItems(evt: EventData) {
-    console.log(`load more items ${evt.eventName}`)
-}
-
 function onSubmit(evt: EventData) {
-    itemList.value = random_choise(candidates)
+    console.log("submit")
 }
-
 </script>

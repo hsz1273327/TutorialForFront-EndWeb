@@ -1,6 +1,6 @@
 <template>
     <MDCardView margin="10" width="300" height="300" rippleColor="blue" elevation="6">
-        <GridLayout rows="40,*,auto,40">
+        <GridLayout rows="40,*,auto,40" backgroundColor="#2ecc71">
             <!--title部分-->
             <StackLayout orientation="horizontal" row="0">
                 <GridLayout columns="40,*">

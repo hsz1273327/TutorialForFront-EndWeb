@@ -1,10 +1,9 @@
-import { createApp, registerElement } from 'nativescript-vue';
+import { createApp } from 'nativescript-vue';
 import { themer } from '@nativescript-community/ui-material-core';
+import PickerField from '@nativescript/picker/vue';
 
-
-// import Home from './views/ListView_Home.vue'
-// import Home from './views/CollectionView_Home.vue'
-import Home from './views/Home.vue'
+// import Home from './views/PickHome.vue'
+import Home from './views/SearchHome.vue'
 
 if (global.isIOS) {
   themer.setPrimaryColor('#bff937');
@@ -12,5 +11,5 @@ if (global.isIOS) {
   themer.setSecondaryColor('#a830d7');
 }
 
-
+//.use(PickerField) 
 createApp(Home).start();

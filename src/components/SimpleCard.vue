@@ -23,5 +23,4 @@ const props = defineProps<{
     // mediaImgURL: string,
     description: string
 }>()
-
 </script>

@@ -6,8 +6,7 @@
                 <GridLayout columns="40,*,40">
                     <NSImg :src="iconImgURL" stretch="fitCenter" roundAsCircle="true" col="0" />
                     <Label :text="title" class="title" col="1"></Label>
-                    <MDFloatingActionButton rippleColor="blue" :src="fontsrc_more" class="mdi-ab" col="2"
-                        @tap="onActionTap" />
+                    <fab rippleColor="blue" :text="fontsrc_more" class="mdi-ab" col="2" @tap="onActionTap" />
                 </GridLayout>
             </StackLayout>
             <!--文本部分 -->
@@ -37,7 +36,7 @@ const props = defineProps<{
     description: string
 }>()
 
-const fontsrc_more = "res://\uf19b"
+const fontsrc_more = "\uf19b"
 
 const defaultIndex = ref(0)
 function onActionTap(evt: EventData) {

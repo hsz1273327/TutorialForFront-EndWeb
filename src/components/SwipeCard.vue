@@ -33,8 +33,6 @@ const props = defineProps<{
     mediaImgURL: string,
     description: string
 }>()
-
-const menuOpened = ref(false)
 function drawerTranslationFunction(side, width, value, delta, progress) {
     const result = {
         mainContent: {

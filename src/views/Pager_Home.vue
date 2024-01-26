@@ -14,16 +14,14 @@
                 </template>
             </ActionBar>
             <GridLayout class="page" rows="*,auto">
-                <Pager ref="pager" :items="itemList" height="100%" peaking="30" spacing="10" pagesCount="3" canGoRight="true"
-                    canGoLeft="true" circularMode="" true :autoPlay="autoPlay">
-                    <!-- <template #default="{ item }">
-                        <GridLayout :backgroundColor="item.color">
+                <Pager ref="pager" :items="itemList">
+                    <PagerItem backgroundColor="#e67e22"><Label text="First" /></PagerItem>
+                    <PagerItem backgroundColor="#3498db"><Label text="Second" /></PagerItem>
+                    <PagerItem backgroundColor="#e74c3c"><Label text="Third" /></PagerItem>
+                    <PagerItem backgroundColor="#9b59b6"><Label text="Fourth" /></PagerItem>
+                    <!-- <GridLayout v-for="item in itemList" :backgroundColor="item.color">
                             <Label :text="item.name" />
-                        </GridLayout>
-                    </template> -->
-                    <GridLayout v-for="item in itemList" :backgroundColor="item.color">
-                            <Label :text="item.name" />
-                    </GridLayout>
+                    </GridLayout> -->
                 </Pager>
             </GridLayout>
 
@@ -78,7 +76,7 @@ function toHead(evt: EventData) {
 }
 
 function play(evt: EventData) {
-    
+
 }
 
 function toTail(evt: EventData) {

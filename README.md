@@ -8,3 +8,5 @@
 
 
 <!-- <CollectionView ref="collection" :items="itemList" colWidth="50%" rowHeight="100" orientation="vertical" @itemTap="tapItem" -->
+
+                <Pager ref="pager" :items="itemList" height="100%" peaking="30" spacing="10" pagesCount="3" canGoRight="true" canGoLeft="true" circularMode="" true :autoPlay="autoPlay">

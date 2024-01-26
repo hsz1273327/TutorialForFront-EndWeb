@@ -1,5 +1,6 @@
-import { createApp } from 'nativescript-vue';
+import { createApp, registerElement } from 'nativescript-vue';
 import { themer } from '@nativescript-community/ui-material-core';
+import { DrawingPad } from '@nativescript-community/drawingpad';
 
 // import Home from './views/PickHome.vue'
 import Home from './views/Home.vue'
@@ -10,5 +11,5 @@ if (global.isIOS) {
   themer.setSecondaryColor('#a830d7');
 }
 
-//.use(PickerField) 
+registerElement('DrawingPad', () => DrawingPad);
 createApp(Home).start();

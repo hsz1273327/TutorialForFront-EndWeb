@@ -3,9 +3,10 @@
         <Page actionBarHidden="true">
             <!-- <GridLayout rows="*,auto"> -->
             <StackLayout>
-                <SimpleCard v-bind="simplecardprops" />
-                <SwipeCard v-bind="simplecardprops" />
-                <Button row="1" text="outside" />
+                <!-- <SimpleCard v-bind="simplecardprops" /> -->
+                <!-- <MediaCard v-bind="simplecardprops" /> -->
+                <ComplexCard v-bind="simplecardprops" />
+                <!-- <SwipeCard v-bind="simplecardprops" /> -->
             </StackLayout>
             <!-- </GridLayout> -->
         </Page>
@@ -14,6 +15,8 @@
 <script lang="ts" setup>
 import { ref } from "nativescript-vue";
 import SimpleCard from "../components/SimpleCard.vue"
+import MediaCard from "../components/MediaCard.vue"
+import ComplexCard from "../components/ComplexCard.vue"
 import SwipeCard from "../components/SwipeCard.vue"
 
 const simplecardprops = ref({

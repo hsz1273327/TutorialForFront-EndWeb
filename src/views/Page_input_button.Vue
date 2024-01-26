@@ -3,19 +3,18 @@
         <Page actionBarHidden="true">
             <StackLayout>
                 <Label text="Home" id="banner" ref="banner"></Label>
-                <Button :text="`${iconUnicode('\uf067')} snackbar`" @tap="onActionTap" @doubleTap="onActionDoubleTap"
-                    @longPress="onActionLongPress" class="fas" />
-                <MDButton :text="`${iconUnicode('\uf067')} snackbar`" @tap="onActionTap" @doubleTap="onActionDoubleTap"
-                    @longPress="onActionLongPress" class="fas" />
-                <MDButton :text="`${iconUnicode('\uf067')} snackbar`" @tap="onActionTap" @doubleTap="onActionDoubleTap"
-                    @longPress="onActionLongPress" variant="flat" class="fas" />
-                <MDButton :text="`${iconUnicode('\uf067')} snackbar`" @tap="onActionTap" @doubleTap="onActionDoubleTap"
-                    @longPress="onActionLongPress" variant="text" class="fas" />
-                <!-- <MDFloatingActionButton rippleColor="blue" src="res://ic_input_add"/> -->
-                <MDFloatingActionButton rippleColor="blue" src="res://fa_plus" @tap="onActionTap"
+                <Button :text="mood_snackbar" @tap="onActionTap" @doubleTap="onActionDoubleTap"
+                    @longPress="onActionLongPress" class="mdi" />
+                <MDButton :text="mood_snackbar" @tap="onActionTap" @doubleTap="onActionDoubleTap"
+                    @longPress="onActionLongPress" class="mdi" />
+                <MDButton :text="mood_snackbar" @tap="onActionTap" @doubleTap="onActionDoubleTap"
+                    @longPress="onActionLongPress" variant="flat" class="mdi" />
+                <MDButton :text="mood_snackbar" @tap="onActionTap" @doubleTap="onActionDoubleTap"
+                    @longPress="onActionLongPress" variant="text" class="mdi" />
+                <MDFloatingActionButton rippleColor="blue" src="res://logo" @tap="onActionTap"
                     @doubleTap="onActionDoubleTap" @longPress="onActionLongPress" />
 
-                <fab rippleColor="blue" :text="iconUnicode('\uf215')" class="mdi" @tap="onActionTap" ></fab>
+                <fab rippleColor="blue" :text="iconUnicode('\uf214')" class="mdi" @tap="onActionTap" ></fab>
 
                 <MDSpeedDial :text="iconUnicode('\uf207')" buttonClass="mdi" horizontalAlignment="right">
                     <MDSpeedDialItem :text="iconUnicode('\uf35b')" title="test1" buttonClass="mdi" @tap="onActionTap" />
@@ -32,7 +31,8 @@
 <script lang="ts" setup>
 import { EventData } from "@nativescript/core/data/observable";
 
-
+const mood_unicode = "\uf214"
+const mood_snackbar = `${mood_unicode} snackbar`
 function iconUnicode(icon: string): string {
     return `${icon}`;
 }

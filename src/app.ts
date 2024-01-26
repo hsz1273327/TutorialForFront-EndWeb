@@ -1,9 +1,8 @@
 import { createApp } from 'nativescript-vue';
 import { themer } from '@nativescript-community/ui-material-core';
-import PickerField from '@nativescript/picker/vue';
 
 // import Home from './views/PickHome.vue'
-import Home from './views/SearchHome.vue'
+import Home from './views/Home.vue'
 
 if (global.isIOS) {
   themer.setPrimaryColor('#bff937');

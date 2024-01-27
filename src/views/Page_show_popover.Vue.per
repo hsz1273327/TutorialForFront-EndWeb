@@ -1,0 +1,24 @@
+<template>
+    <Frame>
+        <Page actionBarHidden="true">
+            <StackLayout>
+                <Button text="open popover" @tap="onOpenPopover" />
+            </StackLayout>
+        </Page>
+    </Frame>
+</template>
+  
+<script lang="ts" setup>
+import { onMounted, ref, getCurrentInstance } from "nativescript-vue";
+import { EventData } from "@nativescript/core/data/observable";
+import Popover from '../components/Popover'
+
+const instance = getCurrentInstance();
+const { ctx } = instance;
+
+function onOpenPopover(evt: EventData) {
+    ctx.$showPopover(Popover, {
+        props: {}
+    });
+}
+</script>

@@ -1,6 +1,5 @@
 import { createApp, registerElement } from 'nativescript-vue';
 import { themer } from '@nativescript-community/ui-material-core';
-import { Video } from 'nativescript-videoplayer'
 // import Home from './views/PickHome.vue'
 import Home from './views/Home.vue'
 
@@ -9,5 +8,6 @@ if (global.isIOS) {
   themer.setAccentColor('#ff8a39');
   themer.setSecondaryColor('#a830d7');
 }
-registerElement('VideoPlayer', () => Video)
+registerElement('VideoPlayer', () => require('nativescript-videoplayer').Video)
+registerElement('Fab', () => require('@nstudio/nativescript-floatingactionbutton').Fab)
 createApp(Home).start();

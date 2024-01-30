@@ -26,12 +26,15 @@ function onChartLoaded() {
     chart.setScaleEnabled(true);
     chart.setMaxVisibleValueCount(200);
     chart.setPinchZoom(true);
+
+
     const l = chart.getLegend();
     l.setEnabled(true)
     l.setVerticalAlignment(LegendVerticalAlignment.TOP);
     l.setHorizontalAlignment(LegendHorizontalAlignment.RIGHT);
     l.setOrientation(LegendOrientation.VERTICAL);
     l.setDrawInside(false);
+    
     const yl = chart.getAxisLeft();
     yl.setSpaceTop(30);
     yl.setSpaceBottom(30);

@@ -2,8 +2,8 @@ import { createApp, registerElement } from 'nativescript-vue';
 import { themer } from '@nativescript-community/ui-material-core';
 import { install as installGestures } from '@nativescript-community/gesturehandler';
 
-// import Home from './views/ScatterChartHome.vue'
-import Home from './views/BubbleChartHome.vue'
+import Home from './views/ScatterChartHome.vue'
+// import Home from './views/BubbleChartHome.vue'
 
 
 if (global.isIOS) {

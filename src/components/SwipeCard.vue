@@ -1,6 +1,6 @@
 <template>
-    <SwipeMenu width="300" height="300" leftSwipeDistance="200" :translationFunction="drawerTranslationFunction">
-        <GridLayout rows="40,auto,*" margin="10" height="300" rippleColor="blue" elevation="6" ~mainContent width="100%"
+    <SwipeMenu width="300" height="150" leftSwipeDistance="200" :translationFunction="drawerTranslationFunction">
+        <GridLayout rows="40,auto,*" margin="10" height="150" rippleColor="blue" elevation="6" ~mainContent width="100%"
             backgroundColor="#2ecc71" borderRadius="10">
             <!--title部分-->
             <StackLayout orientation="horizontal" row="0">
@@ -16,7 +16,7 @@
 
         </GridLayout>
         <!-- </MDCardView> -->
-        <Stacklayout ~leftDrawer orientation="horizontal" width="200">
+        <Stacklayout ~leftDrawer orientation="horizontal" width="150">
             <Label text="a" width="100" height="100%" backgroundColor="red" textAlignment="center" borderTopLeftRadius="10"
                 borderBottomLeftRadius="10" />
             <Label text="b" width="100" height="100%" backgroundColor="blue" textAlignment="center" />

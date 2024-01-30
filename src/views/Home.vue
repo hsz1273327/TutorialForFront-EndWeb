@@ -3,10 +3,10 @@
         <Page actionBarHidden="true">
             <!-- <GridLayout rows="*,auto"> -->
             <StackLayout>
-                <!-- <SimpleCard v-bind="simplecardprops" /> -->
-                <!-- <MediaCard v-bind="simplecardprops" /> -->
+                <SimpleCard v-bind="simplecardprops" />
+                <MediaCard v-bind="simplecardprops" />
                 <ComplexCard v-bind="simplecardprops" />
-                <!-- <SwipeCard v-bind="simplecardprops" /> -->
+                <SwipeCard v-bind="simplecardprops" />
             </StackLayout>
             <!-- </GridLayout> -->
         </Page>

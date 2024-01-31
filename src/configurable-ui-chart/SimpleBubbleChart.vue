@@ -82,3 +82,4 @@ function onChartLoaded() {
     chart.invalidate()
 }
 </script>
+./configurablechartdata

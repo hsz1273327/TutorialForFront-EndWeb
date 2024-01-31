@@ -1,15 +1,26 @@
 <template>
     <frame id="main-frame">
         <Page actionBarHidden="true">
-            <StackLayout>
-                <SimpleScatterChart :dataSetting="data" />
+            <StackLayout height="400">
+                <ConfigurableScatterChart :dataSetting="data" :axisXSetting="axisXSetting" :axisYSetting="axisYSetting" />
             </StackLayout>
         </Page>
     </frame>
 </template>
 <script lang="ts" setup>
-import SimpleScatterChart from '../components/SimpleScatterChart.vue'
-import { ScatterDataSetting } from '../components/simplechartdata'
+import ConfigurableScatterChart from '../components/ConfigurableScatterChart.vue'
+import { ScatterDataSetting, AxisXSetting, AxisYSetting } from '../configurable-ui-chart/configurablechartdata'
+const axisXSetting: AxisXSetting = {
+    position: "bottom",
+    lineWidth: 3,
+    minimum: 0,
+    withGridLine: false
+}
+const axisYSetting: AxisYSetting = {
+    axisRightEnable: false,
+    minimum: 0,
+    withGridLine: false
+}
 function gen_data(): ScatterDataSetting[] {
     const values1 = [];
     const values2 = [];
@@ -52,3 +63,4 @@ function gen_data(): ScatterDataSetting[] {
 }
 const data = gen_data()
 </script>
+../ui-chart-compose/simplechartdata

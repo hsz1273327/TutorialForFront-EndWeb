@@ -8,7 +8,7 @@
     </frame>
 </template>
 <script lang="ts" setup>
-import ConfigurableScatterChart from '../components/ConfigurableScatterChart.vue'
+import ConfigurableScatterChart from '../configurable-ui-chart/ConfigurableScatterChart.vue'
 import { ScatterDataSetting, AxisXSetting, AxisYSetting } from '../configurable-ui-chart/configurablechartdata'
 const axisXSetting: AxisXSetting = {
     position: "bottom",
@@ -63,4 +63,3 @@ function gen_data(): ScatterDataSetting[] {
 }
 const data = gen_data()
 </script>
-../ui-chart-compose/simplechartdata

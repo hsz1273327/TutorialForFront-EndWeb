@@ -2,8 +2,12 @@ import { createApp, registerElement } from 'nativescript-vue';
 import { themer } from '@nativescript-community/ui-material-core';
 import { install as installGestures } from '@nativescript-community/gesturehandler';
 
-import Home from './views/ScatterChartHome.vue'
+// import Home from './views/ScatterChartHome.vue'
+// import Home from './views/ConfigableScatterChartHome.vue'
 // import Home from './views/BubbleChartHome.vue'
+// import Home from './views/ConfigableBubbleChartHome.vue'
+import Home from './views/LineChartHome.vue'
+// import Home from './views/ConfigableBubbleChartHome.vue'
 
 
 if (global.isIOS) {
@@ -14,4 +18,5 @@ if (global.isIOS) {
 installGestures()
 registerElement('ScatterChart', () => require("@nativescript-community/ui-chart/charts").ScatterChart);
 registerElement('BubbleChart', () => require("@nativescript-community/ui-chart/charts").BubbleChart);
+registerElement('LineChart', () => require("@nativescript-community/ui-chart/charts").LineChart);
 createApp(Home).start();

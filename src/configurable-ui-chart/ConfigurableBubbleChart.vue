@@ -1,16 +1,18 @@
 <template>
-    <ScatterChart ref="Elechart" @loaded="onChartLoaded" :hardwareAccelerated="hardwareAccelerated" />
+    <BubbleChart ref="Elechart" @loaded="onChartLoaded" :hardwareAccelerated="hardwareAccelerated" />
 </template>
+
 <script lang="ts" setup>
 import { ref, defineProps, withDefaults } from 'nativescript-vue';
-import { ScatterChart } from '@nativescript-community/ui-chart/charts/ScatterChart';
-import { ScatterData } from '@nativescript-community/ui-chart/data/ScatterData';
-import { ScatterDataSet } from '@nativescript-community/ui-chart/data/ScatterDataSet';
-import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, ScatterDataSetting, ScatterDataSettingToConfig } from './configurablechartdata';
+import { BubbleChart } from '@nativescript-community/ui-chart/charts/BubbleChart';
+import { BubbleData } from '@nativescript-community/ui-chart/data/BubbleData';
+import { BubbleDataSet } from '@nativescript-community/ui-chart/data/BubbleDataSet';
+
+import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, BubbleDataSetting, BubbleDataSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig } from './configurablechartdata';
 
 
 interface Setting {
-    dataSetting: ScatterDataSetting;
+    dataSetting: BubbleDataSetting;
     hardwareAccelerated: boolean;
     chartSetting?: ChartSetting;
     legendSetting?: LegendSetting;
@@ -30,7 +32,7 @@ const props = withDefaults(
 const Elechart = ref()
 
 function onChartLoaded() {
-    const chart = Elechart.value._nativeView as ScatterChart
+    const chart = Elechart.value._nativeView as BubbleChart
     let chartConfig = { ...DefaultChartSetting }
     Object.assign(chartConfig, props.chartSetting)
     // 设置图表界面
@@ -45,7 +47,6 @@ function onChartLoaded() {
     if (typeof (chartConfig.backgroundColor) != "undefined") {
         chart.backgroundColor = chartConfig.backgroundColor
     }
-
     // 设置图例
     let legendSetting = { ...DefaultLegendSetting }
     Object.assign(legendSetting, props.legendSetting)
@@ -57,7 +58,7 @@ function onChartLoaded() {
     l.setOrientation(legendConfig.orientation)
     l.setDrawInside(legendConfig.drawInside)
     l.setXOffset(legendConfig.xOffset)
-    if (typeof (legendConfig.font) !== "undefined") {
+    if (typeof (legendConfig.font) !== "undefined"){
         l.setFont(legendConfig.font)
     }
     // 设置坐标轴
@@ -127,41 +128,34 @@ function onChartLoaded() {
             getAxisLabel: axisXConfig.valueFormat
         });
     }
-
     // 设置待渲染的设置对象,构造函数参数为待渲染的数据, 图例标签,待渲染数据中代表x轴的属性名,待渲染数据中代表y轴的属性名
     let init_data = []
-    const datasetting = ScatterDataSettingToConfig(props.dataSetting)
+    const datasetting = BubbleDataSettingToConfig(props.dataSetting)
     for (const data of datasetting.data) {
-        let set = new ScatterDataSet(data.values, data.label, "x", "y")
+        let set = new BubbleDataSet(data.values, data.label, "x", "y", "size")
         set.setForm(data.form)
-        set.setScatterShape(data.shape)
-        set.setScatterShapeSize(data.shapesize)
         if (data.color) {
             set.setColor(data.color);
         }
-        if (data.shapeholeColor) {
-            set.setScatterShapeHoleColor(data.shapeholeColor);
-        }
-        if (data.shapeholeRadius) {
-            set.setScatterShapeHoleRadius(data.shapeholeRadius);
+        if (typeof (data.drawValues) !== "undefined") {
+            set.setDrawValues(data.drawValues);
         }
         init_data.push(set)
     }
 
     // create a data object with the data sets
-    const data = new ScatterData(init_data)
+    const data = new BubbleData(init_data)
+    chart.setData(data)
     if (typeof (datasetting.valueTextSize) !== "undefined") {
         data.setValueTextSize(datasetting.valueTextSize);
     }
     if (typeof (datasetting.valueTextColor) !== "undefined") {
         data.setValueTextColor(datasetting.valueTextColor);
     }
-    if (typeof (datasetting.highlight) !== "undefined") {
-        data.setHighlightEnabled(datasetting.highlight);
+    if (typeof (datasetting.highlightCircleWidth) !== "undefined") {
+        data.setHighlightCircleWidth(datasetting.highlightCircleWidth);
     }
 
-    // data.setValueTypeface(tfLight);
-    chart.setData(data)
     chart.invalidate()
 }
 </script>

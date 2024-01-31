@@ -7,15 +7,17 @@ import { ScatterChart, ScatterShape } from '@nativescript-community/ui-chart/cha
 import { ScatterData } from '@nativescript-community/ui-chart/data/ScatterData';
 import { ScatterDataSet } from '@nativescript-community/ui-chart/data/ScatterDataSet';
 import { XAxisPosition } from "@nativescript-community/ui-chart/components/XAxis";
-import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, ScatterDataSetting, ScatterDataSettingToConfig } from './simplechartdata'
+// import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, ScatterDataSetting, ScatterDataSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting } from './simplechartdata';
+import * from './simplechartdata';
 
 interface Setting {
     dataSetting: ScatterDataSetting[];
     chartSetting?: ChartSetting;
     legendSetting?: LegendSetting;
+    axisYSetting?: AxisYSetting;
 }
 
-const props = withDefaults(defineProps<Setting>(), { chartSetting: () => DefaultChartSetting, legendSetting: () => DefaultLegendSetting })
+const props = withDefaults(defineProps<Setting>(), { chartSetting: () => DefaultChartSetting, legendSetting: () => DefaultLegendSetting, axisYSetting: () => DefaultAxisYSetting })
 const Elechart = ref()
 
 function onChartLoaded() {
@@ -34,7 +36,7 @@ function onChartLoaded() {
     // 设置图例
     let legendSetting = { ...DefaultLegendSetting }
     Object.assign(legendSetting, props.legendSetting)
-    let legendConfig = LegendSettingToConfig(legendSetting)
+    const legendConfig = LegendSettingToConfig(legendSetting)
     const l = chart.getLegend()
     l.setEnabled(legendConfig.setEnabled)
     l.setVerticalAlignment(legendConfig.setVerticalAlignment)
@@ -45,11 +47,45 @@ function onChartLoaded() {
 
     // 设置坐标轴
     // y轴
+    let axisYSetting = { ...DefaultAxisYSetting }
+    Object.assign(axisYSetting, props.axisYSetting)
+    const axisYConfig = AxisYSettingToConfig(axisYSetting)
+
+    chart.getAxisRight().setEnabled(axisYConfig.axisRightEnable)
     const yl = chart.getAxisLeft()
+    if (typeof (axisYConfig.SpaceTop) !== undefined) {
+        yl.setSpaceTop(axisYConfig.SpaceTop)
+    }
+    if (typeof (axisYConfig.SpaceBottom) !== undefined) {
+        yl.setSpaceBottom(axisYConfig.SpaceBottom)
+    }
+    if (typeof (axisYConfig.DrawZeroLine) !== undefined) {
+        yl.setDrawZeroLine(axisYConfig.DrawZeroLine)
+    }
+    if (typeof (axisYConfig.Minimum) !== undefined) {
+        yl.setAxisMinimum(axisYConfig.Minimum)
+    }
+    if (typeof (axisYConfig.Maximum) !== undefined) {
+        yl.setAxisMaximum(axisYConfig.Maximum)
+    }
+    if (typeof (axisYConfig.lineWidth) !== undefined) {
+        yl.setAxisLineWidth(axisYConfig.lineWidth)
+    }
+    if (typeof (axisYConfig.lineColor) !== undefined) {
+        yl.setAxisLineColor(axisYConfig.lineColor)
+    }
+    if (typeof (axisYConfig.position) !== undefined) {
+        yl.setDrawLabelsBehindData(axisYConfig.position)
+    }
+
     yl.setAxisMinimum(0) // this replaces setStartAtZero(true) setAxisMaximum setAxisLineWidth setAxisLineColor setDrawLabels setDrawLabelsBehindData
     // yl.setStartAtZero(true)
     chart.getAxisRight().setEnabled(false)
+
+
     const xl = chart.getXAxis()
+
+
     //// 设置x轴的粗度
     xl.setAxisLineWidth(3)
     //// 设置x轴所在的位置,默认在顶部

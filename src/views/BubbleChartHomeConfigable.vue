@@ -64,7 +64,7 @@ function gen_data(): BubbleDataSetting {
             form: "SQUARE",
             color: "blue",
             drawValues: false,
-        },
+        }
     ]
 
     return {

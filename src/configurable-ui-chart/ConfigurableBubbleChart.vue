@@ -7,17 +7,18 @@ import { ref, defineProps, withDefaults } from 'nativescript-vue';
 import { BubbleChart } from '@nativescript-community/ui-chart/charts/BubbleChart';
 import { BubbleData } from '@nativescript-community/ui-chart/data/BubbleData';
 import { BubbleDataSet } from '@nativescript-community/ui-chart/data/BubbleDataSet';
-
-import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, BubbleDataSetting, BubbleDataSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig } from './configurablechartdata';
+import { LimitLine } from '@nativescript-community/ui-chart/components/LimitLine';
+import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, BubbleDataSetting, BubbleDataSettingToConfig } from './configurablechartdata';
 
 
 interface Setting {
     dataSetting: BubbleDataSetting;
-    hardwareAccelerated: boolean;
+    hardwareAccelerated?: boolean;
     chartSetting?: ChartSetting;
     legendSetting?: LegendSetting;
     axisYSetting?: AxisYSetting;
     axisXSetting?: AxisXSetting;
+    limitLinesSetting?: LimitLinesSetting;
 }
 
 const props = withDefaults(
@@ -30,12 +31,32 @@ const props = withDefaults(
         axisXSetting: () => DefaultAxisXSetting
     })
 const Elechart = ref()
-
+const genll = (conf: LimitLineConfig): LimitLine => {
+    let ll = new LimitLine(conf.limit, conf.label)
+    if (typeof (conf.dashedLine) != "undefined") {
+        ll.enableDashedLine(conf.dashedLine.lineLength, conf.dashedLine.spaceLength, conf.dashedLine.phase)
+    }
+    if (typeof (conf.width) != "undefined") {
+        ll.setLineWidth(conf.width)
+    }
+    if (typeof (conf.labelPosition) != "undefined") {
+        ll.setLabelPosition(conf.labelPosition)
+    }
+    if (typeof (conf.textSize) != "undefined") {
+        ll.setTextSize(conf.textSize)
+    }
+    if (typeof (conf.lineColor) != "undefined") {
+        ll.setLineColor(conf.lineColor)
+    }
+    return ll
+}
 function onChartLoaded() {
+    // 设置图表界面
     const chart = Elechart.value._nativeView as BubbleChart
     let chartConfig = { ...DefaultChartSetting }
-    Object.assign(chartConfig, props.chartSetting)
-    // 设置图表界面
+    if (typeof (props.chartSetting) != "undefined") {
+        Object.assign(chartConfig, props.chartSetting)
+    }
     chart.drawFrameRate = chartConfig.drawFrameRate
     chart.setDrawGridBackground(chartConfig.drawGridBackground)
     chart.setTouchEnabled(chartConfig.touchEnabled)
@@ -49,7 +70,9 @@ function onChartLoaded() {
     }
     // 设置图例
     let legendSetting = { ...DefaultLegendSetting }
-    Object.assign(legendSetting, props.legendSetting)
+    if (typeof (props.legendSetting) != "undefined") {
+        Object.assign(legendSetting, props.legendSetting)
+    }
     const legendConfig = LegendSettingToConfig(legendSetting)
     const l = chart.getLegend()
     l.setEnabled(legendConfig.enabled)
@@ -58,13 +81,15 @@ function onChartLoaded() {
     l.setOrientation(legendConfig.orientation)
     l.setDrawInside(legendConfig.drawInside)
     l.setXOffset(legendConfig.xOffset)
-    if (typeof (legendConfig.font) !== "undefined"){
+    if (typeof (legendConfig.font) !== "undefined") {
         l.setFont(legendConfig.font)
     }
     // 设置坐标轴
     // // y轴
     let axisYSetting = { ...DefaultAxisYSetting }
-    Object.assign(axisYSetting, props.axisYSetting)
+    if (typeof (props.axisYSetting) != "undefined") {
+        Object.assign(axisYSetting, props.axisYSetting)
+    }
     const axisYConfig = AxisYSettingToConfig(axisYSetting)
     const yl = chart.getAxisLeft()
     if (typeof (axisYConfig.spaceTop) !== "undefined") {
@@ -98,7 +123,9 @@ function onChartLoaded() {
 
     //x轴
     let axisXSetting = { ...DefaultAxisXSetting }
-    Object.assign(axisXSetting, props.axisXSetting)
+    if (typeof (props.axisXSetting) != "undefined") {
+        Object.assign(axisXSetting, props.axisXSetting)
+    }
     const axisXConfig = AxisXSettingToConfig(axisXSetting)
     const xl = chart.getXAxis()
     xl.setPosition(axisXConfig.position)
@@ -128,24 +155,48 @@ function onChartLoaded() {
             getAxisLabel: axisXConfig.valueFormat
         });
     }
+
+    // 设置辅助线
+    let limitLinesSetting = {}
+    if (typeof (props.limitLinesSetting) != "undefined") {
+        Object.assign(limitLinesSetting, props.limitLinesSetting)
+    }
+    const limitLinesConfig = LimitLinesSettingToConfig(limitLinesSetting)
+
+    if (typeof (limitLinesConfig.axisX) != "undefined") {
+        if (typeof (limitLinesConfig.axisX.linesBehindData) != "undefined") {
+            xl.setDrawLimitLinesBehindData(limitLinesConfig.axisX.linesBehindData)
+        }
+        for (const lineconf of limitLinesConfig.axisX.lines) {
+            let ll = genll(lineconf)
+            xl.addLimitLine(ll);
+        }
+    }
+    if (typeof (limitLinesConfig.axisY) != "undefined") {
+        if (typeof (limitLinesConfig.axisY.linesBehindData) != "undefined") {
+            yl.setDrawLimitLinesBehindData(limitLinesConfig.axisY.linesBehindData)
+        }
+        for (const lineconf of limitLinesConfig.axisY.lines) {
+            let ll = genll(lineconf)
+            yl.addLimitLine(ll);
+        }
+    }
     // 设置待渲染的设置对象,构造函数参数为待渲染的数据, 图例标签,待渲染数据中代表x轴的属性名,待渲染数据中代表y轴的属性名
     let init_data = []
     const datasetting = BubbleDataSettingToConfig(props.dataSetting)
-    for (const data of datasetting.data) {
-        let set = new BubbleDataSet(data.values, data.label, "x", "y", "size")
-        set.setForm(data.form)
-        if (data.color) {
-            set.setColor(data.color);
+    for (const d of datasetting.data) {
+        let set = new BubbleDataSet(d.values, d.label, "x", "y", "size")
+        set.setForm(d.form)
+        if (typeof (d.color)!== "undefined") {
+            set.setColor(d.color);
         }
-        if (typeof (data.drawValues) !== "undefined") {
-            set.setDrawValues(data.drawValues);
+        if (typeof (d.drawValues) !== "undefined") {
+            set.setDrawValues(d.drawValues);
         }
         init_data.push(set)
     }
-
     // create a data object with the data sets
     const data = new BubbleData(init_data)
-    chart.setData(data)
     if (typeof (datasetting.valueTextSize) !== "undefined") {
         data.setValueTextSize(datasetting.valueTextSize);
     }
@@ -155,7 +206,7 @@ function onChartLoaded() {
     if (typeof (datasetting.highlightCircleWidth) !== "undefined") {
         data.setHighlightCircleWidth(datasetting.highlightCircleWidth);
     }
-
+    chart.setData(data)
     chart.invalidate()
 }
 </script>

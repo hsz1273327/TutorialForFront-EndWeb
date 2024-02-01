@@ -1,17 +1,17 @@
 <template>
-    <ScatterChart ref="Elechart" @loaded="onChartLoaded" :hardwareAccelerated="hardwareAccelerated" />
+    <LineChart ref="Elechart" @loaded="onChartLoaded" :hardwareAccelerated="hardwareAccelerated" />
 </template>
 <script lang="ts" setup>
 import { ref, defineProps, withDefaults } from 'nativescript-vue';
-import { ScatterChart } from '@nativescript-community/ui-chart/charts/ScatterChart';
-import { ScatterData } from '@nativescript-community/ui-chart/data/ScatterData';
-import { ScatterDataSet } from '@nativescript-community/ui-chart/data/ScatterDataSet';
+import { LineChart } from "@nativescript-community/ui-chart/charts/LineChart";
+import { LineDataSet } from "@nativescript-community/ui-chart/data/LineDataSet";
+import { LineData } from "@nativescript-community/ui-chart/data/LineData";
 import { LimitLine } from '@nativescript-community/ui-chart/components/LimitLine';
-import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, ScatterDataSetting, ScatterDataSettingToConfig } from './configurablechartdata';
+import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, LineDataSetting, LineDataSettingToConfig } from './configurablechartdata';
 
 
 interface Setting {
-    dataSetting: ScatterDataSetting;
+    dataSetting: LineDataSetting;
     hardwareAccelerated?: boolean;
     chartSetting?: ChartSetting;
     legendSetting?: LegendSetting;
@@ -51,7 +51,7 @@ const genll = (conf: LimitLineConfig): LimitLine => {
 }
 function onChartLoaded() {
     // 设置图表界面
-    const chart = Elechart.value._nativeView as ScatterChart
+    const chart = Elechart.value._nativeView as LineChart
     let chartConfig = { ...DefaultChartSetting }
     if (typeof (props.chartSetting) != "undefined") {
         Object.assign(chartConfig, props.chartSetting)
@@ -182,26 +182,50 @@ function onChartLoaded() {
     }
     // 设置待渲染的设置对象,构造函数参数为待渲染的数据, 图例标签,待渲染数据中代表x轴的属性名,待渲染数据中代表y轴的属性名
     let init_data = []
-    const datasetting = ScatterDataSettingToConfig(props.dataSetting)
+    const datasetting = LineDataSettingToConfig(props.dataSetting)
     for (const data of datasetting.data) {
-        let set = new ScatterDataSet(data.values, data.label, "x", "y")
+        let set = new LineDataSet(data.values, data.label, "x", "y")
         set.setForm(data.form)
-        set.setScatterShape(data.shape)
-        set.setScatterShapeSize(data.shapesize)
-        if (data.color) {
-            set.setColor(data.color);
-        }
-        if (data.shapeholeColor) {
-            set.setScatterShapeHoleColor(data.shapeholeColor);
-        }
-        if (data.shapeholeRadius) {
-            set.setScatterShapeHoleRadius(data.shapeholeRadius);
-        }
+        set.setColor("blue");
+        // /// 设置是否开启y轴图标
+        // set.setDrawIcons(false);
+        // /// 设置使用虚线,参数为线条长度,空白长度,阶段
+        // // set.enableDashedLine(10, 5, 0);
+        // /// 设置点颜色
+        // set.setCircleColor("black");
+        // /// 设置线条宽度
+        // set.setLineWidth(1);
+        // /// 设置点的直径
+        // set.setCircleRadius(3);
+        // /// 设置点为实心点
+        // set.setDrawCircleHole(false);
+        // /// 自定义图例
+        // //// 设置图标样式
+        // set.setForm(LegendForm.LINE);
+        // set.setFormLineWidth(1);
+        // set.setFormLineDashEffect(new DashPathEffect([10, 5], 0));
+        // set.setFormSize(15);
+        // //设置值的文本字体大小
+        // set.setValueTextSize(9);
+        // // 将选择线画为虚线
+        // set.enableDashedHighlightLine(10, 5, 0);
+        // // 设置填充区
+        // set.setDrawFilled(true);
+        // set.setFillFormatter({
+        //     getFillLinePosition(dataSet: any, dataProvider: any) {
+        //         console.log(`get dataset ${Object.keys(dataSet)}`)
+        //         console.log(`get dataProvider ${Object.keys(dataProvider)}`)
+        //         return chart.getAxisLeft().getAxisMinimum();
+        //         // return 
+        //     },
+        // });
+        // // 设置填充区颜色set color of filled area
+        // set.setFillColor("red");
         init_data.push(set)
     }
 
     // create a data object with the data sets
-    const data = new ScatterData(init_data)
+    const data = new LineData(init_data)
     if (typeof (datasetting.valueTextSize) !== "undefined") {
         data.setValueTextSize(datasetting.valueTextSize);
     }
@@ -211,8 +235,6 @@ function onChartLoaded() {
     if (typeof (datasetting.highlight) !== "undefined") {
         data.setHighlightEnabled(datasetting.highlight);
     }
-
-    // data.setValueTypeface(tfLight);
     chart.setData(data)
     chart.invalidate()
 }

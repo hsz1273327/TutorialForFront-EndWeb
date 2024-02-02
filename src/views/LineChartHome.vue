@@ -28,28 +28,22 @@ function onChartLoaded() {
     chart.setTouchEnabled(true);
     // 设置不画出网格
     chart.setDrawGridBackground(false);
-
     // 设置为可拖拽
     chart.setDragEnabled(true);
     // 设置为可伸缩
     chart.setScaleEnabled(true);
-
     // 设置强制捏合手势用于聚焦
     chart.setPinchZoom(true);
-
     //设置启用每次点击突出显示
     chart.setHighlightPerTapEnabled(true);
     //设置启用每次拖拽突出显示
     chart.setHighlightPerDragEnabled(true);
-
-
     // 设置图例标签
     const legend = chart.getLegend();
     /// 启用图例
     legend.setEnabled(true);
     /// 设置图例上的字体
     legend.setFont(new Font("serif", 10, FontStyle.ITALIC, FontWeight.EXTRA_LIGHT));
-
     // 设置坐标轴
     /// 设置x轴
     const xAxis = chart.getXAxis();
@@ -132,7 +126,6 @@ function onChartLoaded() {
     // yAxis.enableGridDashedLine(10, 30, 0);
     //// 设置隐藏x轴的网格
     // yAxis.setDrawGridLines(false)
-
     /// 设置右轴
     const rightAxis = chart.getAxisRight();
     rightAxis.setEnabled(false);
@@ -144,7 +137,6 @@ function onChartLoaded() {
     // rightAxis.setAxisLineWidth(2);
     // //// 设置右轴是否画网格线
     // rightAxis.setDrawGridLines(false)
-
     /// 设置极值线
     const ll1 = new LimitLine(90, 'Upper Limit');
     ll1.setLineWidth(4);
@@ -164,14 +156,11 @@ function onChartLoaded() {
     yAxis.addLimitLine(ll1);
     yAxis.addLimitLine(ll2);
     //xAxis.addLimitLine(llXAxis);
-
-
     // 构造要渲染的数据,index为横轴,value为纵轴
     const myData = new Array(7).fill(0).map((v, i) => ({
         x: i,
         y: Math.random() * 100,
     }));
-
     // 设置待渲染的设置对象,构造函数参数为待渲染的数据, 图例标签,待渲染数据中代表x轴的属性名,待渲染数据中代表y轴的属性名
     const sets = [];
     const set = new LineDataSet(myData, "test line", "x", "y");
@@ -211,10 +200,8 @@ function onChartLoaded() {
     });
     // 设置填充区颜色set color of filled area
     set.setFillColor("red");
-
     sets.push(set);
     const ld = new LineData(sets);
-
     //将数据设置进组件中渲染
     chart.setData(ld);
 }

@@ -1,17 +1,17 @@
 <template>
-    <ScatterChart ref="Elechart" @loaded="onChartLoaded" :hardwareAccelerated="hardwareAccelerated" />
+    <HorizontalBarChart ref="Elechart" @loaded="onChartLoaded" :hardwareAccelerated="hardwareAccelerated" />
 </template>
 <script lang="ts" setup>
 import { ref, defineProps, withDefaults } from 'nativescript-vue';
-import { ScatterChart } from '@nativescript-community/ui-chart/charts/ScatterChart';
-import { ScatterData } from '@nativescript-community/ui-chart/data/ScatterData';
-import { ScatterDataSet } from '@nativescript-community/ui-chart/data/ScatterDataSet';
+import { HorizontalBarChart } from "@nativescript-community/ui-chart/charts/HorizontalBarChart";
+import { BarData } from "@nativescript-community/ui-chart/data/BarData";
+import { BarDataSet } from "@nativescript-community/ui-chart/data/BarDataSet";
 import { LimitLine } from '@nativescript-community/ui-chart/components/LimitLine';
-import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, ScatterDataSetting, ScatterDataSettingToConfig } from './configurablechartdata';
+import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, BarDataSetting, BarDataSettingToConfig } from './configurablechartdata';
 
 
 interface Setting {
-    dataSetting: ScatterDataSetting;
+    dataSetting: BarDataSetting;
     hardwareAccelerated?: boolean;
     chartSetting?: ChartSetting;
     legendSetting?: LegendSetting;
@@ -51,7 +51,7 @@ const genll = (conf: LimitLineConfig): LimitLine => {
 }
 function onChartLoaded() {
     // 设置图表界面
-    const chart = Elechart.value._nativeView as ScatterChart
+    const chart = Elechart.value._nativeView as HorizontalBarChart
     let chartConfig = { ...DefaultChartSetting }
     if (typeof (props.chartSetting) != "undefined") {
         Object.assign(chartConfig, props.chartSetting)
@@ -86,7 +86,7 @@ function onChartLoaded() {
     }
     // 设置坐标轴
     // // y轴
-    let axisYSetting = { ...DefaultAxisYSetting }
+    let axisYSetting = {}
     if (typeof (props.axisYSetting) != "undefined") {
         Object.assign(axisYSetting, props.axisYSetting)
     }
@@ -122,8 +122,6 @@ function onChartLoaded() {
     if (typeof (axisYConfig.labelCount) !== "undefined") {
         yl.setLabelCount(axisYConfig.labelCount.count, axisYConfig.labelCount.force);
     }
-    chart.getAxisRight().setEnabled(axisYConfig.axisRightEnable)
-
     //x轴
     let axisXSetting = { ...DefaultAxisXSetting }
     if (typeof (props.axisXSetting) != "undefined") {
@@ -185,29 +183,45 @@ function onChartLoaded() {
     }
     // 设置待渲染的设置对象,构造函数参数为待渲染的数据, 图例标签,待渲染数据中代表x轴的属性名,待渲染数据中代表y轴的属性名
     let init_data = []
-    const datasetting = ScatterDataSettingToConfig(props.dataSetting)
+    const datasetting = BarDataSettingToConfig(props.dataSetting)
     for (const d of datasetting.data) {
-        let set = new ScatterDataSet(d.values, d.label, "x", "y")
+        let set = new BarDataSet(d.values, d.label, "x", "y")
         set.setForm(d.form)
-        set.setScatterShape(d.shape)
-        set.setScatterShapeSize(d.shapesize)
-        if (d.color) {
-            set.setColor(d.color);
+        set.setDrawIcons(false)
+        if (typeof (d.color) !== "undefined") {
+            set.setColor(d.color)
         }
-        if (d.shapeholeColor) {
-            set.setScatterShapeHoleColor(d.shapeholeColor);
+        if (typeof (d.formLineWidth) !== "undefined") {
+            set.setFormLineWidth(d.formLineWidth);
         }
-        if (d.shapeholeRadius) {
-            set.setScatterShapeHoleRadius(d.shapeholeRadius);
+        if (typeof (d.formSize) !== "undefined") {
+            set.setFormSize(d.formSize);
         }
-        if (typeof (d.axisDependency) !== "undefined") {
+        if (typeof (d.valueTextSize) !== "undefined") {
+            set.setValueTextSize(d.valueTextSize)
+        }
+        if (typeof (d.stackLabels) !== "undefined") {
+            set.setStackLabels(d.stackLabels);
+        }
+        if (typeof (d.barShadowColor) !== "undefined") {
+            set.setBarShadowColor(d.barShadowColor)
+        }
+        if (typeof (d.barBorderWidth) !== "undefined") {
+            set.setBarBorderWidth(d.barBorderWidth)
+        }
+        if (typeof (d.barBorderColor) !== "undefined") {
+            set.setBarBorderColor(d.barBorderColor)
+        }
+        if (typeof (d.highLightAlpha) !== "undefined") {
+            set.setHighLightAlpha(d.highLightAlpha)
+        }
+        if (typeof (d.axisDependency)!== "undefined"){
             set.setAxisDependency(d.axisDependency)
         }
         init_data.push(set)
     }
-
     // create a data object with the data sets
-    const data = new ScatterData(init_data)
+    const data = new BarData(init_data)
     if (typeof (datasetting.valueTextSize) !== "undefined") {
         data.setValueTextSize(datasetting.valueTextSize);
     }
@@ -217,9 +231,13 @@ function onChartLoaded() {
     if (typeof (datasetting.highlight) !== "undefined") {
         data.setHighlightEnabled(datasetting.highlight);
     }
-
-    // data.setValueTypeface(tfLight);
+    if (typeof (datasetting.barWidth) !== "undefined") {
+        data.setBarWidth(datasetting.barWidth);
+    }
+    if (typeof (datasetting.groupBars) !== "undefined") {
+        data.groupBars(datasetting.groupBars.fromX, datasetting.groupBars.groupSpace, datasetting.groupBars.barSpace);
+    }
     chart.setData(data)
-    chart.invalidate()
+    // chart.invalidate()
 }
 </script>

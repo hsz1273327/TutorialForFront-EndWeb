@@ -119,6 +119,9 @@ function onChartLoaded() {
     if (typeof (axisYConfig.withGridLine) !== "undefined") {
         yl.setDrawGridLines(axisYConfig.withGridLine)
     }
+    if (typeof (axisYConfig.labelCount) !== "undefined") {
+        yl.setLabelCount(axisYConfig.labelCount.count, axisYConfig.labelCount.force);
+    }
     chart.getAxisRight().setEnabled(axisYConfig.axisRightEnable)
 
     //x轴
@@ -183,44 +186,49 @@ function onChartLoaded() {
     // 设置待渲染的设置对象,构造函数参数为待渲染的数据, 图例标签,待渲染数据中代表x轴的属性名,待渲染数据中代表y轴的属性名
     let init_data = []
     const datasetting = LineDataSettingToConfig(props.dataSetting)
-    for (const data of datasetting.data) {
-        let set = new LineDataSet(data.values, data.label, "x", "y")
-        set.setForm(data.form)
-        set.setColor("blue");
-        // /// 设置是否开启y轴图标
-        // set.setDrawIcons(false);
-        // /// 设置使用虚线,参数为线条长度,空白长度,阶段
-        // // set.enableDashedLine(10, 5, 0);
-        // /// 设置点颜色
-        // set.setCircleColor("black");
-        // /// 设置线条宽度
-        // set.setLineWidth(1);
-        // /// 设置点的直径
-        // set.setCircleRadius(3);
-        // /// 设置点为实心点
-        // set.setDrawCircleHole(false);
-        // /// 自定义图例
-        // //// 设置图标样式
-        // set.setForm(LegendForm.LINE);
-        // set.setFormLineWidth(1);
-        // set.setFormLineDashEffect(new DashPathEffect([10, 5], 0));
-        // set.setFormSize(15);
-        // //设置值的文本字体大小
-        // set.setValueTextSize(9);
-        // // 将选择线画为虚线
-        // set.enableDashedHighlightLine(10, 5, 0);
-        // // 设置填充区
-        // set.setDrawFilled(true);
-        // set.setFillFormatter({
-        //     getFillLinePosition(dataSet: any, dataProvider: any) {
-        //         console.log(`get dataset ${Object.keys(dataSet)}`)
-        //         console.log(`get dataProvider ${Object.keys(dataProvider)}`)
-        //         return chart.getAxisLeft().getAxisMinimum();
-        //         // return 
-        //     },
-        // });
-        // // 设置填充区颜色set color of filled area
-        // set.setFillColor("red");
+    for (const d of datasetting.data) {
+        let set = new LineDataSet(d.values, d.label, "x", "y")
+        set.setForm(d.form)
+        set.setDrawIcons(false)
+        if (typeof (d.color) !== "undefined") {
+            set.setColor(d.color)
+        }
+        if (typeof (d.dashedLine) !== "undefined") {
+            set.enableDashedLine(d.dashedLine.lineLength, d.dashedLine.spaceLength, d.dashedLine.phase);
+        }
+        if (typeof (d.circleColor) !== "undefined") {
+            set.setCircleColor(d.circleColor);
+        }
+        if (typeof (d.lineWidth) !== "undefined") {
+            set.setLineWidth(d.lineWidth)
+        }
+        if (typeof (d.circleRadius) !== "undefined") {
+            set.setCircleRadius(d.circleRadius)
+        }
+        if (typeof (d.drawCircleHole) !== "undefined") {
+            set.setDrawCircleHole(d.drawCircleHole);
+        }
+        if (typeof (d.formLineWidth) !== "undefined") {
+            set.setFormLineWidth(d.formLineWidth);
+        }
+        if (typeof (d.formSize) !== "undefined") {
+            set.setFormSize(d.formSize)
+        }
+        if (typeof (d.valueTextSize) !== "undefined") {
+            set.setValueTextSize(d.valueTextSize)
+        }
+        if (typeof (d.dashedHighlightLine) !== "undefined") {
+            set.enableDashedHighlightLine(d.dashedHighlightLine.lineLength, d.dashedHighlightLine.spaceLength, d.dashedHighlightLine.phase)
+        }
+        if (typeof (d.drawFilled) !== "undefined") {
+            set.setDrawFilled(d.drawFilled)
+        }
+        if (typeof (d.fillColor) !== "undefined") {
+            set.setFillColor(d.fillColor)
+        }
+        if (typeof (d.axisDependency)!== "undefined"){
+            set.setAxisDependency(d.axisDependency)
+        }
         init_data.push(set)
     }
 
@@ -236,6 +244,6 @@ function onChartLoaded() {
         data.setHighlightEnabled(datasetting.highlight);
     }
     chart.setData(data)
-    chart.invalidate()
+    // chart.invalidate()
 }
 </script>

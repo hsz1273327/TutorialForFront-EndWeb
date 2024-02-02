@@ -1,17 +1,17 @@
 <template>
-    <ScatterChart ref="Elechart" @loaded="onChartLoaded" :hardwareAccelerated="hardwareAccelerated" />
+    <BarChart ref="Elechart" @loaded="onChartLoaded" :hardwareAccelerated="hardwareAccelerated" />
 </template>
 <script lang="ts" setup>
 import { ref, defineProps, withDefaults } from 'nativescript-vue';
-import { ScatterChart } from '@nativescript-community/ui-chart/charts/ScatterChart';
-import { ScatterData } from '@nativescript-community/ui-chart/data/ScatterData';
-import { ScatterDataSet } from '@nativescript-community/ui-chart/data/ScatterDataSet';
+import { CandleStickChart } from "@nativescript-community/ui-chart/charts/CandleStickChart";
+import { CandleData } from "@nativescript-community/ui-chart/data/CandleData";
+import { CandleDataSet } from "@nativescript-community/ui-chart/data/CandleDataSet";
 import { LimitLine } from '@nativescript-community/ui-chart/components/LimitLine';
-import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, ScatterDataSetting, ScatterDataSettingToConfig } from './configurablechartdata';
+import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, CandleStickDataSetting, CandleStickDataSettingToConfig } from './configurablechartdata';
 
 
 interface Setting {
-    dataSetting: ScatterDataSetting;
+    dataSetting: CandleStickDataSetting;
     hardwareAccelerated?: boolean;
     chartSetting?: ChartSetting;
     legendSetting?: LegendSetting;
@@ -51,7 +51,7 @@ const genll = (conf: LimitLineConfig): LimitLine => {
 }
 function onChartLoaded() {
     // 设置图表界面
-    const chart = Elechart.value._nativeView as ScatterChart
+    const chart = Elechart.value._nativeView as CandleStickChart
     let chartConfig = { ...DefaultChartSetting }
     if (typeof (props.chartSetting) != "undefined") {
         Object.assign(chartConfig, props.chartSetting)
@@ -185,29 +185,43 @@ function onChartLoaded() {
     }
     // 设置待渲染的设置对象,构造函数参数为待渲染的数据, 图例标签,待渲染数据中代表x轴的属性名,待渲染数据中代表y轴的属性名
     let init_data = []
-    const datasetting = ScatterDataSettingToConfig(props.dataSetting)
+    const datasetting = CandleStickDataSettingToConfig(props.dataSetting)
     for (const d of datasetting.data) {
-        let set = new ScatterDataSet(d.values, d.label, "x", "y")
-        set.setForm(d.form)
-        set.setScatterShape(d.shape)
-        set.setScatterShapeSize(d.shapesize)
-        if (d.color) {
-            set.setColor(d.color);
-        }
-        if (d.shapeholeColor) {
-            set.setScatterShapeHoleColor(d.shapeholeColor);
-        }
-        if (d.shapeholeRadius) {
-            set.setScatterShapeHoleRadius(d.shapeholeRadius);
-        }
+        let set = new CandleDataSet(d.values, d.label, "x", "y")
+        set.setDrawIcons(false)
+        set.setDecreasingColor(d.decreasingColor);
+        set.setIncreasingColor(d.increasingColor);
         if (typeof (d.axisDependency) !== "undefined") {
             set.setAxisDependency(d.axisDependency)
         }
+        if (typeof (d.decreasingPaintStyle) !== "undefined") {
+            set.setDecreasingPaintStyle(d.decreasingPaintStyle);
+        }
+        if (typeof (d.increasingPaintStyle) !== "undefined") {
+            set.setIncreasingPaintStyle(d.increasingPaintStyle);
+        }
+        if (typeof (d.neutralColor) !== "undefined") {
+            set.setNeutralColor(d.neutralColor)
+        }
+        if (typeof (d.shadowColor) !== "undefined") {
+            set.setShadowColor(d.shadowColor);
+        }
+        if (typeof (d.shadowColorSameAsCandle) !== "undefined") {
+            set.setShadowColorSameAsCandle(d.shadowColorSameAsCandle)
+        }
+        if (typeof (d.shadowWidth) !== "undefined") {
+            set.setShadowWidth(d.shadowWidth)
+        }
+        if (typeof (d.barSpace) !== "undefined") {
+            set.setBarSpace(d.barSpace)
+        }
+        if (typeof (d.showCandleBar) !== "undefined") {
+            set.setShowCandleBar(d.showCandleBar)
+        }
         init_data.push(set)
     }
-
     // create a data object with the data sets
-    const data = new ScatterData(init_data)
+    const data = new CandleData(init_data)
     if (typeof (datasetting.valueTextSize) !== "undefined") {
         data.setValueTextSize(datasetting.valueTextSize);
     }
@@ -217,9 +231,7 @@ function onChartLoaded() {
     if (typeof (datasetting.highlight) !== "undefined") {
         data.setHighlightEnabled(datasetting.highlight);
     }
-
-    // data.setValueTypeface(tfLight);
     chart.setData(data)
-    chart.invalidate()
+    // chart.invalidate()
 }
 </script>

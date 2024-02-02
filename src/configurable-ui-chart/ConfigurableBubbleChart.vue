@@ -119,6 +119,9 @@ function onChartLoaded() {
     if (typeof (axisYConfig.withGridLine) !== "undefined") {
         yl.setDrawGridLines(axisYConfig.withGridLine)
     }
+    if (typeof (axisYConfig.labelCount) !== "undefined") {
+        yl.setLabelCount(axisYConfig.labelCount.count, axisYConfig.labelCount.force);
+    }
     chart.getAxisRight().setEnabled(axisYConfig.axisRightEnable)
 
     //x轴
@@ -192,6 +195,9 @@ function onChartLoaded() {
         }
         if (typeof (d.drawValues) !== "undefined") {
             set.setDrawValues(d.drawValues);
+        }
+        if (typeof (d.axisDependency)!== "undefined"){
+            set.setAxisDependency(d.axisDependency)
         }
         init_data.push(set)
     }

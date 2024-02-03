@@ -2,16 +2,18 @@
     <BarChart ref="Elechart" @loaded="onChartLoaded" :hardwareAccelerated="hardwareAccelerated" />
 </template>
 <script lang="ts" setup>
-import { ref, defineProps, withDefaults } from 'nativescript-vue';
+import { ref, defineProps, withDefaults, onMounted } from 'nativescript-vue';
 import { BarChart } from "@nativescript-community/ui-chart/charts/BarChart";
 import { BarData } from "@nativescript-community/ui-chart/data/BarData";
 import { BarDataSet } from "@nativescript-community/ui-chart/data/BarDataSet";
 import { LimitLine } from '@nativescript-community/ui-chart/components/LimitLine';
-import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, BarDataSetting, BarDataSettingToConfig } from './configurablechartdata';
+import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, BarDataSetting, BarDataSetSetting, BarDataSetSettingToConfig } from './configurablechartdata';
 
 
 interface Setting {
-    dataSetting: BarDataSetting;
+    datasetSetting?: BarDataSetSetting[];
+    datasetGen?: AsyncGenerator<BarDataSetSetting[]>;
+    dataSetting?: BarDataSetting;
     hardwareAccelerated?: boolean;
     chartSetting?: ChartSetting;
     legendSetting?: LegendSetting;
@@ -49,6 +51,46 @@ const genll = (conf: LimitLineConfig): LimitLine => {
     }
     return ll
 }
+
+function CreateDataSet(datasetsetting: BarDataSetSetting): BarDataSet {
+    let d = BarDataSetSettingToConfig(datasetsetting)
+    let set = new BarDataSet(d.values, d.label, "x", "y")
+    set.setForm(d.form)
+    set.setDrawIcons(false)
+    if (typeof (d.color) !== "undefined") {
+        set.setColor(d.color)
+    }
+    if (typeof (d.formLineWidth) !== "undefined") {
+        set.setFormLineWidth(d.formLineWidth);
+    }
+    if (typeof (d.formSize) !== "undefined") {
+        set.setFormSize(d.formSize);
+    }
+    if (typeof (d.valueTextSize) !== "undefined") {
+        set.setValueTextSize(d.valueTextSize)
+    }
+    if (typeof (d.stackLabels) !== "undefined") {
+        set.setStackLabels(d.stackLabels);
+    }
+    if (typeof (d.barShadowColor) !== "undefined") {
+        set.setBarShadowColor(d.barShadowColor)
+    }
+    if (typeof (d.barBorderWidth) !== "undefined") {
+        set.setBarBorderWidth(d.barBorderWidth)
+    }
+    if (typeof (d.barBorderColor) !== "undefined") {
+        set.setBarBorderColor(d.barBorderColor)
+    }
+    if (typeof (d.highLightAlpha) !== "undefined") {
+        set.setHighLightAlpha(d.highLightAlpha)
+    }
+    if (typeof (d.axisDependency) !== "undefined") {
+        set.setAxisDependency(d.axisDependency)
+    }
+    return set
+}
+
+
 function onChartLoaded() {
     // 设置图表界面
     const chart = Elechart.value._nativeView as BarChart
@@ -183,63 +225,63 @@ function onChartLoaded() {
             yl.addLimitLine(ll);
         }
     }
-    // 设置待渲染的设置对象,构造函数参数为待渲染的数据, 图例标签,待渲染数据中代表x轴的属性名,待渲染数据中代表y轴的属性名
-    let init_data = []
-    const datasetting = BarDataSettingToConfig(props.dataSetting)
-    for (const d of datasetting.data) {
-        let set = new BarDataSet(d.values, d.label, "x", "y")
-        set.setForm(d.form)
-        set.setDrawIcons(false)
-        if (typeof (d.color) !== "undefined") {
-            set.setColor(d.color)
+
+    //设置默认渲染数据集
+    let data: BarData
+    if (typeof (props.datasetSetting) !== "undefined") {
+        let init_data = []
+        for (const _d of props.datasetSetting) {
+            let set = CreateDataSet(_d)
+            init_data.push(set)
         }
-        if (typeof (d.formLineWidth) !== "undefined") {
-            set.setFormLineWidth(d.formLineWidth);
-        }
-        if (typeof (d.formSize) !== "undefined") {
-            set.setFormSize(d.formSize);
-        }
-        if (typeof (d.valueTextSize) !== "undefined") {
-            set.setValueTextSize(d.valueTextSize)
-        }
-        if (typeof (d.stackLabels) !== "undefined") {
-            set.setStackLabels(d.stackLabels);
-        }
-        if (typeof (d.barShadowColor) !== "undefined") {
-            set.setBarShadowColor(d.barShadowColor)
-        }
-        if (typeof (d.barBorderWidth) !== "undefined") {
-            set.setBarBorderWidth(d.barBorderWidth)
-        }
-        if (typeof (d.barBorderColor) !== "undefined") {
-            set.setBarBorderColor(d.barBorderColor)
-        }
-        if (typeof (d.highLightAlpha) !== "undefined") {
-            set.setHighLightAlpha(d.highLightAlpha)
-        }
-        if (typeof (d.axisDependency) !== "undefined") {
-            set.setAxisDependency(d.axisDependency)
-        }
-        init_data.push(set)
+        data = new BarData(init_data)
+    } else {
+        data = new BarData()
     }
-    // create a data object with the data sets
-    const data = new BarData(init_data)
-    if (typeof (datasetting.valueTextSize) !== "undefined") {
-        data.setValueTextSize(datasetting.valueTextSize);
-    }
-    if (typeof (datasetting.valueTextColor) !== "undefined") {
-        data.setValueTextColor(datasetting.valueTextColor);
-    }
-    if (typeof (datasetting.highlight) !== "undefined") {
-        data.setHighlightEnabled(datasetting.highlight);
-    }
-    if (typeof (datasetting.barWidth) !== "undefined") {
-        data.setBarWidth(datasetting.barWidth);
-    }
-    if (typeof (datasetting.groupBars) !== "undefined") {
-        data.groupBars(datasetting.groupBars.fromX, datasetting.groupBars.groupSpace, datasetting.groupBars.barSpace);
+    // 设置待渲染的对象
+    if (typeof (props.dataSetting) !== "undefined") {
+        if (typeof (props.dataSetting.valueTextSize) !== "undefined") {
+            data.setValueTextSize(props.dataSetting.valueTextSize);
+        }
+        if (typeof (props.dataSetting.valueTextColor) !== "undefined") {
+            data.setValueTextColor(props.dataSetting.valueTextColor);
+        }
+        if (typeof (props.dataSetting.highlight) !== "undefined") {
+            data.setHighlightEnabled(props.dataSetting.highlight);
+        }
+        if (typeof (props.dataSetting.barWidth) !== "undefined") {
+            data.setBarWidth(props.dataSetting.barWidth);
+        }
+        if (typeof (props.dataSetting.groupBars) !== "undefined") {
+            data.groupBars(props.dataSetting.groupBars.fromX, props.dataSetting.groupBars.groupSpace, props.dataSetting.groupBars.barSpace);
+        }
     }
     chart.setData(data)
-    // chart.invalidate()
+}
+
+if (typeof (props.datasetGen) !== "undefined") {
+    onMounted(
+        async () => {
+            for await (const val of props.datasetGen) {
+                const chart = Elechart.value._nativeView as BarChart
+                const data = chart.getData();
+                //清空数据集
+                let totalcount = data.getDataSetCount()
+                for (let i = 0; i < totalcount; i++) {
+                    data.removeDataSetAtIndex(i)
+                }
+                //重新注入数据集
+                for (const [index, setting] of val.entries()) {
+                    let set = CreateDataSet(setting)
+                    data.addDataSet(set)
+                }
+                // 通知data对象dataset已经改变
+                data.notifyDataChanged();
+                // 通知chart对象data已经改变
+                chart.notifyDataSetChanged();
+            }
+
+        }
+    )
 }
 </script>

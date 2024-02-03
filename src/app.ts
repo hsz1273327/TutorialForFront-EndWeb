@@ -11,9 +11,9 @@ import { install as installGestures } from '@nativescript-community/gesturehandl
 // import Home from './views/BarChartHome.vue'
 // import Home from './views/BarChartHomeConfigable.vue'
 // import Home from './views/HorizontalBarChartHome.vue'
-// import Home from './views/HorizontalBarChartHomeConfigable.vue'
+import Home from './views/HorizontalBarChartHomeConfigable.vue'
 // import Home from './views/CandleStickChartHome.vue'
-import Home from './views/CandleStickChartHomeConfigable.vue'
+// import Home from './views/CandleStickChartHomeConfigable.vue'
 
 
 if (global.isIOS) {

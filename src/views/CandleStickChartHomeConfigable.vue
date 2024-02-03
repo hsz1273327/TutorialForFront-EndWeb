@@ -2,7 +2,8 @@
     <frame id="main-frame">
         <Page actionBarHidden="true">
             <StackLayout height="400">
-                <ConfigurableCandleStickChart :dataSetting="data" :axisXSetting="axisXSetting" :axisYSetting="axisYSetting" />
+                <ConfigurableCandleStickChart :datasetSetting="data" :axisXSetting="axisXSetting"
+                    :axisYSetting="axisYSetting" :datasetGen="autogendata()" :hardwareAccelerated="true"/>
             </StackLayout>
         </Page>
     </frame>
@@ -10,22 +11,22 @@
     
 <script lang="ts" setup>
 import ConfigurableCandleStickChart from '../configurable-ui-chart/ConfigurableCandleStickChart.vue'
-import { CandleStickDataSetting, AxisXSetting, AxisYSetting } from '../configurable-ui-chart/configurablechartdata'
+import { CandleStickDataSetSetting, AxisXSetting, AxisYSetting } from '../configurable-ui-chart/configurablechartdata'
 const axisXSetting: AxisXSetting = {
     position: "bottom",
     lineWidth: 3,
-    withGridLine: false
+    withGridLine: false,
+
 }
 const axisYSetting: AxisYSetting = {
     axisRightEnable: false,
-    minimum: 0,
-    maximum: 100,
     lineWidth: 3,
-    withGridLine: false
+    withGridLine: false,
+    labelCount: {
+        count: 7
+    }
 }
-function gen_data(): CandleStickDataSetting {
-    const values1 = [];
-    chart.resetTracking();
+function gen_data(): CandleStickDataSetSetting[] {
     const values = [];
     for (let i = 0; i < 30; i++) {
         const multi = 100 + 1;
@@ -40,23 +41,36 @@ function gen_data(): CandleStickDataSetting {
             low: val - low,
             open: even ? val + open : val - open,
             close: even ? val - close : val + close,
+            x: i,
         });
     }
-    const set1 = new CandleDataSet(values, "Data Set");
-    set1.setDrawIcons(false);
-    set1.setAxisDependency(AxisDependency.LEFT);
-    //设置open<close
-    set1.setDecreasingColor("green");
-    set1.setDecreasingPaintStyle(Style.FILL);
-    //设置open>close
-    set1.setIncreasingColor("red");
-    set1.setIncreasingPaintStyle(Style.STROKE);
-    //设置当open==close的情况
-    // set1.setNeutralColor("blue");
-    //设置影线
-    // set1.setShadowColor("darkgray");
-    set1.setShadowColorSameAsCandle(true);
-    set1.setShadowWidth(0.7);
+    return [{
+        values: values,
+        label: "Data Set",
+        decreasingColor: "green",
+        decreasingPaintStyle: "fill",
+        increasingColor: "red",
+        increasingPaintStyle: "stroke",
+        shadowColorSameAsCandle: true,
+        shadowWidth: 0.7,
+        axisDependency: "left"
+    }]
 }
 const data = gen_data()
+function delay(ms: number): Promise<void> {
+    return new Promise<void>((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, ms);
+    });
+}
+async function waitforgen(): Promise<CandleStickDataSetSetting[]> {
+    await delay(1000)
+    return gen_data()
+}
+async function* autogendata(): AsyncGenerator<CandleStickDataSetSetting[]> {
+    while (true) {
+        yield await waitforgen()
+    }
+}
 </script>

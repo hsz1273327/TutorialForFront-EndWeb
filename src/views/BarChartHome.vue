@@ -26,6 +26,10 @@ import { FontStyle, FontWeight } from "@nativescript/core/ui/styling/font";
 
 const Elechart = ref()
 
+function genData(){
+    
+}
+
 function onChartLoaded() {
     const chart = Elechart.value._nativeView as BarChart;
     // 设置图表的背景色

@@ -1,17 +1,19 @@
 <template>
-    <BarChart ref="Elechart" @loaded="onChartLoaded" :hardwareAccelerated="hardwareAccelerated" />
+    <CandleStickChart ref="Elechart" @loaded="onChartLoaded" :hardwareAccelerated="hardwareAccelerated" />
 </template>
 <script lang="ts" setup>
-import { ref, defineProps, withDefaults } from 'nativescript-vue';
+import { ref, defineProps, withDefaults, onMounted } from 'nativescript-vue';
 import { CandleStickChart } from "@nativescript-community/ui-chart/charts/CandleStickChart";
 import { CandleData } from "@nativescript-community/ui-chart/data/CandleData";
 import { CandleDataSet } from "@nativescript-community/ui-chart/data/CandleDataSet";
 import { LimitLine } from '@nativescript-community/ui-chart/components/LimitLine';
-import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, CandleStickDataSetting, CandleStickDataSettingToConfig } from './configurablechartdata';
+import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, CandleStickDataSetting, CandleStickDataSetSetting, CandleStickDataSetSettingToConfig } from './configurablechartdata';
 
 
 interface Setting {
-    dataSetting: CandleStickDataSetting;
+    datasetSetting?: CandleStickDataSetSetting[];
+    datasetGen?: AsyncGenerator<CandleStickDataSetSetting[]>;
+    dataSetting?: CandleStickDataSetting;
     hardwareAccelerated?: boolean;
     chartSetting?: ChartSetting;
     legendSetting?: LegendSetting;
@@ -48,6 +50,42 @@ const genll = (conf: LimitLineConfig): LimitLine => {
         ll.setLineColor(conf.lineColor)
     }
     return ll
+}
+
+function CreateDataSet(datasetsetting: CandleStickDataSetSetting): CandleDataSet {
+    let d = CandleStickDataSetSettingToConfig(datasetsetting)
+    let set = new CandleDataSet(d.values, d.label, "x")
+    set.setDrawIcons(false)
+    set.setDecreasingColor(d.decreasingColor);
+    set.setIncreasingColor(d.increasingColor);
+    if (typeof (d.axisDependency) !== "undefined") {
+        set.setAxisDependency(d.axisDependency)
+    }
+    if (typeof (d.decreasingPaintStyle) !== "undefined") {
+        set.setDecreasingPaintStyle(d.decreasingPaintStyle);
+    }
+    if (typeof (d.increasingPaintStyle) !== "undefined") {
+        set.setIncreasingPaintStyle(d.increasingPaintStyle);
+    }
+    if (typeof (d.neutralColor) !== "undefined") {
+        set.setNeutralColor(d.neutralColor)
+    }
+    if (typeof (d.shadowColor) !== "undefined") {
+        set.setShadowColor(d.shadowColor);
+    }
+    if (typeof (d.shadowColorSameAsCandle) !== "undefined") {
+        set.setShadowColorSameAsCandle(d.shadowColorSameAsCandle)
+    }
+    if (typeof (d.shadowWidth) !== "undefined") {
+        set.setShadowWidth(d.shadowWidth)
+    }
+    if (typeof (d.barSpace) !== "undefined") {
+        set.setBarSpace(d.barSpace)
+    }
+    if (typeof (d.showCandleBar) !== "undefined") {
+        set.setShowCandleBar(d.showCandleBar)
+    }
+    return set;
 }
 function onChartLoaded() {
     // 设置图表界面
@@ -183,55 +221,56 @@ function onChartLoaded() {
             yl.addLimitLine(ll);
         }
     }
-    // 设置待渲染的设置对象,构造函数参数为待渲染的数据, 图例标签,待渲染数据中代表x轴的属性名,待渲染数据中代表y轴的属性名
-    let init_data = []
-    const datasetting = CandleStickDataSettingToConfig(props.dataSetting)
-    for (const d of datasetting.data) {
-        let set = new CandleDataSet(d.values, d.label, "x", "y")
-        set.setDrawIcons(false)
-        set.setDecreasingColor(d.decreasingColor);
-        set.setIncreasingColor(d.increasingColor);
-        if (typeof (d.axisDependency) !== "undefined") {
-            set.setAxisDependency(d.axisDependency)
+    //设置默认渲染数据集
+    let data: CandleData
+    if (typeof (props.datasetSetting) !== "undefined") {
+        let init_data = []
+        for (const _d of props.datasetSetting) {
+            let set = CreateDataSet(_d)
+            init_data.push(set)
         }
-        if (typeof (d.decreasingPaintStyle) !== "undefined") {
-            set.setDecreasingPaintStyle(d.decreasingPaintStyle);
-        }
-        if (typeof (d.increasingPaintStyle) !== "undefined") {
-            set.setIncreasingPaintStyle(d.increasingPaintStyle);
-        }
-        if (typeof (d.neutralColor) !== "undefined") {
-            set.setNeutralColor(d.neutralColor)
-        }
-        if (typeof (d.shadowColor) !== "undefined") {
-            set.setShadowColor(d.shadowColor);
-        }
-        if (typeof (d.shadowColorSameAsCandle) !== "undefined") {
-            set.setShadowColorSameAsCandle(d.shadowColorSameAsCandle)
-        }
-        if (typeof (d.shadowWidth) !== "undefined") {
-            set.setShadowWidth(d.shadowWidth)
-        }
-        if (typeof (d.barSpace) !== "undefined") {
-            set.setBarSpace(d.barSpace)
-        }
-        if (typeof (d.showCandleBar) !== "undefined") {
-            set.setShowCandleBar(d.showCandleBar)
-        }
-        init_data.push(set)
+        data = new CandleData(init_data)
+    } else {
+        data = new CandleData()
     }
-    // create a data object with the data sets
-    const data = new CandleData(init_data)
-    if (typeof (datasetting.valueTextSize) !== "undefined") {
-        data.setValueTextSize(datasetting.valueTextSize);
-    }
-    if (typeof (datasetting.valueTextColor) !== "undefined") {
-        data.setValueTextColor(datasetting.valueTextColor);
-    }
-    if (typeof (datasetting.highlight) !== "undefined") {
-        data.setHighlightEnabled(datasetting.highlight);
+    // 设置待渲染的对象
+    if (typeof (props.dataSetting) !== "undefined") {
+        if (typeof (props.dataSetting.valueTextSize) !== "undefined") {
+            data.setValueTextSize(props.dataSetting.valueTextSize);
+        }
+        if (typeof (props.dataSetting.valueTextColor) !== "undefined") {
+            data.setValueTextColor(props.dataSetting.valueTextColor);
+        }
+        if (typeof (props.dataSetting.highlight) !== "undefined") {
+            data.setHighlightEnabled(props.dataSetting.highlight);
+        }
     }
     chart.setData(data)
     // chart.invalidate()
+}
+
+if (typeof (props.datasetGen) !== "undefined") {
+    onMounted(
+        async () => {
+            for await (const val of props.datasetGen) {
+                const chart = Elechart.value._nativeView as CandleStickChart
+                const data = chart.getData();
+                //清空数据集
+                let totalcount = data.getDataSetCount()
+                for (let i = 0; i < totalcount; i++) {
+                    data.removeDataSetAtIndex(i)
+                }
+                //重新注入数据集
+                for (const [index, setting] of val.entries()) {
+                    let set = CreateDataSet(setting)
+                    data.addDataSet(set)
+                }
+                // 通知data对象dataset已经改变
+                data.notifyDataChanged();
+                // 通知chart对象data已经改变
+                chart.notifyDataSetChanged();
+            }
+        }
+    )
 }
 </script>

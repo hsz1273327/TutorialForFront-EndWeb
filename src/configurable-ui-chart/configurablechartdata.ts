@@ -801,39 +801,38 @@ interface LineDataSetConfig {
  * 
 */
 export interface BarDataSetting {
-    data: BarDataSetSetting[];
     valueTextSize?: number;
     valueTextColor?: string;
     highlight?: boolean;
     barWidth?: number; //柱宽
     groupBars?: BarGroupSetting //柱组设置
 }
-export function BarDataSettingToConfig(setting: BarDataSetting): BarDataConfig {
-    let result: BarDataConfig = {
-        data: setting.data.map((s) => BarDataSetSettingToConfig(s)),
-        valueTextSize: setting?.valueTextSize,
-        valueTextColor: setting?.valueTextColor,
-        highlight: setting?.highlight,
-        barWidth: setting?.barWidth,
-        groupBars: setting?.groupBars
-    }
-    return result
-}
-interface BarDataConfig {
-    data: BarDataSetConfig[];
-    valueTextSize?: number;
-    valueTextColor?: string;
-    highlight?: boolean;
-    barWidth?: number;
-    groupBars?: BarGroupSetting
-}
+// export function BarDataSettingToConfig(setting: BarDataSetting): BarDataConfig {
+//     let result: BarDataConfig = {
+//         data: setting.data.map((s) => BarDataSetSettingToConfig(s)),
+//         valueTextSize: setting?.valueTextSize,
+//         valueTextColor: setting?.valueTextColor,
+//         highlight: setting?.highlight,
+//         barWidth: setting?.barWidth,
+//         groupBars: setting?.groupBars
+//     }
+//     return result
+// }
+// interface BarDataConfig {
+//     data: BarDataSetConfig[];
+//     valueTextSize?: number;
+//     valueTextColor?: string;
+//     highlight?: boolean;
+//     barWidth?: number;
+//     groupBars?: BarGroupSetting
+// }
 
 interface BarGroupSetting {
     fromX: number;
     groupSpace: number;
     barSpace: number;
 }
-function BarDataSetSettingToConfig(setting: BarDataSetSetting): BarDataSetConfig {
+export function BarDataSetSettingToConfig(setting: BarDataSetSetting): BarDataSetConfig {
     let result = {
         values: setting.values,
         label: setting.label,
@@ -855,7 +854,7 @@ function BarDataSetSettingToConfig(setting: BarDataSetSetting): BarDataSetConfig
     return result
 }
 
-interface BarDataSetSetting {
+export interface BarDataSetSetting {
     values: Point[];
     label: string;
     form: string;
@@ -890,51 +889,35 @@ interface BarDataSetConfig {
  * 
 */
 export interface CandleStickDataSetting {
-    data: CandleStickDataSetSetting[];
     valueTextSize?: number;
     valueTextColor?: string;
     highlight?: boolean;
 }
-export function CandleStickDataSettingToConfig(setting: CandleStickDataSetting): CandleStickDataConfig {
-    let result: CandleStickDataConfig = {
-        data: setting.data.map((s) => CandleStickDataSetSettingToConfig(s)),
-        valueTextSize: setting?.valueTextSize,
-        valueTextColor: setting?.valueTextColor,
-        highlight: setting?.highlight,
 
-    }
-    return result
-}
-interface CandleStickDataConfig {
-    data: CandleStickDataSetConfig[];
-    valueTextSize?: number;
-    valueTextColor?: string;
-    highlight?: boolean;
-
-}
-function StyleStringToStyle(stylestr: string): any {
-    let style = Style.FILL
-    switch (stylestr.toLowerCase()) {
-        case "fill":
-            {
-                style = Style.FILL
-            }
-            break;
-        case "stroke":
-            {
-                style = Style.STROKE
-            }
-            break;
-        case "fill_and_stroke":
-            {
-                style = Style.FILL_AND_STROKE
-            }
-            break;
-    }
-    return style
+// CandleStick数据集设置
+export interface CandleStickDataSetSetting {
+    values: KPoint[];
+    label: string;
+    //设置open<close
+    decreasingColor?: string;
+    decreasingPaintStyle?: string;
+    //设置open>close
+    increasingColor?: string;
+    increasingPaintStyle?: string;
+    //设置当open==close的情况
+    neutralColor?: string;
+    //设置影线
+    shadowColor?: string;
+    shadowColorSameAsCandle?: boolean;
+    shadowWidth?: number
+    //
+    barSpace?: number;
+    showCandleBar?: boolean;
+    //
+    axisDependency?: string;
 }
 
-function CandleStickDataSetSettingToConfig(setting: CandleStickDataSetSetting): CandleStickDataSetConfig {
+export function CandleStickDataSetSettingToConfig(setting: CandleStickDataSetSetting): CandleStickDataSetConfig {
     let decreasingColor
     if (typeof (setting.decreasingColor) != "undefined") {
         decreasingColor = "green"
@@ -976,28 +959,6 @@ function CandleStickDataSetSettingToConfig(setting: CandleStickDataSetSetting): 
     }
     return result
 }
-
-interface CandleStickDataSetSetting {
-    values: KPoint[];
-    label: string;
-    //设置open<close
-    decreasingColor?: string;
-    decreasingPaintStyle?: string;
-    //设置open>close
-    increasingColor?: string;
-    increasingPaintStyle?: string;
-    //设置当open==close的情况
-    neutralColor?: string;
-    //设置影线
-    shadowColor?: string;
-    shadowColorSameAsCandle?: boolean;
-    shadowWidth?: number
-    //
-    barSpace?: number;
-    showCandleBar?: boolean;
-    //
-    axisDependency?: string;
-}
 interface CandleStickDataSetConfig {
     values: KPoint[];
     label: string;
@@ -1019,11 +980,31 @@ interface CandleStickDataSetConfig {
     //
     axisDependency?: AxisDependency;
 }
-
 interface KPoint {
     x: number,//横轴上的值,一般是时间日期等
     high: number,
     low: number,
     open: number,
     close: number,
+}
+function StyleStringToStyle(stylestr: string): any {
+    let style = Style.FILL
+    switch (stylestr.toLowerCase()) {
+        case "fill":
+            {
+                style = Style.FILL
+            }
+            break;
+        case "stroke":
+            {
+                style = Style.STROKE
+            }
+            break;
+        case "fill_and_stroke":
+            {
+                style = Style.FILL_AND_STROKE
+            }
+            break;
+    }
+    return style
 }

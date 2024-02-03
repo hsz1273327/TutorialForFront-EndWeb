@@ -537,19 +537,12 @@ function AxisDependencyStringToAxisDependency(axisdependencystr: string): AxisDe
  * 
 */
 export interface ScatterDataSetting {
-    data: ScatterDataSetSetting[];
     valueTextSize?: number;
     valueTextColor?: string;
     highlight?: boolean;
 }
 
-interface ScatterDataConfig {
-    data: ScatterDataSetConfig[];
-    valueTextSize?: number;
-    valueTextColor?: string;
-    highlight?: boolean;
-}
-interface ScatterDataSetSetting {
+export interface ScatterDataSetSetting {
     values: Point[];
     label: string;
     form: string;
@@ -561,24 +554,10 @@ interface ScatterDataSetSetting {
     axisDependency?: string; //从左向右还是从右向左
 }
 
-interface ScatterDataSetConfig {
-    values: Point[];
-    label: string;
-    form: LegendForm;
-    shape: ScatterShape;
-    color?: string;
-    shapeholeColor?: string;
-    shapeholeRadius?: number;
-    shapesize?: number;
-    axisDependency?: AxisDependency;
-}
-interface Point {
-    x: number;
-    y: number;
-}
-function ScatterDataSetSettingToConfig(setting: ScatterDataSetSetting): ScatterDataSetConfig {
+
+export function ScatterDataSetSettingToConfig(setting: ScatterDataSetSetting): ScatterDataSetConfig {
     let shape = ScatterShape.SQUARE
-    switch (setting.form.toLowerCase()) {
+    switch (setting.shape.toLowerCase()) {
         case "square":
             {
                 shape = ScatterShape.SQUARE
@@ -631,41 +610,33 @@ function ScatterDataSetSettingToConfig(setting: ScatterDataSetSetting): ScatterD
     }
     return result
 }
-export function ScatterDataSettingToConfig(setting: ScatterDataSetting): ScatterDataConfig {
-    let config = {
-        valueTextSize: setting?.valueTextSize,
-        valueTextColor: setting?.valueTextColor,
-        highlight: setting?.highlight
-    }
-    let data = []
-    for (const dataset of setting.data) {
-        data.push(ScatterDataSetSettingToConfig(dataset))
-    }
-    let conf = Object.assign({ data: data }, config)
-    return conf
-}
 
-interface SizedPoint {
+interface ScatterDataSetConfig {
+    values: Point[];
+    label: string;
+    form: LegendForm;
+    shape: ScatterShape;
+    color?: string;
+    shapeholeColor?: string;
+    shapeholeRadius?: number;
+    shapesize?: number;
+    axisDependency?: AxisDependency;
+}
+interface Point {
     x: number;
     y: number;
-    size: number;
 }
+
 /**  BubbleChart数据设置
  * 
 */
 export interface BubbleDataSetting {
-    data: BubbleDataSetSetting[];
     valueTextSize?: number;
     valueTextColor?: string;
     highlightCircleWidth?: number;
 }
-interface BubbleDataConfig {
-    data: BubbleDataSetConfig[];
-    valueTextSize?: number;
-    valueTextColor?: string;
-    highlightCircleWidth?: number;
-}
-interface BubbleDataSetSetting {
+
+export interface BubbleDataSetSetting {
     values: SizedPoint[];
     label: string;
     form: string;
@@ -673,16 +644,8 @@ interface BubbleDataSetSetting {
     drawValues?: boolean;
     axisDependency?: string;
 }
-interface BubbleDataSetConfig {
-    values: SizedPoint[];
-    label: string;
-    form: LegendForm;
-    color?: string;
-    drawValues?: boolean;
-    axisDependency?: AxisDependency;
-}
 
-function BubbleDataSetSettingToConfig(setting: BubbleDataSetSetting): BubbleDataSetConfig {
+export function BubbleDataSetSettingToConfig(setting: BubbleDataSetSetting): BubbleDataSetConfig {
     let result = {
         values: setting.values,
         label: setting.label,
@@ -697,45 +660,31 @@ function BubbleDataSetSettingToConfig(setting: BubbleDataSetSetting): BubbleData
     return result
 }
 
-export function BubbleDataSettingToConfig(setting: BubbleDataSetting): BubbleDataConfig {
-    let config = {
-        valueTextSize: setting?.valueTextSize,
-        valueTextColor: setting?.valueTextColor,
-        highlightCircleWidth: setting?.highlightCircleWidth
-    }
-    let data = []
-    for (const dataset of setting.data) {
-        data.push(BubbleDataSetSettingToConfig(dataset))
-    }
-    let conf = Object.assign({ data: data }, config)
-    return conf
+interface SizedPoint {
+    x: number;
+    y: number;
+    size: number;
+}
+
+interface BubbleDataSetConfig {
+    values: SizedPoint[];
+    label: string;
+    form: LegendForm;
+    color?: string;
+    drawValues?: boolean;
+    axisDependency?: AxisDependency;
 }
 
 /**  LineChart数据设置
  * 
 */
 export interface LineDataSetting {
-    data: LineDataSetSetting[];
     valueTextSize?: number;
     valueTextColor?: string;
     highlight?: boolean;
 }
-export function LineDataSettingToConfig(setting: LineDataSetting): LineDataConfig {
-    let result: LineDataConfig = {
-        data: setting.data.map((s) => LineDataSetSettingToConfig(s)),
-        valueTextSize: setting?.valueTextSize,
-        valueTextColor: setting?.valueTextColor,
-        highlight: setting?.highlight
-    }
-    return result
-}
-interface LineDataConfig {
-    data: LineDataSetConfig[];
-    valueTextSize?: number;
-    valueTextColor?: string;
-    highlight?: boolean;
-}
-function LineDataSetSettingToConfig(setting: LineDataSetSetting): LineDataSetConfig {
+
+export function LineDataSetSettingToConfig(setting: LineDataSetSetting): LineDataSetConfig {
     let result = {
         values: setting.values,
         label: setting.label,
@@ -759,7 +708,7 @@ function LineDataSetSettingToConfig(setting: LineDataSetSetting): LineDataSetCon
     }
     return result
 }
-interface LineDataSetSetting {
+export interface LineDataSetSetting {
     values: Point[];
     label: string;
     form: string;
@@ -796,7 +745,6 @@ interface LineDataSetConfig {
     axisDependency?: AxisDependency;
 }
 
-
 /**  BarChart数据设置
  * 
 */
@@ -807,25 +755,6 @@ export interface BarDataSetting {
     barWidth?: number; //柱宽
     groupBars?: BarGroupSetting //柱组设置
 }
-// export function BarDataSettingToConfig(setting: BarDataSetting): BarDataConfig {
-//     let result: BarDataConfig = {
-//         data: setting.data.map((s) => BarDataSetSettingToConfig(s)),
-//         valueTextSize: setting?.valueTextSize,
-//         valueTextColor: setting?.valueTextColor,
-//         highlight: setting?.highlight,
-//         barWidth: setting?.barWidth,
-//         groupBars: setting?.groupBars
-//     }
-//     return result
-// }
-// interface BarDataConfig {
-//     data: BarDataSetConfig[];
-//     valueTextSize?: number;
-//     valueTextColor?: string;
-//     highlight?: boolean;
-//     barWidth?: number;
-//     groupBars?: BarGroupSetting
-// }
 
 interface BarGroupSetting {
     fromX: number;

@@ -2,14 +2,14 @@
     <frame id="main-frame">
         <Page actionBarHidden="true">
             <StackLayout height="400">
-                <ConfigurableScatterChart :dataSetting="data" :axisXSetting="axisXSetting" :axisYSetting="axisYSetting" />
+                <ConfigurableScatterChart :datasetSetting="data" :axisXSetting="axisXSetting" :axisYSetting="axisYSetting" />
             </StackLayout>
         </Page>
     </frame>
 </template>
 <script lang="ts" setup>
 import ConfigurableScatterChart from '../configurable-ui-chart/ConfigurableScatterChart.vue'
-import { ScatterDataSetting, AxisXSetting, AxisYSetting } from '../configurable-ui-chart/configurablechartdata'
+import { ScatterDataSetSetting, AxisXSetting, AxisYSetting } from '../configurable-ui-chart/configurablechartdata'
 const axisXSetting: AxisXSetting = {
     position: "bottom",
     lineWidth: 3,
@@ -21,7 +21,7 @@ const axisYSetting: AxisYSetting = {
     minimum: 0,
     withGridLine: false
 }
-function gen_data(): ScatterDataSetting {
+function gen_data(): ScatterDataSetSetting[] {
     const values1 = [];
     const values2 = [];
     const values3 = [];
@@ -59,7 +59,7 @@ function gen_data(): ScatterDataSetting {
             shapesize: 8
         },
     ]
-    return { data }
+    return data
 }
 const data = gen_data()
 </script>

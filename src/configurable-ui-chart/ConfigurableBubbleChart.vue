@@ -3,16 +3,18 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps, withDefaults } from 'nativescript-vue';
+import { ref, defineProps, withDefaults, onMounted } from 'nativescript-vue';
 import { BubbleChart } from '@nativescript-community/ui-chart/charts/BubbleChart';
 import { BubbleData } from '@nativescript-community/ui-chart/data/BubbleData';
 import { BubbleDataSet } from '@nativescript-community/ui-chart/data/BubbleDataSet';
 import { LimitLine } from '@nativescript-community/ui-chart/components/LimitLine';
-import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, BubbleDataSetting, BubbleDataSettingToConfig } from './configurablechartdata';
+import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, BubbleDataSetting, BubbleDataSetSetting, BubbleDataSetSettingToConfig } from './configurablechartdata';
 
 
 interface Setting {
-    dataSetting: BubbleDataSetting;
+    datasetSetting?: BubbleDataSetSetting[];
+    datasetGen?: AsyncGenerator<BubbleDataSetSetting[]>;
+    dataSetting?: BubbleDataSetting;
     hardwareAccelerated?: boolean;
     chartSetting?: ChartSetting;
     legendSetting?: LegendSetting;
@@ -50,6 +52,23 @@ const genll = (conf: LimitLineConfig): LimitLine => {
     }
     return ll
 }
+
+function CreateDataSet(datasetsetting: BubbleDataSetSetting): BubbleDataSet {
+    let d = BubbleDataSetSettingToConfig(datasetsetting)
+    let set = new BubbleDataSet(d.values, d.label, "x", "y", "size")
+    set.setForm(d.form)
+    if (typeof (d.color) !== "undefined") {
+        set.setColor(d.color);
+    }
+    if (typeof (d.drawValues) !== "undefined") {
+        set.setDrawValues(d.drawValues);
+    }
+    if (typeof (d.axisDependency) !== "undefined") {
+        set.setAxisDependency(d.axisDependency)
+    }
+    return set
+}
+
 function onChartLoaded() {
     // 设置图表界面
     const chart = Elechart.value._nativeView as BubbleChart
@@ -184,35 +203,88 @@ function onChartLoaded() {
             yl.addLimitLine(ll);
         }
     }
-    // 设置待渲染的设置对象,构造函数参数为待渲染的数据, 图例标签,待渲染数据中代表x轴的属性名,待渲染数据中代表y轴的属性名
-    let init_data = []
-    const datasetting = BubbleDataSettingToConfig(props.dataSetting)
-    for (const d of datasetting.data) {
-        let set = new BubbleDataSet(d.values, d.label, "x", "y", "size")
-        set.setForm(d.form)
-        if (typeof (d.color)!== "undefined") {
-            set.setColor(d.color);
+    //设置默认渲染数据集
+    let data: BubbleData
+    if (typeof (props.datasetSetting) !== "undefined") {
+        let init_data = []
+        for (const _d of props.datasetSetting) {
+            let set = CreateDataSet(_d)
+            init_data.push(set)
         }
-        if (typeof (d.drawValues) !== "undefined") {
-            set.setDrawValues(d.drawValues);
+        data = new BubbleData(init_data)
+    } else {
+        data = new BubbleData()
+    }
+    // 设置待渲染的对象
+    if (typeof (props.dataSetting) !== "undefined") {
+        if (typeof (props.dataSetting.valueTextSize) !== "undefined") {
+            data.setValueTextSize(props.dataSetting.valueTextSize);
         }
-        if (typeof (d.axisDependency)!== "undefined"){
-            set.setAxisDependency(d.axisDependency)
+        if (typeof (props.dataSetting.valueTextColor) !== "undefined") {
+            data.setValueTextColor(props.dataSetting.valueTextColor);
         }
-        init_data.push(set)
-    }
-    // create a data object with the data sets
-    const data = new BubbleData(init_data)
-    if (typeof (datasetting.valueTextSize) !== "undefined") {
-        data.setValueTextSize(datasetting.valueTextSize);
-    }
-    if (typeof (datasetting.valueTextColor) !== "undefined") {
-        data.setValueTextColor(datasetting.valueTextColor);
-    }
-    if (typeof (datasetting.highlightCircleWidth) !== "undefined") {
-        data.setHighlightCircleWidth(datasetting.highlightCircleWidth);
+        if (typeof (props.dataSetting.highlightCircleWidth) !== "undefined") {
+            data.setHighlightCircleWidth(props.dataSetting.highlightCircleWidth);
+        }
     }
     chart.setData(data)
-    chart.invalidate()
+    // chart.invalidate()
+
+    // // 设置待渲染的设置对象,构造函数参数为待渲染的数据, 图例标签,待渲染数据中代表x轴的属性名,待渲染数据中代表y轴的属性名
+    // let init_data = []
+    // const datasetting = BubbleDataSettingToConfig(props.dataSetting)
+    // for (const d of datasetting.data) {
+    //     let set = new BubbleDataSet(d.values, d.label, "x", "y", "size")
+    //     set.setForm(d.form)
+    //     if (typeof (d.color) !== "undefined") {
+    //         set.setColor(d.color);
+    //     }
+    //     if (typeof (d.drawValues) !== "undefined") {
+    //         set.setDrawValues(d.drawValues);
+    //     }
+    //     if (typeof (d.axisDependency) !== "undefined") {
+    //         set.setAxisDependency(d.axisDependency)
+    //     }
+    //     init_data.push(set)
+    // }
+    // // create a data object with the data sets
+    // const data = new BubbleData(init_data)
+    // if (typeof (datasetting.valueTextSize) !== "undefined") {
+    //     data.setValueTextSize(datasetting.valueTextSize);
+    // }
+    // if (typeof (datasetting.valueTextColor) !== "undefined") {
+    //     data.setValueTextColor(datasetting.valueTextColor);
+    // }
+    // if (typeof (datasetting.highlightCircleWidth) !== "undefined") {
+    //     data.setHighlightCircleWidth(datasetting.highlightCircleWidth);
+    // }
+    // chart.setData(data)
+    
+}
+
+
+if (typeof (props.datasetGen) !== "undefined") {
+    onMounted(
+        async () => {
+            for await (const val of props.datasetGen) {
+                const chart = Elechart.value._nativeView as BubbleChart
+                const data = chart.getData();
+                //清空数据集
+                let totalcount = data.getDataSetCount()
+                for (let i = 0; i < totalcount; i++) {
+                    data.removeDataSetAtIndex(i)
+                }
+                //重新注入数据集
+                for (const [index, setting] of val.entries()) {
+                    let set = CreateDataSet(setting)
+                    data.addDataSet(set)
+                }
+                // 通知data对象dataset已经改变
+                data.notifyDataChanged();
+                // 通知chart对象data已经改变
+                chart.notifyDataSetChanged();
+            }
+        }
+    )
 }
 </script>

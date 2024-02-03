@@ -3,7 +3,7 @@ import { themer } from '@nativescript-community/ui-material-core';
 import { install as installGestures } from '@nativescript-community/gesturehandler';
 
 // import Home from './views/ScatterChartHome.vue'
-// import Home from './views/ScatterChartHomeConfigable.vue'
+import Home from './views/ScatterChartHomeConfigable.vue'
 // import Home from './views/BubbleChartHome.vue'
 // import Home from './views/BubbleChartHomeConfigable.vue'
 // import Home from './views/LineChartHome.vue'
@@ -11,7 +11,7 @@ import { install as installGestures } from '@nativescript-community/gesturehandl
 // import Home from './views/BarChartHome.vue'
 // import Home from './views/BarChartHomeConfigable.vue'
 // import Home from './views/HorizontalBarChartHome.vue'
-import Home from './views/HorizontalBarChartHomeConfigable.vue'
+// import Home from './views/HorizontalBarChartHomeConfigable.vue'
 // import Home from './views/CandleStickChartHome.vue'
 // import Home from './views/CandleStickChartHomeConfigable.vue'
 

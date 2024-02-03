@@ -2,7 +2,8 @@
     <frame id="main-frame">
         <Page actionBarHidden="true">
             <StackLayout height="400">
-                <ConfigurableHorizontalBarChart :dataSetting="data" :axisXSetting="axisXSetting" :axisYSetting="axisYSetting" />
+                <ConfigurableHorizontalBarChart :datasetSetting="data" :dataSetting="dataSetting"
+                    :axisXSetting="axisXSetting" :axisYSetting="axisYSetting" :hardwareAccelerated="true" />
             </StackLayout>
         </Page>
     </frame>
@@ -10,7 +11,7 @@
     
 <script lang="ts" setup>
 import ConfigurableHorizontalBarChart from '../configurable-ui-chart/ConfigurableHorizontalBarChart.vue'
-import { BarDataSetting, AxisXSetting, AxisYSetting } from '../configurable-ui-chart/configurablechartdata'
+import { BarDataSetSetting, BarDataSetting, AxisXSetting, AxisYSetting } from '../configurable-ui-chart/configurablechartdata'
 const axisXSetting: AxisXSetting = {
     position: "bottom",
     lineWidth: 3,
@@ -22,7 +23,15 @@ const axisYSetting: AxisYSetting = {
     lineWidth: 3,
     withGridLine: false
 }
-function gen_data(): BarDataSetting {
+const dataSetting: BarDataSetting = {
+    barWidth: 0.1,
+    groupBars: {
+        fromX: 0,
+        groupSpace: 0.3,
+        barSpace: 0.1
+    }
+}
+function gen_data(): BarDataSetSetting[] {
     const sets = [];
     for (let x of ["red", "yellow", "blue"]) {
         // 构造要渲染的数据,index为横轴,value为纵轴
@@ -40,15 +49,7 @@ function gen_data(): BarDataSetting {
         }
         sets.push(set)
     }
-    return {
-        data: sets,
-        barWidth: 0.1,
-        groupBars: {
-            fromX: 0,
-            groupSpace: 0.3,
-            barSpace: 0.1
-        }
-    }
+    return sets
 }
 const data = gen_data()
 </script>

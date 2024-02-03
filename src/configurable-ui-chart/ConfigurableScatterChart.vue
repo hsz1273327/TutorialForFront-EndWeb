@@ -2,16 +2,18 @@
     <ScatterChart ref="Elechart" @loaded="onChartLoaded" :hardwareAccelerated="hardwareAccelerated" />
 </template>
 <script lang="ts" setup>
-import { ref, defineProps, withDefaults } from 'nativescript-vue';
+import { ref, defineProps, withDefaults, onMounted } from 'nativescript-vue';
 import { ScatterChart } from '@nativescript-community/ui-chart/charts/ScatterChart';
 import { ScatterData } from '@nativescript-community/ui-chart/data/ScatterData';
 import { ScatterDataSet } from '@nativescript-community/ui-chart/data/ScatterDataSet';
 import { LimitLine } from '@nativescript-community/ui-chart/components/LimitLine';
-import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, ScatterDataSetting, ScatterDataSettingToConfig } from './configurablechartdata';
+import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, ScatterDataSetting, ScatterDataSetSetting, ScatterDataSetSettingToConfig } from './configurablechartdata';
 
 
 interface Setting {
-    dataSetting: ScatterDataSetting;
+    datasetSetting?: ScatterDataSetSetting[];
+    datasetGen?: AsyncGenerator<ScatterDataSetSetting[]>;
+    dataSetting?: ScatterDataSetting;
     hardwareAccelerated?: boolean;
     chartSetting?: ChartSetting;
     legendSetting?: LegendSetting;
@@ -49,6 +51,28 @@ const genll = (conf: LimitLineConfig): LimitLine => {
     }
     return ll
 }
+
+function CreateDataSet(datasetsetting: ScatterDataSetSetting): ScatterDataSet {
+    let d = ScatterDataSetSettingToConfig(datasetsetting)
+    let set = new ScatterDataSet(d.values, d.label, "x", "y")
+    set.setForm(d.form)
+    set.setScatterShape(d.shape)
+    set.setScatterShapeSize(d.shapesize)
+    if (d.color) {
+        set.setColor(d.color);
+    }
+    if (d.shapeholeColor) {
+        set.setScatterShapeHoleColor(d.shapeholeColor);
+    }
+    if (d.shapeholeRadius) {
+        set.setScatterShapeHoleRadius(d.shapeholeRadius);
+    }
+    if (typeof (d.axisDependency) !== "undefined") {
+        set.setAxisDependency(d.axisDependency)
+    }
+    return set
+}
+
 function onChartLoaded() {
     // 设置图表界面
     const chart = Elechart.value._nativeView as ScatterChart
@@ -183,43 +207,96 @@ function onChartLoaded() {
             yl.addLimitLine(ll);
         }
     }
-    // 设置待渲染的设置对象,构造函数参数为待渲染的数据, 图例标签,待渲染数据中代表x轴的属性名,待渲染数据中代表y轴的属性名
-    let init_data = []
-    const datasetting = ScatterDataSettingToConfig(props.dataSetting)
-    for (const d of datasetting.data) {
-        let set = new ScatterDataSet(d.values, d.label, "x", "y")
-        set.setForm(d.form)
-        set.setScatterShape(d.shape)
-        set.setScatterShapeSize(d.shapesize)
-        if (d.color) {
-            set.setColor(d.color);
-        }
-        if (d.shapeholeColor) {
-            set.setScatterShapeHoleColor(d.shapeholeColor);
-        }
-        if (d.shapeholeRadius) {
-            set.setScatterShapeHoleRadius(d.shapeholeRadius);
-        }
-        if (typeof (d.axisDependency) !== "undefined") {
-            set.setAxisDependency(d.axisDependency)
-        }
-        init_data.push(set)
-    }
 
-    // create a data object with the data sets
-    const data = new ScatterData(init_data)
-    if (typeof (datasetting.valueTextSize) !== "undefined") {
-        data.setValueTextSize(datasetting.valueTextSize);
+    //设置默认渲染数据集
+    let data: ScatterData
+    if (typeof (props.datasetSetting) !== "undefined") {
+        let init_data = []
+        for (const _d of props.datasetSetting) {
+            let set = CreateDataSet(_d)
+            init_data.push(set)
+        }
+        data = new ScatterData(init_data)
+    } else {
+        data = new ScatterData()
     }
-    if (typeof (datasetting.valueTextColor) !== "undefined") {
-        data.setValueTextColor(datasetting.valueTextColor);
+    // 设置待渲染的对象
+    if (typeof (props.dataSetting) !== "undefined") {
+        if (typeof (props.dataSetting.valueTextSize) !== "undefined") {
+            data.setValueTextSize(props.dataSetting.valueTextSize);
+        }
+        if (typeof (props.dataSetting.valueTextColor) !== "undefined") {
+            data.setValueTextColor(props.dataSetting.valueTextColor);
+        }
+        if (typeof (props.dataSetting.highlight) !== "undefined") {
+            data.setHighlightEnabled(props.dataSetting.highlight);
+        }
     }
-    if (typeof (datasetting.highlight) !== "undefined") {
-        data.setHighlightEnabled(datasetting.highlight);
-    }
-
-    // data.setValueTypeface(tfLight);
     chart.setData(data)
-    chart.invalidate()
+    // chart.invalidate()
+
+    // // 设置待渲染的设置对象,构造函数参数为待渲染的数据, 图例标签,待渲染数据中代表x轴的属性名,待渲染数据中代表y轴的属性名
+    // let init_data = []
+    // const datasetting = ScatterDataSettingToConfig(props.dataSetting)
+    // for (const d of datasetting.data) {
+    //     let set = new ScatterDataSet(d.values, d.label, "x", "y")
+    //     set.setForm(d.form)
+    //     set.setScatterShape(d.shape)
+    //     set.setScatterShapeSize(d.shapesize)
+    //     if (d.color) {
+    //         set.setColor(d.color);
+    //     }
+    //     if (d.shapeholeColor) {
+    //         set.setScatterShapeHoleColor(d.shapeholeColor);
+    //     }
+    //     if (d.shapeholeRadius) {
+    //         set.setScatterShapeHoleRadius(d.shapeholeRadius);
+    //     }
+    //     if (typeof (d.axisDependency) !== "undefined") {
+    //         set.setAxisDependency(d.axisDependency)
+    //     }
+    //     init_data.push(set)
+    // }
+
+    // // create a data object with the data sets
+    // const data = new ScatterData(init_data)
+    // if (typeof (datasetting.valueTextSize) !== "undefined") {
+    //     data.setValueTextSize(datasetting.valueTextSize);
+    // }
+    // if (typeof (datasetting.valueTextColor) !== "undefined") {
+    //     data.setValueTextColor(datasetting.valueTextColor);
+    // }
+    // if (typeof (datasetting.highlight) !== "undefined") {
+    //     data.setHighlightEnabled(datasetting.highlight);
+    // }
+
+    // // data.setValueTypeface(tfLight);
+    // chart.setData(data)
+    // chart.invalidate()
+}
+
+if (typeof (props.datasetGen) !== "undefined") {
+    onMounted(
+        async () => {
+            for await (const val of props.datasetGen) {
+                const chart = Elechart.value._nativeView as ScatterChart
+                const data = chart.getData();
+                //清空数据集
+                let totalcount = data.getDataSetCount()
+                for (let i = 0; i < totalcount; i++) {
+                    data.removeDataSetAtIndex(i)
+                }
+                //重新注入数据集
+                for (const [index, setting] of val.entries()) {
+                    let set = CreateDataSet(setting)
+                    data.addDataSet(set)
+                }
+                // 通知data对象dataset已经改变
+                data.notifyDataChanged();
+                // 通知chart对象data已经改变
+                chart.notifyDataSetChanged();
+            }
+        }
+    )
 }
 </script>

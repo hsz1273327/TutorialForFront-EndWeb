@@ -2,15 +2,15 @@
     <frame id="main-frame">
         <Page actionBarHidden="true">
             <StackLayout>
-                <ConfigurableLineChart :dataSetting="data" :axisXSetting="axisXSetting" :axisYSetting="axisYSetting"
-                    :limitLinesSetting="limitLinesSetting" />
+                <ConfigurableLineChart :datasetSetting="data" :axisXSetting="axisXSetting" :axisYSetting="axisYSetting"
+                    :hardwareAccelerated="true" :limitLinesSetting="limitLinesSetting" />
             </StackLayout>
         </Page>
     </frame>
 </template>
 <script lang="ts" setup>
 import ConfigurableLineChart from '../configurable-ui-chart/ConfigurableLineChart.vue'
-import { LineDataSetting, AxisXSetting, AxisYSetting, LimitLinesSetting } from '../configurable-ui-chart/configurablechartdata'
+import { LineDataSetSetting, AxisXSetting, AxisYSetting, LimitLinesSetting } from '../configurable-ui-chart/configurablechartdata'
 const axisXSetting: AxisXSetting = {
     position: "bottom",
     lineWidth: 3,
@@ -53,33 +53,31 @@ const limitLinesSetting: LimitLinesSetting = {
         ]
     }
 }
-function gen_data(): LineDataSetting {
+function gen_data(): LineDataSetSetting[] {
     const myData = new Array(7).fill(0).map((v, i) => ({
         x: i,
         y: Math.random() * 100,
     }));
-    return {
-        data: [{
-            values: myData,
-            label: "test line",
-            form: "line",
-            color: "blue",
-            circleColor: "black",
-            lineWidth: 1,
-            circleRadius: 3,
-            drawCircleHole: false,
-            formLineWidth: 1,
-            formSize: 15,
-            valueTextSize: 9,
-            dashedHighlightLine: {
-                lineLength: 10,
-                spaceLength: 5,
-                phase: 0
-            },
-            drawFilled: true,
-            fillColor: "red"
-        }],
-    }
+    return [{
+        values: myData,
+        label: "test line",
+        form: "line",
+        color: "blue",
+        circleColor: "black",
+        lineWidth: 1,
+        circleRadius: 3,
+        drawCircleHole: false,
+        formLineWidth: 1,
+        formSize: 15,
+        valueTextSize: 9,
+        dashedHighlightLine: {
+            lineLength: 10,
+            spaceLength: 5,
+            phase: 0
+        },
+        drawFilled: true,
+        fillColor: "red"
+    }]
 }
 const data = gen_data()
 </script>

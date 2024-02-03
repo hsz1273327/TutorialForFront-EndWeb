@@ -90,7 +90,6 @@ function CreateDataSet(datasetsetting: BarDataSetSetting): BarDataSet {
     return set
 }
 
-
 function onChartLoaded() {
     // 设置图表界面
     const chart = Elechart.value._nativeView as BarChart
@@ -280,7 +279,6 @@ if (typeof (props.datasetGen) !== "undefined") {
                 // 通知chart对象data已经改变
                 chart.notifyDataSetChanged();
             }
-
         }
     )
 }

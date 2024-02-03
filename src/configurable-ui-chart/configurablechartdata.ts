@@ -5,6 +5,8 @@ import { XAxisPosition } from "@nativescript-community/ui-chart/components/XAxis
 import { LimitLabelPosition } from '@nativescript-community/ui-chart/components/LimitLine';
 import { Font } from '@nativescript/core';
 import { Style } from "@nativescript-community/ui-canvas";
+import { ColorTemplate } from "@nativescript-community/ui-chart/utils/ColorTemplate";
+import { PieEntry } from "@nativescript-community/ui-chart/data/PieEntry";
 
 /** 通用设置
  * 各种图都可能用到的设置
@@ -15,6 +17,7 @@ export interface ChartSetting {
     touchEnabled: boolean; //允许触控操作
     maxHighlightDistance: number; //最大高亮显示距离
     dragEnabled: boolean; // 允许拖拽操作
+
     scaleEnabled: boolean; // 允许缩放操作
     maxVisibleValueCount: number; //最大可视值计数
     pinchZoom: boolean; //允许强制捏合手势用于聚焦
@@ -936,4 +939,157 @@ function StyleStringToStyle(stylestr: string): any {
             break;
     }
     return style
+}
+
+/**  Pie数据设置
+ * 
+*/
+export interface PieDataSetting {
+    valueTextSize?: number;
+    valueTextColor?: string;
+    highlight?: boolean;
+
+    // 实际设置在chart上
+    usePercentValues?: boolean;
+    descriptionEnabled?: boolean;
+    cextraOffsets: number[];
+    dragDecelerationFrictionCoef?: number;
+    // 设置中心文本
+    centerText?: string;
+
+    // 中间留出空洞和空洞样式
+    drawHoleEnabled?: boolean;//中心留空洞
+    holeColor?: string;
+    holeRadius?: number;
+    //透明环样式
+    transparentCircleColor?: string;
+    transparentCircleAlpha?: number;
+    transparentCircleRadius?: number;
+    //触摸旋转样式设置
+    rotationEnabled?: boolean;
+    rotationAngle?: number;
+    // 设置点击高亮
+    highlightPerTapEnabled?: boolean;
+    entryLabelColor?: string;
+    entryLabelTextSize?: number;
+    drawEntryLabels?: boolean;
+
+}
+
+// Pie数据集设置
+export interface PieDataSetSetting {
+    values: PieValue[];
+    label: string;
+    sliceSpace?: number;
+    iconsOffset?: Point;
+    selectionShift?: number;
+    colorTemplates?: string[];//设置颜色范围,颜色从ColorTemplate中获取,渲染时按位置获取颜色
+    drawValues?: boolean;
+    valueFormatter?: string; //value,label-value,percent,label-value
+}
+
+export function PieDataSetSettingToConfig(setting: PieDataSetSetting): PieDataSetConfig {
+    let result: PieDataSetConfig = {
+        values: setting.values,
+        label: setting.label,
+        sliceSpace: setting?.sliceSpace,
+        iconsOffset: setting?.iconsOffset,
+        selectionShift: setting?.selectionShift,
+        drawValues: setting?.drawValues
+    }
+    if (typeof (setting.colorTemplates) != "undefined") {
+        let colorTemplates = []
+        for (const colortemplate of setting.colorTemplates) {
+            switch (colortemplate.toLowerCase()) {
+                case "liberty_colors":
+                    {
+                        colorTemplates.push(...ColorTemplate.LIBERTY_COLORS)
+                    }
+                    break;
+                case "joyful_colors":
+                    {
+                        colorTemplates.push(...ColorTemplate.JOYFUL_COLORS)
+                    }
+                    break;
+                case "pastel_colors":
+                    {
+                        colorTemplates.push(...ColorTemplate.PASTEL_COLORS)
+                    }
+                    break;
+                case "colorful_colors":
+                    {
+                        colorTemplates.push(...ColorTemplate.COLORFUL_COLORS)
+                    }
+                    break;
+                case "vordiplom_colors":
+                    {
+                        colorTemplates.push(...ColorTemplate.VORDIPLOM_COLORS)
+                    }
+                    break;
+                case "material_colors":
+                    {
+                        colorTemplates.push(...ColorTemplate.MATERIAL_COLORS)
+                    }
+                    break;
+                case "holoblue":
+                    {
+                        colorTemplates.push(ColorTemplate.getHoloBlue())
+                    }
+                    break;
+            }
+        }
+        Object.assign(result, { colorTemplates: colorTemplates })
+    }
+    if (typeof (setting.valueFormatter) != "undefined") {
+        let colorTemplates: (value: number, entry: PieEntry) => string
+        switch (setting.valueFormatter.toLowerCase()) {
+            case "value":
+                {
+                    colorTemplates = (value: number, entry: PieEntry):string => {
+                        return `${value}`
+                    }
+                }
+                break;
+            case "label-value":
+                {
+                    colorTemplates = (value: number, entry: PieEntry):string => {
+                        return `${entry.label}-${value}`
+                    }
+                }
+                break;
+            case "percent":
+                {
+                    colorTemplates = (value: number, entry: PieEntry):string => {
+                        setting.values.map(())
+                        return `${value}`
+                    }
+                }
+                break;
+            case "label-percent":
+                {
+                    colorTemplates = (value: number, entry: PieEntry):string => {
+                        return `${value}`
+                    }
+                }
+                break;
+        }
+        let decreasingPaintStyle = StyleStringToStyle(setting.decreasingPaintStyle)
+        Object.assign(result, { decreasingPaintStyle: decreasingPaintStyle })
+    }
+
+    return result
+}
+interface PieDataSetConfig {
+    values: PieValue[];
+    label: string;
+    sliceSpace?: number;
+    iconsOffset?: Point;
+    selectionShift?: number;
+    colorTemplates?: any[];//设置颜色范围,颜色从ColorTemplate中获取,渲染时按位置获取颜色
+    drawValues?: boolean;
+    valueFormatter?: (value: number, entry: PieEntry) => string; //value,label-value,percent,label-value
+}
+interface PieValue {
+    y: number,
+    label: string,
 }

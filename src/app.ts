@@ -3,7 +3,7 @@ import { themer } from '@nativescript-community/ui-material-core';
 import { install as installGestures } from '@nativescript-community/gesturehandler';
 
 // import Home from './views/ScatterChartHome.vue'
-import Home from './views/ScatterChartHomeConfigable.vue'
+// import Home from './views/ScatterChartHomeConfigable.vue'
 // import Home from './views/BubbleChartHome.vue'
 // import Home from './views/BubbleChartHomeConfigable.vue'
 // import Home from './views/LineChartHome.vue'
@@ -14,6 +14,8 @@ import Home from './views/ScatterChartHomeConfigable.vue'
 // import Home from './views/HorizontalBarChartHomeConfigable.vue'
 // import Home from './views/CandleStickChartHome.vue'
 // import Home from './views/CandleStickChartHomeConfigable.vue'
+import Home from './views/PieChartHome.vue'
+// import Home from './views/PieChartHomeConfigable.vue'
 
 
 if (global.isIOS) {
@@ -28,5 +30,6 @@ registerElement('LineChart', () => require("@nativescript-community/ui-chart/cha
 registerElement('BarChart', () => require("@nativescript-community/ui-chart/charts").BarChart);
 registerElement('HorizontalBarChart', () => require("@nativescript-community/ui-chart/charts").HorizontalBarChart);
 registerElement('CandleStickChart', () => require("@nativescript-community/ui-chart/charts").CandleStickChart);
+registerElement('PieChart', () => require("@nativescript-community/ui-chart/charts").PieChart);
 
 createApp(Home).start();

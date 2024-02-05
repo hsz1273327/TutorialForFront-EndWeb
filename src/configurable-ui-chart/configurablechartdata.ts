@@ -7,7 +7,7 @@ import { Font } from '@nativescript/core';
 import { Style } from "@nativescript-community/ui-canvas";
 import { ColorTemplate } from "@nativescript-community/ui-chart/utils/ColorTemplate";
 import { PieEntry } from "@nativescript-community/ui-chart/data/PieEntry";
-
+import { RadarEntry } from "@nativescript-community/ui-chart/data/RadarEntry";
 /** 通用设置
  * 各种图都可能用到的设置
  */
@@ -48,7 +48,9 @@ export interface LegendSetting {
     orientation: string;
     drawInside: boolean;
     xOffset: number;
-    font?: FontSetting
+    font?: FontSetting;
+    xEntrySpace?: number;
+    yEntrySpace?: number;
 }
 export const DefaultLegendSetting = {
     enabled: true,
@@ -114,7 +116,9 @@ export function LegendSettingToConfig(setting: LegendSetting): LegendConfig {
         horizontalAlignment: horizontalAlignment,
         orientation: orientation,
         drawInside: setting.drawInside,
-        xOffset: setting.xOffset
+        xOffset: setting.xOffset,
+        xEntrySpace: setting?.xEntrySpace,
+        yEntrySpace: setting?.yEntrySpace
     }
     if (typeof (setting.font) != "undefined") {
         let style = undefined
@@ -131,6 +135,7 @@ export function LegendSettingToConfig(setting: LegendSetting): LegendConfig {
     return result
 }
 
+
 interface LegendConfig {
     enabled: boolean;
     verticalAlignment: LegendVerticalAlignment;
@@ -139,6 +144,8 @@ interface LegendConfig {
     drawInside: boolean;
     xOffset: number;
     font?: Font;
+    xEntrySpace?: number;
+    yEntrySpace?: number;
 }
 interface FontSetting {
     family: string,
@@ -941,22 +948,20 @@ function StyleStringToStyle(stylestr: string): any {
     return style
 }
 
-/**  Pie数据设置
+/**  Pie图设置
  * 
 */
-export interface PieDataSetting {
-    valueTextSize?: number;
-    valueTextColor?: string;
-    highlight?: boolean;
-
+export interface PieChartSetting {
     // 实际设置在chart上
+    drawFrameRate: boolean; //显示fps
+    touchEnabled?: boolean; //允许触控操作
+    maxHighlightDistance?: number; //最大高亮显示距离
+    backgroundColor?: string
     usePercentValues?: boolean;
-    descriptionEnabled?: boolean;
-    cextraOffsets: number[];
+    extraOffsets?: [number, number, number, number];
     dragDecelerationFrictionCoef?: number;
     // 设置中心文本
     centerText?: string;
-
     // 中间留出空洞和空洞样式
     drawHoleEnabled?: boolean;//中心留空洞
     holeColor?: string;
@@ -973,13 +978,33 @@ export interface PieDataSetting {
     entryLabelColor?: string;
     entryLabelTextSize?: number;
     drawEntryLabels?: boolean;
-
+    //在data下设置的
+    valueTextSize?: number;
+    valueTextColor?: string;
+    highlight?: boolean;
 }
+
+export const DefaultPieChartSetting: PieChartSetting = {
+    drawFrameRate: false,
+    highlightPerTapEnabled: false,
+    usePercentValues: true,
+    // 中间留出空洞和空洞样式
+    drawHoleEnabled: false,
+    //透明环样式
+    transparentCircleColor: "white",
+    transparentCircleAlpha: 110,
+    transparentCircleRadius: 61,
+    //触摸旋转样式设置
+    rotationEnabled: false,
+}
+
+
 
 // Pie数据集设置
 export interface PieDataSetSetting {
     values: PieValue[];
     label: string;
+    form?: string;
     sliceSpace?: number;
     iconsOffset?: Point;
     selectionShift?: number;
@@ -987,6 +1012,7 @@ export interface PieDataSetSetting {
     drawValues?: boolean;
     valueFormatter?: string; //value,label-value,percent,label-value
 }
+
 
 export function PieDataSetSettingToConfig(setting: PieDataSetSetting): PieDataSetConfig {
     let result: PieDataSetConfig = {
@@ -997,6 +1023,11 @@ export function PieDataSetSettingToConfig(setting: PieDataSetSetting): PieDataSe
         selectionShift: setting?.selectionShift,
         drawValues: setting?.drawValues
     }
+    if (typeof (setting.form) != "undefined") {
+        let form = FormStringToForm(setting.form)
+        Object.assign(result, { form: form })
+    }
+
     if (typeof (setting.colorTemplates) != "undefined") {
         let colorTemplates = []
         for (const colortemplate of setting.colorTemplates) {
@@ -1041,47 +1072,46 @@ export function PieDataSetSettingToConfig(setting: PieDataSetSetting): PieDataSe
         Object.assign(result, { colorTemplates: colorTemplates })
     }
     if (typeof (setting.valueFormatter) != "undefined") {
-        let colorTemplates: (value: number, entry: PieEntry) => string
+        let valueFormatter: (value: number, entry: PieEntry) => string
         switch (setting.valueFormatter.toLowerCase()) {
             case "value":
                 {
-                    colorTemplates = (value: number, entry: PieEntry):string => {
+                    valueFormatter = (value: number, entry: PieEntry): string => {
                         return `${value}`
                     }
                 }
                 break;
             case "label-value":
                 {
-                    colorTemplates = (value: number, entry: PieEntry):string => {
+                    valueFormatter = (value: number, entry: PieEntry): string => {
                         return `${entry.label}-${value}`
                     }
                 }
                 break;
             case "percent":
                 {
-                    colorTemplates = (value: number, entry: PieEntry):string => {
-                        setting.values.map(())
-                        return `${value}`
+                    valueFormatter = (value: number, entry: PieEntry): string => {
+                        return `${value.toFixed(2)}%`
                     }
                 }
                 break;
             case "label-percent":
                 {
-                    colorTemplates = (value: number, entry: PieEntry):string => {
-                        return `${value}`
+                    valueFormatter = (value: number, entry: PieEntry): string => {
+                        return `${entry.label}-${value.toFixed(2)}%`
                     }
                 }
                 break;
         }
-        let decreasingPaintStyle = StyleStringToStyle(setting.decreasingPaintStyle)
-        Object.assign(result, { decreasingPaintStyle: decreasingPaintStyle })
+        Object.assign(result, { valueFormatter: valueFormatter })
     }
-
     return result
 }
+
 interface PieDataSetConfig {
     values: PieValue[];
     label: string;
+    form?: LegendForm;
     sliceSpace?: number;
     iconsOffset?: Point;
     selectionShift?: number;
@@ -1092,4 +1122,179 @@ interface PieDataSetConfig {
 interface PieValue {
     y: number,
     label: string,
+}
+
+
+/** Radar数据设置
+ * 
+*/
+export interface RadarChartSetting {
+    // 实际设置在chart上
+    drawFrameRate: boolean; //显示fps
+    touchEnabled?: boolean; //允许触控操作
+    maxHighlightDistance?: number; //最大高亮显示距离
+    backgroundColor?: string
+    usePercentValues?: boolean;
+    extraOffsets?: [number, number, number, number];
+    dragDecelerationFrictionCoef?: number;
+    // 设置中心文本
+    centerText?: string;
+    // 中间留出空洞和空洞样式
+    drawHoleEnabled?: boolean;//中心留空洞
+    holeColor?: string;
+    holeRadius?: number;
+    //透明环样式
+    transparentCircleColor?: string;
+    transparentCircleAlpha?: number;
+    transparentCircleRadius?: number;
+    //触摸旋转样式设置
+    rotationEnabled?: boolean;
+    rotationAngle?: number;
+    // 设置点击高亮
+    highlightPerTapEnabled?: boolean;
+    entryLabelColor?: string;
+    entryLabelTextSize?: number;
+    drawEntryLabels?: boolean;
+    //在data下设置的
+    valueTextSize?: number;
+    valueTextColor?: string;
+    highlight?: boolean;
+}
+
+
+export const DefaultRadarChartSetting: RadarChartSetting = {
+    drawFrameRate: false,
+    highlightPerTapEnabled: false,
+    usePercentValues: true,
+    // 中间留出空洞和空洞样式
+    drawHoleEnabled: false,
+    //透明环样式
+    transparentCircleColor: "white",
+    transparentCircleAlpha: 110,
+    transparentCircleRadius: 61,
+    //触摸旋转样式设置
+    rotationEnabled: false,
+}
+
+
+
+// Radar数据集设置
+export interface RadarDataSetSetting {
+    values: RadarValue[];
+    label: string;
+    form?: string;
+    sliceSpace?: number;
+    iconsOffset?: Point;
+    selectionShift?: number;
+    colorTemplates?: string[];//设置颜色范围,颜色从ColorTemplate中获取,渲染时按位置获取颜色
+    drawValues?: boolean;
+    valueFormatter?: string; //value,label-value,percent,label-value
+}
+
+export function RadarDataSetSettingToConfig(setting: RadarDataSetSetting): RadarDataSetConfig {
+    let result: RadarDataSetConfig = {
+        values: setting.values,
+        label: setting.label,
+        sliceSpace: setting?.sliceSpace,
+        iconsOffset: setting?.iconsOffset,
+        selectionShift: setting?.selectionShift,
+        drawValues: setting?.drawValues
+    }
+    if (typeof (setting.form) != "undefined") {
+        let form = FormStringToForm(setting.form)
+        Object.assign(result, { form: form })
+    }
+
+    if (typeof (setting.colorTemplates) != "undefined") {
+        let colorTemplates = []
+        for (const colortemplate of setting.colorTemplates) {
+            switch (colortemplate.toLowerCase()) {
+                case "liberty_colors":
+                    {
+                        colorTemplates.push(...ColorTemplate.LIBERTY_COLORS)
+                    }
+                    break;
+                case "joyful_colors":
+                    {
+                        colorTemplates.push(...ColorTemplate.JOYFUL_COLORS)
+                    }
+                    break;
+                case "pastel_colors":
+                    {
+                        colorTemplates.push(...ColorTemplate.PASTEL_COLORS)
+                    }
+                    break;
+                case "colorful_colors":
+                    {
+                        colorTemplates.push(...ColorTemplate.COLORFUL_COLORS)
+                    }
+                    break;
+                case "vordiplom_colors":
+                    {
+                        colorTemplates.push(...ColorTemplate.VORDIPLOM_COLORS)
+                    }
+                    break;
+                case "material_colors":
+                    {
+                        colorTemplates.push(...ColorTemplate.MATERIAL_COLORS)
+                    }
+                    break;
+                case "holoblue":
+                    {
+                        colorTemplates.push(ColorTemplate.getHoloBlue())
+                    }
+                    break;
+            }
+        }
+        Object.assign(result, { colorTemplates: colorTemplates })
+    }
+    if (typeof (setting.valueFormatter) != "undefined") {
+        let valueFormatter: (value: number, entry: PieEntry) => string
+        switch (setting.valueFormatter.toLowerCase()) {
+            case "value":
+                {
+                    valueFormatter = (value: number, entry: PieEntry): string => {
+                        return `${value}`
+                    }
+                }
+                break;
+            case "label-value":
+                {
+                    valueFormatter = (value: number, entry: PieEntry): string => {
+                        return `${entry.label}-${value}`
+                    }
+                }
+                break;
+            case "percent":
+                {
+                    valueFormatter = (value: number, entry: PieEntry): string => {
+                        return `${value.toFixed(2)}%`
+                    }
+                }
+                break;
+            case "label-percent":
+                {
+                    valueFormatter = (value: number, entry: PieEntry): string => {
+                        return `${entry.label}-${value.toFixed(2)}%`
+                    }
+                }
+                break;
+        }
+        Object.assign(result, { valueFormatter: valueFormatter })
+    }
+    return result
+}
+interface RadarDataSetConfig {
+    values: RadarValue[];
+    label: string;
+    form?: LegendForm;
+    sliceSpace?: number;
+    iconsOffset?: Point;
+    selectionShift?: number;
+    colorTemplates?: any[];//设置颜色范围,颜色从ColorTemplate中获取,渲染时按位置获取颜色
+    drawValues?: boolean;
+    valueFormatter?: (value: number, entry: RadarEntry) => string; //value,label-value,percent,label-value
+}
+interface RadarValue {
+    y: number
 }

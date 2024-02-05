@@ -108,8 +108,14 @@ function onChartLoaded() {
     if (typeof (legendConfig.font) !== "undefined") {
         l.setFont(legendConfig.font)
     }
+    if (typeof (legendConfig.xEntrySpace) !== "undefined") {
+        l.setXEntrySpace(legendConfig.xEntrySpace)
+    }
+    if (typeof (legendConfig.yEntrySpace) !== "undefined") {
+        l.setYEntrySpace(legendConfig.yEntrySpace)
+    }
     // 设置坐标轴
-    // // y轴
+    // y轴
     let axisYSetting = { ...DefaultAxisYSetting }
     if (typeof (props.axisYSetting) != "undefined") {
         Object.assign(axisYSetting, props.axisYSetting)

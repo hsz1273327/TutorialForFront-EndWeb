@@ -14,8 +14,11 @@ import { install as installGestures } from '@nativescript-community/gesturehandl
 // import Home from './views/HorizontalBarChartHomeConfigable.vue'
 // import Home from './views/CandleStickChartHome.vue'
 // import Home from './views/CandleStickChartHomeConfigable.vue'
-import Home from './views/PieChartHome.vue'
+// import Home from './views/PieChartHome.vue'
 // import Home from './views/PieChartHomeConfigable.vue'
+import Home from './views/RadarChartHome.vue'
+// import Home from './views/RadarChartHomeConfigable.vue'
+
 
 
 if (global.isIOS) {
@@ -31,5 +34,6 @@ registerElement('BarChart', () => require("@nativescript-community/ui-chart/char
 registerElement('HorizontalBarChart', () => require("@nativescript-community/ui-chart/charts").HorizontalBarChart);
 registerElement('CandleStickChart', () => require("@nativescript-community/ui-chart/charts").CandleStickChart);
 registerElement('PieChart', () => require("@nativescript-community/ui-chart/charts").PieChart);
+registerElement('RadarChart', () => require("@nativescript-community/ui-chart/charts").RadarChart);
 
 createApp(Home).start();

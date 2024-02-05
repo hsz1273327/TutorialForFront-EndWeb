@@ -1,11 +1,11 @@
 <template>
-    <PieChart ref="Elechart" @loaded="onChartLoaded" :hardwareAccelerated="hardwareAccelerated" />
+    <RadarChart ref="Elechart" @loaded="onChartLoaded" :hardwareAccelerated="hardwareAccelerated" />
 </template>
 <script lang="ts" setup>
 import { ref, defineProps, withDefaults, onMounted } from 'nativescript-vue';
-import { PieChart } from "@nativescript-community/ui-chart/charts/PieChart";
-import { PieData } from "@nativescript-community/ui-chart/data/PieData";
-import { PieDataSet } from "@nativescript-community/ui-chart/data/PieDataSet";
+import { RadarChart } from "@nativescript-community/ui-chart/charts/RadarChart";
+import { RadarData } from "@nativescript-community/ui-chart/data/RadarData";
+import { RadarDataSet } from "@nativescript-community/ui-chart/data/RadarDataSet";
 
 import { BaseEntry } from "@nativescript-community/ui-chart/data/BaseEntry";
 import { AxisBase } from "@nativescript-community/ui-chart/components/AxisBase";
@@ -14,14 +14,14 @@ import { Entry } from "@nativescript-community/ui-chart/data/Entry";
 import { RadarEntry } from "@nativescript-community/ui-chart/data/RadarEntry";
 import { BubbleEntry } from "@nativescript-community/ui-chart/data/BubbleEntry";
 import { CandleEntry } from "@nativescript-community/ui-chart/data/CandleEntry";
-import { LegendSetting, DefaultLegendSetting, LegendSettingToConfig, PieChartSetting, DefaultPieChartSetting, PieDataSetSetting, PieDataSetSettingToConfig } from './configurablechartdata';
+import { LegendSetting, DefaultLegendSetting, LegendSettingToConfig, RadarChartSetting, DefaultRadarChartSetting, RadarDataSetSetting, RadarDataSetSettingToConfig } from './configurablechartdata';
 
 
 interface Setting {
-    datasetSetting?: PieDataSetSetting[];
-    datasetGen?: AsyncGenerator<PieDataSetSetting[]>;
+    datasetSetting?: RadarDataSetSetting[];
+    datasetGen?: AsyncGenerator<RadarDataSetSetting[]>;
     hardwareAccelerated?: boolean;
-    chartSetting?: PieChartSetting;
+    chartSetting?: RadarChartSetting;
     legendSetting?: LegendSetting;
 }
 
@@ -29,14 +29,14 @@ const props = withDefaults(
     defineProps<Setting>(),
     {
         hardwareAccelerated: false,
-        chartSetting: () => DefaultPieChartSetting,
+        chartSetting: () => DefaultRadarChartSetting,
         legendSetting: () => DefaultLegendSetting
     })
 const Elechart = ref()
 
-function CreateDataSet(datasetsetting: PieDataSetSetting): PieDataSet {
+function CreateDataSet(datasetsetting: RadarDataSetSetting): RadarDataSet {
     let d = PieDataSetSettingToConfig(datasetsetting)
-    let set = new PieDataSet(d.values, d.label, "y")
+    let set = new RadarDataSet(d.values, d.label, "y")
     if (typeof (d.form) !== "undefined") {
         set.setForm(d.form)
     }
@@ -92,8 +92,8 @@ function CreateDataSet(datasetsetting: PieDataSetSetting): PieDataSet {
 
 function onChartLoaded() {
     // 设置图表界面
-    const chart = Elechart.value._nativeView as PieChart
-    let chartConfig = { ...DefaultPieChartSetting }
+    const chart = Elechart.value._nativeView as RadarChart
+    let chartConfig = { ...DefaultRadarChartSetting }
     if (typeof (props.chartSetting) != "undefined") {
         Object.assign(chartConfig, props.chartSetting)
     }
@@ -180,16 +180,16 @@ function onChartLoaded() {
         l.setYEntrySpace(legendConfig.yEntrySpace)
     }
     //设置默认渲染数据集
-    let data: PieData
+    let data: RadarData
     if (typeof (props.datasetSetting) !== "undefined") {
         let init_data = []
         for (const _d of props.datasetSetting) {
             let set = CreateDataSet(_d)
             init_data.push(set)
         }
-        data = new PieData(init_data)
+        data = new RadarData(init_data)
     } else {
-        data = new PieData()
+        data = new RadarData([])
     }
     // 设置待渲染的对象
     if (typeof (chartConfig.valueTextSize) !== "undefined") {
@@ -208,7 +208,7 @@ if (typeof (props.datasetGen) !== "undefined") {
     onMounted(
         async () => {
             for await (const val of props.datasetGen) {
-                const chart = Elechart.value._nativeView as PieChart
+                const chart = Elechart.value._nativeView as RadarChart
                 const data = chart.getData();
                 //清空数据集
                 let totalcount = data.getDataSetCount()

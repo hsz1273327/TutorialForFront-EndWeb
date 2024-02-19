@@ -155,6 +155,7 @@ interface FontSetting {
     scale?: number,
 }
 
+
 /** Y轴设置
  * 
 */
@@ -169,6 +170,12 @@ export interface AxisYSetting {
     labelPosition?: string;
     withGridLine?: boolean;
     labelCount?: LableCountSetting;
+    suggestedAxisMinimum?: number;
+    suggestedAxisMaximum?: number;
+    spaceMin?: number;
+    spaceMax?: number;
+    textSize?: number;
+    textColor?: string;
 }
 export interface AxisYWithRightAxisSetting extends AxisYSetting {
     axisRightEnable?: boolean; //对纵向图,比如HorizontalBar无效
@@ -191,7 +198,13 @@ export function AxisYSettingToConfig(setting: AxisYSetting): AxisYConfig {
         lineWidth: setting?.lineWidth,
         lineColor: setting?.lineColor,
         withGridLine: setting?.withGridLine,
-        labelCount: setting?.labelCount
+        labelCount: setting?.labelCount,
+        suggestedAxisMinimum: setting?.suggestedAxisMinimum,
+        suggestedAxisMaximum: setting?.suggestedAxisMaximum,
+        spaceMin: setting?.spaceMin,
+        spaceMax: setting?.spaceMax,
+        textSize: setting?.textSize,
+        textColor: setting?.textColor
     }
     if (setting.labelPosition) {
         switch (setting.labelPosition.toLowerCase()) {
@@ -229,6 +242,12 @@ interface AxisYConfig {
     labelPosition?: YAxisLabelPosition;
     withGridLine?: boolean;
     labelCount?: LableCountSetting;
+    suggestedAxisMinimum?: number;
+    suggestedAxisMaximum?: number;
+    spaceMin?: number;
+    spaceMax?: number;
+    textSize?: number;
+    textColor?: string;
 }
 interface AxisYWithRightAxisConfig extends AxisYConfig {
     axisRightEnable: boolean;
@@ -246,6 +265,13 @@ export interface AxisXSetting {
     avoidFirstLastClipping?: boolean;
     withGridLine?: boolean;
     valueFormat?: string; // 提供weekday,date,datetime,utcdatetime
+    suggestedAxisMinimum?: number;
+    suggestedAxisMaximum?: number;
+    spaceMin?: number;
+    spaceMax?: number;
+    textSize?: number;
+    textColor?: string;
+
 }
 export const DefaultAxisXSetting: AxisXSetting = {
     position: "bottom",
@@ -287,7 +313,13 @@ export function AxisXSettingToConfig(setting: AxisXSetting): AxisXConfig {
         lineColor: setting?.lineColor,
         labelRotationAngle: setting?.labelRotationAngle,
         avoidFirstLastClipping: setting?.avoidFirstLastClipping,
-        withGridLine: setting?.withGridLine
+        withGridLine: setting?.withGridLine,
+        suggestedAxisMinimum: setting?.suggestedAxisMinimum,
+        suggestedAxisMaximum: setting?.suggestedAxisMaximum,
+        spaceMin: setting?.spaceMin,
+        spaceMax: setting?.spaceMax,
+        textSize: setting?.textSize,
+        textColor: setting?.textColor
     }
     if (typeof (setting.valueFormat) != "undefined") {
         switch (setting.valueFormat.toLowerCase()) {
@@ -391,6 +423,12 @@ interface AxisXConfig {
     avoidFirstLastClipping?: boolean;
     withGridLine?: boolean;
     valueFormat?: Formater;
+    suggestedAxisMinimum?: number;
+    suggestedAxisMaximum?: number;
+    spaceMin?: number;
+    spaceMax?: number;
+    textSize?: number;
+    textColor?: string;
 }
 
 /** 辅助线
@@ -1198,7 +1236,7 @@ export function RadarDataSetSettingToConfig(setting: RadarDataSetSetting): Radar
         dashedHighlightLine: setting?.dashedHighlightLine,
         drawFilled: setting?.drawFilled,
         fillColor: setting?.fillColor,
-        drawValues?: setting?.drawValues,
+        drawValues: setting?.drawValues,
 
         drawHighlightCircleEnabled: setting?.drawHighlightCircleEnabled,
         highlightCircleFillColor: setting?.highlightCircleFillColor,
@@ -1218,6 +1256,7 @@ export function RadarDataSetSettingToConfig(setting: RadarDataSetSetting): Radar
     }
     if (typeof (setting.valueFormatter) != "undefined") {
         let valueFormatter: (value: number, entry: PieEntry) => string
+
         switch (setting.valueFormatter.toLowerCase()) {
             case "value":
                 {

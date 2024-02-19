@@ -8,7 +8,7 @@ import { BubbleChart } from '@nativescript-community/ui-chart/charts/BubbleChart
 import { BubbleData } from '@nativescript-community/ui-chart/data/BubbleData';
 import { BubbleDataSet } from '@nativescript-community/ui-chart/data/BubbleDataSet';
 import { LimitLine } from '@nativescript-community/ui-chart/components/LimitLine';
-import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, BubbleDataSetting, BubbleDataSetSetting, BubbleDataSetSettingToConfig } from './configurablechartdata';
+import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, BubbleDataSetting, BubbleDataSetSetting, BubbleDataSetSettingToConfig } from './configurablechartdata';
 
 
 interface Setting {
@@ -29,7 +29,6 @@ const props = withDefaults(
         hardwareAccelerated: false,
         chartSetting: () => DefaultChartSetting,
         legendSetting: () => DefaultLegendSetting,
-        axisYSetting: () => DefaultAxisYSetting,
         axisXSetting: () => DefaultAxisXSetting
     })
 const Elechart = ref()
@@ -111,7 +110,7 @@ function onChartLoaded() {
     }
     // 设置坐标轴
     // // y轴
-    let axisYSetting = { ...DefaultAxisYSetting }
+    let axisYSetting = {}
     if (typeof (props.axisYSetting) != "undefined") {
         Object.assign(axisYSetting, props.axisYSetting)
     }
@@ -147,7 +146,25 @@ function onChartLoaded() {
     if (typeof (axisYConfig.labelCount) !== "undefined") {
         yl.setLabelCount(axisYConfig.labelCount.count, axisYConfig.labelCount.force);
     }
-    chart.getAxisRight().setEnabled(axisYConfig.axisRightEnable)
+    if (typeof (axisYConfig.suggestedAxisMinimum) !== "undefined") {
+        yl.setSuggestedAxisMinimum(axisYConfig.suggestedAxisMinimum)
+    }
+    if (typeof (axisYConfig.suggestedAxisMaximum) !== "undefined") {
+        yl.setSuggestedAxisMaximum(axisYConfig.suggestedAxisMaximum)
+    }
+    if (typeof (axisYConfig.spaceMin) !== "undefined") {
+        yl.setSpaceMin(axisYConfig.spaceMin)
+    }
+    if (typeof (axisYConfig.spaceMax) !== "undefined") {
+        yl.setSpaceMax(axisYConfig.spaceMax)
+    }
+    if (typeof (axisYConfig.textSize) !== "undefined") {
+        yl.setTextSize(axisYConfig.textSize)
+    }
+    if (typeof (axisYConfig.textColor) !== "undefined") {
+        yl.setTextColor(axisYConfig.textColor)
+    }
+    // chart.getAxisRight().setEnabled(false)
 
     //x轴
     let axisXSetting = { ...DefaultAxisXSetting }
@@ -183,7 +200,24 @@ function onChartLoaded() {
             getAxisLabel: axisXConfig.valueFormat
         });
     }
-
+    if (typeof (axisXConfig.suggestedAxisMinimum) !== "undefined") {
+        xl.setSuggestedAxisMinimum(axisXConfig.suggestedAxisMinimum)
+    }
+    if (typeof (axisXConfig.suggestedAxisMaximum) !== "undefined") {
+        xl.setSuggestedAxisMaximum(axisXConfig.suggestedAxisMaximum)
+    }
+    if (typeof (axisXConfig.spaceMin) !== "undefined") {
+        xl.setSpaceMin(axisXConfig.spaceMin)
+    }
+    if (typeof (axisXConfig.spaceMax) !== "undefined") {
+        xl.setSpaceMax(axisXConfig.spaceMax)
+    }
+    if (typeof (axisXConfig.textSize) !== "undefined") {
+        xl.setTextSize(axisXConfig.textSize)
+    }
+    if (typeof (axisXConfig.textColor) !== "undefined") {
+        xl.setTextColor(axisXConfig.textColor)
+    }
     // 设置辅助线
     let limitLinesSetting = {}
     if (typeof (props.limitLinesSetting) != "undefined") {

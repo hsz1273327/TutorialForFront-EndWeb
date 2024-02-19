@@ -8,6 +8,13 @@ import { RadarData } from "@nativescript-community/ui-chart/data/RadarData";
 import { RadarDataSet } from "@nativescript-community/ui-chart/data/RadarDataSet";
 import { LimitLine } from '@nativescript-community/ui-chart/components/LimitLine';
 import { Color } from '@nativescript/core';
+import { BaseEntry } from "@nativescript-community/ui-chart/data/BaseEntry";
+import { AxisBase } from "@nativescript-community/ui-chart/components/AxisBase";
+import { BarEntry } from "@nativescript-community/ui-chart/data/BarEntry";
+import { Entry } from "@nativescript-community/ui-chart/data/Entry";
+import { BubbleEntry } from "@nativescript-community/ui-chart/data/BubbleEntry";
+import { CandleEntry } from "@nativescript-community/ui-chart/data/CandleEntry";
+import { PieEntry } from "@nativescript-community/ui-chart/data/PieEntry";
 import {
     LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig,
     RadarChartSetting, DefaultRadarChartSetting, RadarDataSetSetting, RadarDataSetSettingToConfig, RadarDataSetting
@@ -57,9 +64,10 @@ const genll = (conf: LimitLineConfig): LimitLine => {
 
 function CreateDataSet(datasetsetting: RadarDataSetSetting): RadarDataSet {
     let d = RadarDataSetSettingToConfig(datasetsetting)
-    let set = new RadarDataSet(d.values, d.label, "x")
-    set.setForm(d.form)
-    set.setDrawIcons(false)
+    let set = new RadarDataSet(d.values, d.label, "y")
+    if (typeof (d.form) !== "undefined") {
+        set.setForm(d.form)
+    }
     if (typeof (d.color) !== "undefined") {
         set.setColor(d.color)
     }
@@ -114,6 +122,37 @@ function CreateDataSet(datasetsetting: RadarDataSetSetting): RadarDataSet {
     if (typeof (d.highlightCircleStrokeWidth) !== "undefined") {
         set.setHighlightCircleStrokeWidth(d.highlightCircleStrokeWidth)
     }
+
+    if (typeof (d.valueFormatter) !== "undefined") {
+        set.setValueFormatter({
+            getFormattedValue(value: number, entry?: BaseEntry): string {
+                return "";
+            },
+            getAxisLabel(value: number, axis: AxisBase): string {
+                return "";
+            },
+            getBarLabel(value: any, entry: BarEntry): string {
+                return "";
+            },
+            getBarStackedLabel(value: any, entry: BarEntry): string {
+                return "";
+            },
+            getPointLabel(value: any, entry: Entry): string {
+                return "";
+            },
+            getPieLabel(value: any, entry: PieEntry): string {
+                return "";
+            },
+            getRadarLabel: d.valueFormatter,
+            getBubbleLabel(value: any, entry: BubbleEntry): string {
+                return "";
+            },
+            getCandleLabel(value: any, entry: CandleEntry): string {
+                return "";
+            },
+        });
+    }
+
     return set
 }
 function onChartLoaded() {
@@ -168,7 +207,6 @@ function onChartLoaded() {
     if (typeof (chartConfig.skipWebLineCount) != "undefined") {
         chart.setSkipWebLineCount(chartConfig.skipWebLineCount);
     }
-
     // 设置图例
     let legendSetting = { ...DefaultLegendSetting }
     if (typeof (props.legendSetting) != "undefined") {
@@ -229,9 +267,26 @@ function onChartLoaded() {
     if (typeof (axisYConfig.labelCount) !== "undefined") {
         yl.setLabelCount(axisYConfig.labelCount.count, axisYConfig.labelCount.force);
     }
-
+    if (typeof (axisYConfig.suggestedAxisMinimum) !== "undefined") {
+        yl.setSuggestedAxisMinimum(axisYConfig.suggestedAxisMinimum)
+    }
+    if (typeof (axisYConfig.suggestedAxisMaximum) !== "undefined") {
+        yl.setSuggestedAxisMaximum(axisYConfig.suggestedAxisMaximum)
+    }
+    if (typeof (axisYConfig.spaceMin) !== "undefined") {
+        yl.setSpaceMin(axisYConfig.spaceMin)
+    }
+    if (typeof (axisYConfig.spaceMax) !== "undefined") {
+        yl.setSpaceMax(axisYConfig.spaceMax)
+    }
+    if (typeof (axisYConfig.textSize) !== "undefined") {
+        yl.setTextSize(axisYConfig.textSize)
+    }
+    if (typeof (axisYConfig.textColor) !== "undefined") {
+        yl.setTextColor(axisYConfig.textColor)
+    }
     //x轴
-    let axisXSetting = {}
+    let axisXSetting = { ...DefaultAxisXSetting }
     if (typeof (props.axisXSetting) != "undefined") {
         Object.assign(axisXSetting, props.axisXSetting)
     }
@@ -266,6 +321,24 @@ function onChartLoaded() {
             getAxisLabel: axisXConfig.valueFormat
         });
     }
+    if (typeof (axisXConfig.suggestedAxisMinimum) !== "undefined") {
+        xl.setSuggestedAxisMinimum(axisXConfig.suggestedAxisMinimum)
+    }
+    if (typeof (axisXConfig.suggestedAxisMaximum) !== "undefined") {
+        xl.setSuggestedAxisMaximum(axisXConfig.suggestedAxisMaximum)
+    }
+    if (typeof (axisXConfig.spaceMin) !== "undefined") {
+        xl.setSpaceMin(axisXConfig.spaceMin)
+    }
+    if (typeof (axisXConfig.spaceMax) !== "undefined") {
+        xl.setSpaceMax(axisXConfig.spaceMax)
+    }
+    if (typeof (axisXConfig.textSize) !== "undefined") {
+        xl.setTextSize(axisXConfig.textSize)
+    }
+    if (typeof (axisXConfig.textColor) !== "undefined") {
+        xl.setTextColor(axisXConfig.textColor)
+    }
     // 设置辅助线
     let limitLinesSetting = {}
     if (typeof (props.limitLinesSetting) != "undefined") {
@@ -296,6 +369,7 @@ function onChartLoaded() {
     if (typeof (props.datasetSetting) !== "undefined") {
         let init_data = []
         for (const _d of props.datasetSetting) {
+
             let set = CreateDataSet(_d)
             init_data.push(set)
         }
@@ -304,6 +378,7 @@ function onChartLoaded() {
         data = new RadarData([])
     }
     // 设置待渲染的对象
+    
     if (typeof (props.dataSetting) !== "undefined") {
         if (typeof (props.dataSetting.valueTextSize) !== "undefined") {
             data.setValueTextSize(props.dataSetting.valueTextSize);

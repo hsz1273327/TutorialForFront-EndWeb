@@ -11,6 +11,9 @@
 <script lang="ts" setup>
 import ConfigurableRadarChart from '../configurable-ui-chart/ConfigurableRadarChart.vue'
 import { RadarDataSetSetting, AxisXSetting, AxisYSetting, RadarChartSetting, RadarDataSetting, RadarValue } from '../configurable-ui-chart/configurablechartdata'
+
+
+
 const axisXSetting: AxisXSetting = {
     textColor: "green",
 }

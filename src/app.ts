@@ -16,8 +16,8 @@ import { install as installGestures } from '@nativescript-community/gesturehandl
 // import Home from './views/CandleStickChartHomeConfigable.vue'
 // import Home from './views/PieChartHome.vue'
 // import Home from './views/PieChartHomeConfigable.vue'
-import Home from './views/RadarChartHome.vue'
-// import Home from './views/RadarChartHomeConfigable.vue'
+// import Home from './views/RadarChartHome.vue'
+import Home from './views/RadarChartHomeConfigable.vue'
 
 
 

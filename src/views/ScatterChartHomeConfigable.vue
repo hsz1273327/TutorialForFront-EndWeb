@@ -9,14 +9,14 @@
 </template>
 <script lang="ts" setup>
 import ConfigurableScatterChart from '../configurable-ui-chart/ConfigurableScatterChart.vue'
-import { ScatterDataSetSetting, AxisXSetting, AxisYSetting } from '../configurable-ui-chart/configurablechartdata'
+import { ScatterDataSetSetting, AxisXSetting, AxisYWithRightAxisSetting } from '../configurable-ui-chart/configurablechartdata'
 const axisXSetting: AxisXSetting = {
     position: "bottom",
     lineWidth: 3,
     minimum: 0,
     withGridLine: false
 }
-const axisYSetting: AxisYSetting = {
+const axisYSetting: AxisYWithRightAxisSetting = {
     axisRightEnable: false,
     minimum: 0,
     withGridLine: false

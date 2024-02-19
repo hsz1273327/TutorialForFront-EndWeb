@@ -11,13 +11,13 @@
     
 <script lang="ts" setup>
 import ConfigurableBarChart from '../configurable-ui-chart/ConfigurableBarChart.vue'
-import { BarDataSetSetting, BarDataSetting, AxisXSetting, AxisYSetting } from '../configurable-ui-chart/configurablechartdata'
+import { BarDataSetSetting, BarDataSetting, AxisXSetting, AxisYWithRightAxisSetting } from '../configurable-ui-chart/configurablechartdata'
 const axisXSetting: AxisXSetting = {
     position: "bottom",
     lineWidth: 3,
     withGridLine: false
 }
-const axisYSetting: AxisYSetting = {
+const axisYSetting: AxisYWithRightAxisSetting = {
     axisRightEnable: false,
     minimum: 0,
     maximum: 100,

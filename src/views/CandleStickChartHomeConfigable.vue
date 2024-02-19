@@ -11,14 +11,14 @@
     
 <script lang="ts" setup>
 import ConfigurableCandleStickChart from '../configurable-ui-chart/ConfigurableCandleStickChart.vue'
-import { CandleStickDataSetSetting, AxisXSetting, AxisYSetting } from '../configurable-ui-chart/configurablechartdata'
+import { CandleStickDataSetSetting, AxisXSetting, AxisYWithRightAxisSetting } from '../configurable-ui-chart/configurablechartdata'
 const axisXSetting: AxisXSetting = {
     position: "bottom",
     lineWidth: 3,
     withGridLine: false,
 
 }
-const axisYSetting: AxisYSetting = {
+const axisYSetting: AxisYWithRightAxisSetting = {
     axisRightEnable: false,
     lineWidth: 3,
     withGridLine: false,

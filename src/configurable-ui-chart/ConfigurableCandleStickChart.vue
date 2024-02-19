@@ -7,17 +7,17 @@ import { CandleStickChart } from "@nativescript-community/ui-chart/charts/Candle
 import { CandleData } from "@nativescript-community/ui-chart/data/CandleData";
 import { CandleDataSet } from "@nativescript-community/ui-chart/data/CandleDataSet";
 import { LimitLine } from '@nativescript-community/ui-chart/components/LimitLine';
-import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, CandleStickDataSetting, CandleStickDataSetSetting, CandleStickDataSetSettingToConfig } from './configurablechartdata';
+import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYWithRightAxisSetting, AxisYWithRightAxisSettingToConfig, DefaultAxisYWithRightAxisSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, DataSetting, CandleStickDataSetSetting, CandleStickDataSetSettingToConfig } from './configurablechartdata';
 
 
 interface Setting {
     datasetSetting?: CandleStickDataSetSetting[];
     datasetGen?: AsyncGenerator<CandleStickDataSetSetting[]>;
-    dataSetting?: CandleStickDataSetting;
+    dataSetting?: DataSetting;
     hardwareAccelerated?: boolean;
     chartSetting?: ChartSetting;
     legendSetting?: LegendSetting;
-    axisYSetting?: AxisYSetting;
+    axisYSetting?: AxisYWithRightAxisSetting;
     axisXSetting?: AxisXSetting;
     limitLinesSetting?: LimitLinesSetting;
 }
@@ -28,7 +28,7 @@ const props = withDefaults(
         hardwareAccelerated: false,
         chartSetting: () => DefaultChartSetting,
         legendSetting: () => DefaultLegendSetting,
-        axisYSetting: () => DefaultAxisYSetting,
+        axisYSetting: () => DefaultAxisYWithRightAxisSetting,
         axisXSetting: () => DefaultAxisXSetting
     })
 const Elechart = ref()
@@ -130,11 +130,11 @@ function onChartLoaded() {
     }
     // 设置坐标轴
     // // y轴
-    let axisYSetting = { ...DefaultAxisYSetting }
+    let axisYSetting = { ...DefaultAxisYWithRightAxisSetting }
     if (typeof (props.axisYSetting) != "undefined") {
         Object.assign(axisYSetting, props.axisYSetting)
     }
-    const axisYConfig = AxisYSettingToConfig(axisYSetting)
+    const axisYConfig = AxisYWithRightAxisSettingToConfig(axisYSetting)
     const yl = chart.getAxisLeft()
     if (typeof (axisYConfig.spaceTop) !== "undefined") {
         yl.setSpaceTop(axisYConfig.spaceTop)
@@ -175,7 +175,9 @@ function onChartLoaded() {
     }
     const axisXConfig = AxisXSettingToConfig(axisXSetting)
     const xl = chart.getXAxis()
-    xl.setPosition(axisXConfig.position)
+    if (typeof (axisXConfig.position) !== "undefined") {
+        xl.setPosition(axisXConfig.position)
+    }
     if (typeof (axisXConfig.minimum) !== "undefined") {
         xl.setAxisMinimum(axisXConfig.minimum)
     }

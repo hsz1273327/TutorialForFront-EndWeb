@@ -159,7 +159,6 @@ interface FontSetting {
  * 
 */
 export interface AxisYSetting {
-    axisRightEnable?: boolean; //对纵向图比如HorizontalBar无效
     spaceTop?: number;
     spaceBottom?: number;
     drawZeroLine?: boolean;
@@ -171,16 +170,19 @@ export interface AxisYSetting {
     withGridLine?: boolean;
     labelCount?: LableCountSetting;
 }
+export interface AxisYWithRightAxisSetting extends AxisYSetting {
+    axisRightEnable?: boolean; //对纵向图,比如HorizontalBar无效
+}
+export const DefaultAxisYWithRightAxisSetting: AxisYWithRightAxisSetting = {
+    axisRightEnable: false
+}
 interface LableCountSetting {
     count: number;
     force?: boolean;
 }
-export const DefaultAxisYSetting: AxisYSetting = {
-    axisRightEnable: false
-}
+
 export function AxisYSettingToConfig(setting: AxisYSetting): AxisYConfig {
     let config = {
-        axisRightEnable: setting?.axisRightEnable,
         spaceTop: setting?.spaceTop,
         spaceBottom: setting?.spaceBottom,
         drawZeroLine: setting?.drawZeroLine,
@@ -208,8 +210,15 @@ export function AxisYSettingToConfig(setting: AxisYSetting): AxisYConfig {
     }
     return config
 }
+
+export function AxisYWithRightAxisSettingToConfig(setting: AxisYWithRightAxisSetting): AxisYWithRightAxisConfig {
+    let result: AxisYWithRightAxisConfig = {
+        axisRightEnable: setting?.axisRightEnable,
+    }
+    Object.assign(result, AxisYSettingToConfig(setting))
+    return result
+}
 interface AxisYConfig {
-    axisRightEnable: boolean;
     spaceTop?: number;
     spaceBottom?: number;
     drawZeroLine?: boolean;
@@ -221,11 +230,14 @@ interface AxisYConfig {
     withGridLine?: boolean;
     labelCount?: LableCountSetting;
 }
+interface AxisYWithRightAxisConfig extends AxisYConfig {
+    axisRightEnable: boolean;
+}
 /** X轴设置
  * 
 */
 export interface AxisXSetting {
-    position: string;
+    position?: string;
     minimum?: number;
     maximum?: number;
     lineWidth?: number;
@@ -543,15 +555,17 @@ function AxisDependencyStringToAxisDependency(axisdependencystr: string): AxisDe
     }
     return axisDependency
 }
-/**  ScatterChart数据设置
+/**  基础的data数据设置
  * 
 */
-export interface ScatterDataSetting {
+export interface DataSetting {
     valueTextSize?: number;
     valueTextColor?: string;
     highlight?: boolean;
 }
-
+/**  ScatterChart数据集设置
+ * 
+*/
 export interface ScatterDataSetSetting {
     values: Point[];
     label: string;
@@ -563,7 +577,6 @@ export interface ScatterDataSetSetting {
     shapesize?: number;
     axisDependency?: string; //从左向右还是从右向左
 }
-
 
 export function ScatterDataSetSettingToConfig(setting: ScatterDataSetSetting): ScatterDataSetConfig {
     let shape = ScatterShape.SQUARE
@@ -640,9 +653,7 @@ interface Point {
 /**  BubbleChart数据设置
  * 
 */
-export interface BubbleDataSetting {
-    valueTextSize?: number;
-    valueTextColor?: string;
+export interface BubbleDataSetting extends DataSetting {
     highlightCircleWidth?: number;
 }
 
@@ -685,15 +696,9 @@ interface BubbleDataSetConfig {
     axisDependency?: AxisDependency;
 }
 
-/**  LineChart数据设置
+/**  LineChart数据集设置
  * 
 */
-export interface LineDataSetting {
-    valueTextSize?: number;
-    valueTextColor?: string;
-    highlight?: boolean;
-}
-
 export function LineDataSetSettingToConfig(setting: LineDataSetSetting): LineDataSetConfig {
     let result = {
         values: setting.values,
@@ -710,7 +715,8 @@ export function LineDataSetSettingToConfig(setting: LineDataSetSetting): LineDat
         valueTextSize: setting?.valueTextSize,
         dashedHighlightLine: setting?.dashedHighlightLine,
         drawFilled: setting?.drawFilled,
-        fillColor: setting?.fillColor
+        fillColor: setting?.fillColor,
+        fillAlpha: setting?.fillAlpha
     }
     if (typeof (setting.axisDependency) != "undefined") {
         let axisDependency = AxisDependencyStringToAxisDependency(setting.axisDependency)
@@ -723,9 +729,9 @@ export interface LineDataSetSetting {
     label: string;
     form: string;
     color?: string; //设置线条颜色
+    lineWidth?: number;// 设置线条宽度
     dashedLine?: DashlineSetting;/// 设置使用虚线,参数为线条长度,空白长度,阶段
     circleColor?: string;// 设置点颜色
-    lineWidth?: number;// 设置线条宽度
     circleRadius?: number;// 设置点的直径
     drawCircleHole?: boolean;// 设置点为空心点
     formLineWidth?: number;// 设置图标宽度
@@ -734,6 +740,7 @@ export interface LineDataSetSetting {
     dashedHighlightLine?: DashlineSetting;// 将选择线画为虚线
     drawFilled?: boolean;// 设置填充区
     fillColor?: string;// 设置填充区颜色set color of filled area
+    fillAlpha?: number;
     axisDependency?: string;
 }
 interface LineDataSetConfig {
@@ -741,9 +748,9 @@ interface LineDataSetConfig {
     label: string;
     form: LegendForm;
     color?: string; //设置线条颜色
+    lineWidth?: number;// 设置线条宽度
     dashedLine?: DashlineSetting;/// 设置使用虚线,参数为线条长度,空白长度,阶段
     circleColor?: string;// 设置点颜色
-    lineWidth?: number;// 设置线条宽度
     circleRadius?: number;// 设置点的直径
     drawCircleHole?: boolean;// 设置点为空心点
     formLineWidth?: number;// 设置图标宽度
@@ -752,16 +759,14 @@ interface LineDataSetConfig {
     dashedHighlightLine?: DashlineSetting;// 将选择线画为虚线
     drawFilled?: boolean;// 设置填充区
     fillColor?: string;// 设置填充区颜色set color of filled area
+    fillAlpha?: number;
     axisDependency?: AxisDependency;
 }
 
 /**  BarChart数据设置
  * 
 */
-export interface BarDataSetting {
-    valueTextSize?: number;
-    valueTextColor?: string;
-    highlight?: boolean;
+export interface BarDataSetting extends DataSetting {
     barWidth?: number; //柱宽
     groupBars?: BarGroupSetting //柱组设置
 }
@@ -824,16 +829,9 @@ interface BarDataSetConfig {
     axisDependency?: AxisDependency;
 }
 
-/**  CandleStick数据设置
+/**  CandleStick数据集设置
  * 
 */
-export interface CandleStickDataSetting {
-    valueTextSize?: number;
-    valueTextColor?: string;
-    highlight?: boolean;
-}
-
-// CandleStick数据集设置
 export interface CandleStickDataSetSetting {
     values: KPoint[];
     label: string;
@@ -978,10 +976,6 @@ export interface PieChartSetting {
     entryLabelColor?: string;
     entryLabelTextSize?: number;
     drawEntryLabels?: boolean;
-    //在data下设置的
-    valueTextSize?: number;
-    valueTextColor?: string;
-    highlight?: boolean;
 }
 
 export const DefaultPieChartSetting: PieChartSetting = {
@@ -997,7 +991,6 @@ export const DefaultPieChartSetting: PieChartSetting = {
     //触摸旋转样式设置
     rotationEnabled: false,
 }
-
 
 
 // Pie数据集设置
@@ -1125,157 +1118,118 @@ interface PieValue {
 }
 
 
-/** Radar数据设置
+/** Radar图设置
  * 
 */
 export interface RadarChartSetting {
     // 实际设置在chart上
-    drawFrameRate: boolean; //显示fps
+    drawFrameRate?: boolean; //显示fps
     touchEnabled?: boolean; //允许触控操作
     maxHighlightDistance?: number; //最大高亮显示距离
     backgroundColor?: string
-    usePercentValues?: boolean;
+
     extraOffsets?: [number, number, number, number];
     dragDecelerationFrictionCoef?: number;
-    // 设置中心文本
-    centerText?: string;
-    // 中间留出空洞和空洞样式
-    drawHoleEnabled?: boolean;//中心留空洞
-    holeColor?: string;
-    holeRadius?: number;
-    //透明环样式
-    transparentCircleColor?: string;
-    transparentCircleAlpha?: number;
-    transparentCircleRadius?: number;
+
+
     //触摸旋转样式设置
     rotationEnabled?: boolean;
     rotationAngle?: number;
     // 设置点击高亮
     highlightPerTapEnabled?: boolean;
-    entryLabelColor?: string;
-    entryLabelTextSize?: number;
-    drawEntryLabels?: boolean;
-    //在data下设置的
-    valueTextSize?: number;
-    valueTextColor?: string;
-    highlight?: boolean;
+
+    // radar独有
+    webLineWidth?: number;
+    webLineWidthInner?: number;
+    webAlpha?: number;
+    webColor?: string;
+    webColorInner?: string
+    drawWeb?: boolean;
+    skipWebLineCount?: number;
 }
 
 
 export const DefaultRadarChartSetting: RadarChartSetting = {
     drawFrameRate: false,
     highlightPerTapEnabled: false,
-    usePercentValues: true,
-    // 中间留出空洞和空洞样式
-    drawHoleEnabled: false,
-    //透明环样式
-    transparentCircleColor: "white",
-    transparentCircleAlpha: 110,
-    transparentCircleRadius: 61,
     //触摸旋转样式设置
     rotationEnabled: false,
 }
 
 
-
+//Radar数据设置
+export interface RadarDataSetting extends DataSetting {
+    labels: string[];
+}
 // Radar数据集设置
 export interface RadarDataSetSetting {
     values: RadarValue[];
     label: string;
     form?: string;
-    sliceSpace?: number;
-    iconsOffset?: Point;
-    selectionShift?: number;
-    colorTemplates?: string[];//设置颜色范围,颜色从ColorTemplate中获取,渲染时按位置获取颜色
+    color?: string; //设置线条颜色
+    lineWidth?: number;// 设置线条宽度
+    formLineWidth?: number;// 设置图标宽度
+    formSize?: number; //设置图标尺寸
+    valueTextSize?: number; //设置值的文本字体大小
+    dashedHighlightLine?: DashlineSetting;// 将选择线画为虚线
+    drawFilled?: boolean;// 设置填充区
+    fillColor?: string;// 设置填充区颜色set color of filled area
+    fillAlpha?: number;
     drawValues?: boolean;
-    valueFormatter?: string; //value,label-value,percent,label-value
+    axisDependency?: string;
+    drawHighlightCircleEnabled?: boolean;
+    highlightCircleFillColor?: string;
+    highlightCircleStrokeColor?: string;
+    highlightCircleStrokeAlpha?: number;
+    highlightCircleInnerRadius?: number;
+    highlightCircleOuterRadius?: number;
+    highlightCircleStrokeWidth?: number;
+    valueFormatter?: string;
 }
-
 export function RadarDataSetSettingToConfig(setting: RadarDataSetSetting): RadarDataSetConfig {
     let result: RadarDataSetConfig = {
         values: setting.values,
         label: setting.label,
-        sliceSpace: setting?.sliceSpace,
-        iconsOffset: setting?.iconsOffset,
-        selectionShift: setting?.selectionShift,
-        drawValues: setting?.drawValues
+        color: setting?.color,
+        lineWidth: setting?.lineWidth,
+        formLineWidth: setting?.formLineWidth,
+        formSize: setting?.formSize,
+        valueTextSize: setting?.valueTextSize,
+        dashedHighlightLine: setting?.dashedHighlightLine,
+        drawFilled: setting?.drawFilled,
+        fillColor: setting?.fillColor,
+        drawValues?: setting?.drawValues,
+
+        drawHighlightCircleEnabled: setting?.drawHighlightCircleEnabled,
+        highlightCircleFillColor: setting?.highlightCircleFillColor,
+        highlightCircleStrokeColor: setting?.highlightCircleStrokeColor,
+        highlightCircleStrokeAlpha: setting?.highlightCircleStrokeAlpha,
+        highlightCircleInnerRadius: setting?.highlightCircleInnerRadius,
+        highlightCircleOuterRadius: setting?.highlightCircleOuterRadius,
+        highlightCircleStrokeWidth: setting?.highlightCircleStrokeWidth
     }
     if (typeof (setting.form) != "undefined") {
         let form = FormStringToForm(setting.form)
         Object.assign(result, { form: form })
     }
-
-    if (typeof (setting.colorTemplates) != "undefined") {
-        let colorTemplates = []
-        for (const colortemplate of setting.colorTemplates) {
-            switch (colortemplate.toLowerCase()) {
-                case "liberty_colors":
-                    {
-                        colorTemplates.push(...ColorTemplate.LIBERTY_COLORS)
-                    }
-                    break;
-                case "joyful_colors":
-                    {
-                        colorTemplates.push(...ColorTemplate.JOYFUL_COLORS)
-                    }
-                    break;
-                case "pastel_colors":
-                    {
-                        colorTemplates.push(...ColorTemplate.PASTEL_COLORS)
-                    }
-                    break;
-                case "colorful_colors":
-                    {
-                        colorTemplates.push(...ColorTemplate.COLORFUL_COLORS)
-                    }
-                    break;
-                case "vordiplom_colors":
-                    {
-                        colorTemplates.push(...ColorTemplate.VORDIPLOM_COLORS)
-                    }
-                    break;
-                case "material_colors":
-                    {
-                        colorTemplates.push(...ColorTemplate.MATERIAL_COLORS)
-                    }
-                    break;
-                case "holoblue":
-                    {
-                        colorTemplates.push(ColorTemplate.getHoloBlue())
-                    }
-                    break;
-            }
-        }
-        Object.assign(result, { colorTemplates: colorTemplates })
+    if (typeof (setting.axisDependency) != "undefined") {
+        let axisDependency = AxisDependencyStringToAxisDependency(setting.axisDependency)
+        Object.assign(result, { axisDependency: axisDependency })
     }
     if (typeof (setting.valueFormatter) != "undefined") {
         let valueFormatter: (value: number, entry: PieEntry) => string
         switch (setting.valueFormatter.toLowerCase()) {
             case "value":
                 {
-                    valueFormatter = (value: number, entry: PieEntry): string => {
+                    valueFormatter = (value: number, entry: RadarEntry): string => {
                         return `${value}`
                     }
                 }
                 break;
             case "label-value":
                 {
-                    valueFormatter = (value: number, entry: PieEntry): string => {
+                    valueFormatter = (value: number, entry: RadarEntry): string => {
                         return `${entry.label}-${value}`
-                    }
-                }
-                break;
-            case "percent":
-                {
-                    valueFormatter = (value: number, entry: PieEntry): string => {
-                        return `${value.toFixed(2)}%`
-                    }
-                }
-                break;
-            case "label-percent":
-                {
-                    valueFormatter = (value: number, entry: PieEntry): string => {
-                        return `${entry.label}-${value.toFixed(2)}%`
                     }
                 }
                 break;
@@ -1284,17 +1238,34 @@ export function RadarDataSetSettingToConfig(setting: RadarDataSetSetting): Radar
     }
     return result
 }
+
 interface RadarDataSetConfig {
     values: RadarValue[];
     label: string;
     form?: LegendForm;
-    sliceSpace?: number;
-    iconsOffset?: Point;
-    selectionShift?: number;
-    colorTemplates?: any[];//设置颜色范围,颜色从ColorTemplate中获取,渲染时按位置获取颜色
+    color?: string; //设置线条颜色
+    lineWidth?: number;// 设置线条宽度
+    formLineWidth?: number;// 设置图标宽度
+    formSize?: number; //设置图标尺寸
+    valueTextSize?: number; //设置值的文本字体大小
+    dashedHighlightLine?: DashlineSetting;// 将选择线画为虚线
+    drawFilled?: boolean;// 设置填充区
+    fillColor?: string;// 设置填充区颜色set color of filled area
+    fillAlpha?: number;
+    axisDependency?: AxisDependency;
     drawValues?: boolean;
-    valueFormatter?: (value: number, entry: RadarEntry) => string; //value,label-value,percent,label-value
+    //radar特有
+    drawHighlightCircleEnabled?: boolean;
+    highlightCircleFillColor?: string;
+    highlightCircleStrokeColor?: string;
+    highlightCircleStrokeAlpha?: number;
+    highlightCircleInnerRadius?: number;
+    highlightCircleOuterRadius?: number;
+    highlightCircleStrokeWidth?: number;
+    valueFormatter?: (value: number, entry: RadarEntry) => string;
 }
-interface RadarValue {
+
+
+export interface RadarValue {
     y: number
 }

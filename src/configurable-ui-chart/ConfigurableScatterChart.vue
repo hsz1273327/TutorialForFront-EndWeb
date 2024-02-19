@@ -7,17 +7,17 @@ import { ScatterChart } from '@nativescript-community/ui-chart/charts/ScatterCha
 import { ScatterData } from '@nativescript-community/ui-chart/data/ScatterData';
 import { ScatterDataSet } from '@nativescript-community/ui-chart/data/ScatterDataSet';
 import { LimitLine } from '@nativescript-community/ui-chart/components/LimitLine';
-import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, ScatterDataSetting, ScatterDataSetSetting, ScatterDataSetSettingToConfig } from './configurablechartdata';
+import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYWithRightAxisSetting, AxisYWithRightAxisSettingToConfig, DefaultAxisYWithRightAxisSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, DataSetting, ScatterDataSetSetting, ScatterDataSetSettingToConfig } from './configurablechartdata';
 
 
 interface Setting {
     datasetSetting?: ScatterDataSetSetting[];
     datasetGen?: AsyncGenerator<ScatterDataSetSetting[]>;
-    dataSetting?: ScatterDataSetting;
+    dataSetting?: DataSetting;
     hardwareAccelerated?: boolean;
     chartSetting?: ChartSetting;
     legendSetting?: LegendSetting;
-    axisYSetting?: AxisYSetting;
+    axisYSetting?: AxisYWithRightAxisSetting;
     axisXSetting?: AxisXSetting;
     limitLinesSetting?: LimitLinesSetting;
 }
@@ -28,7 +28,7 @@ const props = withDefaults(
         hardwareAccelerated: false,
         chartSetting: () => DefaultChartSetting,
         legendSetting: () => DefaultLegendSetting,
-        axisYSetting: () => DefaultAxisYSetting,
+        axisYSetting: () => DefaultAxisYWithRightAxisSetting,
         axisXSetting: () => DefaultAxisXSetting
     })
 const Elechart = ref()
@@ -116,11 +116,11 @@ function onChartLoaded() {
     }
     // 设置坐标轴
     // y轴
-    let axisYSetting = { ...DefaultAxisYSetting }
+    let axisYSetting = { ...DefaultAxisYWithRightAxisSetting }
     if (typeof (props.axisYSetting) != "undefined") {
         Object.assign(axisYSetting, props.axisYSetting)
     }
-    const axisYConfig = AxisYSettingToConfig(axisYSetting)
+    const axisYConfig = AxisYWithRightAxisSettingToConfig(axisYSetting)
     const yl = chart.getAxisLeft()
     if (typeof (axisYConfig.spaceTop) !== "undefined") {
         yl.setSpaceTop(axisYConfig.spaceTop)
@@ -161,7 +161,9 @@ function onChartLoaded() {
     }
     const axisXConfig = AxisXSettingToConfig(axisXSetting)
     const xl = chart.getXAxis()
-    xl.setPosition(axisXConfig.position)
+    if (typeof (axisXConfig.position) !== "undefined") {
+        xl.setPosition(axisXConfig.position)
+    }
     if (typeof (axisXConfig.minimum) !== "undefined") {
         xl.setAxisMinimum(axisXConfig.minimum)
     }
@@ -239,45 +241,6 @@ function onChartLoaded() {
         }
     }
     chart.setData(data)
-    // chart.invalidate()
-
-    // // 设置待渲染的设置对象,构造函数参数为待渲染的数据, 图例标签,待渲染数据中代表x轴的属性名,待渲染数据中代表y轴的属性名
-    // let init_data = []
-    // const datasetting = ScatterDataSettingToConfig(props.dataSetting)
-    // for (const d of datasetting.data) {
-    //     let set = new ScatterDataSet(d.values, d.label, "x", "y")
-    //     set.setForm(d.form)
-    //     set.setScatterShape(d.shape)
-    //     set.setScatterShapeSize(d.shapesize)
-    //     if (d.color) {
-    //         set.setColor(d.color);
-    //     }
-    //     if (d.shapeholeColor) {
-    //         set.setScatterShapeHoleColor(d.shapeholeColor);
-    //     }
-    //     if (d.shapeholeRadius) {
-    //         set.setScatterShapeHoleRadius(d.shapeholeRadius);
-    //     }
-    //     if (typeof (d.axisDependency) !== "undefined") {
-    //         set.setAxisDependency(d.axisDependency)
-    //     }
-    //     init_data.push(set)
-    // }
-
-    // // create a data object with the data sets
-    // const data = new ScatterData(init_data)
-    // if (typeof (datasetting.valueTextSize) !== "undefined") {
-    //     data.setValueTextSize(datasetting.valueTextSize);
-    // }
-    // if (typeof (datasetting.valueTextColor) !== "undefined") {
-    //     data.setValueTextColor(datasetting.valueTextColor);
-    // }
-    // if (typeof (datasetting.highlight) !== "undefined") {
-    //     data.setHighlightEnabled(datasetting.highlight);
-    // }
-
-    // // data.setValueTypeface(tfLight);
-    // chart.setData(data)
     // chart.invalidate()
 }
 

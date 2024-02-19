@@ -14,12 +14,13 @@ import { Entry } from "@nativescript-community/ui-chart/data/Entry";
 import { RadarEntry } from "@nativescript-community/ui-chart/data/RadarEntry";
 import { BubbleEntry } from "@nativescript-community/ui-chart/data/BubbleEntry";
 import { CandleEntry } from "@nativescript-community/ui-chart/data/CandleEntry";
-import { LegendSetting, DefaultLegendSetting, LegendSettingToConfig, PieChartSetting, DefaultPieChartSetting, PieDataSetSetting, PieDataSetSettingToConfig } from './configurablechartdata';
+import { LegendSetting, DefaultLegendSetting, LegendSettingToConfig, PieChartSetting, DefaultPieChartSetting, PieDataSetSetting, PieDataSetSettingToConfig, DataSetting } from './configurablechartdata';
 
 
 interface Setting {
     datasetSetting?: PieDataSetSetting[];
     datasetGen?: AsyncGenerator<PieDataSetSetting[]>;
+    dataSetting?: DataSetting;
     hardwareAccelerated?: boolean;
     chartSetting?: PieChartSetting;
     legendSetting?: LegendSetting;
@@ -192,14 +193,16 @@ function onChartLoaded() {
         data = new PieData()
     }
     // 设置待渲染的对象
-    if (typeof (chartConfig.valueTextSize) !== "undefined") {
-        data.setValueTextSize(chartConfig.valueTextSize);
-    }
-    if (typeof (chartConfig.valueTextColor) !== "undefined") {
-        data.setValueTextColor(chartConfig.valueTextColor);
-    }
-    if (typeof (chartConfig.highlight) !== "undefined") {
-        data.setHighlightEnabled(chartConfig.highlight);
+    if (typeof (props.dataSetting) != "undefined") {
+        if (typeof (props.dataSetting.valueTextSize) !== "undefined") {
+            data.setValueTextSize(props.dataSetting.valueTextSize);
+        }
+        if (typeof (props.dataSetting.valueTextColor) !== "undefined") {
+            data.setValueTextColor(props.dataSetting.valueTextColor);
+        }
+        if (typeof (props.dataSetting.highlight) !== "undefined") {
+            data.setHighlightEnabled(props.dataSetting.highlight);
+        }
     }
     chart.setData(data)
 }

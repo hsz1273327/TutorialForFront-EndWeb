@@ -7,7 +7,7 @@ import { HorizontalBarChart } from "@nativescript-community/ui-chart/charts/Hori
 import { BarData } from "@nativescript-community/ui-chart/data/BarData";
 import { BarDataSet } from "@nativescript-community/ui-chart/data/BarDataSet";
 import { LimitLine } from '@nativescript-community/ui-chart/components/LimitLine';
-import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, BarDataSetting, BarDataSetSetting, BarDataSetSettingToConfig } from './configurablechartdata';
+import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, BarDataSetting, BarDataSetSetting, BarDataSetSettingToConfig } from './configurablechartdata';
 
 
 interface Setting {
@@ -28,7 +28,6 @@ const props = withDefaults(
         hardwareAccelerated: false,
         chartSetting: () => DefaultChartSetting,
         legendSetting: () => DefaultLegendSetting,
-        axisYSetting: () => DefaultAxisYSetting,
         axisXSetting: () => DefaultAxisXSetting
     })
 const Elechart = ref()
@@ -176,7 +175,9 @@ function onChartLoaded() {
     }
     const axisXConfig = AxisXSettingToConfig(axisXSetting)
     const xl = chart.getXAxis()
-    xl.setPosition(axisXConfig.position)
+    if (typeof (axisXConfig.position) !== "undefined") {
+        xl.setPosition(axisXConfig.position)
+    }
     if (typeof (axisXConfig.minimum) !== "undefined") {
         xl.setAxisMinimum(axisXConfig.minimum)
     }
@@ -259,63 +260,6 @@ function onChartLoaded() {
         }
     }
     chart.setData(data)
-    // // 设置待渲染的设置对象,构造函数参数为待渲染的数据, 图例标签,待渲染数据中代表x轴的属性名,待渲染数据中代表y轴的属性名
-    // let init_data = []
-    // const datasetting = BarDataSettingToConfig(props.dataSetting)
-    // for (const d of datasetting.data) {
-    //     let set = new BarDataSet(d.values, d.label, "x", "y")
-    //     set.setForm(d.form)
-    //     set.setDrawIcons(false)
-    //     if (typeof (d.color) !== "undefined") {
-    //         set.setColor(d.color)
-    //     }
-    //     if (typeof (d.formLineWidth) !== "undefined") {
-    //         set.setFormLineWidth(d.formLineWidth);
-    //     }
-    //     if (typeof (d.formSize) !== "undefined") {
-    //         set.setFormSize(d.formSize);
-    //     }
-    //     if (typeof (d.valueTextSize) !== "undefined") {
-    //         set.setValueTextSize(d.valueTextSize)
-    //     }
-    //     if (typeof (d.stackLabels) !== "undefined") {
-    //         set.setStackLabels(d.stackLabels);
-    //     }
-    //     if (typeof (d.barShadowColor) !== "undefined") {
-    //         set.setBarShadowColor(d.barShadowColor)
-    //     }
-    //     if (typeof (d.barBorderWidth) !== "undefined") {
-    //         set.setBarBorderWidth(d.barBorderWidth)
-    //     }
-    //     if (typeof (d.barBorderColor) !== "undefined") {
-    //         set.setBarBorderColor(d.barBorderColor)
-    //     }
-    //     if (typeof (d.highLightAlpha) !== "undefined") {
-    //         set.setHighLightAlpha(d.highLightAlpha)
-    //     }
-    //     if (typeof (d.axisDependency) !== "undefined") {
-    //         set.setAxisDependency(d.axisDependency)
-    //     }
-    //     init_data.push(set)
-    // }
-    // // create a data object with the data sets
-    // const data = new BarData(init_data)
-    // if (typeof (datasetting.valueTextSize) !== "undefined") {
-    //     data.setValueTextSize(datasetting.valueTextSize);
-    // }
-    // if (typeof (datasetting.valueTextColor) !== "undefined") {
-    //     data.setValueTextColor(datasetting.valueTextColor);
-    // }
-    // if (typeof (datasetting.highlight) !== "undefined") {
-    //     data.setHighlightEnabled(datasetting.highlight);
-    // }
-    // if (typeof (datasetting.barWidth) !== "undefined") {
-    //     data.setBarWidth(datasetting.barWidth);
-    // }
-    // if (typeof (datasetting.groupBars) !== "undefined") {
-    //     data.groupBars(datasetting.groupBars.fromX, datasetting.groupBars.groupSpace, datasetting.groupBars.barSpace);
-    // }
-    // chart.setData(data)
 }
 
 if (typeof (props.datasetGen) !== "undefined") {

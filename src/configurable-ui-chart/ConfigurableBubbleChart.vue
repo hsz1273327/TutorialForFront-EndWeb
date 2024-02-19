@@ -232,40 +232,11 @@ function onChartLoaded() {
         if (typeof (props.dataSetting.highlightCircleWidth) !== "undefined") {
             data.setHighlightCircleWidth(props.dataSetting.highlightCircleWidth);
         }
+        if (typeof (props.dataSetting.highlight) !== "undefined") {
+            data.setHighlightEnabled(props.dataSetting.highlight);
+        }
     }
     chart.setData(data)
-    // chart.invalidate()
-
-    // // 设置待渲染的设置对象,构造函数参数为待渲染的数据, 图例标签,待渲染数据中代表x轴的属性名,待渲染数据中代表y轴的属性名
-    // let init_data = []
-    // const datasetting = BubbleDataSettingToConfig(props.dataSetting)
-    // for (const d of datasetting.data) {
-    //     let set = new BubbleDataSet(d.values, d.label, "x", "y", "size")
-    //     set.setForm(d.form)
-    //     if (typeof (d.color) !== "undefined") {
-    //         set.setColor(d.color);
-    //     }
-    //     if (typeof (d.drawValues) !== "undefined") {
-    //         set.setDrawValues(d.drawValues);
-    //     }
-    //     if (typeof (d.axisDependency) !== "undefined") {
-    //         set.setAxisDependency(d.axisDependency)
-    //     }
-    //     init_data.push(set)
-    // }
-    // // create a data object with the data sets
-    // const data = new BubbleData(init_data)
-    // if (typeof (datasetting.valueTextSize) !== "undefined") {
-    //     data.setValueTextSize(datasetting.valueTextSize);
-    // }
-    // if (typeof (datasetting.valueTextColor) !== "undefined") {
-    //     data.setValueTextColor(datasetting.valueTextColor);
-    // }
-    // if (typeof (datasetting.highlightCircleWidth) !== "undefined") {
-    //     data.setHighlightCircleWidth(datasetting.highlightCircleWidth);
-    // }
-    // chart.setData(data)
-    
 }
 
 

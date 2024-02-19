@@ -7,17 +7,17 @@ import { LineChart } from "@nativescript-community/ui-chart/charts/LineChart";
 import { LineDataSet } from "@nativescript-community/ui-chart/data/LineDataSet";
 import { LineData } from "@nativescript-community/ui-chart/data/LineData";
 import { LimitLine } from '@nativescript-community/ui-chart/components/LimitLine';
-import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYSetting, AxisYSettingToConfig, DefaultAxisYSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, LineDataSetting, LineDataSetSetting, LineDataSetSettingToConfig } from './configurablechartdata';
+import { ChartSetting, DefaultChartSetting, LegendSetting, DefaultLegendSetting, LegendSettingToConfig, AxisYWithRightAxisSetting, AxisYWithRightAxisSettingToConfig, DefaultAxisYWithRightAxisSetting, AxisXSetting, DefaultAxisXSetting, AxisXSettingToConfig, LimitLinesSetting, LimitLinesSettingToConfig, LimitLineConfig, DataSetting, LineDataSetSetting, LineDataSetSettingToConfig } from './configurablechartdata';
 
 
 interface Setting {
     datasetSetting?: LineDataSetSetting[];
     datasetGen?: AsyncGenerator<LineDataSetSetting[]>;
-    dataSetting?: LineDataSetting;
+    dataSetting?: DataSetting;
     hardwareAccelerated?: boolean;
     chartSetting?: ChartSetting;
     legendSetting?: LegendSetting;
-    axisYSetting?: AxisYSetting;
+    axisYSetting?: AxisYWithRightAxisSetting;
     axisXSetting?: AxisXSetting;
     limitLinesSetting?: LimitLinesSetting;
 }
@@ -28,7 +28,7 @@ const props = withDefaults(
         hardwareAccelerated: false,
         chartSetting: () => DefaultChartSetting,
         legendSetting: () => DefaultLegendSetting,
-        axisYSetting: () => DefaultAxisYSetting,
+        axisYSetting: () => DefaultAxisYWithRightAxisSetting,
         axisXSetting: () => DefaultAxisXSetting
     })
 const Elechart = ref()
@@ -60,14 +60,14 @@ function CreateDataSet(datasetsetting: LineDataSetSetting): LineDataSet {
     if (typeof (d.color) !== "undefined") {
         set.setColor(d.color)
     }
+    if (typeof (d.lineWidth) !== "undefined") {
+        set.setLineWidth(d.lineWidth)
+    }
     if (typeof (d.dashedLine) !== "undefined") {
         set.enableDashedLine(d.dashedLine.lineLength, d.dashedLine.spaceLength, d.dashedLine.phase);
     }
     if (typeof (d.circleColor) !== "undefined") {
         set.setCircleColor(d.circleColor);
-    }
-    if (typeof (d.lineWidth) !== "undefined") {
-        set.setLineWidth(d.lineWidth)
     }
     if (typeof (d.circleRadius) !== "undefined") {
         set.setCircleRadius(d.circleRadius)
@@ -92,6 +92,9 @@ function CreateDataSet(datasetsetting: LineDataSetSetting): LineDataSet {
     }
     if (typeof (d.fillColor) !== "undefined") {
         set.setFillColor(d.fillColor)
+    }
+    if (typeof (d.fillAlpha) !== "undefined") {
+        set.setFillAlpha(d.fillAlpha)
     }
     if (typeof (d.axisDependency) !== "undefined") {
         set.setAxisDependency(d.axisDependency)
@@ -142,11 +145,11 @@ function onChartLoaded() {
     }
     // 设置坐标轴
     // // y轴
-    let axisYSetting = { ...DefaultAxisYSetting }
+    let axisYSetting = { ...DefaultAxisYWithRightAxisSetting }
     if (typeof (props.axisYSetting) != "undefined") {
         Object.assign(axisYSetting, props.axisYSetting)
     }
-    const axisYConfig = AxisYSettingToConfig(axisYSetting)
+    const axisYConfig = AxisYWithRightAxisSettingToConfig(axisYSetting)
     const yl = chart.getAxisLeft()
     if (typeof (axisYConfig.spaceTop) !== "undefined") {
         yl.setSpaceTop(axisYConfig.spaceTop)
@@ -187,7 +190,9 @@ function onChartLoaded() {
     }
     const axisXConfig = AxisXSettingToConfig(axisXSetting)
     const xl = chart.getXAxis()
-    xl.setPosition(axisXConfig.position)
+    if (typeof (axisXConfig.position) !== "undefined") {
+        xl.setPosition(axisXConfig.position)
+    }
     if (typeof (axisXConfig.minimum) !== "undefined") {
         xl.setAxisMinimum(axisXConfig.minimum)
     }

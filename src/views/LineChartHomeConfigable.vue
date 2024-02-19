@@ -10,14 +10,14 @@
 </template>
 <script lang="ts" setup>
 import ConfigurableLineChart from '../configurable-ui-chart/ConfigurableLineChart.vue'
-import { LineDataSetSetting, AxisXSetting, AxisYSetting, LimitLinesSetting } from '../configurable-ui-chart/configurablechartdata'
+import { LineDataSetSetting, AxisXSetting, AxisYWithRightAxisSetting, LimitLinesSetting } from '../configurable-ui-chart/configurablechartdata'
 const axisXSetting: AxisXSetting = {
     position: "bottom",
     lineWidth: 3,
     minimum: 0,
     withGridLine: false
 }
-const axisYSetting: AxisYSetting = {
+const axisYSetting: AxisYWithRightAxisSetting = {
     axisRightEnable: false,
     minimum: 0,
     withGridLine: false

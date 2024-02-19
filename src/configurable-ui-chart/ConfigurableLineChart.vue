@@ -99,6 +99,9 @@ function CreateDataSet(datasetsetting: LineDataSetSetting): LineDataSet {
     if (typeof (d.axisDependency) !== "undefined") {
         set.setAxisDependency(d.axisDependency)
     }
+    if (typeof (d.mode) !== "undefined") {
+        set.setMode(d.mode)
+    }
     return set
 }
 

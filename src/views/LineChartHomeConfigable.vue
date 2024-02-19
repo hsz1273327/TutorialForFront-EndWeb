@@ -62,6 +62,7 @@ function gen_data(): LineDataSetSetting[] {
         values: myData,
         label: "test line",
         form: "line",
+        mode: "horizontal_bezier",
         color: "blue",
         circleColor: "black",
         lineWidth: 1,

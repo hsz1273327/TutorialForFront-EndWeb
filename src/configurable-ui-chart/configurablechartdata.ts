@@ -8,6 +8,7 @@ import { Style } from "@nativescript-community/ui-canvas";
 import { ColorTemplate } from "@nativescript-community/ui-chart/utils/ColorTemplate";
 import { PieEntry } from "@nativescript-community/ui-chart/data/PieEntry";
 import { RadarEntry } from "@nativescript-community/ui-chart/data/RadarEntry";
+import { Mode } from "@nativescript-community/ui-chart/data/LineDataSet"
 /** 通用设置
  * 各种图都可能用到的设置
  */
@@ -760,12 +761,41 @@ export function LineDataSetSettingToConfig(setting: LineDataSetSetting): LineDat
         let axisDependency = AxisDependencyStringToAxisDependency(setting.axisDependency)
         Object.assign(result, { axisDependency: axisDependency })
     }
+    if (typeof (setting.mode) != "undefined") {
+        let mode = Mode.LINEAR
+
+        switch (setting.mode.toLowerCase()) {
+            case "linear":
+                {
+                    mode = Mode.LINEAR
+                }
+                break;
+            case "stepped":
+                {
+                    mode = Mode.STEPPED
+                }
+                break;
+            case "cubic_bezier":
+                {
+                    mode = Mode.CUBIC_BEZIER
+                }
+                break;
+            case "horizontal_bezier":
+                {
+                    mode = Mode.HORIZONTAL_BEZIER
+                }
+                break;
+
+        }
+        Object.assign(result, { mode: mode })
+    }
     return result
 }
 export interface LineDataSetSetting {
     values: Point[];
     label: string;
     form: string;
+    mode?: string;
     color?: string; //设置线条颜色
     lineWidth?: number;// 设置线条宽度
     dashedLine?: DashlineSetting;/// 设置使用虚线,参数为线条长度,空白长度,阶段
@@ -785,6 +815,7 @@ interface LineDataSetConfig {
     values: Point[];
     label: string;
     form: LegendForm;
+    mode?: Mode;
     color?: string; //设置线条颜色
     lineWidth?: number;// 设置线条宽度
     dashedLine?: DashlineSetting;/// 设置使用虚线,参数为线条长度,空白长度,阶段

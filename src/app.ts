@@ -7,7 +7,7 @@ import { install as installGestures } from '@nativescript-community/gesturehandl
 // import Home from './views/BubbleChartHome.vue'
 // import Home from './views/BubbleChartHomeConfigable.vue'
 // import Home from './views/LineChartHome.vue'
-// import Home from './views/LineChartHomeConfigable.vue'
+import Home from './views/LineChartHomeConfigable.vue'
 // import Home from './views/BarChartHome.vue'
 // import Home from './views/BarChartHomeConfigable.vue'
 // import Home from './views/HorizontalBarChartHome.vue'
@@ -17,8 +17,8 @@ import { install as installGestures } from '@nativescript-community/gesturehandl
 // import Home from './views/PieChartHome.vue'
 // import Home from './views/PieChartHomeConfigable.vue'
 // import Home from './views/RadarChartHome.vue'
-import Home from './views/RadarChartHomeConfigable.vue'
-
+// import Home from './views/RadarChartHomeConfigable.vue'
+// import Home from './views/AutoFreshChartHome.vue'
 
 
 if (global.isIOS) {

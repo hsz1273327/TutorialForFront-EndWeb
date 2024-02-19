@@ -8,6 +8,7 @@
     "@nativescript-community/ui-chart": "^1.2.35",
     "@nativescript-community/ui-material-core": "^7.2.27",
     "@nativescript/core": "~8.6.2",
+    "denque": "^2.1.0",
     "nativescript-vue": "3.0.0-beta.11"
   },
   "devDependencies": {

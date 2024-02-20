@@ -1,9 +1,6 @@
-import { createApp, registerElement } from 'nativescript-vue';
-
-
+import { createApp } from 'nativescript-vue';
 import Home from './views/Home.vue'
 
-registerElement("AutoFitText", ()=>require("@nativescript/auto-fit-text").AutoFitText)
 
 createApp(Home).start();
 

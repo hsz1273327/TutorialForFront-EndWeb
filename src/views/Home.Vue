@@ -1,7 +1,7 @@
 <template>
     <Frame>
         <Page actionBarHidden="true">
-            <AutoFitText fontSize="48" text="Lorem Ipsum this line of text with fontSize ignored because the text is so long." />
+            <TextView :text="deviceInfo" editable="false" />
         </Page>
     </Frame>
 </template>
@@ -22,4 +22,6 @@ const manufacturer: string = Device.manufacturer // 制造商
 const model: string = Device.model //型号
 const uuid: string = Device.uuid
 
+const deviceInfo = ref(`本设备为${deviceType},型号${model},系统为${os}-${osVersion},制造商为${manufacturer},设备ID为${uuid},当前地区为${region},语言为${language}`)
 </script>
+

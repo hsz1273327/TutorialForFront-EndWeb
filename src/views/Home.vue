@@ -2,12 +2,15 @@
     <frame>
         <Page actionBarHidden="true">
             <!-- <GridLayout rows="*,auto"> -->
-            <StackLayout>
-                <SimpleCard v-bind="simplecardprops" />
-                <MediaCard v-bind="simplecardprops" />
-                <ComplexCard v-bind="simplecardprops" />
-                <SwipeCard v-bind="simplecardprops" />
-            </StackLayout>
+            <ScrollView>
+                <StackLayout>
+                    <SimpleCard v-bind="simplecardprops" />
+                    <MediaCard v-bind="simplecardprops" />
+                    <ComplexCard v-bind="simplecardprops" />
+                    <SwipeCard v-bind="simplecardprops" />
+                </StackLayout>
+            </ScrollView>
+
             <!-- </GridLayout> -->
         </Page>
     </frame>

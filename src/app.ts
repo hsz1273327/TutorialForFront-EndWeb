@@ -15,9 +15,10 @@ imageInitialize({isDownsampleEnabled: true});
 registerElement('HTMLLabel', () => HTMLLabel);
 registerElement('Gif', () => Gif);
 registerElement('BlurView', () => BlurView);
+registerElement("AutoFitText", ()=>require("@nativescript/auto-fit-text").AutoFitText)
 
-// import Home from './views/Page_show_label.vue'
-import Home from './views/Page_show_image.vue'
+import Home from './views/Page_show_label.vue'
+// import Home from './views/Page_show_image.vue'
 
 if (global.isIOS) {
     themer.setPrimaryColor('#bff937');

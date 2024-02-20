@@ -9,17 +9,22 @@ import SliderPlugin from '@nativescript-community/ui-material-slider/vue';
 import SekkBarPlugin from '@nativescript-community/ui-range-seek-bar/vue'
 import TextFieldPlugin from '@nativescript-community/ui-material-textfield/vue'
 
-import Home from './views/Page_input_button.vue'
+// import Home from './views/Page_input_button.vue'
 // import Home from './views/Page_input_choose.vue'
 // import Home from './views/Page_input_choose_time.vue'
 // import Home from './views/Page_input_slider.vue'
-// import Home from './views/Page_input_text.vue'
+import Home from './views/Page_input_text.vue'
 
 
 registerElement(
     'Fab',
     () => require('@nstudio/nativescript-floatingactionbutton').Fab
 )
+registerElement('PreviousNextView', () => require('@nativescript/iqkeyboardmanager').PreviousNextView);
+
+registerElement('KeyboardToolbar', () => require('@nativescript/keyboard-toolbar').Toolbar);
+
+
 if (global.isIOS) {
     themer.setPrimaryColor('#bff937');
     themer.setAccentColor('#ff8a39');

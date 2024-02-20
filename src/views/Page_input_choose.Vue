@@ -1,17 +1,20 @@
 <template>
     <Frame>
         <Page actionBarHidden="true">
-            <StackLayout>
-                <Switch v-model="itemEnabled" />
-                <Switch checked="true" @checkedChange="switch_callback" />
-                <ListPicker :items="listOfItems" v-model="listpicker_selectedItem" />
-                <ListPicker :items="listOfItems" selectedIndex="0" @selectedIndexChange="ListPicker_callback" />
+            <ScrollView>
+                <StackLayout>
+                    <Switch v-model="itemEnabled" />
+                    <Switch checked="true" @checkedChange="switch_callback" />
+                    <ListPicker :items="listOfItems" v-model="listpicker_selectedItem" />
+                    <ListPicker :items="listOfItems" selectedIndex="0" @selectedIndexChange="ListPicker_callback" />
 
-                <Label text="checkbox" />
-                <template v-for="(item, index)  in  listOfItems " :key="index">
-                    <check-box :text="item" :checked="isChecked[index]" @checkedChange="isChecked[index] = $event.value" />
-                </template>
-            </StackLayout>
+                    <Label text="checkbox" />
+                    <template v-for="(item, index)  in  listOfItems " :key="index">
+                        <check-box :text="item" :checked="isChecked[index]"
+                            @checkedChange="isChecked[index] = $event.value" />
+                    </template>
+                </StackLayout>
+            </ScrollView>
         </Page>
     </Frame>
 </template>

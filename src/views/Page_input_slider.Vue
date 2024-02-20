@@ -1,14 +1,18 @@
 <template>
     <Frame>
         <Page actionBarHidden="true">
-            <StackLayout>
-                <Slider v-model="slider_value" minValue="0" maxValue="100" />
-                <MDSlider v-model="md_slider_value" minValue="0" maxValue="100" />
-                <RangeSeekBar col="1" :minValue="rangeSeekBarProp.minValue" :maxValue="rangeSeekBarProp.maxValue"
-                    :valueMin="rangeSeekBarProp.valueMin" :valueMax="rangeSeekBarProp.valueMax"
-                    :minRange="rangeSeekBarProp.minRange" :step="rangeSeekBarProp.step" @valueChanged="valueChanged($event)"
-                    @finalValueChanged="finalValueChanged($event)" class="range-seek-bar" />
-            </StackLayout>
+            <ScrollView>
+                <StackLayout>
+                    <Slider v-model="slider_value" minValue="0" maxValue="100" />
+                    <MDSlider v-model="md_slider_value" minValue="0" maxValue="100" />
+                    <RangeSeekBar col="1" :minValue="rangeSeekBarProp.minValue" :maxValue="rangeSeekBarProp.maxValue"
+                        :valueMin="rangeSeekBarProp.valueMin" :valueMax="rangeSeekBarProp.valueMax"
+                        :minRange="rangeSeekBarProp.minRange" :step="rangeSeekBarProp.step"
+                        @valueChanged="valueChanged($event)" @finalValueChanged="finalValueChanged($event)"
+                        class="range-seek-bar" />
+                </StackLayout>
+            </ScrollView>
+
         </Page>
     </Frame>
 </template>

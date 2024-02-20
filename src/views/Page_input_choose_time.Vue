@@ -1,11 +1,16 @@
 <template>
     <Frame>
         <Page actionBarHidden="true">
-            <StackLayout>
-                <DatePicker v-model="selectedDate" />
-                <TimePicker v-model="selectedTime" />
-                <DateTimePickerFields hintDate="select date" hintTime="select time" @dateChange="selectedDatetime=$event.value" :date="selectedDatetime" locale="zh_cn" dateFormat="yyyy-MM-dd" timeFormat="HH:mm:ss" pickerTitleDate="choose date" pickerTitleTime="choose time"/>
-            </StackLayout>
+            <ScrollView>
+                <StackLayout>
+                    <DatePicker v-model="selectedDate" />
+                    <TimePicker v-model="selectedTime" />
+                    <DateTimePickerFields hintDate="select date" hintTime="select time"
+                        @dateChange="selectedDatetime = $event.value" :date="selectedDatetime" locale="zh_cn"
+                        dateFormat="yyyy-MM-dd" timeFormat="HH:mm:ss" pickerTitleDate="choose date"
+                        pickerTitleTime="choose time" />
+                </StackLayout>
+            </ScrollView>
         </Page>
     </Frame>
 </template>

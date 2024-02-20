@@ -16,6 +16,8 @@
     "@nativescript-community/ui-range-seek-bar": "^2.0.3",
     "@nativescript/core": "~8.6.1",
     "@nativescript/datetimepicker": "^2.1.13",
+    "@nativescript/iqkeyboardmanager": "^2.1.1",
+    "@nativescript/keyboard-toolbar": "^2.0.0",
     "@nstudio/nativescript-floatingactionbutton": "^3.0.4",
     "nativescript-vue": "3.0.0-beta.11"
   },

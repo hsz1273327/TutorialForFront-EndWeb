@@ -5,6 +5,7 @@
                 <StackLayout>
                     <TextView :text="deviceInfo" editable="false" />
                     <TextView :text="screenInfo" editable="false" />
+                    <TextView :text="connectInfo" editable="false" />
                 </StackLayout>
             </ScrollView>
         </Page>
@@ -23,6 +24,7 @@ import {
     addCallback,
     running,
 } from '@nativescript/core/fps-meter'
+import { Connectivity } from '@nativescript/core'
 
 
 const isRealDevice = Utils.isRealDevice() ? "是" : "不是"
@@ -62,10 +64,87 @@ function startFPSMeter(): () => void {
     }
 }
 
+
+
+const connectionType: number = Connectivity.getConnectionType()
+let con_type = "none"
+switch (connectionType) {
+    case Connectivity.connectionType.none:
+        {//0,未连接
+            con_type= "none"
+        }
+        break;
+    case Connectivity.connectionType.wifi:
+        {//1,连接了wifi
+            con_type = "wifi"
+        }
+        break;
+    case Connectivity.connectionType.mobile:
+        {//2,连接了移动流量
+            con_type = "mobile"
+        }
+        break;
+    case Connectivity.connectionType.ethernet:
+        {//3,连接了以太网
+            con_type = "ethernet"
+        }
+        break;
+    case Connectivity.connectionType.bluetooth:
+        {//4,连接了蓝牙
+            con_type = "bluetooth"
+        }
+        break;
+    case Connectivity.connectionType.vpn:
+        {//5,连接了vpn
+            con_type = "vpn"
+        }
+        break;
+}
+
+const connectInfo = ref(`当前设备网络连接类型为${con_type}`)
+
+const connectChangeMonitor = (change: number) => {
+  switch (change) {
+    case Connectivity.connectionType.wifi:
+        {
+            connectInfo.value = `当前设备网络连接类型为wifi`
+        }
+        break
+    case Connectivity.connectionType.ethernet:
+        {
+            connectInfo.value = `当前设备网络连接类型为ethernet`
+        }
+        break
+    case Connectivity.connectionType.mobile:
+        {
+            connectInfo.value = `当前设备网络连接类型为mobile`
+        }
+        break
+    case Connectivity.connectionType.bluetooth:
+        {
+            connectInfo.value = `当前设备网络连接类型为bluetooth`
+        }
+        break
+    case Connectivity.connectionType.vpn:
+        {
+            connectInfo.value = `当前设备网络连接类型为vpn`
+        }
+        break
+    default:
+        {
+            connectInfo.value = `当前设备网络连接类型为none`
+        }
+        break
+  }
+}
+
 onMounted(() => {
     closeFPSMeter.value = startFPSMeter()
+    Connectivity.startMonitoring(connectChangeMonitor)
 })
 
-onUnmounted(() => closeFPSMeter.value())
-
+onUnmounted(() => {
+    closeFPSMeter.value()
+    Connectivity.stopMonitoring()
+})
 </script>

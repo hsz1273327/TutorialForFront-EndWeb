@@ -12,7 +12,6 @@
                         class="range-seek-bar" />
                 </StackLayout>
             </ScrollView>
-
         </Page>
     </Frame>
 </template>

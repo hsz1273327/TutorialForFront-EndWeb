@@ -5,6 +5,23 @@
                 <GridLayout>
                     <PreviousNextView>
                         <StackLayout>
+                            <Label text="placehold"/>
+                            <Label text="placehold"/>
+                            <Label text="placehold"/>
+                            <Label text="placehold"/>
+                            <Label text="placehold"/>
+                            <Label text="placehold"/>
+                            <Label text="placehold"/>
+                            <Label text="placehold"/>
+                            <Label text="placehold"/>
+                            <Label text="placehold"/>
+                            <Label text="placehold"/>
+                            <Label text="placehold"/>
+                            <Label text="placehold"/>
+                            <Label text="placehold"/>
+                            <Label text="placehold"/>
+                            <Label text="placehold"/>
+
                             <TextField id="tv2" v-model="textFieldValue" hint="Enter text..." text="Say it with emoji!" />
                             <MDTextField hint="md Enter text..." v-model="MDtextFieldValue" />
                             <MDTextField hint="md outline Enter text..." v-model="MDtextFieldValueoutline"
@@ -28,7 +45,13 @@
 
 <script lang="ts" setup>
 import { ref } from "nativescript-vue";
-import { Frame } from "@nativescript/core";
+import { Frame, Label } from "@nativescript/core";
+const iqKeyboard = IQKeyboardManager.sharedManager();
+
+if (global.isIOS) {
+    iqKeyboard.enableAutoToolbar = false;
+}
+
 const textFieldValue = ref("")
 const MDtextFieldValue = ref("")
 const MDtextFieldValueoutline = ref("")

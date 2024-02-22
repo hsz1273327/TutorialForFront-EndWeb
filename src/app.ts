@@ -13,15 +13,15 @@ import TextFieldPlugin from '@nativescript-community/ui-material-textfield/vue'
 // import Home from './views/Page_input_choose.vue'
 // import Home from './views/Page_input_choose_time.vue'
 // import Home from './views/Page_input_slider.vue'
-import Home from './views/Page_input_text.vue'
-
+// import Home from './views/Page_input_text.vue'
+import Home from './views/Page_input_textios.vue'
 
 registerElement(
     'Fab',
     () => require('@nstudio/nativescript-floatingactionbutton').Fab
 )
 registerElement('PreviousNextView', () => require('@nativescript/iqkeyboardmanager').PreviousNextView);
-
+registerElement('TextViewWithHint', () => require('@nativescript/iqkeyboardmanager').TextViewWithHint);
 registerElement('KeyboardToolbar', () => require('@nativescript/keyboard-toolbar').Toolbar);
 
 

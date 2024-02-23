@@ -16,7 +16,24 @@
 import { ref, onMounted, Ref } from "nativescript-vue";
 import { PullToRefresh } from '@nativescript-community/ui-pulltorefresh'
 import { Http, EventData } from "@nativescript/core"
+import { isAndroid } from '@nativescript/core/platform';
+import { SSE } from 'nativescript-sse';
 const url = 'https://api.github.com/users'
+
+const sse = new SSE(isAndroid ? 'http://10.0.2.2:5000/stream' : 'http://localhost:5000/stream', {'X-Token': 'Test1234'});
+
+sse.events.on('onConnect', data => {
+            console.log("get connected");
+        });
+
+sse.events.on('onMessage', data => {
+    this.list.push(data.object.message.data);
+    console.log(data.object.message.data);
+});
+sse.events.on('onError', data => {
+            console.log("get error");
+        });
+
 
 interface UserInfo {
     login: string

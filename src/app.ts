@@ -1,10 +1,14 @@
 import { createApp, registerElement } from 'nativescript-vue';
-import Home from './views/nativeHttpHome.vue'
+// import { init as bghttp_init } from '@nativescript/background-http'
+
+// import Home from './views/nativeHttpHome.vue'
+import Home from "./views/communityHttpHome.vue"
 
 registerElement(
     'PullToRefresh',
     () => require('@nativescript-community/ui-pulltorefresh').PullToRefresh
 )
+// bghttp_init()
 createApp(Home).start();
 
 // createApp(Home).use(ImageModulePlugin).use(CanvasSVG).start();

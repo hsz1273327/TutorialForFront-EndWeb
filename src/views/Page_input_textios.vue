@@ -26,7 +26,7 @@
                         <MDTextField hint="md outline Enter text..." v-model="MDtextFieldValueoutline" variant="outline" />
                         <MDTextField hint="md filled Enter text..." v-model="MDtextFieldValuefilled" variant="filled" />
                         <TextView v-model="textViewValue" />
-                        <TextView id="oneTimeCodeField" hint="code" />
+                        <TextView ref="oneTimeCodeField" hint="code" />
                     </StackLayout>
                 </PreviousNextView>
             </ScrollView>
@@ -35,10 +35,19 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "nativescript-vue";
-import { Frame, Label,getCurrentPage,TextField } from "@nativescript/core";
+import { ref,onMounted } from "nativescript-vue";
+import { Frame, Label, TextView } from "@nativescript/core";
 
-
+const oneTimeCodeField = ref()
+onMounted(()=>{
+    if (global.isIOS) {
+        const mfaCodeField =  oneTimeCodeField.value._nativeView as TextView 
+        
+        if (mfaCodeField !== null && mfaCodeField.ios) {
+            mfaCodeField.ios.textContentType = UITextContentTypeOneTimeCode;
+        }
+    }
+})
 if (global.isIOS) {
     const iqKeyboard = IQKeyboardManager.sharedManager();
     iqKeyboard.overrideKeyboardAppearance = true;
@@ -47,11 +56,6 @@ if (global.isIOS) {
     iqKeyboard.shouldShowToolbarPlaceholder = true
     // iqKeyboard.toolbarDoneBarButtonItemImage = new UIImage({ data: new NSData({base64Encoding: "string"}) })
     iqKeyboard.toolbarManageBehaviour = 2
-    
-    const mfaCodeField = getCurrentPage().getViewById('oneTimeCodeField') as TextField
-    if (mfaCodeField !== null && mfaCodeField.ios) {
-        mfaCodeField.ios.textContentType = UITextContentTypeOneTimeCode;
-    }
 }
 
 

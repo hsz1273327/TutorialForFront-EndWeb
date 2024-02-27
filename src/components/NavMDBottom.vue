@@ -14,37 +14,43 @@ import HomePage from "../views/HomePage.vue";
 import Page1 from "../views/Page1.vue";
 import Page2 from "../views/Page2.vue";
 
+let selected = false
 function onBottomNavigationTabSelected(args: TabSelectedEventData) {
-    console.log("!!!!!");
-    console.log(args.oldIndex);
-    console.log(args.newIndex);
-    switch (args.newIndex) {
-        case 0:
-            {
-                $navigateTo(HomePage, {
-                    transition: { name: "fade" },
-                    frame: "main-frame",
-                });
-            }
-            break;
-        case 1:
-            {
-                $navigateTo(Page1, {
-                    transition: { name: "fade" },
-                    frame: "main-frame",
-                });
-            }
-            break;
-        case 2:
-            {
-                $navigateTo(Page2, {
-                    transition: { name: "fade" },
-                    frame: "main-frame",
-                });
-            }
-            break;
-        default:
-            console.log(`unknown index ${args.newIndex}`);
+    if (selected) {
+        selected = false
+    } else {
+        selected = true
+        console.log("!!!!!");
+        console.log(args.oldIndex);
+        console.log(args.newIndex);
+        switch (args.newIndex) {
+            case 0:
+                {
+                    $navigateTo(HomePage, {
+                        transition: { name: "fade" },
+                        frame: "main-frame",
+                    });
+                }
+                break;
+            case 1:
+                {
+                    $navigateTo(Page1, {
+                        transition: { name: "fade" },
+                        frame: "main-frame",
+                    });
+                }
+                break;
+            case 2:
+                {
+                    $navigateTo(Page2, {
+                        transition: { name: "fade" },
+                        frame: "main-frame",
+                    });
+                }
+                break;
+            default:
+                console.log(`unknown index ${args.newIndex}`);
+        }
     }
 }
 </script>

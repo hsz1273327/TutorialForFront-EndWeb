@@ -14,8 +14,8 @@ import { initialize as imageInitialize} from '@nativescript-community/ui-image';
 // import Home from './views/Main_simple_mf.vue';
 // import Home from './views/Main_material_tabs.vue';
 // import Home from './views/Main_sb.vue';
-// import Home from './views/Main_MDBottomNavigationBar.vue';
-import Home from './views/Main_BottomSheet.vue'
+import Home from './views/Main_MDBottomNavigationBar.vue';
+// import Home from './views/Main_BottomSheet.vue'
 // import Home from './views/Main_ui-drawer.vue'
 if (global.isIOS) {
     themer.setPrimaryColor('#bff937');

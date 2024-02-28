@@ -19,10 +19,6 @@
 
 <script lang="ts" setup>
 import { ref, defineProps, onMounted, computed } from 'nativescript-vue';
-// import { GetFlickById, FlickDetail } from "../models/Flick_json";
-// import { GetFlickById, FlickDetail } from "../models/Flick_ApplicationSettings";
-// import { GetFlickById, FlickDetail } from "../models/Flick_CouchDB";
-// import { GetFlickById, FlickDetail } from "../models/Flick_sqlite";
 import { GetFlickById, FlickDetail } from "../models/Flick_orm";
 
 const props = defineProps(['id'])
@@ -38,17 +34,13 @@ const flick = ref<FlickDetail>({
 })
 
 const hasContent = computed(() => flick ? true : false)
-// // for Flick_json and Flick_ApplicationSettings
-// onMounted(() => {
-//   let res = GetFlickById(props.id)
-//   flick.value = res
-// })
-//for other
-onMounted(() => {
-  GetFlickById(props.id).then((res) => {
-    flick.value = res;
-  }).catch((e) => {
+
+onMounted(async () => {
+  try {
+    const res = await GetFlickById(props.id)
+    flick.value = res
+  } catch (e) {
     console.log(`GetFlickById get error ${e}`)
-  })
+  }
 })
 </script>

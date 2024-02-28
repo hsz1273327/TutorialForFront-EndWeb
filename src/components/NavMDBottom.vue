@@ -18,21 +18,32 @@ const pages = ref([{
     "path": "/"
 }, {
     "title": "Page1",
-    "path": "/page1"
+    "path": "/page1",
+    "props": { "x": 1 }
 }, {
     "title": "Page2",
     "path": "/page2"
 }])
 
+let selected = false
 function onBottomNavigationTabSelected(args: TabSelectedEventData) {
-    try {
-        let path = pages.value[args.newIndex].path
-        router.push(path,
-            {
+    if (selected) {
+        selected = false
+    } else {
+        selected = true
+        try {
+            let path = pages.value[args.newIndex].path
+            let props = pages.value[args.newIndex].props
+            let opt = {
                 frame: "main-frame"
-            })
-    } catch (e) {
-        console.log(`unknown index ${args.newIndex}`);
+            }
+            if (typeof (props) !== "undefined") {
+                Object.assign(opt, { props: props })
+            }
+            router.push(path, opt)
+        } catch (e) {
+            console.log(`unknown index ${args.newIndex}`);
+        }
     }
 }
 </script>

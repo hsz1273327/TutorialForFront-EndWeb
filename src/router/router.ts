@@ -23,6 +23,10 @@ const router = createRouter(
         routeBackFallbackPath: "/",
     }
 );
+
+router.beforeEach((to, from) => {
+    console.log(`from ${from.path} to ${to.path} with props ${JSON.stringify(to.meta.props)} `)
+});
 export {
     router
 }

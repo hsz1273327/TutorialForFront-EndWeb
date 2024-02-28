@@ -7,7 +7,9 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from "nativescript-vue";
+import { onMounted, defineProps } from "nativescript-vue";
 
-onMounted(() => console.log("&&&&mounted page1"))
+const props = defineProps(["x"])
+
+onMounted(() => console.log(`&&&&mounted page1 with props ${props.x}`))
 </script>

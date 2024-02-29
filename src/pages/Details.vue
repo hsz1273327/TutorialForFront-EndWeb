@@ -20,7 +20,8 @@
 <script lang="ts" setup>
 import { ref, defineProps, onMounted, computed } from 'nativescript-vue';
 import { GetFlickById, FlickDetail } from "../models/Flick_orm";
-
+import { FeedbackPosition } from "nativescript-feedback"
+import { feedback } from "../utils"
 const props = defineProps(['id'])
 
 const flick = ref<FlickDetail>({
@@ -40,6 +41,10 @@ onMounted(async () => {
     const res = await GetFlickById(props.id)
     flick.value = res
   } catch (e) {
+    feedback.error({
+      message: "数据加载异常,请过会儿重试",
+      position: FeedbackPosition.Top
+    });
     console.log(`GetFlickById get error ${e}`)
   }
 })

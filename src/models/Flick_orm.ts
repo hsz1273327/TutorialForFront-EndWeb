@@ -1,4 +1,4 @@
-import { createConnection,Connection } from '@nativescript-community/typeorm/browser';
+import { createConnection, Connection } from '@nativescript-community/typeorm/browser';
 import { knownFolders, path } from '@nativescript/core'
 import init_data from '../data/flick.json'
 import { Flick } from './entity/Flick'
@@ -63,7 +63,12 @@ async function Init() {
       row.url = flick.url
       row.description = flick.description
       row.details = JSON.stringify(flick.details)
-      await row.save()
+      try {
+        await row.save()
+        console.log(`********************save ${row.id} ok`)
+      } catch (e) {
+        console.log(`save row get error ${e}`)
+      }
     }
   }
   inited = true
@@ -78,11 +83,19 @@ async function Close() {
   }
 }
 
-
+function delay(ms: number): Promise<void> {
+  return new Promise<void>((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, ms);
+  });
+}
 
 //GetFlicks 获取flicks库存列表
 async function GetFlicks(): Promise<FlickModel[]> {
-
+  while (!inited) {
+    await delay(1000)
+  }
   let rows = await Flick.find({})
   console.log(`***************GetFlicks get ${rows.length}`)
   let res: FlickModel[] = rows.map((row) => {
@@ -97,7 +110,9 @@ async function GetFlicks(): Promise<FlickModel[]> {
 }
 //GetFlickById 通过id查找flick详情
 async function GetFlickById(id: number): Promise<FlickDetail> {
-
+  while (!inited) {
+    await delay(1000)
+  }
   let row = await Flick.findOneOrFail({
     where: {
       id

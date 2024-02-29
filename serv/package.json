@@ -1,17 +1,19 @@
 {
-  "name": "myAwesomeAppServ",
-  "type": "module",
-  "version": "1.0.0",
-  "private": true,
-  "dependencies": {
-    "koa": "^2.11.0",
-    "koa-router": "^7.4.0",
-    "koa-sse-stream": "^0.2.0",
-    "koa-static": "^5.0.0",
-    "koa-websocket": "^6.0.0"
-  },
-  "scripts": {
-    "sse": "node sse.js",
-    "ws": "node ws.js"
-  }
+    "name": "ws-hello",
+    "type": "module",
+    "version": "0.0.1",
+    "description": "simple tools",
+    "author": "huangsizhe",
+    "license": "MIT",
+    "devDependencies": {
+        "mocha": "^9.1.0",
+        "nyc": "^13.3.0"
+    },
+    "dependencies": {
+        "ws": "^8.2.0"
+    },
+    "scripts": {
+        "start": "node index.js",
+        "test": "node test.js"
+    }
 }

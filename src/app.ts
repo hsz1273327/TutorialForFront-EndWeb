@@ -1,4 +1,5 @@
 import { createApp, registerElement } from 'nativescript-vue';
+import { createPinia } from 'pinia'
 import Home from './views/Root.vue';
 // for orm
 import { installMixins } from '@nativescript-community/sqlite/typeorm';
@@ -9,4 +10,4 @@ registerElement(
     'PullToRefresh',
     () => require('@nativescript-community/ui-pulltorefresh').PullToRefresh
 )
-createApp(Home).use(router).start();
+createApp(Home).use(createPinia()).use(router).start();

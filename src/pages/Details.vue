@@ -4,6 +4,7 @@
     <ScrollView height="100%">
       <StackLayout>
         <Image margin="0" stretch="aspectFill" :src="flick.image" />
+        <Label marginTop="15" fontSize="16" fontWeight="700" class="text-primary" textWrap="true" :text="count" />
         <StackLayout padding="10 20">
           <StackLayout v-for="detail in flick.details" :key="detail.title">
             <Label marginTop="15" fontSize="16" fontWeight="700" class="text-primary" textWrap="true"
@@ -22,6 +23,13 @@ import { ref, defineProps, onMounted, computed } from 'nativescript-vue';
 import { GetFlickById, FlickDetail } from "../models/Flick_orm";
 import { FeedbackPosition } from "nativescript-feedback"
 import { feedback } from "../utils"
+import { storeToRefs } from 'pinia'
+import { useCounterStore } from '../store/counter'
+
+const store = useCounterStore()
+const { count } = storeToRefs(store)
+const { increment } = store
+
 const props = defineProps(['id'])
 
 const flick = ref<FlickDetail>({
@@ -40,6 +48,7 @@ onMounted(async () => {
   try {
     const res = await GetFlickById(props.id)
     flick.value = res
+    increment()
   } catch (e) {
     feedback.error({
       message: "数据加载异常,请过会儿重试",

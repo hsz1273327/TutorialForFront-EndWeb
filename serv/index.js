@@ -11,19 +11,14 @@ wsserver.on('connection', ws => {
     ws.on('message', message => {
         console.log('received: %s', message)
         switch (message) {
-            case "close":
+            case "close\n":
                 {
                     ws.close()
                 }
                 break
-            case "helloworld":
-                {
-                    ws.send('Hello World')
-                }
-                break
             default:
                 {
-                    ws.send('unkonwn command')
+                    ws.send(`echo ${message}`)
                 }
         }
     })

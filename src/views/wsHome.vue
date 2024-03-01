@@ -1,65 +1,66 @@
 <template>
     <Frame>
         <Page actionBarHidden="true">
-            <PullToRefresh @refresh="onRefresh">
-                <ListView :items="users">
-                    <template #default="{ item }">
-                        <Label :text="item" />
+
+            <ScrollView>
+                <StackLayout padding="12">
+                    <Label :text="welcomeword" />
+                    <template v-for="(item, key) in messages" :key="key">
+                        <StackLayout margin-top="10" :backgroundColor="item.position == 'Self' ? 'pink' : 'green'">
+                            <Label :text="item.message" />
+                        </StackLayout>
                     </template>
-                </ListView>
-            </PullToRefresh>
+                    <TextField :text="messageToSend" hint="Enter text to send" @returnPress="sendMessage"
+                        :editable="editable" :visibility="editable?'visible':'collapsed'" />
+                </StackLayout>
+            </ScrollView>
         </Page>
     </Frame>
 </template>
   
 <script lang="ts" setup>
-import { ref, onMounted, Ref } from "nativescript-vue";
-import { PullToRefresh } from '@nativescript-community/ui-pulltorefresh'
-import { Http, EventData } from "@nativescript/core"
+import { ref, Ref } from "nativescript-vue";
+import { EventData, TextField } from "@nativescript/core"
 
-const url = 'https://api.github.com/users'
+const welcomeword = ref("not connected yet")
 
+const editable = ref(false)
+const messageToSend = ref("")
+interface message {
+    message: string;
+    position: string;
+}
+
+const messages: Ref<message[]> = ref([])
 // const ws = new WebSocket("wss://socketsbay.com/wss/v2/1/demo/")
 const ws = new WebSocket("ws://10.0.2.2:3000")
 ws.onclose = (ev) => {
+    welcomeword.value = `connection closed`
+    editable.value = false
     console.log(`disconnected type: ${ev.type} message: ${ev.message}`);
 }
-ws.onmessage = (message_event) => console.log(`get message ${message_event.data} with type ${message_event.type}`)
-ws.onopen = (ev) => { console.log(`*****************************ws opened`) }
-console.log("**********************************812342315")
-
-interface UserInfo {
-    login: string
-}
-const users: Ref<string[]> = ref([])
-async function getUsers() {
-    try {
-        let resp: UserInfo[] = await Http.getJSON(url)
-        users.value = resp.map((x) => x.login)
-    } catch (e) {
-        console.log(`getUsers get error ${e}`)
-    }
+ws.onopen = (ev) => {
+    welcomeword.value = `connection ready`
+    editable.value = true
+    console.log(`ws opened`)
 }
 
-async function onRefresh(evt: EventData) {
-    await getUsers()
-    let pullRefresh = evt.object as PullToRefresh
-    pullRefresh.refreshing = false
+ws.onerror = (ev) => {
+    welcomeword.value = `connection error`
+    console.log(`connection get error ${ev.type}`);
+    editable.value = false
 }
-function delay(ms: number): Promise<void> {
-    return new Promise<void>((resolve) => {
-        setTimeout(() => {
-            resolve();
-        }, ms);
-    });
+ws.onmessage = (message_event) => {
+    messages.value.push({ message: message_event.data, position: "Remote" })
+    console.log(`get message ${message_event.data} with type ${message_event.type}`)
 }
-onMounted(async () => {
-    while (ws.readyState !== WebSocket.OPEN) {
-        await delay(1000)
-    }
-    console.log("******************************can send")
-    ws.send('helloworld')
-    console.log("******************************send ok")
-    getUsers()
-})
+
+function sendMessage(evt: EventData) {
+    const textField = evt.object as TextField
+    ws.send(textField.text)
+    messages.value.push({ message: textField.text, position: "Self" })
+    textField.text=""
+    console.log(`send message ${textField.text} ok`)
+}
+
 </script>

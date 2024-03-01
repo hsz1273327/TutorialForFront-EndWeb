@@ -1,7 +1,6 @@
 <template>
     <Frame>
         <Page actionBarHidden="true">
-
             <ScrollView>
                 <StackLayout padding="12">
                     <Label :text="welcomeword" />
@@ -54,7 +53,6 @@ ws.onmessage = (message_event) => {
     messages.value.push({ message: message_event.data, position: "Remote" })
     console.log(`get message ${message_event.data} with type ${message_event.type}`)
 }
-
 function sendMessage(evt: EventData) {
     const textField = evt.object as TextField
     ws.send(textField.text)
@@ -62,5 +60,4 @@ function sendMessage(evt: EventData) {
     textField.text=""
     console.log(`send message ${textField.text} ok`)
 }
-
 </script>

@@ -1,0 +1,14 @@
+version: "2.4"
+services:
+    rabbitmq:
+        build: ./
+        logging:
+            options:
+                max-file: "3"
+                max-size: 10m
+        ports:
+            - 18080:15672
+            - 15675:15675
+            - 1883:1883
+        # environment:
+        #     RABBITMQ_DEFAULT_VHOST: 

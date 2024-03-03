@@ -19,7 +19,7 @@
   
 <script lang="ts" setup>
 import { ref, Ref, onMounted } from "nativescript-vue";
-import { EventData, TextField } from "@nativescript/core"
+import { EventData, TextField,isIOS } from "@nativescript/core"
 
 import { MQTTClient, ClientOptions, ConnectionOptions, SubscribeOptions, Message } from "@edusperoni/nativescript-mqtt";
 // import {Message} from "@edusperoni/nativescript-mqtt/common";
@@ -36,8 +36,10 @@ interface message {
 
 const messages: Ref<message[]> = ref([])
 
+const host = isIOS? "localhost": "10.0.2.2"
+
 const mqtt_clientOptions: ClientOptions = {
-    host: "10.0.2.2",
+    host: host,
     /** the port number to connect to */
     port: 15675,
     path: "/ws"

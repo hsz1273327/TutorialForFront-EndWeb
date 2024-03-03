@@ -29,10 +29,10 @@ interface message {
     message: string;
     position: string;
 }
-
+const host = isIOS? "localhost": "10.0.2.2"
 const messages: Ref<message[]> = ref([])
 // const ws = new WebSocket("wss://socketsbay.com/wss/v2/1/demo/")
-const ws = new WebSocket("ws://10.0.2.2:3000")
+const ws = new WebSocket(`ws://${host}:3000`)
 ws.onclose = (ev) => {
     welcomeword.value = `connection closed`
     editable.value = false

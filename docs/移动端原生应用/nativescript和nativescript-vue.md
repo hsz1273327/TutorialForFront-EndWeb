@@ -85,6 +85,46 @@ nativescript支持插件化开发,这也就为社区提供了土壤,官方自己
 
 也就是说`nativescript`提供runtime,组件,项目管理工具等各种让程序可以跑起来的元素,而`nativescript-vue`提供vue.js的语法让我们可以通过编程将这些元素组合起来成为应用.
 
+需要注意在`nativescript-vue`中的组件是经过包装的`nativescript`组件.而很多接口需要直接访问`nativescript`组件,我们就需要从`nativescript-vue`中解包出`nativescript`组件再进行操作.
+
+#### 使用ref获取`nativescript`组件的实例
+
+最常见的获取`nativescript`组件实例的方法,原理是利用vue的`ref`获取`nativescript-vue`组件.
+
+```vue
+<template>
+...
+<XXX ref="ElementA" />  // 指定vue组件实例名为"ElementA"
+...
+</template>
+<script lang="ts" setup>
+import { ref } from 'nativescript-vue';
+const ElementA = ref() //映射ref指定的vue实例
+const ele = Elechart.value._nativeView as XXX; // 从vue实例的`._nativeView`属性中获取`nativescript`组件的实例
+...
+</script>
+```
+
+#### 从事件中获取`nativescript`组件的实例
+
+`EventData`事件类以及其子类都有一个属性`object`用于记录发生事件的`nativescript`组件.因此一些由事件触发的针对触发事件`nativescript`组件的操作就可以用这种方式来进行
+
+```vue
+<template>
+...
+<TextField  hint="Enter text to send" @returnPress="sendMessage" />
+...
+</template>
+<script lang="ts" setup>
+import { EventData, TextField } from "@nativescript/core"
+function sendMessage(evt: EventData) {
+    const textField = evt.object as TextField
+    ...
+}
+...
+</script>
+```
+
 ### nativescript-vue与vue的关系
 
 `nativescript-vue`其实和`vue`本体没什么关系,它只是使用vue语法来写构造原生界面而已.具体来说,`nativescript-vue v2`使用`vue 2`语法;`nativescript-vue v3`使用`vue 3`语法.不过`nativescript-vue v3`目前还beta测试,并不完善.

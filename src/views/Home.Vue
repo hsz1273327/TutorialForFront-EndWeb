@@ -13,7 +13,7 @@
 </template>
   
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted, Ref } from "nativescript-vue";
+import { ref, onMounted, onUnmounted} from "nativescript-vue";
 import { Utils } from "@nativescript/core"
 import { Device } from "@nativescript/core"
 import { Screen } from '@nativescript/core'

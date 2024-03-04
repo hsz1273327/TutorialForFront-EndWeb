@@ -143,22 +143,24 @@ const connectChangeMonitor = (change: number) => {
 }
 
 const geoInfo = ref("未获得地理位置信息")
-function onActionTap() {
-    console.log('enableLocationRequest')
-    geolocation.enableLocationRequest().then(() => {
+async function onActionTap() {
+    try {
+        if (!geolocation.isEnabled()){
+            console.log('enableLocationRequest')
+            await geolocation.enableLocationRequest()
+        }
         console.log('getCurrentLocation')
-        geolocation
-            .getCurrentLocation({
-                desiredAccuracy: CoreTypes.Accuracy.high,
-                maximumAge: 5000,
-                timeout: 20000,
-            })
-            .then((currentLocation) => {
-                console.log('My current latitude: ', currentLocation.latitude)
-                console.log('My current longitude: ', currentLocation.longitude)
-                geoInfo.value = `My current latitude: ${currentLocation.latitude} and current longitude: ${currentLocation.longitude}`
-            })
-    })
+        let currentLocation = await geolocation.getCurrentLocation({
+            desiredAccuracy: CoreTypes.Accuracy.high,
+            maximumAge: 5000,
+            timeout: 20000,
+        })
+        console.log('My current latitude: ', currentLocation.latitude)
+        console.log('My current longitude: ', currentLocation.longitude)
+        geoInfo.value = `My current latitude: ${currentLocation.latitude} and current longitude: ${currentLocation.longitude}`
+    } catch (error) {
+        console.log(`get error: ${error}`)
+    }
 }
 
 

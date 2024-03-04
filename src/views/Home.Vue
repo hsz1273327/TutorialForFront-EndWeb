@@ -6,6 +6,8 @@
                     <TextView :text="deviceInfo" editable="false" />
                     <TextView :text="screenInfo" editable="false" />
                     <TextView :text="connectInfo" editable="false" />
+                    <Button text="获取当前位置信息" @tap="onActionTap" />
+                    <TextView :text="geoInfo" editable="false" />
                 </StackLayout>
             </ScrollView>
         </Page>
@@ -139,7 +141,12 @@ const connectChangeMonitor = (change: number) => {
             break
     }
 }
-geolocation.enableLocationRequest().then(() => {
+
+const geoInfo = ref("未获得地理位置信息")
+function onActionTap() {
+    console.log('enableLocationRequest')
+    geolocation.enableLocationRequest().then(() => {
+        console.log('getCurrentLocation')
         geolocation
             .getCurrentLocation({
                 desiredAccuracy: CoreTypes.Accuracy.high,
@@ -149,13 +156,16 @@ geolocation.enableLocationRequest().then(() => {
             .then((currentLocation) => {
                 console.log('My current latitude: ', currentLocation.latitude)
                 console.log('My current longitude: ', currentLocation.longitude)
+                geoInfo.value = `My current latitude: ${currentLocation.latitude} and current longitude: ${currentLocation.longitude}`
             })
     })
+}
+
 
 onMounted(() => {
     closeFPSMeter.value = startFPSMeter()
     Connectivity.startMonitoring(connectChangeMonitor)
-    
+
 })
 
 onUnmounted(() => {

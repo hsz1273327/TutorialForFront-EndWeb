@@ -11,9 +11,9 @@
         </Page>
     </Frame>
 </template>
-  
+
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted} from "nativescript-vue";
+import { ref, onMounted, onUnmounted } from "nativescript-vue";
 import { Utils } from "@nativescript/core"
 import { Device } from "@nativescript/core"
 import { Screen } from '@nativescript/core'
@@ -25,6 +25,8 @@ import {
     running,
 } from '@nativescript/core/fps-meter'
 import { Connectivity } from '@nativescript/core'
+import * as geolocation from '@nativescript/geolocation'
+import { CoreTypes } from '@nativescript/core' // used to describe at what accuracy the location should get
 
 
 const isRealDevice = Utils.isRealDevice() ? "是" : "不是"
@@ -71,7 +73,7 @@ let con_type = "none"
 switch (connectionType) {
     case Connectivity.connectionType.none:
         {//0,未连接
-            con_type= "none"
+            con_type = "none"
         }
         break;
     case Connectivity.connectionType.wifi:
@@ -104,43 +106,56 @@ switch (connectionType) {
 const connectInfo = ref(`当前设备网络连接类型为${con_type}`)
 
 const connectChangeMonitor = (change: number) => {
-  switch (change) {
-    case Connectivity.connectionType.wifi:
-        {
-            connectInfo.value = `当前设备网络连接类型为wifi`
-        }
-        break
-    case Connectivity.connectionType.ethernet:
-        {
-            connectInfo.value = `当前设备网络连接类型为ethernet`
-        }
-        break
-    case Connectivity.connectionType.mobile:
-        {
-            connectInfo.value = `当前设备网络连接类型为mobile`
-        }
-        break
-    case Connectivity.connectionType.bluetooth:
-        {
-            connectInfo.value = `当前设备网络连接类型为bluetooth`
-        }
-        break
-    case Connectivity.connectionType.vpn:
-        {
-            connectInfo.value = `当前设备网络连接类型为vpn`
-        }
-        break
-    default:
-        {
-            connectInfo.value = `当前设备网络连接类型为none`
-        }
-        break
-  }
+    switch (change) {
+        case Connectivity.connectionType.wifi:
+            {
+                connectInfo.value = `当前设备网络连接类型为wifi`
+            }
+            break
+        case Connectivity.connectionType.ethernet:
+            {
+                connectInfo.value = `当前设备网络连接类型为ethernet`
+            }
+            break
+        case Connectivity.connectionType.mobile:
+            {
+                connectInfo.value = `当前设备网络连接类型为mobile`
+            }
+            break
+        case Connectivity.connectionType.bluetooth:
+            {
+                connectInfo.value = `当前设备网络连接类型为bluetooth`
+            }
+            break
+        case Connectivity.connectionType.vpn:
+            {
+                connectInfo.value = `当前设备网络连接类型为vpn`
+            }
+            break
+        default:
+            {
+                connectInfo.value = `当前设备网络连接类型为none`
+            }
+            break
+    }
 }
+geolocation.enableLocationRequest().then(() => {
+        geolocation
+            .getCurrentLocation({
+                desiredAccuracy: CoreTypes.Accuracy.high,
+                maximumAge: 5000,
+                timeout: 20000,
+            })
+            .then((currentLocation) => {
+                console.log('My current latitude: ', currentLocation.latitude)
+                console.log('My current longitude: ', currentLocation.longitude)
+            })
+    })
 
 onMounted(() => {
     closeFPSMeter.value = startFPSMeter()
     Connectivity.startMonitoring(connectChangeMonitor)
+    
 })
 
 onUnmounted(() => {

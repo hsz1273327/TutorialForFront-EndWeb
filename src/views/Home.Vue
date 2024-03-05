@@ -18,7 +18,6 @@ async function onActionTap() {
             console.log('requestPermission')
             await LocalNotifications.requestPermission()
         }
-        
         let scheduledIds = await LocalNotifications.schedule([
             {
                 id: 1, // generated id if not set
@@ -51,5 +50,4 @@ async function onActionTap() {
         console.log('scheduling error: ' + error)
     }
 }
-
 </script>

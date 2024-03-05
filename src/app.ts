@@ -10,5 +10,3 @@ LocalNotifications.addOnMessageReceivedCallback((notification: ReceivedNotificat
 });
 
 createApp(Home).start();
-
-// createApp(Home).use(ImageModulePlugin).use(CanvasSVG).start();

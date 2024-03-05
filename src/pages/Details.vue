@@ -26,9 +26,9 @@ import { feedback } from "../utils"
 import { storeToRefs } from 'pinia'
 import { useCounterStore } from '../store/counter'
 
-const store = useCounterStore()
-const { count } = storeToRefs(store)
-const { increment } = store
+const counter_store = useCounterStore()
+const { count } = storeToRefs(counter_store)
+const { increment } = counter_store
 
 const props = defineProps(['id'])
 

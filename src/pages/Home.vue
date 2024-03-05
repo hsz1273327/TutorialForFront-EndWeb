@@ -1,6 +1,7 @@
 <template>
   <Page>
-    <ActionBar title="NativeFlix" />
+    <ActionBar :title="nowLocalTime" />
+    <!-- <Label marginTop="15" fontSize="16" fontWeight="700" class="text-primary" textWrap="true" :text="nowLocalTime" /> -->
     <PullToRefresh ref="" @refresh="refresh">
       <ListView height="100%" separatorColor="transparent" :items="flicks">
         <template #default="{ item }">
@@ -29,7 +30,11 @@ import { PullToRefresh } from '@nativescript-community/ui-pulltorefresh'
 import { GetFlicks, FlickModel } from "../models/Flick_orm";
 import { FeedbackPosition } from "nativescript-feedback"
 import { feedback } from "../utils"
+import { storeToRefs } from 'pinia'
+import { useTimeStore } from '../store/time'
 
+const time_store = useTimeStore()
+const { nowLocalTime } = storeToRefs(time_store)
 
 const router = useRouter();
 const flicks = ref<FlickModel[]>([]);

@@ -2,51 +2,54 @@
     <Frame>
         <Page actionBarHidden="true">
             <StackLayout>
-                <Button text="获取权限10s后系统通知" @tap="onActionTap" />
+                <Label :text="cam_available_msg" />
+                <Button v-show="!cam_available" text="申请摄像头授权" @tap="queryCamPerm" />
+                <Button v-show="cam_available" text="拍张照片" @tap="takePhoto" />
+                <Image v-show="has_photo" ref="photoimg" />
             </StackLayout>
         </Page>
     </Frame>
 </template>
 
 <script lang="ts" setup>
-import { Color, isAndroid } from '@nativescript/core'
+import { ref, computed } from 'nativescript-vue'
+import { ImageSource,Image } from "@nativescript/core";
+import { isAvailable, requestPermissions, takePicture } from '@nativescript/camera';
 
-async function onActionTap() {
+const cam_available = ref(false)
+const photoimg = ref()
+
+const cam_available_msg = computed(() => {
+    return cam_available.value ? '有可用摄像头' : '没有可用摄像头'
+})
+
+const has_photo = ref(false)
+
+function check_cam_status() {
+    let status = isAvailable()
+    cam_available.value = status.valueOf()
+}
+
+async function queryCamPerm() {
+    await requestPermissions()
+    check_cam_status()
+}
+
+async function takePhoto() {
     try {
-        if (!LocalNotifications.hasPermission()){
-            console.log('requestPermission')
-            await LocalNotifications.requestPermission()
-        }
-        let scheduledIds = await LocalNotifications.schedule([
-            {
-                id: 1, // generated id if not set
-                title: 'The title',
-                body: 'Recurs every minute until cancelled',
-                ticker: 'The ticker',
-                color: new Color('red'),
-                badge: 1,
-                groupedMessages: [
-                    'The first',
-                    'Second',
-                    'Keep going',
-                    'one more..',
-                    'OK Stop',
-                ], //android only
-                groupSummary: 'Summary of the grouped messages above', //android only
-                ongoing: true, // makes the notification ongoing (Android only)
-                icon: 'res://heart',
-                image:
-                    'https://cdn-images-1.medium.com/max/1200/1*c3cQvYJrVezv_Az0CoDcbA.jpeg',
-                thumbnail: true,
-                interval: 'minute',
-                channel: 'My Channel', // default: 'Channel'
-                sound: isAndroid ? 'customsound' : 'customsound.wav',
-                at: new Date(new Date().getTime() + 10 * 1000), // 10 seconds from now
-            },
-        ])
-        console.log('Notification id(s) scheduled: ' + JSON.stringify(scheduledIds))
+        const image = photoimg.value._nativeView as Image;
+        const options = {
+            width: 300,
+            height: 300,
+            keepAspectRatio: false,
+            saveToGallery: true
+        };
+        const imageAsset = await takePicture(options)
+        console.log("Result is an image asset instance")
+        image.src = imageAsset
+        has_photo.value = true
     } catch (error) {
-        console.log('scheduling error: ' + error)
+        console.log("Error -> " + error.message)
     }
 }
 </script>

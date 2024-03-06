@@ -9,7 +9,6 @@
 </template>
 
 <script lang="ts" setup>
-import { LocalNotifications } from '@nativescript/local-notifications'
 import { Color, isAndroid } from '@nativescript/core'
 
 async function onActionTap() {

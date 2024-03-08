@@ -1,6 +1,6 @@
 <template>
     <GridLayout height="300" @shownInBottomSheet="onShownInBottomSheet">
-        <BarcodeView ref="cameraView" class="scanner-round" pause beepOnScan="true" reportDuplicates="false"
+        <BarcodeView ref="cameraView" class="scanner-round" pause beepOnScan="true" reportDuplicates="false" format="QR_CODE"
             @scanResult="onScanResult" />
         <Image src="~/assets/crosshair.png" width="140" height="140" style="margin-top: 14; opacity: 0.3"
             horizontalAlignment="center" verticalAlignment="center" />

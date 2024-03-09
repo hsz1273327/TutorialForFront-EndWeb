@@ -51,5 +51,7 @@
     <string>enter your camera permission request text here</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>enter your photo library permission request text here</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Recording Practice Sessions</string>
 </dict>
 </plist>

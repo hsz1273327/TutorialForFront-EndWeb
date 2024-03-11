@@ -27,3 +27,5 @@ hooks
 *.log
 *.db
 *.mp4
+serv
+httpserv

@@ -1,0 +1,63 @@
+<template>
+    <Frame>
+        <Page>
+            <ActionBar title="My App">
+                <template v-if="isIOS">
+                    <ActionItem :icon="fontPermission" ios.position="right" class="mdi-ab" fontSize="20" @Tap="requestPermission"/>
+
+                </template>
+                <template v-else>
+                    <ActionItem :icon="fontPermission" android.position="actionBar" class="mdi-ab" fontSize="20" @Tap="requestPermission"/>
+                </template>
+            </ActionBar>
+            <GridLayout rows="*,*,*">
+                <!-- <WebRTCView @loaded="remoteLoaded" row="0" ref="remoteVideoView"></WebRTCView> -->
+                <GridLayout verticalAlignment="center" horizontalAlignment="center" row="1" rows="auto,auto,auto"
+                    columns="auto,auto,auto">
+                    <Button row="0" col="1" text="Call" />
+                    <Button row="1" col="0" text="Switch" />
+                    <Button row="1" col="2" text="Mute" />
+                    <Button row="2" col="1" text="End" />
+                </GridLayout>
+                <!-- <WebRTCView @loaded="localLoaded" row="2" ref="localVideoView"></WebRTCView> -->
+            </GridLayout>
+        </Page>
+    </Frame>
+</template>
+
+<script lang="ts" setup>
+import { ref, Ref, onMounted } from "nativescript-vue";
+import { EventData, TextField } from "@nativescript/core"
+import { WebRTC } from 'nativescript-webrtc-plugin';
+
+const isIOS = ref(global.isIOS)
+
+const _fontWithoutPermission = "\uf2de"
+const _fontWithPermission = "\uf2e0"
+
+const fontPermission = ref(_fontWithoutPermission)
+
+function hasPermissions(){
+    if (WebRTC.hasPermissions()){
+        fontPermission.value = _fontWithPermission
+    }else{
+        fontPermission.value = _fontWithoutPermission
+    }
+}
+
+async function requestPermission(){
+    if (!WebRTC.hasPermissions()) {
+        try {
+            await WebRTC.requestPermissions();
+            hasPermissions()
+        } catch (e) {
+            console.log(`WebRTC request Permissions get error ${e.message}`)
+        }
+    }else{
+        console.log(`WebRTC no need to request Permissions`)
+    }
+}
+
+onMounted(hasPermissions)
+
+</script>

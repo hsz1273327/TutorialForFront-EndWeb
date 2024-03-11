@@ -4,12 +4,13 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@duicorn/nativescript-sse": "^5.0.2",
     "@edusperoni/nativescript-mqtt": "^2.0.0",
     "@nativescript-community/https": "^4.1.8",
     "@nativescript-community/ui-pulltorefresh": "^2.5.3",
     "@nativescript/core": "~8.6.1",
     "@valor/nativescript-websockets": "^1.0.5",
-    "nativescript-vue": "3.0.0-beta.11",
+    "nativescript-vue": "3.0.0-beta.11"
   },
   "devDependencies": {
     "@nativescript/android": "8.6.2",

@@ -4,8 +4,9 @@ import { createApp, registerElement } from 'nativescript-vue';
 
 // import Home from './views/nativeHttpHome.vue'
 // import Home from "./views/communityHttpHome.vue"
+import Home from "./views/sseHome.vue"
 // import Home from "./views/wsHome.vue"
-import Home from "./views/mqttHome.vue"
+// import Home from "./views/mqttHome.vue"
 // import Home from "./views/webrtcMsgHome.vue"
 
 import '@valor/nativescript-websockets'

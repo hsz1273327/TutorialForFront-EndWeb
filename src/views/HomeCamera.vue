@@ -15,7 +15,8 @@
 <script lang="ts" setup>
 import { ref, computed } from 'nativescript-vue'
 import { Image } from "@nativescript/core"
-import { isAvailable, requestPermissions, takePicture } from '@nativescript/camera'
+import { isAvailable, takePicture } from '@nativescript/camera'
+import { request } from '@nativescript-community/perms';
 
 const cam_available = ref(false)
 const photoimg = ref()
@@ -33,9 +34,15 @@ function check_cam_status() {
 }
 
 async function queryCamPerm() {
-    let result = await requestPermissions()
-    console.log(`requestPermissions ok ${result}`)
-    check_cam_status()
+    try {
+        // let result = await requestPermissions()
+        const result = await request('camera', { type: 'always' })
+        console.log(`requestPermissions ok ${JSON.stringify(result)}`)
+        check_cam_status()
+    } catch (error) {
+        console.log(`requestPermissions get error: android.permission.CAMERA : ${error["android.permission.CAMERA;"]} android.permission.WRITE_EXTERNAL_STORAGE: ${error["android.permission.WRITE_EXTERNAL_STORAGE"]}`)
+    }
+
 }
 
 async function takePhoto() {

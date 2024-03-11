@@ -12,7 +12,11 @@ ActionBar {
   font-family: 'Material Design Icons', 'Material-Design-Iconic-Font';
   font-weight: 400;
 }
-
+.mdi-ab {
+  font-family: 'Material Design Icons', 'Material-Design-Iconic-Font';
+  font-weight: 400;
+  font-size: 24;
+}
 .fontello {
   font-family: 'Fontello', 'fontello';
   font-weight: 400;

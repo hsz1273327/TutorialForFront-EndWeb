@@ -40,7 +40,7 @@ async function queryCamPerm() {
         console.log(`requestPermissions ok ${JSON.stringify(result)}`)
         check_cam_status()
     } catch (error) {
-        console.log(`requestPermissions get error: android.permission.CAMERA : ${error["android.permission.CAMERA;"]} android.permission.WRITE_EXTERNAL_STORAGE: ${error["android.permission.WRITE_EXTERNAL_STORAGE"]}`)
+        console.log(`requestPermissions get error: android.permission.CAMERA : ${error["android.permission.CAMERA;"]}`)
     }
 
 }

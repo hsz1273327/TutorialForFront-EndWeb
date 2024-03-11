@@ -4,17 +4,17 @@
             <StackLayout>
                 <Label :text="cam_available_msg" />
                 <Button v-show="!cam_available" text="申请摄像头授权" @tap="queryCamPerm" />
-                <Button v-show="cam_available" text="录段视频" @tap="takePhoto" />
+                <Button v-show="cam_available" text="录段视频" @tap="record" />
                 
-                <GridLayout rows="*,30" margin="10" height="100%" borderWidth="5" borderColor="red">
-                <VideoPlayer ref="player" src="~/assets/BigBuckBunny.mp4" autoplay="false" controls="true" row="0" />
-                <StackLayout orientation="horizontal" row="1">
-                    <fab :text="fontFullScreen" class="mdi-ab" @onTap="fullscreen" />
-                    <fab :text="fontRepeat" class="mdi-ab" @onTap="repeatseitch" />
-                    <fab :text="fontVolumeMute" class="mdi-ab" @onTap="volumemuteswtich" />
-                    <Slider v-model="Volume" minValue="0" maxValue="100" width="200" />
-                </StackLayout>
-            </GridLayout>
+                <GridLayout v-show="has_record" rows="*,30" margin="10" height="100%" borderWidth="5" borderColor="red">
+                    <VideoPlayer ref="player" autoplay="false" controls="true" row="0" />
+                    <StackLayout orientation="horizontal" row="1">
+                        <fab :text="fontFullScreen" class="mdi-ab" @onTap="fullscreen" />
+                        <fab :text="fontRepeat" class="mdi-ab" @onTap="repeatseitch" />
+                        <fab :text="fontVolumeMute" class="mdi-ab" @onTap="volumemuteswtich" />
+                        <Slider v-model="Volume" minValue="0" maxValue="100" width="200" />
+                    </StackLayout>
+                </GridLayout>
             </StackLayout>
         </Page>
     </Frame>
@@ -107,7 +107,7 @@ function fullscreen(evt: EventData) {
     }
 }
 
-async function takePhoto() {
+async function record() {
     try {
         const video = player.value._nativeView as Video
         const options: VideoRecorderOptions = {

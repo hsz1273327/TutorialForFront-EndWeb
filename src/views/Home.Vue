@@ -6,8 +6,6 @@
                     <TextView :text="deviceInfo" editable="false" />
                     <TextView :text="screenInfo" editable="false" />
                     <TextView :text="connectInfo" editable="false" />
-                    <Button text="获取当前位置信息" @tap="onActionTap" />
-                    <TextView :text="geoInfo" editable="false" />
                 </StackLayout>
             </ScrollView>
         </Page>
@@ -27,7 +25,6 @@ import {
     running,
 } from '@nativescript/core/fps-meter'
 import { Connectivity } from '@nativescript/core'
-import * as geolocation from '@nativescript/geolocation'
 import { CoreTypes } from '@nativescript/core' // used to describe at what accuracy the location should get
 
 
@@ -139,27 +136,6 @@ const connectChangeMonitor = (change: number) => {
                 connectInfo.value = `当前设备网络连接类型为none`
             }
             break
-    }
-}
-
-const geoInfo = ref("未获得地理位置信息")
-async function onActionTap() {
-    try {
-        if (!geolocation.isEnabled()){
-            console.log('enableLocationRequest')
-            await geolocation.enableLocationRequest()
-        }
-        console.log('getCurrentLocation')
-        let currentLocation = await geolocation.getCurrentLocation({
-            desiredAccuracy: CoreTypes.Accuracy.high,
-            maximumAge: 5000,
-            timeout: 20000,
-        })
-        console.log('My current latitude: ', currentLocation.latitude)
-        console.log('My current longitude: ', currentLocation.longitude)
-        geoInfo.value = `My current latitude: ${currentLocation.latitude} and current longitude: ${currentLocation.longitude}`
-    } catch (error) {
-        console.log(`get error: ${error}`)
     }
 }
 

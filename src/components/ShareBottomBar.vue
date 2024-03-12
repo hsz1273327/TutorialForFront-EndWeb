@@ -8,7 +8,7 @@
 </template>
     
 <script lang="ts" setup>
-import { defineProps, $navigateTo, ref } from "nativescript-vue";
+import { defineProps, ref } from "nativescript-vue";
 import { View } from "@nativescript/core";
 import { SelectedIndexChangedEventData } from "@nativescript/core/ui/segmented-bar";
 import { useBottomSheet } from "@nativescript-community/ui-material-bottomsheet/vue3";

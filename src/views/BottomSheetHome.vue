@@ -14,18 +14,19 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from "nativescript-vue";
+import { EventData } from "@nativescript/core"
+import ShareBottomBar from "../components/ShareBottomBar.vue";
+import { useBottomSheet } from "@nativescript-community/ui-material-bottomsheet/vue3";
 
-import { ref } from 'nativescript-vue'
-import { EventData, StackLayout } from "@nativescript/core"
-import { usePopover } from "../utils/popover"
-
-import ColorHelp from '../components/ColorHelp.vue'
-const { showPopover }=usePopover()
+const { showBottomSheet } = useBottomSheet()
+const defaultIndex = ref(0)
 
 interface Card {
     name: string
     color: string
 }
+
 const itemList = ref<Card[]>([
     { name: 'TURQUOISE', color: '#1abc9c' },
     { name: 'EMERALD', color: '#2ecc71' },
@@ -50,8 +51,19 @@ const itemList = ref<Card[]>([
 ]);
 
 async function onLongPress(evt: EventData) {
-    let anchor = evt.object as StackLayout
-    let color = anchor.backgroundColor
-    await showPopover(ColorHelp, { anchor: anchor, props: { "color": color } })
+    showBottomSheet(ShareBottomBar, {
+        dismissOnBackgroundTap: true,
+        props: {
+            canCloseBottomSheet: true,
+            defaultIndex: defaultIndex.value,
+        },
+        closeCallback: (...args: any[]) => {
+            try {
+                defaultIndex.value = args[0][0][1];
+            } catch (e) {
+                defaultIndex.value = 0
+            }
+        },
+    });
 }
 </script>

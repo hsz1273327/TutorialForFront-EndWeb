@@ -14,9 +14,6 @@ import { SelectedIndexChangedEventData } from "@nativescript/core/ui/segmented-b
 import { useBottomSheet } from "@nativescript-community/ui-material-bottomsheet/vue3";
 
 const { closeBottomSheet } = useBottomSheet()
-// const icon_google = ref("font://\uf34e")
-// const icon_github = ref("font://\uf345")
-// const icon_twitter = ref("font://\uf360")
 const icon_google = ref("\uf34e")
 const icon_github = ref("\uf345")
 const icon_twitter = ref("\uf360")
@@ -41,12 +38,12 @@ function onIndexSelected(evt: SelectedIndexChangedEventData) {
             break;
         case 1:
             {
-                console.log("twitter")
+                console.log("github")
             }
             break;
         case 2:
             {
-                console.log("github")
+                console.log("twitter")
             }
             break;
         default:

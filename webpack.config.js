@@ -1,11 +1,11 @@
 const webpack = require("@nativescript/webpack");
-
+// const NsVueTemplateCompiler = require('nativescript-vue-template-compiler')
 
 module.exports = (env) => {
 	webpack.init(env);
 
-	// const NsVueTemplateCompiler = require('nativescript-vue-template-compiler')
-	// NsVueTemplateCompiler.registerElement('BottomSheet', () => require('@nativescript-community/ui-persistent-bottomsheet').Pager, {
+
+	// NsVueTemplateCompiler.registerElement('BottomSheet', () => require('@nativescript-community/ui-persistent-bottomsheet').BottomSheet, {
 	// 	model: {
 	// 	  prop: 'stepIndex',
 	// 	  event: 'stepIndexChange'

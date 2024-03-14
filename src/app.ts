@@ -4,9 +4,9 @@ import speeddialPlugin from '@nativescript-community/ui-material-speeddial/vue'
 import { BottomSheetPlugin } from '@nativescript-community/ui-material-bottomsheet/vue3';
 import { install as installBottomsheet } from "@nativescript-community/ui-material-bottomsheet";
 
-
+// import Home from './views/SpeedDialHome.vue'
+import Home from './views/PopoverHome.vue'
 // import Home from './views/Main_BottomSheet.vue'
-import Home from './views/SpeedDialHome.vue'
 
 if (global.isIOS) {
     themer.setPrimaryColor('#bff937');

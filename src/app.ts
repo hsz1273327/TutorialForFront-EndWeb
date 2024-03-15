@@ -10,11 +10,12 @@ import { install as installUIDrawer} from '@nativescript-community/ui-drawer';
 import ImageModulePlugin from '@nativescript-community/ui-image/vue';
 import { initialize as imageInitialize} from '@nativescript-community/ui-image';
 
+import Home from './views/Main_ActionBar.vue';
 // import Home from './views/Main_simple.vue';
 // import Home from './views/Main_simple_mf.vue';
 // import Home from './views/Main_material_tabs.vue';
 // import Home from './views/Main_sb.vue';
-import Home from './views/Main_MDBottomNavigationBar.vue';
+// import Home from './views/Main_MDBottomNavigationBar.vue';
 // import Home from './views/Main_BottomSheet.vue'
 // import Home from './views/Main_ui-drawer.vue'
 if (global.isIOS) {

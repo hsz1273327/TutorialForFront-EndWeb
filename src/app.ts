@@ -6,14 +6,14 @@ import { BottomSheetPlugin } from '@nativescript-community/ui-material-bottomshe
 import { install as installBottomsheet } from "@nativescript-community/ui-material-bottomsheet";
 import ButtonPlugin from '@nativescript-community/ui-material-button/vue';
 import DrawerPlugin from '@nativescript-community/ui-drawer/vue3'
-import { install as installUIDrawer} from '@nativescript-community/ui-drawer';
+import { install as installUIDrawer } from '@nativescript-community/ui-drawer';
 import ImageModulePlugin from '@nativescript-community/ui-image/vue';
-import { initialize as imageInitialize} from '@nativescript-community/ui-image';
+import { initialize as imageInitialize } from '@nativescript-community/ui-image';
 
-import Home from './views/Main_ActionBar.vue';
-// import Home from './views/Main_simple.vue';
-// import Home from './views/Main_simple_mf.vue';
-// import Home from './views/Main_material_tabs.vue';
+// import Home from './views/ActionBarHome.vue';
+// import Home from './views/TabHome.vue';
+// import Home from './views/TabFrameHome.vue';
+import Home from './views/MaterialTabHome.vue';
 // import Home from './views/Main_sb.vue';
 // import Home from './views/Main_MDBottomNavigationBar.vue';
 // import Home from './views/Main_BottomSheet.vue'
@@ -25,5 +25,5 @@ if (global.isIOS) {
 }
 installBottomsheet();
 installUIDrawer()
-imageInitialize({isDownsampleEnabled: true});
+imageInitialize({ isDownsampleEnabled: true });
 createApp(Home).use(TabsPlugin).use(BottomNavigationBar).use(ButtonPlugin).use(BottomSheetPlugin).use(DrawerPlugin).use(ImageModulePlugin).start();

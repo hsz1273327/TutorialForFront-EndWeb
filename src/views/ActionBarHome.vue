@@ -38,9 +38,9 @@
 import { ref, computed } from "nativescript-vue";
 import { TapGestureEventData } from "@nativescript/core/ui/gestures";
 import { $navigateTo, $navigateBack } from "nativescript-vue";
-import HomePage from "./HomePage.vue";
-import Page1 from "./Page1.vue";
-import Page2 from "./Page2.vue";
+import HomePage from "../pages/HomePage.vue";
+import SearchPage from "../pages/SearchPage.vue";
+import MessagePage from "../pages/MessagePage.vue";
 
 const isIOS = ref(global.isIOS)
 
@@ -75,14 +75,14 @@ function toHome(evt: TapGestureEventData) {
 }
 function toSearch(evt: TapGestureEventData) {
     console.log("tap toSearch!")
-    $navigateTo(Page1, {
+    $navigateTo(SearchPage, {
         transition: { name: "fade" },
         frame: "main-frame",
     });
 }
 function toMessage(evt: TapGestureEventData) {
     console.log("tap toMessage!")
-    $navigateTo(Page2, {
+    $navigateTo(MessagePage, {
         transition: { name: "fade" },
         frame: "main-frame",
     });

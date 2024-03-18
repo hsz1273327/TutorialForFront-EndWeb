@@ -1,7 +1,7 @@
 <template>
     <Page actionBarHidden="true" id="Page1">
         <StackLayout>
-            <Label text="Page 1"></Label>
+            <Label text="Search Page"></Label>
         </StackLayout>
     </Page>
 </template>

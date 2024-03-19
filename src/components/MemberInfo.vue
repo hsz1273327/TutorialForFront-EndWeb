@@ -1,9 +1,11 @@
 <template>
-    <Label :text="info"></Label>
+    <Stacklayout backgroundColor="white" padding="25">
+        <Label :text="info" fontSize="40" color="red"></Label>
+    </Stacklayout>
 </template>
-    
+
 <script lang="ts" setup>
-import { defineProps,ref } from "nativescript-vue";
+import { defineProps } from "nativescript-vue";
 const props = defineProps({
     member: {
         type: String,

@@ -17,8 +17,8 @@
 
 import { ref } from 'nativescript-vue'
 import { EventData, StackLayout } from "@nativescript/core"
-import { usePopover } from "../utils/popover"
-
+// import { usePopover } from "../utils/popover"
+import { usePopover } from '@nativescript-community/ui-popover/vue3'
 import ColorHelp from '../components/ColorHelp.vue'
 const { showPopover }=usePopover()
 

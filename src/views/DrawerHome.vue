@@ -1,19 +1,17 @@
 <template>
     <Frame>
         <Page>
-            <Drawer ref="drawer">
-                <SideSheet ~leftDrawer />
-                <SideSheet ~rightDrawer />
-                <NavMDBottom ~topDrawer />
-                <NavMDBottom ~bottomDrawer />
-                <ListView ~mainContent ref="collection" height="100%" width="100%" separatorColor="transparent"
-                    :items="itemList" colWidth="50%" rowHeight="100">
-                    <template #default="{ item }">
-                        <StackLayout :backgroundColor="item.color" height="100">
-                            <Label :text="item.name" />
-                        </StackLayout>
-                    </template>
-                </ListView>
+            <Drawer ref="drawer" @open="showOpen" @close="showClose">
+                <MemberInfo ~leftDrawer member="左侧" />
+                <MemberInfo ~rightDrawer member="右侧" />
+                <MemberInfo ~topDrawer member="顶部" />
+                <MemberInfo ~bottomDrawer member="底部" />
+                <StackLayout ~mainContent backgroundColor="white">
+                    <Button @tap="onOpenDrawer('left')" text="Open Left Drawer" width="250" marginTop="25" />
+                    <Button @tap="onOpenDrawer('right')" text="Open Right Drawer" width="250" marginTop="25" />
+                    <Button @tap="onOpenDrawer('top')" text="Open Top Drawer" width="250" marginTop="25" />
+                    <Button @tap="onOpenDrawer('bottom')" text="Open Bottom Drawer" width="250" marginTop="25" />
+                </StackLayout>
             </Drawer>
         </Page>
     </Frame>
@@ -21,36 +19,22 @@
 
 <script lang="ts" setup>
 import { ref } from "nativescript-vue";
-import HomePage from "./HomePage.vue";
-import SideSheet from "../components/SideSheet.vue"
-import NavMDBottom from "../components/NavMDBottom.vue";
+import MemberInfo from '../components/MemberInfo.vue'
 
-
-interface Card {
-    name: string
-    color: string
+const drawer = ref()
+function onOpenDrawer(side: string) {
+    drawer.value._nativeView.open(side)
 }
-const itemList = ref<Card[]>([
-    { name: 'TURQUOISE', color: '#1abc9c' },
-    { name: 'EMERALD', color: '#2ecc71' },
-    { name: 'PETER RIVER', color: '#3498db' },
-    { name: 'AMETHYST', color: '#9b59b6' },
-    { name: 'WET ASPHALT', color: '#34495e' },
-    { name: 'GREEN SEA', color: '#16a085' },
-    { name: 'NEPHRITIS', color: '#27ae60' },
-    { name: 'BELIZE HOLE', color: '#2980b9' },
-    { name: 'WISTERIA', color: '#8e44ad' },
-    { name: 'MIDNIGHT BLUE', color: '#2c3e50' },
-    { name: 'SUN FLOWER', color: '#f1c40f' },
-    { name: 'CARROT', color: '#e67e22' },
-    { name: 'ALIZARIN', color: '#e74c3c' },
-    { name: 'CLOUDS', color: '#ecf0f1' },
-    { name: 'CONCRETE', color: '#95a5a6' },
-    { name: 'ORANGE', color: '#f39c12' },
-    { name: 'PUMPKIN', color: '#d35400' },
-    { name: 'POMEGRANATE', color: '#c0392b' },
-    { name: 'SILVER', color: '#bdc3c7' },
-    { name: 'ASBESTOS', color: '#7f8c8d' }
-]);
+interface DrawerEvent {
+    side: string;
+    duration: number;
+}
 
+function showOpen(evt: DrawerEvent) {
+    console.log(`open ${evt.side} on ${evt.duration}`)
+}
+
+function showClose(evt: DrawerEvent) {
+    console.log(`close ${evt.side} on ${evt.duration}`)
+}
 </script>

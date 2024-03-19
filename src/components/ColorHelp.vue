@@ -8,7 +8,8 @@
 <script lang="ts" setup>
 import { defineProps, ref } from "nativescript-vue";
 import { Color, StackLayout } from "@nativescript/core"
-import { usePopover } from "../utils/popover"
+// import { usePopover } from "../utils/popover"
+import { usePopover } from '@nativescript-community/ui-popover/vue3'
 const { closePopover } = usePopover()
 
 const props = defineProps({

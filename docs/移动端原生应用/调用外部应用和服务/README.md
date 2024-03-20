@@ -11,9 +11,12 @@
 值得一提的是google的[firebase服务](https://firebase.google.com/docs/reference/android/com/google/firebase/FirebaseApp)国内无法使用,因此这边也就先不介绍了
 
 
+
+
 系统应用
 
 https://github.com/nativescript-community/ui-document-picker
+
 https://github.com/nativescript-community/preferences
 
 https://github.com/nativescript-community/nativescript-health-data

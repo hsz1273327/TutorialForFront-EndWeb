@@ -23,6 +23,6 @@
     "target": 3,
     "lib": "nativescript-vue"
   },
-  "include": ["src", "types"],
+  "include": ["src", "types","src/**/*.vue"],
   "exclude": ["node_modules", "platforms"]
 }

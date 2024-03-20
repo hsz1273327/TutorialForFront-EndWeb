@@ -2,18 +2,18 @@
     <MDBottomNavigationBar activeColor="#e57373" badgeColor="#1976d2" selectedTabIndex="0"
         @tabSelected="onBottomNavigationTabSelected">
         <MDBottomNavigationTab title="Home" />
-        <MDBottomNavigationTab title="Page1" />
-        <MDBottomNavigationTab title="Page2" />
+        <MDBottomNavigationTab title="Search" />
+        <MDBottomNavigationTab title="Message" />
     </MDBottomNavigationBar>
 </template>
-    
+
 <script lang="ts" setup>
-import { $navigateTo } from "nativescript-vue";
+import { $navigateTo, defineEmits } from "nativescript-vue";
 import { TabSelectedEventData } from "@nativescript-community/ui-material-bottomnavigationbar";
 import HomePage from "../pages/HomePage.vue";
 import SearchPage from "../pages/SearchPage.vue";
 import MessagePage from "../pages/MessagePage.vue";
-
+const emit = defineEmits(["drawerClose"]);
 let selected = false
 function onBottomNavigationTabSelected(args: TabSelectedEventData) {
     if (selected) {
@@ -34,7 +34,7 @@ function onBottomNavigationTabSelected(args: TabSelectedEventData) {
                 break;
             case 1:
                 {
-                    $navigateTo(Page1, {
+                    $navigateTo(SearchPage, {
                         transition: { name: "fade" },
                         frame: "main-frame",
                     });
@@ -42,7 +42,7 @@ function onBottomNavigationTabSelected(args: TabSelectedEventData) {
                 break;
             case 2:
                 {
-                    $navigateTo(Page2, {
+                    $navigateTo(MessagePage, {
                         transition: { name: "fade" },
                         frame: "main-frame",
                     });
@@ -51,6 +51,7 @@ function onBottomNavigationTabSelected(args: TabSelectedEventData) {
             default:
                 console.log(`unknown index ${args.newIndex}`);
         }
+        emit("drawerClose")
     }
 }
 </script>

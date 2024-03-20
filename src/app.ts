@@ -9,8 +9,8 @@ import { install as installUIDrawer} from '@nativescript-community/ui-drawer'
 // import Home from './views/TabHome.vue';
 // import Home from './views/TabFrameHome.vue';
 // import Home from './views/MaterialTabHome.vue';
-import Home from './views/SegmentedBarHome.vue';
-// import Home from './views/MDBottomNavigationBarHome.vue';
+// import Home from './views/SegmentedBarHome.vue';
+import Home from './views/MDBottomNavigationBarHome.vue';
 
 if (global.isIOS) {
     themer.setPrimaryColor('#bff937');

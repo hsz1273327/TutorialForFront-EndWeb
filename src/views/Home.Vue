@@ -3,6 +3,9 @@
         <Page actionBarHidden="true">
             <StackLayout>
                 <StackLayout>
+                    <Button text="Request Permissions" @tap="requestPermissions" />
+                </StackLayout>
+                <StackLayout>
                     <Button text="Pick Document" @tap="pickDocument" />
                     <Label v-show="showInfo" :text="chosenImageName" />
                     <Label v-show="showInfo" :text="chosenImagePath" />
@@ -22,8 +25,9 @@
 
 <script lang="ts" setup>
 import { ref, Ref, computed } from 'nativescript-vue'
-import { File, TextField, EventData } from '@nativescript/core';
+import { File, TextField, EventData, isAndroid } from '@nativescript/core';
 import { openFilePicker, pickFolder, saveFile } from '@nativescript-community/ui-document-picker';
+import { request } from '@nativescript-community/perms';
 interface ImageInfo {
     name: string;
     path: string;
@@ -90,5 +94,17 @@ async function save(evt: EventData) {
         "mimeType": "text/plain"
     })
     console.log(`save ok ${result}`)
+}
+
+async function requestPermissions() {
+    if (isAndroid) {
+        console.log("android query Permissions")
+        try {
+            const result = await request({ storage: { manage: true } })
+            console.log(`get result ${JSON.stringify(result)}`)
+        } catch (error) {
+            console.log(`get error ${error.message}`)
+        }
+    }
 }
 </script>

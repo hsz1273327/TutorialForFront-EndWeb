@@ -1,32 +1,67 @@
 <template>
     <Frame>
         <Page actionBarHidden="true">
-            <Button :text="statusFont" @tap="changeStatus" :backgroundColor="backgroundColor" class="mdi" fontSize="60" color="white"/>
+            <StackLayout>
+                <Button text="Pick Document" @tap="pickDocument" />
+                <Label v-show="showInfo" :text="chosenImageName" />
+                <Label v-show="showInfo" :text="chosenImagePath" />
+                <Image v-show="showInfo" :src="chosenImageSrc" />
+            </StackLayout>
         </Page>
     </Frame>
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from "nativescript-vue";
-import { keepAwake, allowSleepAgain } from "@nativescript-community/insomnia"
+import { ref, Ref, computed } from 'nativescript-vue'
+import { File } from '@nativescript/core';
+import { openFilePicker } from '@nativescript-community/ui-document-picker';
+interface ImageInfo {
+    name: string;
+    path: string;
+}
+const chosenImage: Ref<ImageInfo> = ref(null)
+const showInfo = ref(false)
+const chosenImageName = computed(() => {
+    if (chosenImage.value) {
+        return `chosen image ${chosenImage.value.name}`
+    }
+    return "not chosen"
 
-const canSleep = ref(true)
-const canSleepFont = "\uf15c"
-const canNotSleepFont = '\uf15b'
-const backgroundColor = computed(() => {
-    return canSleep.value ? "orange" : "blue"
 })
-const statusFont = computed(() => {
-    return canSleep.value ? canSleepFont : canNotSleepFont
-})
+const chosenImagePath = computed(() => {
+    if (chosenImage.value) {
+        return `in path ${chosenImage.value.path}`
+    }
+    return "not chosen"
 
-async function changeStatus() {
-    if (canSleep.value){
-        await keepAwake()
-        canSleep.value = false
-    }else{
-        await allowSleepAgain()
-        canSleep.value = true
+})
+const chosenImageSrc = computed(() => {
+    if (chosenImage.value) {
+        return chosenImage.value.path
+    }
+    return ""
+
+})
+async function pickDocument() {
+    try {
+        const files = await openFilePicker({
+            extensions: ['jpg', 'png']
+        });
+        let _item = File.fromPath(files.files[0])
+        chosenImage.value = {
+            "name": _item._name,
+            "path": _item._path
+        }
+        console.log("chosenImage changed")
+        showInfo.value = true
+        // listView.value._nativescriptView.refresh()
+        // console.log('files', files, knownFolders.currentApp())
+        // console.log('test', File.fromPath(files.files[0]))
+        // console.log('test2',readTextFromUri(files.files[0]))
+        // console.log('test2', File.fromPath(files.files[0]).readTextSync())
+
+    } catch (error) {
+        console.error(error)
     }
 }
 </script>

@@ -2,10 +2,19 @@
     <Frame>
         <Page actionBarHidden="true">
             <StackLayout>
-                <Button text="Pick Document" @tap="pickDocument" />
-                <Label v-show="showInfo" :text="chosenImageName" />
-                <Label v-show="showInfo" :text="chosenImagePath" />
-                <Image v-show="showInfo" :src="chosenImageSrc" />
+                <StackLayout>
+                    <Button text="Pick Document" @tap="pickDocument" />
+                    <Label v-show="showInfo" :text="chosenImageName" />
+                    <Label v-show="showInfo" :text="chosenImagePath" />
+                    <Image v-show="showInfo" :src="chosenImageSrc" />
+                </StackLayout>
+                <StackLayout>
+                    <Button text="Pick Dir" @tap="pickDir" />
+                    <Label v-show="showDirInfo" :text="chosenDirPath" />
+                </StackLayout>
+                <StackLayout>
+                    <TextField :text="textFieldValue" hint="save as test.txt ..." @returnPress="save" />
+                </StackLayout>
             </StackLayout>
         </Page>
     </Frame>
@@ -13,8 +22,8 @@
 
 <script lang="ts" setup>
 import { ref, Ref, computed } from 'nativescript-vue'
-import { File } from '@nativescript/core';
-import { openFilePicker } from '@nativescript-community/ui-document-picker';
+import { File, TextField, EventData } from '@nativescript/core';
+import { openFilePicker, pickFolder, saveFile } from '@nativescript-community/ui-document-picker';
 interface ImageInfo {
     name: string;
     path: string;
@@ -54,14 +63,32 @@ async function pickDocument() {
         }
         console.log("chosenImage changed")
         showInfo.value = true
-        // listView.value._nativescriptView.refresh()
-        // console.log('files', files, knownFolders.currentApp())
-        // console.log('test', File.fromPath(files.files[0]))
-        // console.log('test2',readTextFromUri(files.files[0]))
-        // console.log('test2', File.fromPath(files.files[0]).readTextSync())
-
     } catch (error) {
         console.error(error)
     }
+}
+
+const showDirInfo = ref(false)
+const chosenDirPath = ref("")
+async function pickDir() {
+    try {
+        const dirs = await pickFolder({
+        });
+        console.log("chosenImage changed")
+        showDirInfo.value = true
+        chosenDirPath.value = dirs.folders[0]
+    } catch (error) {
+        console.error(error)
+    }
+}
+const textFieldValue = ref("")
+async function save(evt: EventData) {
+    let target = evt.object as TextField
+    let result = await saveFile({
+        "name": 'test.txt',
+        "data": target.text,
+        "mimeType": "text/plain"
+    })
+    console.log(`save ok ${result}`)
 }
 </script>

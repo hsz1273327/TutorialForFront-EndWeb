@@ -50,12 +50,12 @@ const chosenImageSrc = computed(() => {
 async function pickDocument() {
     try {
         let p = await picker.authorize()
-        if (!p.details[1]) {
+        console.log(JSON.stringify(p))
+        if (!p.authorized) {
             feedback.warning({
                 message: "没有权限!",
                 position: FeedbackPosition.Top
-            });
-            console.log(JSON.stringify(p.details))
+            })
         } else {
             const picked = await picker.present()
             chosenImage.value = {
@@ -69,5 +69,4 @@ async function pickDocument() {
         console.error(error)
     }
 }
-
 </script>

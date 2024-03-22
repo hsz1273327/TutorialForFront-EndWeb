@@ -3,20 +3,10 @@
         <Page actionBarHidden="true">
             <StackLayout>
                 <StackLayout>
-                    <Button text="Request Permissions" @tap="requestPermissions" />
-                </StackLayout>
-                <StackLayout>
                     <Button text="Pick Document" @tap="pickDocument" />
                     <Label v-show="showInfo" :text="chosenImageName" />
                     <Label v-show="showInfo" :text="chosenImagePath" />
                     <Image v-show="showInfo" :src="chosenImageSrc" />
-                </StackLayout>
-                <StackLayout>
-                    <Button text="Pick Dir" @tap="pickDir" />
-                    <Label v-show="showDirInfo" :text="chosenDirPath" />
-                </StackLayout>
-                <StackLayout>
-                    <TextField :text="textFieldValue" hint="save as test.txt ..." @returnPress="save" />
                 </StackLayout>
             </StackLayout>
         </Page>
@@ -25,14 +15,16 @@
 
 <script lang="ts" setup>
 import { ref, Ref, computed } from 'nativescript-vue'
-import { File, TextField, EventData, isAndroid } from '@nativescript/core';
-import { openFilePicker, pickFolder, saveFile } from '@nativescript-community/ui-document-picker';
-import { request } from '@nativescript-community/perms';
+import { ImagePicker, ImagePickerMediaType } from '@nativescript/imagepicker';
+import { Feedback, FeedbackPosition } from "nativescript-feedback"
 interface ImageInfo {
     name: string;
     path: string;
 }
-const chosenImage: Ref<ImageInfo> = ref(null)
+
+const picker = new ImagePicker({ mode: 'single', mediaType: ImagePickerMediaType.Image })
+const feedback = new Feedback()
+const chosenImage: Ref<any> = ref(null)
 const showInfo = ref(false)
 const chosenImageName = computed(() => {
     if (chosenImage.value) {
@@ -57,13 +49,19 @@ const chosenImageSrc = computed(() => {
 })
 async function pickDocument() {
     try {
-        const files = await openFilePicker({
-            extensions: ['jpg', 'png']
-        });
-        let _item = File.fromPath(files.files[0])
-        chosenImage.value = {
-            "name": _item._name,
-            "path": _item._path
+        let p = await picker.authorize()
+        if (!p.details[1]) {
+            feedback.warning({
+                message: "没有权限!",
+                position: FeedbackPosition.Top
+            });
+            console.log(JSON.stringify(p.details))
+        } else {
+            const picked = await picker.present()
+            chosenImage.value = {
+                "name": picked[0].filename,
+                "path": picked[0].path
+            }
         }
         console.log("chosenImage changed")
         showInfo.value = true
@@ -72,39 +70,4 @@ async function pickDocument() {
     }
 }
 
-const showDirInfo = ref(false)
-const chosenDirPath = ref("")
-async function pickDir() {
-    try {
-        const dirs = await pickFolder({
-        });
-        console.log("chosenImage changed")
-        showDirInfo.value = true
-        chosenDirPath.value = dirs.folders[0]
-    } catch (error) {
-        console.error(error)
-    }
-}
-const textFieldValue = ref("")
-async function save(evt: EventData) {
-    let target = evt.object as TextField
-    let result = await saveFile({
-        "name": 'test.txt',
-        "data": target.text,
-        "mimeType": "text/plain"
-    })
-    console.log(`save ok ${result}`)
-}
-
-async function requestPermissions() {
-    if (isAndroid) {
-        console.log("android query Permissions")
-        try {
-            const result = await request({ storage: { manage: true } })
-            console.log(`get result ${JSON.stringify(result)}`)
-        } catch (error) {
-            console.log(`get error ${error.message}`)
-        }
-    }
-}
 </script>

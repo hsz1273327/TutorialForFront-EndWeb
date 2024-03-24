@@ -10,6 +10,7 @@
     "@nativescript-community/ui-material-speeddial": "^7.2.45",
     "@nativescript-community/ui-popover": "^0.1.15",
     "@nativescript/core": "~8.6.2",
+    "@triniwiz/nativescript-tooltip": "^3.0.0",
     "nativescript-vue": "3.0.0-beta.11"
   },
   "devDependencies": {

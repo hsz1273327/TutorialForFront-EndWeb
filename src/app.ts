@@ -8,8 +8,9 @@ import { install as installBottomsheet } from "@nativescript-community/ui-materi
 // import { install as installPersistentBottomsheet } from '@nativescript-community/ui-persistent-bottomsheet'
 // import PersistentBottomSheetPlugin from '@nativescript-community/ui-persistent-bottomsheet/vue'
 
-import Home from './views/SpeedDialHome.vue'
+// import Home from './views/SpeedDialHome.vue'
 // import Home from './views/PopoverHome.vue'
+import Home from './views/ToolTipHome.vue'
 // import Home from './views/DrawerHome.vue'
 // import Home from './views/BottomSheetHome.vue'
 // import Home from './views/PersistentBottomSheetHome.vue'

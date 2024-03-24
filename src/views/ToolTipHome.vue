@@ -14,19 +14,15 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "nativescript-vue";
-import { EventData } from "@nativescript/core"
-import ShareBottomBar from "../components/ShareBottomBar.vue";
-import { useBottomSheet } from "@nativescript-community/ui-material-bottomsheet/vue3";
 
-const { showBottomSheet } = useBottomSheet()
-const defaultIndex = ref(0)
+import { ref } from 'nativescript-vue'
+import { EventData, StackLayout } from "@nativescript/core"
+import { ToolTip, ToolTipConfig } from '@triniwiz/nativescript-tooltip';
 
 interface Card {
     name: string
     color: string
 }
-
 const itemList = ref<Card[]>([
     { name: 'TURQUOISE', color: '#1abc9c' },
     { name: 'EMERALD', color: '#2ecc71' },
@@ -50,20 +46,21 @@ const itemList = ref<Card[]>([
     { name: 'ASBESTOS', color: '#7f8c8d' }
 ]);
 
-async function show(evt: EventData) {
-    showBottomSheet(ShareBottomBar, {
-        dismissOnBackgroundTap: true,
-        props: {
-            canCloseBottomSheet: true,
-            defaultIndex: defaultIndex.value,
-        },
-        closeCallback: (...args: any[]) => {
-            try {
-                defaultIndex.value = args[0][0][1];
-            } catch (e) {
-                defaultIndex.value = 0
-            }
-        },
-    });
+function show(evt: EventData) {
+    let anchor = evt.object as StackLayout
+    let color = anchor.backgroundColor
+    try {
+        const options: ToolTipConfig = {
+            position: 'top',
+            text: `${color}`,
+            backgroundColor: 'orange',
+            textColor: 'blue',
+            duration: 5000
+        };
+        const tooltip = new ToolTip(anchor, options);
+        tooltip.show();
+    } catch (error) {
+        console.log(`get error ${error.message}`)
+    }
 }
 </script>

@@ -4,7 +4,7 @@
             <ListView ref="collection" height="100%" width="100%" separatorColor="transparent" :items="itemList"
                 colWidth="50%" rowHeight="100">
                 <template #default="{ item }">
-                    <StackLayout :backgroundColor="item.color" height="100" @longPress="onLongPress">
+                    <StackLayout :backgroundColor="item.color" height="100" @tap="show">
                         <Label :text="item.name" />
                     </StackLayout>
                 </template>
@@ -49,9 +49,13 @@ const itemList = ref<Card[]>([
     { name: 'ASBESTOS', color: '#7f8c8d' }
 ]);
 
-async function onLongPress(evt: EventData) {
+async function show(evt: EventData) {
     let anchor = evt.object as StackLayout
     let color = anchor.backgroundColor
-    await showPopover(ColorHelp, { anchor: anchor, props: { "color": color } })
+    try {
+        await showPopover(ColorHelp, { anchor: anchor, props: { "color": color } })
+    } catch (error) {
+        console.log(`get error ${error.message}`)
+    }
 }
 </script>

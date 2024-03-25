@@ -1,0 +1,40 @@
+[
+    {
+        "id": 1,
+        "name": {
+            "given": "Li",
+            "middle": null,
+            "family": "Wei",
+            "prefix": null,
+            "suffix": null,
+            "displayname": "Li Wei",
+            "phonetic": {
+                "given": null,
+                "middle": null,
+                "family": null
+            }
+        },
+        "organization": {
+            "name": "",
+            "jobTitle": "",
+            "department": "",
+            "symbol": "",
+            "phonetic": "",
+            "location": "",
+            "type": ""
+        },
+        "nickname": "",
+        "notes": "",
+        "photo": null,
+        "urls": [],
+        "phoneNumbers": [
+            {
+                "id": "",
+                "label": "Mobile",
+                "value": "51235426980"
+            }
+        ],
+        "emailAddresses": [],
+        "postalAddresses": []
+    }
+]

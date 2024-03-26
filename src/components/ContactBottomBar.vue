@@ -30,7 +30,7 @@ const props = defineProps({
 function callPhone(evt: EventData) {
     console.log(`callPhone get phoneNumber ${props.phoneNumber}`)
     try {
-        let res = dial(props.phoneNumber, false)
+        let res = dial(props.phoneNumber, true)
         console.log(`to dial page ok: ${res}`)
     } catch (error) {
         console.log(`dial get error: ${error}`)

@@ -83,6 +83,14 @@ async function requestPermissions() {
         } catch (error) {
             console.log(`get error ${error.message}`)
         }
+    } else {
+        console.log("ios query Permissions")
+        try {
+            const result = await request({ contacts: {} })
+            console.log(`get result ${JSON.stringify(result)}`)
+        } catch (error) {
+            console.log(`get error ${error.message}`)
+        }
     }
 }
 

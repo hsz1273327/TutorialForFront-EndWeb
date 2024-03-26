@@ -22,3 +22,4 @@ https://github.com/nativescript-community/ui-share-file
 
 https://github.com/nativescript-community/appurl
 
+https://docs.nativescript.org/plugins/social-share

@@ -58,6 +58,7 @@ async function pickDocument() {
             })
         } else {
             const picked = await picker.present()
+            console.log("chosenImage picked")
             chosenImage.value = {
                 "name": picked[0].filename,
                 "path": picked[0].path

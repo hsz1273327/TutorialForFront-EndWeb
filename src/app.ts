@@ -7,8 +7,9 @@ import { initialize as imageInitialize} from '@nativescript-community/ui-image';
 import CanvasSVG from '@nativescript-community/ui-svg/vue';
 import { Gif } from 'nativescript-gif';
 import { BlurView } from '@nativescript-community/ui-blurview';
+import { PDFView } from '@nativescript/pdf'
 
-
+// import { MarkdownView } from "nativescript-markdown-view"
 
 imageInitialize({isDownsampleEnabled: true});
 
@@ -16,9 +17,14 @@ registerElement('HTMLLabel', () => HTMLLabel);
 registerElement('Gif', () => Gif);
 registerElement('BlurView', () => BlurView);
 registerElement("AutoFitText", ()=>require("@nativescript/auto-fit-text").AutoFitText)
-
-import Home from './views/Page_show_label.vue'
+registerElement('PDFView', () => PDFView);
+// registerElement('MarkdownView', () =>MarkdownView)
+// import Home from './views/Page_show_label.vue'
 // import Home from './views/Page_show_image.vue'
+// import Home from './views/Page_show_gif.vue'
+// import Home from './views/Page_show_svg.vue'
+import Home from './views/Page_show_pdf.vue'
+// import Home from './views/Page_show_markdown.vue'
 
 if (global.isIOS) {
     themer.setPrimaryColor('#bff937');

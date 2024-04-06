@@ -10,6 +10,9 @@
                         :minRange="rangeSeekBarProp.minRange" :step="rangeSeekBarProp.step"
                         @valueChanged="valueChanged($event)" @finalValueChanged="finalValueChanged($event)"
                         class="range-seek-bar" />
+                    <StarRating emptyBorderColor="white" emptyColor="white" filledBorderColor="black" filledColor="red"
+                        :value="start_rating_value" max="5" isindicator="false"
+                        @valueChange="onStartRatingValueChanged" />
                 </StackLayout>
             </ScrollView>
         </Page>
@@ -18,6 +21,7 @@
 
 <script lang="ts" setup>
 import { ref } from "nativescript-vue";
+import { EventDataValue } from "@nativescript/core/data/observable"
 import { RangeSeekBarEventData } from '@nativescript-community/ui-range-seek-bar';
 
 const slider_value = ref(0.5)
@@ -31,11 +35,17 @@ const rangeSeekBarProp = ref({
     step: 2.4,
 })
 
+const start_rating_value = ref(3)
+
 function valueChanged(event: RangeSeekBarEventData) {
     Object.assign(this.rangeSeekBarProp, event.value);
 }
 function finalValueChanged(event: RangeSeekBarEventData) {
     Object.assign(this.rangeSeekBarProp, event.value);
+}
+
+function onStartRatingValueChanged(event: EventDataValue){
+    console.log(`StartRatingValueChanged to ${event.value}`)
 }
 </script>
 

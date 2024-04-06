@@ -8,10 +8,10 @@ import SliderPlugin from '@nativescript-community/ui-material-slider/vue';
 import SekkBarPlugin from '@nativescript-community/ui-range-seek-bar/vue'
 import TextFieldPlugin from '@nativescript-community/ui-material-textfield/vue'
 
-import Home from './views/Page_input_button.vue'
+// import Home from './views/Page_input_button.vue'
 // import Home from './views/Page_input_choose.vue'
 // import Home from './views/Page_input_choose_time.vue'
-// import Home from './views/Page_input_slider.vue'
+import Home from './views/Page_input_slider.vue'
 // import Home from './views/Page_input_text.vue'
 // import Home from './views/Page_input_textios.vue'
 
@@ -22,7 +22,7 @@ registerElement(
 registerElement('PreviousNextView', () => require('@nativescript/iqkeyboardmanager').PreviousNextView);
 registerElement('TextViewWithHint', () => require('@nativescript/iqkeyboardmanager').TextViewWithHint);
 registerElement('KeyboardToolbar', () => require('@nativescript/keyboard-toolbar').Toolbar);
-
+registerElement('StarRating', () => require('@triniwiz/nativescript-star-ratings').StarRating);
 
 if (global.isIOS) {
     themer.setPrimaryColor('#bff937');

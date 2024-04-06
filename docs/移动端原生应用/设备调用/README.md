@@ -11,6 +11,7 @@
 + 生物识别传感器,一般是指纹或前置摄像头
 + 蓝牙
 + 陀螺仪
++ 加速传感器(@triniwiz/nativescript-accelerometer)
 
 有些还会有`nfc`等额外的设备.
 

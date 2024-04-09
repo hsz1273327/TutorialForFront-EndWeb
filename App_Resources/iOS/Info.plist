@@ -43,12 +43,18 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSContactsUsageDescription</key>
-	<string>Kindly provide permission to access contacts on your device.</string>
-	<key>LSApplicationQueriesSchemes</key>
+	<key>CFBundleURLTypes</key>
 	<array>
-		<string>tel</string>
-		<string>telprompt</string>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.yourcompany.myAwesomeApp</string>
+		</dict>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>myAwesomeApp</string>
+			</array>
+		</dict>
 	</array>
 </dict>
 </plist>

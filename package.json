@@ -6,6 +6,7 @@
   "dependencies": {
     "@nativescript-community/ui-share-file": "^1.3.3",
     "@nativescript/core": "~8.6.1",
+    "@nativescript/social-share": "^2.3.0",
     "nativescript-vue": "3.0.0-beta.11"
   },
   "devDependencies": {

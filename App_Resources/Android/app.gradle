@@ -10,6 +10,7 @@ android {
   // ndkVersion ""
 
   defaultConfig {
+    applicationId "org.nativescript.myAwesomeApp"
     minSdkVersion 23
     targetSdkVersion 33
 
@@ -22,5 +23,19 @@ android {
 
   aaptOptions {
     additionalParameters '--no-version-vectors'
+  }
+  // signingConfigs {
+  //   debug {
+  //     storeFile file('/Users/mac/WORKSPACE/GITHUB/BLOG/TutorialForFront-EndWeb/debug.keystore')
+  //     storePassword '12345'
+  //     keyPassword '123445'
+  //     keyAlias 'key0'
+  //   }
+  //   release {
+  //     storeFile file('/Users/mac/WORKSPACE/GITHUB/BLOG/TutorialForFront-EndWeb/release.keystore')
+  //     storePassword '12345'
+  //     keyPassword '123445'
+  //     keyAlias 'key0'
+  //   }
   }
 }

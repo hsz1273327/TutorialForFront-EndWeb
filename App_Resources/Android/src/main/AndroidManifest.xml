@@ -46,7 +46,7 @@
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" /> 
-				<data android:scheme="myAwesomeApp" android:host="__PACKAGE__" />
+				<data android:scheme="myAwesomeApp"/>
 			</intent-filter>
 		</activity>
 		<activity android:name="com.tns.ErrorReportActivity"/>

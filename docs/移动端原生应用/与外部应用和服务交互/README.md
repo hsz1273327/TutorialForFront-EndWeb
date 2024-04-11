@@ -16,7 +16,3 @@
 
 https://github.com/nativescript-community/nativescript-health-data
 
-本地的其他第三方应用
-
-
-https://github.com/nativescript-community/appurl

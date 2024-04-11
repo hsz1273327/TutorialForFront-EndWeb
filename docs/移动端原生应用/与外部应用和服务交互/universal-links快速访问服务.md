@@ -1,1 +1,0 @@
-[](https://github.com/nativescript-community/universal-links)

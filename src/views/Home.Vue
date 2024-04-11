@@ -2,105 +2,47 @@
     <Frame>
         <Page actionBarHidden="true">
             <StackLayout>
-                <StackLayout>
-                    <Button text="Request Permissions" @tap="requestPermissions" />
-                </StackLayout>
-                <StackLayout>
-                    <Button text="Pick Document" @tap="getAll" />
-                    <SearchBar hint="Search..." @submit="getByName" />
-                </StackLayout>
-                <ScrollView v-show="hasContacts">
-                    <StackLayout padding="12">
-                        <template v-for="(item, key) in contacts" :key="key">
-                            <StackLayout height="100">
-                                <Label :text="item.displayname" />
-                                <template v-for="(num, key1) in item.phoneNumbers" :key="key1">
-                                    <Label :text="num" @tap="showContactBar(num)" />
-                                </template>
-                            </StackLayout>
-                        </template>
-                    </StackLayout>
-                </ScrollView>
+                <Button text="Check Can Send Email" @tap="checkEmail" />
+                <Button text="Send Email" @tap="sendEmail" />
             </StackLayout>
         </Page>
     </Frame>
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'nativescript-vue'
-import { isAndroid, EventData, SearchBar } from '@nativescript/core';
-import { Contacts } from '@nativescript/contacts';
-import { request } from '@nativescript-community/perms';
-import { useBottomSheet } from "@nativescript-community/ui-material-bottomsheet/vue3";
-import ContactBottomBar from "../components/ContactBottomBar.vue";
-const { showBottomSheet } = useBottomSheet()
+import { EventData, } from '@nativescript/core'
+import { available, compose } from '@nativescript/email'
 
-const contacts = ref([])
-const hasContacts = computed(() => {
-    return contacts.value.length > 0 ? true : false
-})
 
-async function getAll() {
+async function checkEmail() {
     try {
-        const contactFields = ['name', 'phoneNumbers'];
-        let res = await Contacts.getAllContacts(contactFields)
-        console.log(`get res ${JSON.stringify(res.data)}`)
-        contacts.value = res.data.map((i) => {
-            return {
-                "displayname": i.name.displayname,
-                "phoneNumbers": i.phoneNumbers.map((j) => `${j.value}`)
-            }
-        })
-        console.log(`get contacts ${JSON.stringify(contacts.value)}`)
+        let avail = await available()
+        console.log('Email available? ' + avail)
     } catch (error) {
-        console.error(error)
+        console.log(`get error ${error.message}`)
     }
 }
-async function getByName(evt: EventData) {
+
+async function sendEmail(evt: EventData) {
     try {
-        const contactFields = ['name', 'phoneNumbers']
-        const searchbar = evt.object as SearchBar
-        let res = await Contacts.getContactsByName(searchbar.text, contactFields)
-        console.log(`get res ${JSON.stringify(res.data)}`)
-        contacts.value = res.data.map((i) => {
-            return {
-                "displayname": i.name.displayname,
-                "phoneNumbers": i.phoneNumbers.map((j) => `${j.value}`)
-            }
+        let result = await compose({
+            subject: 'Yo',
+            body: 'Hello <strong>dude</strong> :)',
+            to: ['eddyverbruggen@gmail.com', 'to@person2.com'],
+            cc: ['ccperson@somewhere.com'],
+            bcc: ['eddy@combidesk.com', 'eddy@x-services.nl'],
+            attachments: [
+                {
+                    fileName: 'arrow1.png',
+                    path: 'base64://iVBORw0KGgoAAAANSUhEUgAAABYAAAAoCAYAAAD6xArmAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAHGlET1QAAAACAAAAAAAAABQAAAAoAAAAFAAAABQAAAB5EsHiAAAAAEVJREFUSA1iYKAimDhxYjwIU9FIBgaQgZMmTfoPwlOmTJGniuHIhlLNxaOGwiNqNEypkwlGk9RokoIUfaM5ijo5Clh9AAAAAP//ksWFvgAAAEFJREFUY5g4cWL8pEmT/oMwiM1ATTBqONbQHA2W0WDBGgJYBUdTy2iwYA0BrILDI7VMmTJFHqv3yBUEBQsIg/QDAJNpcv6v+k1ZAAAAAElFTkSuQmCC',
+                    mimeType: 'image/png',
+                }
+            ],
         })
-        console.log(`get contacts ${JSON.stringify(contacts.value)}`)
+        console.log(`Email composer closed with result ${result}`)
     } catch (error) {
-        console.error(error)
+        console.log(`get error ${error.message}`)
     }
 }
 
-async function requestPermissions() {
-    if (isAndroid) {
-        console.log("android query Permissions")
-        try {
-            const result = await request({ contacts: {}, callPhone: {} })
-            console.log(`get result ${JSON.stringify(result)}`)
-        } catch (error) {
-            console.log(`get error ${error.message}`)
-        }
-    } else {
-        console.log("ios query Permissions")
-        try {
-            const result = await request({ contacts: {} })
-            console.log(`get result ${JSON.stringify(result)}`)
-        } catch (error) {
-            console.log(`get error ${error.message}`)
-        }
-    }
-}
-
-function showContactBar(phoneNumber: string) {
-    showBottomSheet(ContactBottomBar, {
-        dismissOnBackgroundTap: true,
-        props: {
-            canCloseBottomSheet: true,
-            phoneNumber: phoneNumber,
-        }
-    });
-}
 </script>

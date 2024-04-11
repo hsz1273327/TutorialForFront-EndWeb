@@ -1,0 +1,65 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "apple-app-site-association JSON",
+    "examples": [
+        {
+            "applinks": {
+                "apps": [],
+                "details": [
+                    {
+                        "appID": "T5TQ36Q2SQ.com.branch.sdk.TestBed",
+                        "paths": [
+                            "*"
+                        ]
+                    }
+                ]
+            }
+        }
+    ],
+    "type": "object",
+    "properties": {
+        "applinks": {
+            "type": "object",
+            "properties": {
+                "apps": {
+                    "description": "应用列表,一般填空",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": []
+                },
+                "details": {
+                    "description": "应用详情列表",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "appID": {
+                                "type": "string",
+                                "description": "上面获得的Prefix.ID"
+                            },
+                            "paths": {
+                                "type": "array",
+                                "description": "允许的path",
+                                "items": {
+                                    "type": "string"
+                                },
+                                "default": [
+                                    "*"
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "required": [
+                "apps",
+                "details"
+            ]
+        }
+    },
+    "required": [
+        "applinks"
+    ]
+}

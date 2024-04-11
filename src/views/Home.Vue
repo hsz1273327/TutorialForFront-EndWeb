@@ -44,5 +44,4 @@ async function sendEmail(evt: EventData) {
         console.log(`get error ${error.message}`)
     }
 }
-
 </script>

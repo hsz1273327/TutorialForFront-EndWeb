@@ -2,44 +2,71 @@
     <Frame>
         <Page actionBarHidden="true">
             <StackLayout>
-                <Button text="Check Can Send Email" @tap="checkEmail" />
-                <Button text="Send Email" @tap="sendEmail" />
+                <Button text="Check Available" @tap="checkAvailable" />
+                <Button text="CheckBio" @tap="checkBio" />
             </StackLayout>
         </Page>
     </Frame>
 </template>
 
 <script lang="ts" setup>
-import { EventData, } from '@nativescript/core'
-import { available, compose } from '@nativescript/email'
+import { EventData, isIOS } from '@nativescript/core'
+import { Feedback, FeedbackPosition } from "nativescript-feedback"
+import { BiometricAuth, ERROR_CODES } from "@nativescript/biometrics";
+const feedback = new Feedback();
+var biometricAuth = new BiometricAuth();
 
 
-async function checkEmail() {
+async function checkAvailable(evt: EventData) {
     try {
-        let avail = await available()
-        console.log('Email available? ' + avail)
+        let avail = await biometricAuth.available()
+        feedback.info({
+            message: `status: ${JSON.stringify(avail)}`,
+            position: FeedbackPosition.Top
+        });
     } catch (error) {
         console.log(`get error ${error.message}`)
     }
 }
-
-async function sendEmail(evt: EventData) {
+async function checkBio(evt: EventData) {
     try {
-        let result = await compose({
-            subject: 'Yo',
-            body: 'Hello <strong>dude</strong> :)',
-            to: ['eddyverbruggen@gmail.com', 'to@person2.com'],
-            cc: ['ccperson@somewhere.com'],
-            bcc: ['eddy@combidesk.com', 'eddy@x-services.nl'],
-            attachments: [
-                {
-                    fileName: 'arrow1.png',
-                    path: 'base64://iVBORw0KGgoAAAANSUhEUgAAABYAAAAoCAYAAAD6xArmAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAHGlET1QAAAACAAAAAAAAABQAAAAoAAAAFAAAABQAAAB5EsHiAAAAAEVJREFUSA1iYKAimDhxYjwIU9FIBgaQgZMmTfoPwlOmTJGniuHIhlLNxaOGwiNqNEypkwlGk9RokoIUfaM5ijo5Clh9AAAAAP//ksWFvgAAAEFJREFUY5g4cWL8pEmT/oMwiM1ATTBqONbQHA2W0WDBGgJYBUdTy2iwYA0BrILDI7VMmTJFHqv3yBUEBQsIg/QDAJNpcv6v+k1ZAAAAAElFTkSuQmCC',
-                    mimeType: 'image/png',
+        let avail = await biometricAuth.available()
+        if (isIOS) {
+            if (avail.touch) {
+                // 如果生物识别是指纹识别
+                let changed = await biometricAuth.didBiometricDatabaseChange()
+                if (changed) {
+                    await feedback.warning({
+                        message: `need to auth again`,
+                        position: FeedbackPosition.Top
+                    });
+                    return
                 }
-            ],
-        })
-        console.log(`Email composer closed with result ${result}`)
+            }
+        }
+        if (avail.any) {
+            let result = await biometricAuth.verifyBiometric({
+                message: 'Scan your finger',
+                fallbackMessage: 'Enter your PIN',
+                pinFallback: true,
+            })
+            if (result.code === ERROR_CODES.SUCCESS) {
+                await feedback.warning({
+                    message: "Biometric ID OK",
+                    position: FeedbackPosition.Top
+                });
+            } else {
+                await feedback.warning({
+                    message: `Biometric ID not OK with code ${result.code}`,
+                    position: FeedbackPosition.Top
+                });
+            }
+        } else {
+            await feedback.warning({
+                message: "not available",
+                position: FeedbackPosition.Top
+            });
+        }
     } catch (error) {
         console.log(`get error ${error.message}`)
     }

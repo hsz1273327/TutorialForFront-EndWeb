@@ -11,6 +11,12 @@
               :text="detail.title" />
             <Label class="mdi icon-sp" :text="delete_icon"></Label> 
             <Label class="fontello" :text="manage_icon"></Label> 
+            <Label class="fontello" :text="alipay_icon"></Label> 
+            <Label class="fontello" :text="applepay_icon"></Label> 
+            <Label class="fontello" :text="googlepay_icon"></Label> 
+            <Label class="fontello" :text="wechatpay_icon"></Label> 
+            <Label class="fontello" :text="btc_icon"></Label> 
+            <Label class="fontello" :text="eth_icon"></Label> 
             <!-- <Label fontSize="14" class="text-secondary" textWrap="true" :text="detail.body" /> -->
             <Label fontSize="14" class="info" textWrap="true" :text="detail.body" />
           </StackLayout>
@@ -32,6 +38,13 @@ const flick = ref(flickService.getFlickById(props.id));
 
 const delete_icon = ref("\uf154")
 const manage_icon = ref("\ue80c")
+const alipay_icon = ref("\ue805")
+const applepay_icon = ref("\ue803")
+const googlepay_icon = ref("\ue802")
+const wechatpay_icon = ref("\ue801")
+const btc_icon = ref("\ue804")
+const eth_icon = ref("\ue806")
+
 </script>
 
 <style scoped>

@@ -10,8 +10,10 @@ import ProgressPlugin from '@nativescript-community/ui-material-progress/vue';
 // import Home from './views/Page_show_progress.vue'
 // import Home from './views/Page_show_snackbar.vue'
 // import Home from './views/Page_show_banner.vue'
-import Home from './views/Page_show_dialog.vue'
+// import Home from './views/Page_show_dialog.vue'
 // import Home from './views/Page_show_popover.vue'
+// import Home from './views/Page_show_popup_loading.vue'
+import Home from './views/Page_show_toasty.vue'
 
 if (global.isIOS) {
     themer.setPrimaryColor('#bff937');

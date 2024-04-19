@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Application theme -->
+    <style name="LaunchScreenTheme32" parent="LaunchScreenThemeBase">
+
+        <!-- 
+            Disable forced dark mode on newer devices. 
+            Enabling this will make your app appear in dark-mode, 
+            but the way the app is converted may lead to visual issues 
+        -->
+        <item name="android:windowSplashScreenBackground">@color/ns_splash_screen_background</item>
+        <!-- <item name="android:windowSplashScreenAnimatedIcon">@drawable/news_avd_v02</item> -->
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="android:windowSplashScreenAnimationDuration">1000</item>
+        <!-- <item name="android:windowSplashScreenIconBackgroundColor">@color/...</item> -->
+        <!-- <item name="android:windowSplashScreenBrandingImage">@drawable/...</item> -->
+    </style>
+
+    <style name="LaunchScreenTheme" parent="LaunchScreenTheme32">
+    </style>
+
+</resources>

@@ -1,16 +1,19 @@
 {
   "images" : [
     {
+      "size" : "768x1024",
       "idiom" : "universal",
       "filename" : "LaunchScreen-AspectFill.png",
       "scale" : "1x"
     },
     {
+      "size" : "1536x2048",
       "idiom" : "universal",
       "filename" : "LaunchScreen-AspectFill@2x.png",
       "scale" : "2x"
     },
     {
+      "size" : "2304x3072",
       "idiom" : "universal",
       "filename" : "LaunchScreen-AspectFill@3x.png",
       "scale" : "3x"

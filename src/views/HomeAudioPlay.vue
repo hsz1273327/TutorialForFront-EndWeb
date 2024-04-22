@@ -79,6 +79,5 @@ async function play() {
     } catch (error) {
         console.log(`&&&&&&&&&&&&&&&play get error ${error.message}`)
     }
-
 }
 </script>

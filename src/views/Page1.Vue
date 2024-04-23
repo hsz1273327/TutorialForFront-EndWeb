@@ -1,15 +1,15 @@
 <template>
     <Page actionBarHidden="true" id="Page1">
-        <StackLayout>
-            <Label text="Page 1"></Label>
-        </StackLayout>
+        <GridLayout rows="*, auto">
+            <StackLayout row="0">
+                <Label text="Page 1"></Label>
+            </StackLayout>
+            <NavMDBottom row="1" selectedTabIndex="1"/>
+        </GridLayout>
     </Page>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, defineProps } from "nativescript-vue";
+import NavMDBottom from "../components/NavMDBottom.vue"
 
-const props = defineProps(["x"])
-
-onMounted(() => console.log(`&&&&mounted page1 with props ${props.x}`))
 </script>

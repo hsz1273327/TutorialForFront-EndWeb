@@ -47,21 +47,23 @@
 	<array>
 	<dict>
 		<key>UIApplicationShortcutItemIconFile</key>
-		<string>Eye</string>
+		<string>eye</string>
 		<key>UIApplicationShortcutItemTitle</key>
-		<string>Eye from plist</string>
+		<string>Eye</string>
 		<key>UIApplicationShortcutItemSubtitle</key>
 		<string>Awesome subtitle</string>
 		<key>UIApplicationShortcutItemType</key>
-		<string>eyefromplist</string>
+		<string>eye</string>
 	</dict>
 	<dict>
-		<key>UIApplicationShortcutItemIconType</key>
-		<string>UIApplicationShortcutIconTypeCompose</string>
+		<key>UIApplicationShortcutItemIconFile</key>
+		<string>beer</string>
 		<key>UIApplicationShortcutItemTitle</key>
-		<string>Compose</string>
+		<string>Beer</string>
+		<key>UIApplicationShortcutItemSubtitle</key>
+		<string>Awesome subtitle</string>
 		<key>UIApplicationShortcutItemType</key>
-		<string>compose</string>
+		<string>beer</string>
 	</dict>
 	</array>
 </dict>

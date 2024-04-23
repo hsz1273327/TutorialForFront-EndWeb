@@ -1,15 +1,30 @@
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+  <!-- 设置快捷方式 -->
   <shortcut
-      android:shortcutId="compose"
+      android:shortcutId="eye"
       android:enabled="true"
-      android:icon="@drawable/add"
-      android:shortcutShortLabel="@string/shortcut_short_label1"
-      android:shortcutLongLabel="@string/shortcut_long_label1"
-      android:shortcutDisabledMessage="@string/shortcut_disabled_message1">
-    <intent
-        android:action="shortcut.type.compose"
-        android:targetPackage="org.nativescript.myAwesomeApp"
-        android:targetClass="com.tns.NativeScriptActivity"/>
+      android:icon="@drawable/eye"
+      android:shortcutShortLabel="@string/shortcut_short_label_eye"
+      android:shortcutLongLabel="@string/shortcut_long_label_eye"
+      android:shortcutDisabledMessage="@string/shortcut_disabled_message_eye">
+    <intent android:action="android.intent.action.VIEW"
+      android:targetPackage="org.nativescript.myAwesomeApp"
+      android:data="myapp://shortcut.type.eye" />
+      
+    <categories android:name="android.shortcut.conversation"/>
+  </shortcut>
+    <shortcut
+      android:shortcutId="beer"
+      android:enabled="true"
+      android:icon="@drawable/beer"
+      android:shortcutShortLabel="@string/shortcut_short_label_beer"
+      android:shortcutLongLabel="@string/shortcut_long_label_beer"
+      android:shortcutDisabledMessage="@string/shortcut_disabled_message_beer">
+    <intent android:action="android.intent.action.VIEW"
+      android:targetPackage="org.nativescript.myAwesomeApp"
+      android:data="myapp://shortcut.type.beer" />
+      
     <categories android:name="android.shortcut.conversation"/>
   </shortcut>
 </shortcuts>
+<!-- android:targetClass="com.tns.NativeScriptActivity" -->

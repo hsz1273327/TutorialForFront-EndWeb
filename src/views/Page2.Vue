@@ -1,13 +1,14 @@
 <template>
     <Page actionBarHidden="true" id="Page2">
-        <StackLayout>
-            <Label text="Page 2"></Label>
-        </StackLayout>
+        <GridLayout rows="*, auto">
+            <StackLayout row="0">
+                <Label text="Page 2"></Label>
+            </StackLayout>
+            <NavMDBottom row="1" selectedTabIndex="2" />
+        </GridLayout>
     </Page>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from "nativescript-vue";
-
-onMounted(() => console.log("&&&&mounted page2"))
+import NavMDBottom from "../components/NavMDBottom.vue"
 </script>

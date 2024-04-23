@@ -1,5 +1,8 @@
 <resources>
-  <string name="shortcut_short_label1">Add</string>
-  <string name="shortcut_long_label1">Add stuff</string>
-  <string name="shortcut_disabled_message1">Adding disabled</string>
+  <string name="shortcut_short_label_eye">Eye</string>
+  <string name="shortcut_long_label_eye">Eyes Open</string>
+  <string name="shortcut_disabled_message_eye">Eye Disabled</string>
+  <string name="shortcut_short_label_beer">Beer</string>
+  <string name="shortcut_long_label_beer">Beer Open</string>
+  <string name="shortcut_disabled_message_beer">Beer Disabled</string>
 </resources>

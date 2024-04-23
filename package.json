@@ -7,10 +7,12 @@
     "@nativescript-community/ui-material-bottomnavigationbar": "^7.2.27",
     "@nativescript-community/ui-material-bottomsheet": "^7.2.26",
     "@nativescript-community/ui-material-core": "^7.2.26",
+    "@nativescript-community/universal-links": "^3.0.1",
     "@nativescript/core": "~8.7.1",
-    "nativescript-app-shortcuts": "^3.0.0",
     "nativescript-vue": "3.0.0-rc.1",
-    "router-vue-native": "^2.1.0"
+    "ns-shortcuts": "github:hsz1273327/nativescript-app-shortcuts#master",
+    "router-vue-native": "^2.1.0",
+    "url-parse": "^1.5.10"
   },
   "devDependencies": {
     "@nativescript/android": "~8.7.0",

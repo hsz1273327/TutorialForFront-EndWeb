@@ -5,3 +5,5 @@
 ## 使用方法
 
 `ns run ios`或`ns run android`
+
+git+https://github.com/hsz1273327/nativescript-app-shortcuts.git#master

@@ -1,5 +1,5 @@
 <template>
-    <MDBottomNavigationBar activeColor="#e57373" badgeColor="#1976d2" selectedTabIndex="0"
+    <MDBottomNavigationBar activeColor="#e57373" badgeColor="#1976d2" :selectedTabIndex="selectedTabIndex"
         @tabSelected="onBottomNavigationTabSelected">
         <template v-for="item in pages">
             <MDBottomNavigationTab :title=item.title />
@@ -8,9 +8,11 @@
 </template>
     
 <script lang="ts" setup>
-import { ref } from 'nativescript-vue'
+import { ref,defineProps  } from 'nativescript-vue'
 import { TabSelectedEventData } from "@nativescript-community/ui-material-bottomnavigationbar";
 import { useRouter } from "router-vue-native";
+
+const props = defineProps(["selectedTabIndex"])
 // get router
 const router = useRouter();
 const pages = ref([{
@@ -18,8 +20,7 @@ const pages = ref([{
     "path": "/"
 }, {
     "title": "Page1",
-    "path": "/page1",
-    "props": { "x": 1 }
+    "path": "/page1"
 }, {
     "title": "Page2",
     "path": "/page2"
@@ -30,15 +31,14 @@ function onBottomNavigationTabSelected(args: TabSelectedEventData) {
     if (selected) {
         selected = false
     } else {
+        if (args.newIndex == props.selectedTabIndex){
+            return
+        }
         selected = true
         try {
             let path = pages.value[args.newIndex].path
-            let props = pages.value[args.newIndex].props
             let opt = {
                 frame: "main-frame"
-            }
-            if (typeof (props) !== "undefined") {
-                Object.assign(opt, { props: props })
             }
             router.push(path, opt)
         } catch (e) {

@@ -8,8 +8,10 @@
       android:shortcutLongLabel="@string/shortcut_long_label_eye"
       android:shortcutDisabledMessage="@string/shortcut_disabled_message_eye">
     <intent android:action="android.intent.action.VIEW"
-      android:targetPackage="org.nativescript.myAwesomeApp"
       android:data="myapp://shortcut.type.eye" />
+    <!-- <intent android:action="android.intent.action.VIEW"
+      android:targetPackage="org.nativescript.myAwesomeApp"
+      android:data="myapp://shortcut.type.eye" /> -->
       
     <categories android:name="android.shortcut.conversation"/>
   </shortcut>
@@ -21,9 +23,12 @@
       android:shortcutLongLabel="@string/shortcut_long_label_beer"
       android:shortcutDisabledMessage="@string/shortcut_disabled_message_beer">
     <intent android:action="android.intent.action.VIEW"
+      android:data="myapp://shortcut.type.beer" />
+
+      <!-- <intent android:action="android.intent.action.VIEW"
       android:targetPackage="org.nativescript.myAwesomeApp"
       android:data="myapp://shortcut.type.beer" />
-      
+       -->
     <categories android:name="android.shortcut.conversation"/>
   </shortcut>
 </shortcuts>

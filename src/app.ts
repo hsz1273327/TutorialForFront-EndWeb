@@ -1,5 +1,4 @@
 import { createApp, $navigateTo, createNativeView } from 'nativescript-vue';
-import { isIOS, Frame, Application, LaunchEventData, AndroidApplication, AndroidActivityBundleEventData, AndroidActivityEventData } from '@nativescript/core';
 import { themer, installMixins } from '@nativescript-community/ui-material-core';
 import BottomNavigationBar from '@nativescript-community/ui-material-bottomnavigationbar/vue'
 import { AppShortcuts } from "ns-shortcuts";

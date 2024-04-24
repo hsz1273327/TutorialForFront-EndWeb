@@ -4,7 +4,7 @@
     * [node执行环境和工具链](Javascript/node执行环境和工具链/README.md)
         * [Babel编译器](Javascript/node执行环境和工具链/Babel编译器.md)
         * [TypeScript编译器](Javascript/node执行环境和工具链/TypeScript编译器.md)
-        * [业务环境区分]Javascript/node执行环境和工具链/业务环境区分.md
+        * [业务环境区分](Javascript/node执行环境和工具链/业务环境区分.md)
         * [log工具](Javascript/node执行环境和工具链/log工具.md)
         * [代码风格](Javascript/node执行环境和工具链/代码风格.md)
         * [代码测试工具](Javascript/node执行环境和工具链/代码测试工具.md)

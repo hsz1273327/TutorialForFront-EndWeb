@@ -10,7 +10,7 @@
     "@nativescript-community/universal-links": "^3.0.1",
     "@nativescript/core": "~8.7.1",
     "nativescript-vue": "3.0.0-rc.1",
-    "ns-shortcuts": "github:hsz1273327/nativescript-app-shortcuts#master",
+    "ns-shortcuts": "~1.0.1",
     "router-vue-native": "^2.1.0",
     "url-parse": "^1.5.10"
   },

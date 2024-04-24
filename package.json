@@ -4,7 +4,11 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@cfworker/json-schema": "^1.12.8",
     "@nativescript/core": "~8.7.1",
+    "@ygoe/msgpack": "^1.0.3",
+    "js-yaml": "^4.1.0",
+    "markdown-it": "^14.1.0",
     "nativescript-vue": "3.0.0-rc.1",
     "url-parse": "^1.5.10"
   },

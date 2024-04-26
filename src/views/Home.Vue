@@ -133,11 +133,12 @@ async function onCryptoCheck(evt: EventData) {
     const encrypted = CryptoES.AES.encrypt("Message", "Secret Passphrase");
     console.log(`get message's aes encrypted message ${encrypted}`)
     const decrypted = CryptoES.AES.decrypt(encrypted, "Secret Passphrase");
-    if (decrypted.toString(CryptoES.enc.Utf8) == "Message"){
+    if (decrypted.toString(CryptoES.enc.Utf8) == "Message") {
         await alert("Uuid Check ok")
-    }else{
+    } else {
         console.log(`get decrypted message ${decrypted}`)
         await alert("Uuid Check not match")
     }
 }
+
 </script>

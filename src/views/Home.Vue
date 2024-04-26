@@ -8,6 +8,8 @@
                     <Button text="messagepack check" @tap="onMsgPackCheck" />
                     <Button text="yaml check" @tap="onYamlCheck" />
                     <Button text="jsonschema check" @tap="onJsonSchemaCheck" />
+                    <Button text="calcul check" @tap="onCalculCheck" />
+                    <Button text="Crypto check" @tap="onCryptoCheck" />
                 </StackLayout>
             </ScrollView>
         </Page>
@@ -15,7 +17,6 @@
 </template>
 
 <script lang="ts" setup>
-
 import { EventData } from "@nativescript/core"
 import { alert } from "@nativescript/core/ui/dialogs"
 import * as urlparse from 'url-parse'
@@ -23,7 +24,9 @@ import * as msgpack from "@ygoe/msgpack"
 import * as yaml from 'js-yaml'
 import { Validator } from '@cfworker/json-schema';
 import markdownit from 'markdown-it'
-
+// import "nativescript-nodeify"
+import * as nj from '../numjs.min.js'
+import CryptoES from 'crypto-es'
 
 async function onParseURL(evt: EventData) {
     const ul = "https://maps.google.com/maps?q=31.207149,121.593086(%E9%87%91%E7%A7%91%E8%B7%AF)&z=17&hl=en"
@@ -117,7 +120,24 @@ async function onJsonSchemaCheck(evt: EventData) {
         console.log(msg)
         await alert("jsonschema check has error")
     }
+}
+async function onCalculCheck(evt: EventData) {
+    const a = nj.random([4, 3])
+    const b = nj.dot(a, a.T)
+    const msg = `Calcul Check get result with shape ${b.shape}`
+    console.log(msg)
+    await alert("Calcul Check ok")
 
-
+}
+async function onCryptoCheck(evt: EventData) {
+    const encrypted = CryptoES.AES.encrypt("Message", "Secret Passphrase");
+    console.log(`get message's aes encrypted message ${encrypted}`)
+    const decrypted = CryptoES.AES.decrypt(encrypted, "Secret Passphrase");
+    if (decrypted.toString(CryptoES.enc.Utf8) == "Message"){
+        await alert("Uuid Check ok")
+    }else{
+        console.log(`get decrypted message ${decrypted}`)
+        await alert("Uuid Check not match")
+    }
 }
 </script>

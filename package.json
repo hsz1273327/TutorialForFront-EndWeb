@@ -7,6 +7,7 @@
     "@cfworker/json-schema": "^1.12.8",
     "@nativescript/core": "~8.7.1",
     "@ygoe/msgpack": "^1.0.3",
+    "crypto-es": "^2.1.0",
     "js-yaml": "^4.1.0",
     "markdown-it": "^14.1.0",
     "nativescript-vue": "3.0.0-rc.1",

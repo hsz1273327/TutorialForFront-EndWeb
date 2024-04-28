@@ -59,11 +59,7 @@ nativescript安装分为两步:
 
 nativescript借助webpack打包,它会将js代码编译为对应平台上runtime支持的程序.因此可以理解为编译期在开编译机的node上执行,而运行时则在目标设备的runtime上,与node无关.因此我们需要注意很多依赖node标准库的库是无法直接在nativescript上使用的,反而因为浏览器上没有node环境中的标准库,所以不少可以使用.但如果你使用ts进行开发,很多老旧的浏览器库会找不到类型声明文件.总体来说nativescript和node上的库并不能完全通用.
 
-下面列举常用功能可用的库(持续更新):
-
-+ id生成: [pure-uuid](https://github.com/rse/pure-uuid)
-+ 数字签名,hash,加密: [crypto-js](https://github.com/brix/crypto-js)
-+ jwt:[jwt-decode](https://github.com/auth0/jwt-decode)
+至于有哪些js生态的库可以使用,我会在后面的文章中专门找个地方汇总.
 
 ### nativescript的组件与插件
 

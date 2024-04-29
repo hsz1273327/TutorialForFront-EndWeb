@@ -190,7 +190,7 @@ decrypted.toString(CryptoES.enc.Utf8) == "Message" ? true:false
 
 ## 网络相关工具
 
-## url解析
+### url解析
 
 url解析可以使用[url-parse](https://www.npmjs.com/package/url-parse),它属于*第一类*,因此可以完美在nativescript中使用.它在涉及到deeplink的场景下非常常用
 
@@ -308,3 +308,7 @@ const fbstr = await fileToBase64("./mymsg.txt")
 const str_match = msg == bmsg ? true : false
 const b64_match = fbstr == bstr ? true : false
 ```
+
+## zip压缩解压
+
+https://docs.nativescript.org/plugins/zip

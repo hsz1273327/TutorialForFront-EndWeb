@@ -9,6 +9,8 @@ nativescript的执行环境是基于v8引擎的运行时.因此很尴尬的可�
 3. 第三类,专门针对nativescript不同平台原生代码封装而成的工具库
 4. 第四类,不同平台有原生实现且不用安装依赖,但并没有封装成统一接口的库
 
+本文的例子可以在[nsv-usetools分支](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/nsv-usetools)找到
+
 ## 全局对象的支持
 
 js用起来最方便的自然是全局对象,但nativescript只有对js全局对象的部分支持,下面是我总结的支持对象
@@ -311,4 +313,23 @@ const b64_match = fbstr == bstr ? true : false
 
 ## zip压缩解压
 
-https://docs.nativescript.org/plugins/zip
+zip压缩也是非常常见的操作.一方面移动端空间有限,通过zip压缩数据可以显著降低应用保存数据的大小;一方面如果与远端后台传递较大的文件,zip压缩也可以减少带宽.官方插件[@nativescript/zip](https://docs.nativescript.org/plugins/zip)属于*第三类*工具,它封装了原生的zip工具让我们可以在程序中自行压缩解压zip文件.注意这是一个插件,我们可以用`ns plugin add @nativescript/zip`安装
+
+```ts
+import { Zip } from '@nativescript/zip'
+
+const zip_target = path.join(knownFolders.currentApp().path, "./assets/pics")
+const zip_dest = path.join(knownFolders.currentApp().path, './assets/pics.zip');
+let result = await Zip.zip({
+    directory: zip_target,
+    archive: zip_dest
+})
+console.log(`zipped ${result}`)
+const unzip_target= path.join(knownFolders.currentApp().path, './assets/pics.zip')
+const unzip_dest = path.join(knownFolders.currentApp().path, "./assets/pics_new");
+result = await Zip.unzip({
+    directory:  unzip_dest,
+    archive: unzip_target
+})
+console.log(`unzipped ${result}`)
+```

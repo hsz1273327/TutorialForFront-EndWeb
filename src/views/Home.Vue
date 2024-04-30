@@ -13,7 +13,7 @@
                     <Button text="gen new uuid" @tap="onGenUUID" />
                     <Button text="decode JWT" @tap="onDecodeJWT" />
                     <Button text="Base64 Check" @tap="onBase64Check" />
-
+                    <Button text="zip Check" @tap="onZipCheck" />
                 </StackLayout>
             </ScrollView>
         </Page>
@@ -33,6 +33,7 @@ import * as nj from '../numjs.min.js'
 import CryptoES from 'crypto-es'
 import * as UUID from "pure-uuid"
 import jwtDecode from "jwt-decode"
+import { Zip } from '@nativescript/zip'
 
 async function onParseMarkdown(evt: EventData) {
     const mdcontent = '# markdown-it rulezz!'
@@ -235,9 +236,29 @@ async function onBase64Check(evt: EventData) {
         const b64_match = fbstr == bstr ? true : false
         await alert(`Base64Check ok: str match ${str_match};b64 match ${b64_match}`)
     } catch (e) {
-        console.log(`Base64Chec get error ${e.message}`)
+        console.log(`Base64Check get error ${e.message}`)
     }
 }
-
+async function onZipCheck(evt: EventData) {
+    try {
+        const zip_target = path.join(knownFolders.currentApp().path, "./assets/pics")
+        const zip_dest = path.join(knownFolders.currentApp().path, './assets/pics.zip');
+        let result = await Zip.zip({
+            directory: zip_target,
+            archive: zip_dest
+        })
+        console.log(`zipped ${result}`)
+        const unzip_target= path.join(knownFolders.currentApp().path, './assets/pics.zip')
+        const unzip_dest = path.join(knownFolders.currentApp().path, "./assets/pics_new");
+        result = await Zip.unzip({
+            directory:  unzip_dest,
+            archive: unzip_target
+        })
+        console.log(`unzipped ${result}`)
+        await alert(`ZipCheck ok`)
+    } catch (e) {
+        console.log(`ZipCheck get error ${e}`)
+    }
+}
 
 </script>

@@ -6,6 +6,7 @@
   "dependencies": {
     "@cfworker/json-schema": "^1.12.8",
     "@nativescript/core": "~8.7.1",
+    "@nativescript/zip": "^6.0.0",
     "@ygoe/msgpack": "^1.0.3",
     "crypto-es": "^2.1.0",
     "js-yaml": "^4.1.0",

@@ -6,8 +6,8 @@
   "dependencies": {
     "@nativescript-community/audio": "^6.4.4",
     "@nativescript/core": "~8.7.1",
-    "@nota/nativescript-audioplayer": "^8.4.2",
-    "nativescript-vue": "3.0.0-rc.1"
+    "nativescript-vue": "3.0.0-rc.1",
+    "@nota/nativescript-audioplayer": "^8.4.2"
   },
   "devDependencies": {
     "@nativescript/android": "8.7.0",

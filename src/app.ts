@@ -1,10 +1,9 @@
 import { createApp, registerElement } from 'nativescript-vue';
+import { GestureRootView, install as GestureInstall } from '@nativescript-community/gesturehandler';
+import Home from './views/Home.vue'
 
-// import Home from './views/HomeCamera.vue'
-import Home from './views/HomeVideoRecorder.vue'
+GestureInstall(true)
 registerElement(
-    'Fab',
-    () => require('@nstudio/nativescript-floatingactionbutton').Fab
+    'GestureRootView', () => GestureRootView
 )
-registerElement('VideoPlayer', () => require('nativescript-videoplayer').Video)
 createApp(Home).start();

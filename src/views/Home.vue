@@ -2,90 +2,62 @@
     <Frame>
         <Page actionBarHidden="true">
             <StackLayout>
-                <ListPicker :items="listOfItems" selectedIndex="0" @selectedIndexChange="pickChange" />
-                <Button text="impact-LIGHT" @tap="impact(1)" />
-                <Button text="impact-MEDIUM" @tap="impact(2)" />
-                <Button text="impact-HEAVY" @tap="impact(3)" />
-                <Button text="notification-ERROR" @tap="notification_error" />
-                <Button text="notification-WARNING" @tap="notification_warning" />
-                <Button text="notification-SUCCESS" @tap="notification_success" />
+                <Button :text="WatchAccelerometerbtn" @tap="startOrStopWatchAccelerometer" />
             </StackLayout>
         </Page>
     </Frame>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'nativescript-vue'
-import { EventData, EventDataValue } from '@nativescript/core/data/observable'
+import { ref } from 'nativescript-vue'
+import { isAndroid } from '@nativescript/core'
 import { Feedback, FeedbackPosition } from "nativescript-feedback"
-import { Haptics,HapticNotificationType } from '@nativescript/haptics'
+import { request } from '@nativescript-community/perms'
+import { startAccelerometerUpdates, stopAccelerometerUpdates, AccelerometerData, isListening } from '@triniwiz/nativescript-accelerometer'
 
 const feedback = new Feedback();
-const isSupported = ref(false)
-const listOfItems = ref(["a", "b", "c"])
+const WatchAccelerometerbtn = ref("start Watching Accelerometer")
 
-function pickChange(evt: EventDataValue) {
-    console.log(`pick index ${evt.value}`)
-    if (isSupported.value) {
-        Haptics.selection()
-    }
+function onActivityEvent(eventData: AccelerometerData) {
+    console.log(`onActivityEvent ${JSON.stringify(eventData)}`)
 }
 
-function impact(level: number) {
-    if (isSupported.value) {
-        if ((level > 3) || (level < 1)) {
-            Haptics.impact()
-        } else {
-            Haptics.impact(level)
+async function startWatchAccelerometer() {
+    if (isAndroid && android.os.Build.VERSION.SDK_INT >= 29) {
+        // on android >= 29 you need to request permission at runtime
+        const result = await request('android.permission.ACTIVITY_RECOGNITION')
+        if (result[0] !== 'authorized') {
+            feedback.error({
+                message: `missing ACTIVITY_RECOGNITION permission: ${result[0]}`,
+                position: FeedbackPosition.Top
+            })
+            return
         }
     }
+    try {
+        console.log('start Watch Motion');
+        startAccelerometerUpdates(onActivityEvent, { sensorDelay: "normal" })
+        WatchAccelerometerbtn.value = "stop Watching Accelerometer"
+    } catch (error) {
+        console.error(error);
+    }
 }
 
-function notification_error(evt: EventData) {
-    feedback.error({
-        message: "a error",
-        position: FeedbackPosition.Top
-    })
-    if (isSupported.value) {
-        Haptics.notification(HapticNotificationType.ERROR)
+function stopWatchAccelerometer() {
+    try {
+        stopAccelerometerUpdates()
+        WatchAccelerometerbtn.value = "start Watching Accelerometer"
+        console.log('stop Watch Motion')
+    } catch (error) {
+        console.error(error);
     }
-    console.log("notification_error ok")
-}
-function notification_warning(evt: EventData) {
-    feedback.warning({
-        message: "a warning",
-        position: FeedbackPosition.Top
-    })
-    if (isSupported.value) {
-        Haptics.notification(HapticNotificationType.WARNING)
-    }
-    console.log("notification_warning ok")
-}
-function notification_success(evt: EventData) {
-    feedback.success({
-        message: "a success",
-        position: FeedbackPosition.Top
-    })
-    if (isSupported.value) {
-        Haptics.notification(HapticNotificationType.SUCCESS)
-    }
-    console.log("notification_success ok")
 }
 
-onMounted(() => {
-    if (Haptics.isSupported()) {
-        feedback.info({
-            message: "Haptics is Supported",
-            position: FeedbackPosition.Top
-        })
-        isSupported.value = true
-        console.log("Haptics is Supported")
+async function startOrStopWatchAccelerometer() {
+    if (isListening()) {
+        await stopWatchAccelerometer()
     } else {
-        feedback.warning({
-            message: "Haptics is not Supported",
-            position: FeedbackPosition.Top
-        })
-        console.log("Haptics is not Supported")
+        await startWatchAccelerometer()
     }
-})
+}
 </script>

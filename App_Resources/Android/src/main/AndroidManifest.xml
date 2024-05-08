@@ -17,7 +17,7 @@
 	<uses-permission android:name="android.permission.INTERNAL_SYSTEM_WINDOW"/>
 	<uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER"/>
     <uses-permission android:name="android.permission.ROTATE_SURFACE_FLINGER"/>
-	<uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+
 
 
 	<application

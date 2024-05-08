@@ -2,62 +2,78 @@
     <Frame>
         <Page actionBarHidden="true">
             <StackLayout>
-                <Button :text="WatchAccelerometerbtn" @tap="startOrStopWatchAccelerometer" />
+                <Button text="checkPermission" @tap="checkPermission" />
+                <Button :text="ble_opened_msg" @tap="checkOpen" />
+                <Button text="scan" @tap="openScan" />
             </StackLayout>
         </Page>
     </Frame>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'nativescript-vue'
+import { ref, onMounted, $showModal } from 'nativescript-vue'
 import { isAndroid } from '@nativescript/core'
 import { Feedback, FeedbackPosition } from "nativescript-feedback"
-import { request } from '@nativescript-community/perms'
-import { startAccelerometerUpdates, stopAccelerometerUpdates, AccelerometerData, isListening } from '@triniwiz/nativescript-accelerometer'
+import { Bluetooth } from '@nativescript-community/ble'
 
-const feedback = new Feedback();
-const WatchAccelerometerbtn = ref("start Watching Accelerometer")
+const feedback = new Feedback()
+const bluetooth = new Bluetooth()
 
-function onActivityEvent(eventData: AccelerometerData) {
-    console.log(`onActivityEvent ${JSON.stringify(eventData)}`)
+const ble_opened_msg = ref("bluetooth is not open")
+
+async function checkPermission() {
+    try {
+        const hasPermission = await bluetooth.hasLocationPermission()
+        if (!hasPermission) {
+            const granted = await bluetooth.requestLocationPermission()
+            console.log(`Location permission requested, user granted? ${granted}`)
+            await feedback.success({ message: `Location permission requested, user granted? ${granted}` })
+        } else {
+            console.log(`Has Location Permission? ${hasPermission}`)
+            await feedback.success({ message: `Has Location Permission? ${hasPermission}` })
+        }
+    } catch (error) {
+        console.log(`checkPermission get error ${error}`)
+        await feedback.error({ message: `checkPermission get error ${error}` })
+    }
 }
 
-async function startWatchAccelerometer() {
-    if (isAndroid && android.os.Build.VERSION.SDK_INT >= 29) {
-        // on android >= 29 you need to request permission at runtime
-        const result = await request('android.permission.ACTIVITY_RECOGNITION')
-        if (result[0] !== 'authorized') {
-            feedback.error({
-                message: `missing ACTIVITY_RECOGNITION permission: ${result[0]}`,
-                position: FeedbackPosition.Top
+async function checkOpen() {
+    if (ble_opened_msg.value == "blue tooth is opened") {
+        feedback.info({
+            message: "bluetooth already opened"
+        })
+    } else {
+        if (isAndroid) {
+            let enabled = await bluetooth.enable()
+            feedback.success({
+                message: "bluetooth opened"
             })
-            return
+        } else {
+            feedback.info({
+                message: "please open bluetooth manually"
+            })
         }
     }
+}
+
+async function openScan() {
     try {
-        console.log('start Watch Motion');
-        startAccelerometerUpdates(onActivityEvent, { sensorDelay: "normal" })
-        WatchAccelerometerbtn.value = "stop Watching Accelerometer"
-    } catch (error) {
-        console.error(error);
+        await bluetooth.startScanning({
+            filters: [{ serviceUUID: '180d' }],
+            seconds: 4,
+            onDiscovered: function (peripheral) {
+                console.log("Periperhal found with UUID: " + peripheral.UUID);
+            }
+        })
+        console.log("scanning complete")
+    } catch (err) {
+        console.log(`error while scanning: ${err}`);
     }
 }
 
-function stopWatchAccelerometer() {
-    try {
-        stopAccelerometerUpdates()
-        WatchAccelerometerbtn.value = "start Watching Accelerometer"
-        console.log('stop Watch Motion')
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-async function startOrStopWatchAccelerometer() {
-    if (isListening()) {
-        await stopWatchAccelerometer()
-    } else {
-        await startWatchAccelerometer()
-    }
-}
+onMounted(async () => {
+    let enabled = await bluetooth.isBluetoothEnabled()
+    ble_opened_msg.value = enabled ? "bluetooth is opened" : "bluetooth is not open"
+})
 </script>

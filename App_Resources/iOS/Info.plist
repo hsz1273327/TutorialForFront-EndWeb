@@ -47,7 +47,7 @@
 	<array>
 		<string>location</string>
 	</array>
-	<key>NSMotionUsageDescription</key>
-    <string>enter your motion permission request text here</string>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>enter your bluetooth permission request text here</string>
 </dict>
 </plist>

@@ -1,8 +1,7 @@
-import { createApp, registerElement } from 'nativescript-vue';
+import { createApp } from 'nativescript-vue';
 
-// import Home from './views/HomeAudioPlay.vue'
-import Home from './views/HomeAudioPlayer.vue'
-// import Home from './views/HomeAudioRecorder.vue'
+import Home from './views/Home.vue'
+
 
 
 createApp(Home).start();

@@ -19,6 +19,7 @@ import { LoadingIndicator, Mode } from '@nstudio/nativescript-loading-indicator'
 import { Bluetooth, Peripheral } from '@nativescript-community/ble'
 import { ConnectionState, Service, AdvertismentData } from '@nativescript-community/ble/index.common'
 import BlueToothListModal from '../components/BlueToothListModal.vue'
+import ServiceListModal from '../components/ServiceListModal.vue'
 const loader = new LoadingIndicator()
 const feedback = new Feedback()
 const bluetooth = new Bluetooth()
@@ -76,6 +77,13 @@ interface PeripheralDisConnInfo {
     UUID: string;
     name: string;
 }
+interface ServiceChosenInfo {
+    servicUUID: string;
+    serviceName: string;
+    characteristicUUID: string;
+    characteristicName: string;
+    characteristicProperties: string;
+}
 async function openScan() {
     try {
         loader.show({
@@ -91,7 +99,7 @@ async function openScan() {
         })
         await bluetooth.startScanning({
             seconds: 4,
-            avoidDuplicates:true,
+            avoidDuplicates: true,
             onDiscovered: function (peripheral: Peripheral) {
                 if (peripheral.name) {
                     console.log(`Periperhal found ${JSON.stringify(peripheral)}`)
@@ -132,16 +140,23 @@ async function openScan() {
                             console.log(JSON.stringify(service))
                         }
                     }
+                    loader.hide()
+                    let serviceChosen = await $showModal(BlueToothListModal, {
+                        fullscreen: false,
+                        props: {
+                            members: peripheralList.value
+                        }
+                    }) as ServiceChosenInfo
                 },
                 onDisconnected: (data: PeripheralDisConnInfo) => {
                     console.log(`disconnect ${data.UUID}`)
-                }
-            })
-            loader.hide()
-        }
+                  }
+    })
+
+}
     } catch (err) {
-        console.log(`error while scanning: ${err}`);
-    }
+    console.log(`error while scanning: ${err}`);
+}
 }
 
 async function closeConn() {

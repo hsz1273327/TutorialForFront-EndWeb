@@ -5,8 +5,8 @@
             <template #default="{ item }">
                 <StackLayout height="100">
                     <Label :text="item.name" />
-                    <Label :text="item.uuid" />
-                    <Label :text="item.status" />
+                    <Label :text="item.UUID" />
+                    <Label :text="item.state" />
                 </StackLayout>
             </template>
         </ListView>

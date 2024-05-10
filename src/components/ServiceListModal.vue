@@ -4,7 +4,11 @@
                     rowHeight="100" @itemTap="chooseOne">
             <template #default="{ item }">
                 <StackLayout height="100">
-                    <Label :text="item.name" />
+                    <Label :text="item.servicUUID" />
+                    <Label :text="item.serviceName" />
+                    <Label :text="item.characteristicUUID" />
+                    <Label :text="item.characteristicName" />
+                    <Label :text="item.characteristicProperties" />
                 </StackLayout>
             </template>
         </ListView>
@@ -14,22 +18,32 @@
 <script lang="ts" setup>
 import { ref, defineProps,onMounted } from "nativescript-vue";
 import { ItemEventData, ListView } from '@nativescript/core'
-import { Peripheral } from '@nativescript-community/ble'
+import { Service } from '@nativescript-community/ble'
 
 const props = defineProps({
-    members: {
-        type: Array<Peripheral>,
+    services: {
+        type: Array<Service>,
         required: true
     },
 })
+let _members = []
+for (let serv of props.services){
+    for (let characteristic of serv.characteristics){
+        _members.push({
+            servicUUID: serv.UUID,
+            serviceName:serv.name,
+            characteristicUUID: characteristic.UUID,
+            characteristicName: characteristic.name,
+            characteristicProperties: JSON.stringify(characteristic.properties)
+        })
+    }
+}
+const members=ref(_members)
 
 function chooseOne(evt: ItemEventData) {
-    let item = props.members[evt.index]
-    console.log(`choose ${item.UUID}`)
+    let item = members.value[evt.index]
+    console.log(`choose servicUUID: ${item.servicUUID} characteristicUUID: ${item.characteristicUUID}`)
     const lv = evt.object as ListView
     lv.closeModal(item)
 }
-onMounted(()=>{
-    console.log(`Blue Tooth List Modal get members size${props.members.length}`)
-})
 </script>

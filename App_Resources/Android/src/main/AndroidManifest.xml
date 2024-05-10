@@ -23,7 +23,6 @@
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-
 	<application
 		android:name="com.tns.NativeScriptApplication"
 		android:allowBackup="true"

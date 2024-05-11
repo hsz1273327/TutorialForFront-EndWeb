@@ -17,7 +17,7 @@ import { isAndroid } from '@nativescript/core'
 import { Feedback } from "nativescript-feedback"
 import { LoadingIndicator, Mode } from '@nstudio/nativescript-loading-indicator'
 import { Bluetooth, Peripheral } from '@nativescript-community/ble'
-import { ConnectionState, Service, AdvertismentData } from '@nativescript-community/ble/index.common'
+import { ConnectionState, Service, AdvertismentData, Characteristic } from '@nativescript-community/ble/index.common'
 import BlueToothListModal from '../components/BlueToothListModal.vue'
 import ServiceListModal from '../components/ServiceListModal.vue'
 const loader = new LoadingIndicator()
@@ -84,6 +84,7 @@ interface ServiceChosenInfo {
     characteristicName: string;
     characteristicProperties: string;
 }
+
 async function openScan() {
     try {
         loader.show({
@@ -132,31 +133,74 @@ async function openScan() {
             })
             await bluetooth.connect({
                 UUID: chosen.UUID,
-                // autoDiscoverAll: true,
+                autoDiscoverAll: true,
                 onConnected: (data: PeripheralConnInfo) => {
-                    console.log(`connect to ${data.name} with uuid ${data.UUID}`)
+                    console.log(`connect to ${data.name} with uuid ${data.UUID}, keys ${Object.keys(data)}`)
                     if (data.services) {
-                        for (let service of data.services) {
-                            console.log(JSON.stringify(service))
-                        }
+                        data.services.forEach(function (service) { console.log("service found: " + JSON.stringify(service)) })
+                        loader.hide()
+                        $showModal(ServiceListModal, {
+                            fullscreen: false,
+                            props: {
+                                services: data.services
+                            }
+                        }).then((serviceChosen: ServiceChosenInfo) => {
+                            console.log(JSON.stringify(serviceChosen))
+                            return bluetooth.read({
+                                peripheralUUID: chosen.UUID,
+                                serviceUUID: serviceChosen.servicUUID,
+                                characteristicUUID: serviceChosen.characteristicUUID
+                            })
+                        }).then((result) => {
+                            let data = new Uint8Array(result.value)
+                            let datastr = uint8ArrayToHexString(data)
+                            if (datastr.length == 10) {
+                                let dataformated = hexStringFormat(datastr)
+                                console.log(`get info: ${dataformated}`)
+                            } else {
+                                console.log(`get message: ${datastr}`)
+                            }
+                        })
+                    } else {
+                        feedback.info({ message: `service data.UUID not have services` })
+                        console.log("Peripheral data.UUID not have services")
+                        loader.hide()
                     }
-                    loader.hide()
-                    let serviceChosen = await $showModal(BlueToothListModal, {
-                        fullscreen: false,
-                        props: {
-                            members: peripheralList.value
-                        }
-                    }) as ServiceChosenInfo
                 },
                 onDisconnected: (data: PeripheralDisConnInfo) => {
                     console.log(`disconnect ${data.UUID}`)
-                  }
-    })
-
-}
+                }
+            })
+        }
     } catch (err) {
-    console.log(`error while scanning: ${err}`);
+        console.log(`error while scanning: ${err}`);
+    }
 }
+
+function uint8ArrayToHexString(uint8Arraydata: Uint8Array): string {
+    return Array.from(uint8Arraydata).map(byte => byte.toString(16).padStart(2, '0')).join('');
+}
+
+function hexStringFormat(data: string): string {
+    let step = 2
+    let res = []
+    let head = 0
+    while (head < data.length) {
+        let sub = data.substring(head, head + step)
+        res.push(sub)
+        head += 2
+    }
+    res.reverse()
+    let voltagehex = res[0] + res[1]
+    let voltage = parseInt(voltagehex, 16) / 100
+    let humidityhex = res[2]
+    let humidity = parseInt(humidityhex, 16)
+    let temperaturehex = res[3] + res[4]
+    if (temperaturehex.startsWith("0")){
+        temperaturehex=  temperaturehex.substring(1)
+    }
+    let temperature = parseInt(temperaturehex)
+    return `temperature:${temperature}C(${temperaturehex}) humidity: ${humidity}%,voltage: ${voltage}mv`
 }
 
 async function closeConn() {

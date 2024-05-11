@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps,onMounted } from "nativescript-vue";
+import { ref, defineProps } from "nativescript-vue";
 import { ItemEventData, ListView } from '@nativescript/core'
 import { Service } from '@nativescript-community/ble'
 
@@ -29,12 +29,18 @@ const props = defineProps({
 let _members = []
 for (let serv of props.services){
     for (let characteristic of serv.characteristics){
+        let properties = []
+        for (let [key,value] of Object.entries(characteristic.properties)){
+            if (value){
+                properties.push(key)
+            }
+        }
         _members.push({
             servicUUID: serv.UUID,
             serviceName:serv.name,
             characteristicUUID: characteristic.UUID,
             characteristicName: characteristic.name,
-            characteristicProperties: JSON.stringify(characteristic.properties)
+            characteristicProperties: JSON.stringify(properties)
         })
     }
 }

@@ -47,7 +47,7 @@
 	<array>
 		<string>location</string>
 	</array>
-    <key>NSBluetoothAlwaysUsageDescription</key>
-    <string>enter your bluetooth permission request text here</string>
+    <key>NFCReaderUsageDescription</key>
+    <string>enter your nfc permission request text here</string>
 </dict>
 </plist>

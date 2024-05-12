@@ -157,6 +157,7 @@ async function openScan() {
                             if (datastr.length == 10) {
                                 let dataformated = hexStringFormat(datastr)
                                 console.log(`get info: ${dataformated}`)
+                                feedback.success({ message: `get info: ${dataformated}`})
                             } else {
                                 console.log(`get message: ${datastr}`)
                             }
@@ -196,11 +197,8 @@ function hexStringFormat(data: string): string {
     let humidityhex = res[2]
     let humidity = parseInt(humidityhex, 16)
     let temperaturehex = res[3] + res[4]
-    if (temperaturehex.startsWith("0")){
-        temperaturehex=  temperaturehex.substring(1)
-    }
-    let temperature = parseInt(temperaturehex)
-    return `temperature:${temperature}C(${temperaturehex}) humidity: ${humidity}%,voltage: ${voltage}mv`
+    let temperature = parseInt(temperaturehex,16) /100
+    return `temperature:${temperature}C humidity: ${humidity}%,voltage: ${voltage}mv`
 }
 
 async function closeConn() {

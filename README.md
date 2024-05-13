@@ -124,9 +124,24 @@ await nfc.setOnNdefDiscoveredListener((data: NfcNdefData) => {
         }
     }
 }, { stopAfterFirstRead: true })
+
+interface NfcNdefData {
+    id?: Array<number>;
+    techList?: Array<string>;
+    message: Array<NfcNdefRecord>;
+}
+interface NfcNdefRecord {
+    id: Array<number>;
+    tnf: number;
+    type: number;
+    payload: string;
+    payloadAsHexString: string;
+    payloadAsStringWithPrefix: string;
+    payloadAsString: string;
+}
 ```
 
-而android可以读取尽可能多格式的nfc卡
+而android可以识别尽可能多格式的nfc卡
 
 ```ts
 await nfc.setOnTagDiscoveredListener((data: NfcTagData) => {
@@ -136,48 +151,41 @@ await nfc.setOnTagDiscoveredListener((data: NfcTagData) => {
         feedback.success({ message: `tag discovered! techList record: ${JSON.stringify(data.techList)}` })
     }
 })
+
+interface NfcTagData {
+    id?: Array<number>;
+    techList?: Array<string>;
+}
 ```
 
-当然如果你只想读ndef格式的nfc卡像ios中那么写就行了.
+回调函数的参数中会有个字段`techList`,它是描述nfc卡支持数据格式等技术的列表.而在移动端有用的信息其实只能通过`setOnNdefDiscoveredListener`接口来读取.即`setOnTagDiscoveredListener`的作用是识别nfc卡;而`setOnNdefDiscoveredListener`的作用是读取nfc卡中的信息
 
 如果要关闭监听,把回调参数设为`null`再调用一次就行.
 
 ```ts
-
+await nfc.setOnTagDiscoveredListener(null)
+await nfc.setOnNdefDiscoveredListener(null)
 ```
 
-因此我们通常像下面这样写
+因此我们通常像下面这样写读卡的逻辑
 
 + 监听读nfc
 
     ```ts
     async function startWaitNFC() {
-        
-        if (isAndroid) {
-            await nfc.setOnTagDiscoveredListener((data: NfcTagData) => {
-                // data.message is an array of records, so:
-                console.log("Discovered a tag with ID " + data.id);
-                if (data.techList) {
-                    console.log(`tag discovered! techList record: ${JSON.stringify(data.techList)}`)
-                    feedback.success({ message: `tag discovered! techList record: ${JSON.stringify(data.techList)}` })
+        await nfc.setOnNdefDiscoveredListener((data: NfcNdefData) => {
+            // data.message is an array of records, so:
+            if (data.message) {
+                for (let m in data.message) {
+                    let record = data.message[m];
+                    console.log(
+                        "Ndef discovered! Message record: " + record.payloadAsString
+                    )
+                    feedback.success({ message: `Discovered a Message ${record.payloadAsString}` })
                 }
-            })
-            console.log("OnDiscovered listener added")
-        } else {
-            await nfc.setOnNdefDiscoveredListener((data: NfcNdefData) => {
-                // data.message is an array of records, so:
-                if (data.message) {
-                    for (let m in data.message) {
-                        let record = data.message[m];
-                        console.log(
-                            "Ndef discovered! Message record: " + record.payloadAsString
-                        )
-                        feedback.success({ message: `Discovered a Message ${record.payloadAsString}` })
-                    }
-                }
-            }, { stopAfterFirstRead: true })
-            console.log("OnDiscovered listener added")
-        }
+            }
+        }, { stopAfterFirstRead: true })
+        console.log("OnDiscovered listener added")
     }
     ```
 
@@ -185,13 +193,8 @@ await nfc.setOnTagDiscoveredListener((data: NfcTagData) => {
 
     ```ts
     async function stopWaitNFC() {
-        if (isAndroid) {
-            await nfc.setOnTagDiscoveredListener(null)
-            console.log("OnTagDiscovered listener removed")
-        } else {
-            await nfc.setOnNdefDiscoveredListener(null)
-            console.log("OnNdefDiscovered listener removed")
-        }
+        await nfc.setOnNdefDiscoveredListener(null)
+        console.log("OnNdefDiscovered listener removed")
     }
     ```
 
@@ -199,15 +202,250 @@ await nfc.setOnTagDiscoveredListener((data: NfcTagData) => {
 
 android还支持往卡里写数据或擦除数据.注意这个库仅android支持擦写nfc卡
 
-针对空白卡
+### 写入信息
+
+这个库写入信息使用接口`nfc.writeTag(opt:WriteTagOptions)=>Promise<void>`
 
 ```ts
+interface WriteTagOptions {
+    textRecords?: Array<TextRecord>;
+    uriRecords?: Array<UriRecord>;
+}
+interface TextRecord {
+    /**
+     * String of text to encode.
+     */
+    text: string;
+    /**
+     * ISO/IANA language code. Examples: 'fi', 'en-US'.
+     * Default 'en'.
+     */
+    languageCode?: string;
+    /**
+     * Default [].
+     */
+    id?: Array<number>;
+}
+interface UriRecord {
+    /**
+     * String representing the uri to encode.
+     */
+    uri: string;
+    /**
+     * Default [].
+     */
+    id?: Array<number>;
+}
 ```
 
-针对有内容的卡
+它支持文本和uri两种形式,即接口`WriteTagOptions`中的两个字段.因此`textRecords`和`uriRecords`这两个字段互斥,不要同时写.其中的`id`字段是可选字段,是负载的元数据,一般没啥用,但还是建议填下
+
+由于写入的数据是`ndef`格式,因此写入以后就只能用`setOnNdefDiscoveredListener`接口监听.
+
+> 针对空白卡
+
+当你的nfc卡中没有信息时你应该使用`setOnTagDiscoveredListener`接口监听(识别nfc卡),在手机震动后表名识别到了nfc卡,这时不要远离,调用写入接口`writeTag(opt:WriteTagOptions)=>Promise<void>`
 
 ```ts
+await nfc.setOnTagDiscoveredListener((data: NfcTagData) => {
+    console.log("Discovered a tag with ID " + data.id);
+    nfc.writeTag(opt).then(()=>{
+        console.log(`write ok`)
+    })
+})
 ```
 
+> 针对有内容的卡
 
+当你的卡中有信息时也就是说可以用`setOnNdefDiscoveredListener`读取到数据时,你就应该使用`setOnNdefDiscoveredListener`接口先读到数据,然后再调用`writeTag(opt:WriteTagOptions)=>Promise<void>`接口写入.注意针对有内容的卡,写入是覆盖不是添加.
 
+```ts
+await nfc.setOnNdefDiscoveredListener((data: NfcNdefData) => {
+    console.log("Discovered a tag with ID " + data.id);
+    nfc.writeTag(opt).then(()=>{
+        console.log(`write ok`)
+    })
+})
+```
+
+### 擦除信息
+
+擦除信息通常使用`setOnTagDiscoveredListener`接口监听,在手机震动后表名识别到了nfc卡.这时不要远离,调用擦除接口`nfc.eraseTag()=>Promise<void>`即可擦除nfc卡中信息
+
+```ts
+await nfc.setOnTagDiscoveredListener((data: NfcTagData) => {
+    console.log("Discovered a tag with ID " + data.id);
+    nfc.eraseTag().then(()=>{
+        console.log(`erase ok`)
+    })
+        
+})
+```
+
+## 例子
+
+这个例子需要一张没用的nfc卡,淘宝NFC213/NFC215的卡片贴纸基本在1元一个的价格.我建议你在android中测试,ios试一次沉默成本太高了
+
+第一个按钮用来检查设备是否支持读取nfc,第二个按钮则用来启动或关闭扫描nfc卡,后面的按钮会在ios中隐藏,分别是用来识别nfc卡,写文本,写url和擦除数据用的按钮.
+
+如果测试写入和擦除,记得先点击开始扫描,操作完成后再点击结束扫描.
+
+```vue
+<template>
+    <Frame>
+        <Page actionBarHidden="true">
+            <StackLayout>
+                <Button text="check Available" @tap="checkAvailable" />
+                <Button :text="startOrStopWaitNdef_btn" @tap="startOrStopWaitNdef" />
+                <Button v-show="isAndroid" :text="startOrStopWaitTag_btn" @tap="startOrStopWaitNFC" />
+                <Button v-show="isAndroid" text="写入文本" @tap="writeTxt" />
+                <Button v-show="isAndroid" text="写入url" @tap="writeURL" />
+                <Button v-show="isAndroid" text="擦除数据" @tap="erase" />
+            </StackLayout>
+        </Page>
+    </Frame>
+</template>
+
+<script lang="ts" setup>
+import { ref, computed } from 'nativescript-vue'
+import { isAndroid } from "@nativescript/core"
+import { Feedback } from "nativescript-feedback"
+import { Nfc, NfcNdefData, NfcTagData } from "nativescript-nfc"
+
+const feedback = new Feedback()
+const nfc = new Nfc()
+
+const waiting_nfc = ref(false)
+const waiting_ndef = ref(false)
+
+const startOrStopWaitTag_btn = computed(() => {
+    if (waiting_nfc.value) {
+        return "结束识别nfc卡"
+    } else {
+        return "开始识别nfc卡"
+    }
+})
+const startOrStopWaitNdef_btn = computed(() => {
+    if (waiting_ndef.value) {
+        return "结束读取nfc卡"
+    } else {
+        return "开始读取nfc卡"
+    }
+})
+
+async function checkAvailable() {
+    let nfc_avail_msg
+    let avail = await nfc.available()
+    if (avail) {
+        let enabled = await nfc.enabled()
+        if (enabled) {
+            nfc_avail_msg = "NFC is available"
+            feedback.success({ message: nfc_avail_msg })
+        } else {
+            nfc_avail_msg = "NFC is not enabled"
+            feedback.warning({ message: nfc_avail_msg })
+        }
+    } else {
+        nfc_avail_msg = "NFC is not available"
+        feedback.error({ message: nfc_avail_msg })
+    }
+}
+async function startWaitNdef() {
+    await nfc.setOnNdefDiscoveredListener((data: NfcNdefData) => {
+        if (data.message) {
+            for (let m in data.message) {
+                let record = data.message[m];
+                console.log(
+                    "Ndef discovered! Message record: " + record.payloadAsString
+                )
+                feedback.success({ message: `Discovered a Message ${record.payloadAsString}` })
+            }
+        }
+    }, { stopAfterFirstRead: true })
+    waiting_ndef.value = true
+    console.log("OnDiscovered listener added")
+}
+
+async function startWaitNFC() {
+
+    await nfc.setOnTagDiscoveredListener((data: NfcTagData) => {
+        console.log("Discovered a tag with ID " + data.id);
+        if (data.techList) {
+            console.log(`tag discovered! techList record: ${JSON.stringify(data.techList)}`)
+            feedback.success({ message: `tag discovered! techList record: ${JSON.stringify(data.techList)}` })
+        }
+    })
+    waiting_nfc.value = true
+    console.log("OnDiscovered listener added")
+}
+async function stopWaitNFC() {
+    await nfc.setOnTagDiscoveredListener(null)
+    waiting_nfc.value = false
+    console.log("OnTagDiscovered listener removed")
+}
+
+async function stopWaitNdef() {
+    await nfc.setOnNdefDiscoveredListener(null)
+    waiting_ndef.value = false
+    console.log("OnNdefDiscovered listener removed")
+}
+async function startOrStopWaitNdef() {
+    if (waiting_ndef.value) {
+        await stopWaitNdef()
+    } else {
+        await startWaitNdef()
+    }
+}
+async function startOrStopWaitNFC() {
+    if (waiting_nfc.value) {
+        await stopWaitNFC()
+    } else {
+        await startWaitNFC()
+    }
+}
+async function writeTxt() {
+    try {
+        const msg = "Hello!"
+        await nfc.writeTag({
+            textRecords: [
+                {
+                    id: [1],
+                    text: msg
+                }
+            ]
+        })
+        console.log(`writeTxt ${msg} ok`)
+        feedback.success({ message: `writeTxt ${msg} ok` })
+    } catch (error) {
+        console.log(`writeTxt get error ${error}`);
+    }
+}
+async function writeURL() {
+    try {
+        const url = "https://www.baidu.com"
+        await nfc.writeTag({
+            uriRecords: [
+                {
+                    id: [2, 5],
+                    uri: url
+                }
+            ]
+        })
+        console.log(`writeURL ${url} ok`)
+        feedback.success({ message: `writeURL ${url} ok` })
+    } catch (error) {
+        console.log(`writeURL get error ${error}`);
+    }
+}
+
+async function erase(){
+    try { 
+        await nfc.eraseTag()
+        console.log(`erase ok`)
+        feedback.success({ message: `erase ok` })
+    } catch (error) {
+        console.log(`writeURL get error ${error}`);
+    }
+}
+</script>
+```

@@ -223,7 +223,12 @@ async function scanOrClose() {
 }
 
 onMounted(async () => {
-    let enabled = await bluetooth.isBluetoothEnabled()
-    ble_opened_msg.value = enabled ? "bluetooth is opened" : "bluetooth is not open"
+    try {
+        let enabled = await bluetooth.isBluetoothEnabled()
+        ble_opened_msg.value = enabled ? "bluetooth is opened" : "bluetooth is not open"
+    } catch (error) {
+        console.log(`error while isBluetoothEnabled: ${error}`);
+    }
+
 })
 </script>

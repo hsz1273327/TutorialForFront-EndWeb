@@ -1,10 +1,9 @@
 import { createApp, registerElement } from 'nativescript-vue';
-
-// import Home from './views/HomeCamera.vue'
-import Home from './views/HomeVideoRecorder.vue'
-registerElement(
-    'Fab',
-    () => require('@nstudio/nativescript-floatingactionbutton').Fab
-)
-registerElement('VideoPlayer', () => require('nativescript-videoplayer').Video)
-createApp(Home).start();
+import { BarcodeView } from '@nativescript-community/ui-barcodeview'
+import { BottomSheetPlugin } from '@nativescript-community/ui-material-bottomsheet/vue3';
+import { install as installBottomsheet } from "@nativescript-community/ui-material-bottomsheet";
+    
+import Home from './views/Home.vue'
+registerElement('BarcodeView', () => BarcodeView)
+installBottomsheet();
+createApp(Home).use(BottomSheetPlugin).start();

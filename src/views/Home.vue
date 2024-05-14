@@ -9,6 +9,7 @@
                 <Button text="notification-ERROR" @tap="notification_error" />
                 <Button text="notification-WARNING" @tap="notification_warning" />
                 <Button text="notification-SUCCESS" @tap="notification_success" />
+                <Button text="vibrate 3s" @tap="vibrate(3000)" />
             </StackLayout>
         </Page>
     </Frame>
@@ -19,6 +20,9 @@ import { ref, onMounted } from 'nativescript-vue'
 import { EventData, EventDataValue } from '@nativescript/core/data/observable'
 import { Feedback, FeedbackPosition } from "nativescript-feedback"
 import { Haptics,HapticNotificationType } from '@nativescript/haptics'
+import { Vibrate } from 'nativescript-vibrate'
+
+let vibrator = new Vibrate();
 
 const feedback = new Feedback();
 const isSupported = ref(false)
@@ -70,6 +74,9 @@ function notification_success(evt: EventData) {
         Haptics.notification(HapticNotificationType.SUCCESS)
     }
     console.log("notification_success ok")
+}
+function vibrate(ms:number){
+    vibrator.vibrate(ms)
 }
 
 onMounted(() => {

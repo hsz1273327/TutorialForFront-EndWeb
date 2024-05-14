@@ -1,1 +1,0 @@
-https://github.com/EddyVerbruggen/nativescript-ar/blob/master/docs/ar-vue.md

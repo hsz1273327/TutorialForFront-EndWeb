@@ -6,12 +6,8 @@
 + 本地的其他第三方应用,比如将文件发送到本地安装的网盘应用,发送要打印的文件到打印机应用等
 + 远程服务的接口,比如社交服务的分享,比如一些第三方支付平台
 
-值得一提的是google的[firebase服务](https://firebase.google.com/docs/reference/android/com/google/firebase/FirebaseApp)国内无法使用,因此这边也就先不介绍了
+值得一提的是google的[firebase服务](https://firebase.google.com/docs/reference/android/com/google/firebase/FirebaseApp)和[mlkit服务](https://developers.google.com/ml-kit?hl=zh-cn)国内无法使用,因此这边也就先不介绍了
 
-
-
-
-系统应用
 
 
 https://github.com/nativescript-community/nativescript-health-data

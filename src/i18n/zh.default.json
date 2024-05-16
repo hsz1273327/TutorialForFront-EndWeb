@@ -1,0 +1,11 @@
+{
+    "app.name": "我的测试应用",
+    "btn": {
+        "changeLanguage": "切换语言"
+    },
+    "alert":{
+        "title": "切换语言",
+        "message": "应用需要重启以切换语言",
+        "okButtonText": "关闭应用!"
+    }
+}

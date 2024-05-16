@@ -1,0 +1,11 @@
+{
+    "app.name": "myAwesomeApp",
+    "btn": {
+        "changeLanguage": "change language"
+    },
+    "alert":{
+        "title": "Switch Language",
+        "message": "The application needs to be restarted to change language",
+        "okButtonText": "Quit!"
+    }
+}

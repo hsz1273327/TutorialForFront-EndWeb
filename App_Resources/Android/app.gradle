@@ -24,4 +24,9 @@ android {
   aaptOptions {
     additionalParameters '--no-version-vectors'
   }
+  bundle {
+    language {
+      enableSplit = false
+    }
+  }
 }

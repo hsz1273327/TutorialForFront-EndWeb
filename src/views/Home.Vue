@@ -1,60 +1,62 @@
 <template>
     <Frame>
-        <Page actionBarHidden="true">
+        <Page>
+            <ActionBar>
+                <Label :text="appName" class="font-bold text-lg bg-black" />
+            </ActionBar>
             <StackLayout>
-                <Button text="执行exported_func" @tap="onActionTap" />
+                <Button :text="btnChangeLanguage" @tap="onActionTap" />
             </StackLayout>
         </Page>
     </Frame>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "nativescript-vue"
-import { knownFolders, path, File } from '@nativescript/core'
+import { ref, onMounted, $showModal, inject, watch } from 'nativescript-vue'
+import { Utils, isAndroid } from '@nativescript/core'
+import { localize, overrideLocale, androidLaunchEventLocalizationHandler } from '@nativescript/localize'
+import supportedLanguageModal from '../components/supportedLanguageModal.vue'
 
-const wasm = ref()
+// import { storeToRefs } from 'pinia'
+// import { useLanguageStore } from '../store/language'
 
-function onActionTap(evt) {
-    if (wasm.value) {
-        try {
-            // let res = wasm.value.exports.exported_func()
-            let res = wasm.value.exports.add(1,5)
-            console.log(`fab wasm get result ${res}`)
-        } catch (error) {
-            console.log(`fab wasm get error ${error}`)
-        }
+// const store = useLanguageStore()
+// const { language } = storeToRefs(store)
 
+
+declare const exit: (code: number) => void
+declare const android: any;
+
+const appName = ref("")
+const btnChangeLanguage = ref("")
+
+async function onActionTap() {
+    const symbol = await $showModal(supportedLanguageModal, {
+        fullscreen: false,
+    })
+    await alert({
+        title: localize("alert.title"),
+        message: localize("alert.message"),
+        okButtonText: localize("alert.okButtonText"),
+    })
+    const localeOverriddenSuccessfully = overrideLocale(symbol)
+    console.log(`change succeed: ${localeOverriddenSuccessfully}`)
+    if (isAndroid) {
+        // Utils.android.getCurrentActivity().finish()
+        setTimeout(()=>android.os.Process.killProcess(android.os.Process.myPid()),100)
     } else {
-        console.log(`not load fab wasm yet`)
+        exit(0)
     }
+
 }
-async function load_wasm() {
-    try {
-        const importObject = {
-            imports: {
-                imported_func: arg => {
-                    console.log(arg);
-                }
-            }
-        }
-        // const wasm_path = path.join(knownFolders.currentApp().path, "assets/wasm/simple.wasm")
-        const wasm_path = path.join(knownFolders.currentApp().path, "assets/wasm/add.wasm")
-        console.log(`load fab wasm file path ok`)
-        const wasm_content = await File.fromPath(wasm_path).read()
-        console.log(`load fab wasm file ok`)
-        let fabwasmCode = new Uint8Array(wasm_content)
-        console.log(`load fab wasm to uint8array ok`)
-        let wasmModule = await WebAssembly.compile(fabwasmCode)
-        console.log(`load fab wasm to module ok`)
-        // wasm.value  = await WebAssembly.instantiate(wasmModule, importObject);
-        wasm.value  = await WebAssembly.instantiate(wasmModule);
-        console.log(`load fab wasm ok`)
-    } catch (error) {
-        console.log(`load fab wasm get error ${error}`)
-    }
+
+function updateLocalize() {
+    appName.value = localize("app.name")
+    btnChangeLanguage.value = localize("btn.changeLanguage")
 }
-onMounted(() => {
-    console.log(`load_fab_wasm start`)
-    load_wasm()
+const languageChangedMessage = inject('languageChangedMessage')
+watch(languageChangedMessage, (newQuestion) => {
+    updateLocalize()
 })
+onMounted(updateLocalize)
 </script>

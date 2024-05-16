@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="_alert_okButtonText_ZNCkrh">"Quit!"</string>
+  <string name="_alert_message_16JHTz">"The application needs to be restarted to change language"</string>
+  <string name="_alert_title_Z2n1TfO">"Switch Language"</string>
+  <string name="_btn_changeLanguage_2aW5Cp">"change language"</string>
+  <string name="_app_name_1k3Sbz">"myAwesomeApp"</string>
+  <string name="app_name">"myAwesomeApp"</string>
+  <string name="title_activity_kimera">"myAwesomeApp"</string>
+</resources>

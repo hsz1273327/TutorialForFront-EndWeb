@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@nativescript/core": "~8.7.1",
+    "@nativescript/localize": "^5.2.0",
     "nativescript-vue": "3.0.0-rc.1"
   },
   "devDependencies": {

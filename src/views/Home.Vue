@@ -12,17 +12,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, $showModal, inject, watch } from 'nativescript-vue'
-import { Utils, isAndroid } from '@nativescript/core'
-import { localize, overrideLocale, androidLaunchEventLocalizationHandler } from '@nativescript/localize'
+import { ref, Ref, onMounted, $showModal, inject, watch } from 'nativescript-vue'
+import { isAndroid } from '@nativescript/core'
+import { alert } from "@nativescript/core/ui/dialogs"
+import { localize, overrideLocale } from '@nativescript/localize'
 import supportedLanguageModal from '../components/supportedLanguageModal.vue'
-
-// import { storeToRefs } from 'pinia'
-// import { useLanguageStore } from '../store/language'
-
-// const store = useLanguageStore()
-// const { language } = storeToRefs(store)
-
 
 declare const exit: (code: number) => void
 declare const android: any;
@@ -42,19 +36,17 @@ async function onActionTap() {
     const localeOverriddenSuccessfully = overrideLocale(symbol)
     console.log(`change succeed: ${localeOverriddenSuccessfully}`)
     if (isAndroid) {
-        // Utils.android.getCurrentActivity().finish()
-        setTimeout(()=>android.os.Process.killProcess(android.os.Process.myPid()),100)
+        setTimeout(() => android.os.Process.killProcess(android.os.Process.myPid()), 100)
     } else {
         exit(0)
     }
-
 }
 
 function updateLocalize() {
     appName.value = localize("app.name")
     btnChangeLanguage.value = localize("btn.changeLanguage")
 }
-const languageChangedMessage = inject('languageChangedMessage')
+const languageChangedMessage: Ref<string> = inject('languageChangedMessage')
 watch(languageChangedMessage, (newQuestion) => {
     updateLocalize()
 })

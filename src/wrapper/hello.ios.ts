@@ -1,4 +1,4 @@
-declare const HelloSwift: any
+// declare const HelloSwift: any
 
 export class MyHello {
     private helloSwift: any

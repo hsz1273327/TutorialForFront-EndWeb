@@ -1,10 +1,10 @@
-declare const JSONSchema: any
+// declare const JSONSchema: any
 
 export class JSONSchemaValidator {
-    private schemaStore: any
-    private schema: 
+    private schema: DSJSONSchema
     constructor(schemaString: string) {
-        
+        NSJSONSerialization.JSONObjectWithStreamOptionsError
+        this.schema = DSJSONSchema.schemaWithObjectBaseURIReferenceStorageSpecificationOptionsError()
     }
 
     validateJson(x: string): boolean {

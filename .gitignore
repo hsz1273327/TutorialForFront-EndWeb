@@ -30,3 +30,4 @@ hooks
 serv
 httpserv
 *.keystore
+typings

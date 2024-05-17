@@ -1,8 +1,8 @@
-# android原生扩展
+# ios原生扩展
 
-我们知道android是使用Kotlin/Java开发的,要使用原生方式扩展应用也就是让nativescript可以识别出Kotlin/Java的源码或二进制包.本人既不会Java又不会Kotlin,但天然对java比较抗拒,所以就用Kotlin来演示了.
+我们知道ios是使用Swift/ObjectC开发的,要使用原生方式扩展应用也就是让nativescript可以识别出Swift/ObjectC的源码或二进制包.本人既不会Swift又不会ObjectC,但听说Swift语法比较简单,所以就用Swift来演示了.
 
-在android中原生资源包括:
+在ios中原生资源包括:
 
 + 源码
 + 二进制包

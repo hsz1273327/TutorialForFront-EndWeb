@@ -2,59 +2,27 @@
     <Frame>
         <Page actionBarHidden="true">
             <StackLayout>
-                <Button text="执行exported_func" @tap="onActionTap" />
+                <Button text="测试源码扩展" @tap="onActionTap1" />
+                <Button text="测试lib扩展" @tap="onActionTap2" />
             </StackLayout>
         </Page>
     </Frame>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "nativescript-vue"
-import { knownFolders, path, File } from '@nativescript/core'
+import { MyHelloKotlin } from '../wrapper/hello'
+import { JSONSchemaValidator } from '../wrapper/jsonschemafriend'
 
-const wasm = ref()
-
-function onActionTap(evt) {
-    if (wasm.value) {
-        try {
-            // let res = wasm.value.exports.exported_func()
-            let res = wasm.value.exports.add(1,5)
-            console.log(`fab wasm get result ${res}`)
-        } catch (error) {
-            console.log(`fab wasm get error ${error}`)
-        }
-
-    } else {
-        console.log(`not load fab wasm yet`)
-    }
+function onActionTap1(evt) {
+    const my = new MyHelloKotlin()
+    console.log(`my.hello is ${my.hello}`)
+    console.log(`my.add(12.5,13.9) is ${my.add(12.5, 13.9)}`)
 }
-async function load_wasm() {
-    try {
-        const importObject = {
-            imports: {
-                imported_func: arg => {
-                    console.log(arg);
-                }
-            }
-        }
-        // const wasm_path = path.join(knownFolders.currentApp().path, "assets/wasm/simple.wasm")
-        const wasm_path = path.join(knownFolders.currentApp().path, "assets/wasm/add.wasm")
-        console.log(`load fab wasm file path ok`)
-        const wasm_content = await File.fromPath(wasm_path).read()
-        console.log(`load fab wasm file ok`)
-        let fabwasmCode = new Uint8Array(wasm_content)
-        console.log(`load fab wasm to uint8array ok`)
-        let wasmModule = await WebAssembly.compile(fabwasmCode)
-        console.log(`load fab wasm to module ok`)
-        // wasm.value  = await WebAssembly.instantiate(wasmModule, importObject);
-        wasm.value  = await WebAssembly.instantiate(wasmModule);
-        console.log(`load fab wasm ok`)
-    } catch (error) {
-        console.log(`load fab wasm get error ${error}`)
-    }
+function onActionTap2(evt) {
+    const schema = `{\"$schema\": \"http://json-schema.org/draft-07/schema#\", \"type\": \"integer\"}`
+    const validator = new JSONSchemaValidator(schema)
+    validator.validateJson("1")
+    console.log(`validator.validateJson("1") is ${validator.validateJson("1")}`)
+    console.log(`validator.validateJson("true") is ${validator.validateJson("true")}`)
 }
-onMounted(() => {
-    console.log(`load_fab_wasm start`)
-    load_wasm()
-})
 </script>

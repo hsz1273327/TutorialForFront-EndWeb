@@ -1,6 +1,6 @@
 declare const my: any
 
-export class MyHelloKotlin {
+export class MyHello {
     private helloKotlin: any
     constructor() {
         this.helloKotlin = new my.example.HelloKotlin()

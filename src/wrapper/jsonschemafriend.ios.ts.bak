@@ -1,0 +1,20 @@
+declare const JSONSchema: any
+
+export class JSONSchemaValidator {
+    private schemaStore: any
+    private schema: 
+    constructor(schemaString: string) {
+        
+    }
+
+    validateJson(x: string): boolean {
+        try {
+            this.validator.validateJson(this.schema, x)
+            return true
+        } catch (error) {
+            console.log(`validator get error ${error}`)
+            return false
+        }
+
+    }
+}

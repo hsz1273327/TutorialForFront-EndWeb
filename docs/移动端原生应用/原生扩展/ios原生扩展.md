@@ -206,3 +206,7 @@ function onActionTap2(evt) {
 }
 </script>
 ```
+
+
+
+https://stackoverflow.com/questions/901357/how-do-i-convert-an-nsstring-value-to-nsdata

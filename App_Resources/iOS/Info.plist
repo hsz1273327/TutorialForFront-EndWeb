@@ -53,5 +53,8 @@
     <string>enter your photo library permission request text here</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Recording Practice Sessions</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>My custom recognition usage description. Overriding the default empty one in the plugin.</string>
+
 </dict>
 </plist>

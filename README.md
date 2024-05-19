@@ -5,3 +5,17 @@
 ## 使用方法
 
 `ns run ios`或`ns run android`
+
+
+
+# 语音识别
+
+
+
+
+
+
+https://github.com/EddyVerbruggen/nativescript-speech-recognition
+
+
+https://github.com/alphacep/nativescript-vosk

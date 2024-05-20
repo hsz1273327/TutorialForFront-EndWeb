@@ -11,6 +11,65 @@
 
 本文的例子在[nsv-extend](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/nsv-extend)的android部分
 
+## 类型转换
+
+在android原生扩展的编码过程中我们不可避免的会需要在js的类型和java/kotlin中的类型之间进行转换--我们调用原生接口需要从js类型转换为java/kotlin中的类型;取得到原生接口的返回值后又需要将java/kotlin中的类型转换为js类型进行业务层处理.
+
+在nativescript中,对于用户自定义类型,在nativescript中则是会被统一转成js的类型,我们只要像js中一样用`new`关键字实例化,用`.`符号取字段掉用方法即可.
+
+而对于基础类型的转换是多数时候是隐式的,我们可以直接将js类型的数据传递给原生接口,原生接口的返回也会被js自动转换为js类型.我们通常只要记住它们的转换规则即可
+
+| js类型             | java类型             | kotlin类型           |
+| ------------------ | -------------------- | -------------------- |
+| `String`           | `java.lang.String`   | `kotlin.String`      |
+| `Boolean`          | `java.lang.Boolean`  | `kotlin.Boolean`     |
+| `Number`           | `java.lang.Double`   | `kotlin.Double`      |
+| `Undefined`&`Null` | `null`               | `null`               |
+
+其中`Number`比较特殊,js中的`Numer`类型的数据会根据原生接口的声明进行转换,比如原生接口中声明这个参数是`int`型,传入`1`就会被转换为`int`型.返回值也是一样,在原生接口中被标注为`int`型的返回值也会被自动转为js中的`Number`类型
+
+### 数值类型的显示转化
+
+对于数值类型`Number`,隐式转换是有风险的,很多时候我们还是需要明确类型,下面列出数值类型`Number`支持的显示转化的类型和对应的构造和解包方法
+
+| 类型名 | java类型构造                               | js类型解包                                 | 说明                                                                                                           |
+| ------ | ------------------------------------------ | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| byte   | `let byte = new java.lang.Byte('1')`       | `let jsByteValue = byte.byteValue()`       | ---                                                                                                            |
+| short  | `let short = new java.lang.Short('1')`     | `let jsShortValue = short.shortValue()`    | ---                                                                                                            |
+| int    | `let int = new java.lang.Integer('1')`     | `let jsIntValue = int.intValue()`          | ---                                                                                                            |
+| float  | `let float = new java.lang.Float('1.5')`   | `let jsFloatValue = float.floatValue()`    | ---                                                                                                            |
+| double | `let double = new java.lang.Double('1.5')` | `let jsDoubleValue = double.doubleValue()` | ---                                                                                                            |
+| long   | `let long = new java.lang.Long('1.5')`     | `let jsLongValue = long`                   | 如果long的取值范围在(-2^53, 2^53)<\br>则返回值是Number对象<\br>否则需要使用`.toString()`获取这个值的字符串形式 |
+
+### 数组类型处理
+
+隐式转换的数组类型自然很难满足需求,我们可以使用`Array.create(elementClassName, length)`的方式构造定长数组,其中`elementClassName`就是类型和形状声明,`length`则指定长度
+
+```ts
+// byte[] byteArr = new byte[10] 
+//字符串声明类型,支持`char`,`boolean`,`byte`,`short`,`int`,`long`,`float`,`double`
+let byteArr = Array.create('byte', 10) 
+// String[] stringArr = new String[10] 
+// 构造函数声明类型
+let stringArr = Array.create(java.lang.String, 10) 
+// int[][] jaggedIntArray2 = new int[10][]
+//申明二维数组,用`[`表示增加1维
+let jaggedIntArray2 = Array.create('[int', 10) 
+
+//赋值
+stringArr[0]="a"
+stringArr[1]="b"
+...
+```
+
+而为了性能的考虑,Java/Kotlin数组有意不转换为JavaScript数组,尤其是对于大型数组.Java/Kotlin数组对象都会有`length`字段用于标明数组长度,我们一般用下标安位取值,如果可以转换则自动转换,不能则返回代理对象.
+
+```ts
+let kotlinClass = new com.example.KotlinClassWithStringArrayProperty()
+let kotlinArray = kotlinClass.getStringArrayProperty() // kotlinArray is a special object as described above
+let firstStringElement = kotlinArray[0] 
+```
+
 ## 用源码扩展
 
 扩展的源码我们大致遵循如下几个步骤
@@ -166,7 +225,6 @@ repositories {
             this.schema = this.schemaStore.loadSchemaJson(schemaString)
             this.validator = new net.jimblackler.jsonschemafriend.Validator()
         }
-
         validateJson(x: string): boolean {
             try {
                 this.validator.validateJson(this.schema, x)

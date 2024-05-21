@@ -55,3 +55,16 @@ yarn-error.log*
 *.mp4
 httpserv
 *.keystore
+*.sh
+platforms/ios/.nsprepareinfo
+platforms/ios/build
+platforms/ios/internal
+platforms/ios/Pods
+platforms/ios/TutorialForFrontEndWeb
+platforms/ios/TutorialForFrontEndWeb.xcodeproj
+platforms/ios/TutorialForFrontEndWeb.xcworkspace
+platforms/ios/.ns-build-pbxgroup-data.json
+platforms/ios/.ns-plugins-build-data.json
+platforms/ios/plugins-debug.xcconfig
+platforms/ios/plugins-release.xcconfig
+platforms/ios/Podfile.lock

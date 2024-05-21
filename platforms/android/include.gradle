@@ -1,0 +1,8 @@
+// You can add your native dependencies here
+repositories {
+    maven { url 'https://repo1.maven.org/maven2' }
+    maven { url 'https://jitpack.io' }
+}
+dependencies {
+  implementation 'net.jimblackler.jsonschemafriend:core:0.12.3'
+}

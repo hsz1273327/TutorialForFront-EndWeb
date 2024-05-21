@@ -2,7 +2,7 @@
     <Frame>
         <Page actionBarHidden="true">
             <StackLayout>
-                <!-- <Button text="测试源码扩展" @tap="onActionTap1" /> -->
+                <Button text="测试源码扩展" @tap="onActionTap1" />
                 <Button text="测试lib扩展" @tap="onActionTap2" />
             </StackLayout>
         </Page>
@@ -10,14 +10,14 @@
 </template>
 
 <script lang="ts" setup>
-// import { MyHello, JSONSchemaValidator } from 'my-awesome-plugin'
-import {  JSONSchemaValidator } from 'my-awesome-plugin'
+import { MyHello, JSONSchemaValidator } from 'my-awesome-plugin'
+// import {  JSONSchemaValidator } from 'my-awesome-plugin'
 
-// function onActionTap1(evt) {
-//     const my = new MyHello()
-//     console.log(`my.hello is ${my.hello}`)
-//     console.log(`my.add(12.5,13.9) is ${my.add(12.5, 13.9)}`)
-// }
+function onActionTap1(evt) {
+    const my = new MyHello()
+    console.log(`my.hello is ${my.hello}`)
+    console.log(`my.add(12.5,13.9) is ${my.add(12.5, 13.9)}`)
+}
 function onActionTap2(evt) {
     const schema = `{\"$schema\": \"http://json-schema.org/draft-07/schema#\", \"type\": \"integer\"}`
     const validator = new JSONSchemaValidator(schema)

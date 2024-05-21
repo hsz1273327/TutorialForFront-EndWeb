@@ -1,14 +1,3 @@
-export class MyHello {
-    constructor() {
-        this.helloSwift = new HelloSwift();
-    }
-    get hello() {
-        return this.helloSwift.hello;
-    }
-    add(x, y) {
-        return this.helloSwift.addWithAB(x, y);
-    }
-}
 export class JSONSchemaValidator {
     constructor(schemaString) {
         const content = NSString.stringWithString(schemaString);

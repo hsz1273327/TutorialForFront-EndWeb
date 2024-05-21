@@ -70,6 +70,8 @@ platforms/ios/plugins-release.xcconfig
 platforms/ios/Podfile.lock
 
 platforms/tempPlugin
+platforms/android/.gradle
+platforms/android/build
 platforms/android/app
 platforms/android/build-tools
 platforms/android/gradle
@@ -82,3 +84,4 @@ platforms/android/gradlew
 platforms/android/gradlew.bat
 platforms/android/settings.gradle
 platforms/android/settings.json
+platforms/android/local.properties

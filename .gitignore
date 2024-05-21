@@ -84,3 +84,5 @@ platforms/android/gradlew.bat
 platforms/android/settings.gradle
 platforms/android/settings.json
 platforms/android/local.properties
+platforms/android/analytics
+platforms/android/.nsprepareinfo

@@ -10,7 +10,7 @@
 
 前面已经介绍过如何分别开发android和ios的原生扩展了.我们将这两部分按特定的规范合并起来,就可以构造插件了.本文将介绍如何构造插件.
 
-本文例子就是将上面两节的内容做成一个插件,这个例子插件在[nsv-plugin分支]().这个分支的插件可以用``的方式安装.
+本文例子就是将上面两节的内容做成一个插件,这个例子插件在[nsv-plugin分支](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/nsv-plugin).这个分支的插件可以用``的方式安装.使用该插件的例子在[分支]()
 
 ## 插件的文件结构
 
@@ -250,7 +250,7 @@
 
 要编译时,需要先执行`npm run ts-patch`执行ts的打补丁操作,再执行`npm run build`编译,之后项目中就会有`.d.ts`和`.js`的对应代码了.
 
-之后我们可以使用`npm run publish`将项目发布到npm,如果不想发布到npm,直接发个release打个tag或者拉个分支也可以用`npm install git+项目地址#tag/分支`的方式安装
+之后我们可以使用`npm run publish`将项目发布到npm,如果不想发布到npm,直接发个release打个tag或者拉个分支也可以用`npm install git+项目地址#tag或分支名`的方式安装
 
 
 其实官方有提供一个种子项目[NativeScript/plugin-seed](https://github.com/NativeScript/plugin-seed)用于快速构建nativescript插件,但个人并不推荐用它,因为这种方式构建的项目,代码仓库仅能作为ts源码的仓库,并不能直接用npm从仓库安装.这种方式构造的插件项目依赖中心化的npm包中心,而很多时候我们又需要分布式或者私有化的包管理仓库,像我上面这样写插件其实反而省事.

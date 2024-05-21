@@ -6,7 +6,6 @@ repositories {
 dependencies {
   //  implementation 'androidx.multidex:multidex:2.0.1'
   implementation 'com.google.android.material:material:1.8.0'
-  implementation 'net.jimblackler.jsonschemafriend:core:0.12.3'
 }
 
 android {

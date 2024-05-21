@@ -10,8 +10,7 @@
 </template>
 
 <script lang="ts" setup>
-import { MyHello } from '../wrapper/hello'
-import { JSONSchemaValidator } from '../wrapper/jsonschemafriend'
+import { MyHello, JSONSchemaValidator } from 'my-awesome-plugin'
 
 function onActionTap1(evt) {
     const my = new MyHello()

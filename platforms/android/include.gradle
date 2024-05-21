@@ -1,4 +1,7 @@
 // You can add your native dependencies here
+android {
+	
+}
 repositories {
     maven { url 'https://repo1.maven.org/maven2' }
     maven { url 'https://jitpack.io' }

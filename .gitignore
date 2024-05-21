@@ -68,3 +68,17 @@ platforms/ios/.ns-plugins-build-data.json
 platforms/ios/plugins-debug.xcconfig
 platforms/ios/plugins-release.xcconfig
 platforms/ios/Podfile.lock
+
+platforms/tempPlugin
+platforms/android/app
+platforms/android/build-tools
+platforms/android/gradle
+platforms/android/gradle-helpers
+platforms/android/.ns-plugins-build-data.json
+platforms/android/build.gradle
+platforms/android/dependencies.json
+platforms/android/gradle.properties
+platforms/android/gradlew
+platforms/android/gradlew.bat
+platforms/android/settings.gradle
+platforms/android/settings.json

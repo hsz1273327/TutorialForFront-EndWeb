@@ -1,4 +1,4 @@
-declare const net: any
+// declare const net: any
 
 export class JSONSchemaValidator {
     private schemaStore: any

@@ -31,7 +31,6 @@ coverage
 .cloud
 .project
 tmp/
-typings/
 
 # Visual Studio Code
 .vscode/*

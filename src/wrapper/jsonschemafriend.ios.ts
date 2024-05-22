@@ -1,4 +1,7 @@
+// declare const DSJSONSchema: any
+// declare const DSJSONSchemaSpecification: any
 export class JSONSchemaValidator {
+  // private schema: any
   private schema: DSJSONSchema
   constructor(schemaString: string) {
     const content = NSString.stringWithString(schemaString)

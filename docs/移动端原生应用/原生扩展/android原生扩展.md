@@ -106,9 +106,26 @@ let firstStringElement = kotlinArray[0]
     }
     ```
 
-3. 写包装层,直接写在业务层在功能上没什么区别,但抽出这个包装层可以方便管理这种原生扩展.注意android的原生扩展包装文件应该取名为`xxxx.android.ts`,
+3. [非必须]声明类型接口.将你的原生代码的接口描述引入到typescript可以识别的位置,通常是放到`typings`目录然后在`types/references.d.ts`中进行注册.需要注意packagename需要用`module`一层一层声明.
 
-4. 调用,在调用时应该将平台信息隐去,即`import {xxx} from 'xxxx'`.
+    ```ts
+    declare module net {
+        export module jimblackler {
+            export module jsonschemafriend {
+                export class HelloKotlin {
+                    public hello: string;
+                    public add(a: number, b: number): number
+                }
+            }
+        }
+    }
+    ```
+
+    如果你不想要声明类型接口,可以在包装层的头部声明`declare const packagename的第一段: any`.这样typescript也不会报错
+
+4. 写包装层,直接写在业务层在功能上没什么区别,但抽出这个包装层可以方便管理这种原生扩展.注意android的原生扩展包装文件应该取名为`xxxx.android.ts`,
+
+5. 调用,在调用时应该将平台信息隐去,即`import {xxx} from 'xxxx'`.
 
 ### 例子
 
@@ -127,11 +144,24 @@ let firstStringElement = kotlinArray[0]
     }
     ```
 
++ `typings/hellokotlin.d.ts`,类型声明
+
+    ```ts
+        declare module net {
+            export module jimblackler {
+                export module jsonschemafriend {
+                    export class HelloKotlin {
+                        public hello: string;
+                        public add(a: number, b: number): number
+                    }
+                }
+            }
+        }
+    ```
+
 + `src/wrapper/hello.android.ts`,包装层
 
     ```ts
-    declare const my: any
-
     export class MyHelloKotlin {
         private helloKotlin: any
         constructor() {
@@ -191,6 +221,8 @@ repositories {
 }
 ```
 
+如果也希望有类型声明,可以先去[mvnrepository](https://mvnrepository.com/)下载依赖包到本地,然后根据后缀是jar还是aar执行`ns typings android --jar 依赖包的路径.jar | --aar 依赖包的路径.aar`或`ns typings android "net.jimblackler.jsonschemafriend:core:0.12.3"`这样的形式直接指定包然后从给出的选择中去选来生成包的接口声明.声明文件会被命名为`android.d.ts`,我们将它为依赖名然后注册进`types/references.d.ts`即可.目前`ns typings android`命令有bug无法使用,我们可以用它底层的`java -jar platforms/android/build-tools/dts-generator.jar -input 依赖包的路径 -output typings`命令来达到同样的效果
+
 之后一样的写包装层写应用层即可.
 
 ### 例子
@@ -214,8 +246,6 @@ repositories {
 + `src/wrapper/jsonschemafriend.android.ts`,包装层
 
     ```ts
-    declare const net: any
-
     export class JSONSchemaValidator {
         private schemaStore: any
         private schema: any

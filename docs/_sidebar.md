@@ -34,6 +34,7 @@
         * [枚举](Javascript/TypeScript/枚举.md)
         * [Typescript与面向对象编程](Javascript/TypeScript/Typescript与面向对象编程.md)
         * [装饰器](Javascript/TypeScript/装饰器.md)
+        * [模块声明](Javascript/TypeScript/模块声明.md)
     * [番外:node环境构建应用](Javascript/node环境构建应用/README.md)
         * [使用commander写命令行工具](Javascript/node环境构建应用/使用commander写命令行工具.md)
         * [使用typeorm连接数据库](Javascript/node环境构建应用/使用typeorm连接数据库.md)

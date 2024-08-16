@@ -1,4 +1,4 @@
-# native-helloworld
+# nsv-calendar
 
 本项目使用nativescript-vue构造.
 

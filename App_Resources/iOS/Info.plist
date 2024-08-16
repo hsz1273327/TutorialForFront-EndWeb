@@ -56,5 +56,7 @@
 			</array>
 		</dict>
 	</array>
+	<key>NSCalendarsUsageDescription</key>
+    <string>My reason justifying fooling around with your calendar</string>
 </dict>
 </plist>

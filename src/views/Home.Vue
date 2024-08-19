@@ -203,5 +203,4 @@ async function onDeleteCalendars() {
         })
     }
 }
-
 </script>

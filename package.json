@@ -7,11 +7,11 @@
     "@nativescript/core": "~8.7.1",
     "nativescript-calendar": "^3.0.0",
     "nativescript-feedback": "^2.0.0",
-    "nativescript-vue": "3.0.0-rc.1"
+    "nativescript-vue": "3.0.0-rc.2"
   },
   "devDependencies": {
     "@nativescript/android": "~8.7.0",
-    "@nativescript/ios": "~8.7.0",
+    "@nativescript/ios": "~8.7.2",
     "@nativescript/tailwind": "~2.0.1",
     "@nativescript/types": "~8.7.0",
     "@nativescript/webpack": "~5.0.0",

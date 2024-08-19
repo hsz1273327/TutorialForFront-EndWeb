@@ -1,6 +1,7 @@
 import { createApp, registerElement } from 'nativescript-vue'
 import { themer } from '@nativescript-community/ui-material-core'
-import { ColorWheel } from '@sergeymell/nativescript-color-wheel'
+import { ColorWheel } from '@hsz1273327/nativescript-color-wheel'
+import SliderPlugin from '@nativescript-community/ui-material-slider/vue';
 import Home from './views/Home.vue'
 
 
@@ -12,4 +13,4 @@ if (global.isIOS) {
 
 
 registerElement('ColorWheel', () => ColorWheel)
-createApp(Home).start()
+createApp(Home).use(SliderPlugin).start()

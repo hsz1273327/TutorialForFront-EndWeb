@@ -4,16 +4,17 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@hsz1273327/nativescript-color-wheel": "github:hsz1273327/nativescript-color-wheel",
     "@nativescript-community/ui-material-core": "^7.2.26",
-    "@nativescript/core": "~8.6.1",
-    "@sergeymell/nativescript-color-wheel": "^1.0.15",
-    "nativescript-vue": "3.0.0-beta.11"
+    "@nativescript-community/ui-material-slider": "^7.2.61",
+    "@nativescript/core": "~8.7.1",
+    "nativescript-vue": "3.0.0-rc.2"
   },
   "devDependencies": {
-    "@nativescript/android": "8.6.2",
-    "@nativescript/ios": "8.6.3",
+    "@nativescript/android": "~8.7.0",
+    "@nativescript/ios": "~8.7.2",
     "@nativescript/tailwind": "~2.0.1",
-    "@nativescript/types": "~8.6.1",
+    "@nativescript/types": "~8.7.0",
     "@nativescript/webpack": "~5.0.0",
     "@types/node": "~17.0.21",
     "tailwindcss": "^3.1.8",

@@ -5,10 +5,7 @@
     <p>Welcome to Your Vue.js + TypeScript App</p>
     <input type="button" value="Send message" @click="sendToParent" />
     <br />
-    <input
-      :value="childMsg"
-      @change="$emit('update:childMsg', $event.target.value)"
-    />
+    <input :value="childMsg" @change="$emit('update:childMsg', $event.target.value)" />
     <br />
     填入foo
     <input :value="foo" @change="updateFoo($event.target.value)" />
@@ -42,22 +39,10 @@
           <input type="tel" name="phone" v-model="friend_phone" />
         </p>
         <p>Gender:</p>
-        <input
-          type="radio"
-          name="gender"
-          id="male"
-          value="male"
-          v-model="friend_gender"
-          checked
-        /><label for="male">male</label>
+        <input type="radio" name="gender" id="male" value="male" v-model="friend_gender" checked /><label
+          for="male">male</label>
         <br />
-        <input
-          type="radio"
-          name="gender"
-          id="female"
-          value="female"
-          v-model="friend_gender"
-        />
+        <input type="radio" name="gender" id="female" value="female" v-model="friend_gender" />
         <label for="female">female</label>
         <br />
         <input type="button" value="Submit" @click="SaveToFriendsList" />
@@ -67,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onUnmounted, computed, watch, inject } from "vue"
+import { ref, onUnmounted, computed, watch, inject, defineProps } from "vue"
 import { debounce } from "lodash-es"
 
 interface Person {

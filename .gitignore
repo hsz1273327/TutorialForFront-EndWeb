@@ -22,3 +22,7 @@ _book
 dist
 .nyc_output
 coverage
+hooks
+node_modules
+platforms
+docs

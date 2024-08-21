@@ -66,18 +66,10 @@
   </div>
 </template>
 
-
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "HelloWorld",
-});
-</script>
-
 <script setup lang="ts">
-import { ref, onUnmounted, computed, watch, inject } from "vue";
-import { debounce } from "lodash-es";
+import { ref, onUnmounted, computed, watch, inject } from "vue"
+import { debounce } from "lodash-es"
+
 interface Person {
   name: string | null;
   gender: string | null;
@@ -89,17 +81,17 @@ interface Props {
 }
 const props = withDefaults(defineProps<Props>(), {
   msg: "vue",
-});
+})
 const url = ref("http://www.baidu.com");
 const host = computed(() =>
   url.value.replaceAll("http://", "").replaceAll("https://", "")
-);
+)
 const friend_name = ref<string>("");
 watch(friend_name, (val, oldVal) => {
   if (oldVal != "") {
     alert("拼错了?");
   }
-});
+})
 const friend_gender = ref<string>("male");
 const friend_phone = ref<number>(0);
 const friends = ref<Person[]>([
@@ -123,7 +115,8 @@ const friends = ref<Person[]>([
     gender: "female",
     phone: 123444,
   },
-]);
+])
+
 function _SaveToFriendsList() {
   let newfriend: Person = {
     name: friend_name.value,
@@ -142,13 +135,14 @@ const user = ref("hsz");
 defineExpose({
   host,
   friends,
-});
-const emit = defineEmits(["toParent", "update:childMsg"]);
+})
+
+const emit = defineEmits(["toParent", "update:childMsg"])
 function sendToParent() {
-  emit("toParent", { msg: "1234" });
+  emit("toParent", { msg: "1234" })
 }
-const foo = inject("foo");
-const updateFoo = inject("updateFoo");
+const foo = inject("foo")
+const updateFoo = inject("updateFoo")
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

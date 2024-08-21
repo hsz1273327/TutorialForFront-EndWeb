@@ -32,3 +32,4 @@ httpserv
 *.keystore
 typings
 native-src
+.vscode

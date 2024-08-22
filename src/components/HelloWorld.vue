@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onUnmounted, computed, watch, inject, defineProps } from "vue"
+import { ref, onUnmounted, computed, watch, inject, defineProps, defineModel } from "vue"
 import { debounce } from "lodash-es"
 
 interface Person {
@@ -62,7 +62,7 @@ interface Person {
 }
 interface Props {
   msg?: string;
-  childMsg?: string;
+  // childMsg?: string;
 }
 const props = withDefaults(defineProps<Props>(), {
   msg: "vue",
@@ -121,11 +121,14 @@ defineExpose({
   host,
   friends,
 })
-
-const emit = defineEmits(["toParent", "update:childMsg"])
+const childMsg = defineModel({ type: String })
+// const emit = defineEmits(["toParent", "update:childMsg"])
 function sendToParent() {
-  emit("toParent", { msg: "1234" })
+  // emit("toParent", { msg: "1234" })
+  childMsg.value = "1234"
 }
+
+
 const foo = inject("foo")
 const updateFoo = inject("updateFoo")
 </script>

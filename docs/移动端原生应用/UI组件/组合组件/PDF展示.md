@@ -1,1 +1,0 @@
-https://docs.nativescript.org/plugins/pdf

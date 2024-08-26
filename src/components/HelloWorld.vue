@@ -3,6 +3,7 @@
     <h1>hello {{ msg }}</h1>
     <slot :user="user" name="user_slot"> 默认的插槽数据 </slot>
     <p>Welcome to Your Vue.js + TypeScript App</p>
+    <TestComponents foo="bar"></TestComponents>
     <input type="button" value="Send message" @click="sendToParent" />
     <br />
     <input :value="childMsg" @change="$emit('update:childMsg', $event.target.value)" />
@@ -52,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onUnmounted, computed, watch, inject, defineProps, defineModel } from "vue"
+import { ref, onUnmounted, computed, watch, inject, defineProps, defineModel, getCurrentInstance } from "vue"
 import { debounce } from "lodash-es"
 
 interface Person {
@@ -131,6 +132,11 @@ function sendToParent() {
 
 const foo = inject("foo")
 const updateFoo = inject("updateFoo")
+const myvueplugin = inject("myvueplugin")
+console.log(` myvueplugin inject: ${JSON.stringify(myvueplugin)}`)
+const { proxy } = getCurrentInstance()
+const myvuepluginfuncreturn = proxy.$myvuepluginfunc()
+console.log(`myvuepluginfuncreturn get result: ${myvuepluginfuncreturn}`)
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

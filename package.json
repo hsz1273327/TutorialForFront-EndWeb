@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "lodash-es": "^4.17.21",
+    "myvueplugin": "github:hsz1273327/TutorialForFront-EndWeb#vue-plugin",
     "vue": "^3.4.29"
   },
   "devDependencies": {

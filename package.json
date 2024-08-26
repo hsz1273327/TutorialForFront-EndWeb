@@ -1,6 +1,6 @@
 {
   "name": "myvueplugin",
-  "main": "index.ts",
+  "main": "index.js",
   "version": "1.0.0",
   "private": true,
   "devDependencies": {

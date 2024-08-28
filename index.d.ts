@@ -1,5 +1,6 @@
 interface MyvuepluginOptions {
     withComponents?: boolean;
+    [k: string]: any;
 }
 export interface ComponentCustomProperties {
     $myvuepluginfunc: () => string;

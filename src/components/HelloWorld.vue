@@ -55,7 +55,7 @@
 <script setup lang="ts">
 import { ref, onUnmounted, computed, watch, inject, defineProps, defineModel, getCurrentInstance } from "vue"
 import { debounce } from "lodash-es"
-
+import { ComponentCustomProperties } from "myvueplugin"
 interface Person {
   name: string | null;
   gender: string | null;
@@ -135,7 +135,8 @@ const updateFoo = inject("updateFoo")
 const myvueplugin = inject("myvueplugin")
 console.log(` myvueplugin inject: ${JSON.stringify(myvueplugin)}`)
 const { proxy } = getCurrentInstance()
-const myvuepluginfuncreturn = proxy.$myvuepluginfunc()
+const instance = proxy as ComponentCustomProperties
+const myvuepluginfuncreturn = instance.$myvuepluginfunc()
 console.log(`myvuepluginfuncreturn get result: ${myvuepluginfuncreturn}`)
 </script>
 

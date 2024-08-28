@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import myvueplugin from "myvueplugin"
+import { MyVuePlugin } from "myvueplugin"
 
-createApp(App).use(myvueplugin, { withComponents: true }).mount('#app')
+createApp(App).use(MyVuePlugin, { withComponents: true }).mount('#app')

@@ -10,6 +10,4 @@ export default {
         }
     }
 }
-
-require('@nstudio/nativescript-floatingactionbutton')
 //# sourceMappingURL=index.js.map

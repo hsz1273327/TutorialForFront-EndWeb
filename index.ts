@@ -4,12 +4,12 @@ import { myvuepluginfunc } from "./properties"
 interface MyvuepluginOptions {
     withComponents?: boolean
 }
-declare module 'vue' {
-    interface ComponentCustomProperties {
-        $myvuepluginfunc: () => string
-    }
+
+export interface ComponentCustomProperties {
+    $myvuepluginfunc: () => string
 }
-export default {
+
+export const MyVuePlugin = {
     install: (app, options: MyvuepluginOptions) => {
         app.provide("myvueplugin", myvuepluginobj)
         app.config.globalProperties.$myvuepluginfunc = myvuepluginfunc

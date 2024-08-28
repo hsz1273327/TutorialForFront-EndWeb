@@ -1,12 +1,10 @@
 interface MyvuepluginOptions {
     withComponents?: boolean;
 }
-declare module 'vue' {
-    interface ComponentCustomProperties {
-        $myvuepluginfunc: () => string;
-    }
+export interface ComponentCustomProperties {
+    $myvuepluginfunc: () => string;
 }
-declare const _default: {
+export declare const MyVuePlugin: {
     install: (app: any, options: MyvuepluginOptions) => void;
 };
-export default _default;
+export {};

@@ -1,49 +1,14 @@
-# Vue.js攻略
+# 基于vue构建前端
 
-[Vue.js](https://v3.cn.vuejs.org/)是一个专注于网页前端的框架项目,其支持渐进式的开发模式,也就是由少到多的使用它.不过本文的目标读者是非前端开发人员但需要使用前端技术的人,因此历史包袱小,我们没有必要从jquery开始按前端架构演变的路线一路下来,只需要直接全盘使用vue.js即可.
+vue的主战场就在浏览器,在浏览器上我们可以发挥vue的全部特性.
 
-Vue.js的大版本是v3,但v2也十分流行并且有大量遗留项目.v3版本在性能和对ts的支持方面都大幅优于v2版本,但好在v3兼容v2,只是去掉了`setup`以及与之相关的组合式api.因此本文以v3版本为基准.在移动端原生应用部分我们会使用vue2的语法,不过其实会了3那2基本也看的懂.
+本文会用一个"英雄指南"项目来演示vue在复杂前端项目中的用法
 
-## vue生态的基本特点
+本文将以组合式api的vue3为基准
 
-vue.js本体专职页面渲染,大致有如下特点:
+## 前端vue项目基本结构
 
-1. 声明式模板
-2. 组件化
-3. 数据双向绑定
-
-配合生态中的状态管理插件[Vuex](https://vuex.vuejs.org/zh/guide/)和路由插件[Vue Router](https://router.vuejs.org/zh/guide/)就可以完整的构建前端项目了.而且还有脚手架工具是[vue cli](https://cli.vuejs.org/zh/guide/)可以非常方便的构建和管理项目.
-
-vue支持es也支持ts,作为一个前端"项目",从可维护性角度看我们应该首选ts.
-
-vue生态的最大特点就是统一.它非常的不像个js项目而是很像python项目.生态统一,基础功能都是官方维护.前端项目的最恶心之处就在于碎片化,有一堆工具声称可以实现这个那个,但要找到合适自己的那个实现甚至只是希望完成一个helloworld都其费事.而vue生态的最大优势就是它在给你选择的同时会给你一个通用的实现对应你的需求.你不需要去额外挑选非常省心.这也是本文以vue为基础写作的原因.
-
-本文会分为如下几个部分
-
-1. vue核心概念介绍
-
-2. 利用vue生态构造一个复杂的前端项目"英雄指南"
-
-3. 将"英雄指南"改造为一个pwa项目
-
-但在所有之前我们先来个helloworld直观的了解下vue项目
-
-## helloworld
-
-我们先创建一个简单完整的vue项目用于演示.这个项目的代码在[浏览器环境-vue-hello分支](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83-vue-hello).
-
-我们先`npm install -g @vue/cli`全局安装`vue-cli`.安装好后我们在目标文件夹下执行`vue create helloworld -n`
-
-根据提示我们选择需要的插件,选择`babel+typescript+stylus+eslint only error`即可.注意:
-
-1. 不要使用typescript的class模式.
-2. 多选时使用空格选择,回车确定结果进入下一步
-
-等全部安装完成我们进入项目文件夹下执行`npm run serve`即可执行,我们可以看到一个最简单的页面介绍vue项目;使用`npm run build`就可以将项目编译为前端项目的最终成果(在目录`dist`中).
-
-### vue项目基本结构
-
-一个vue项目的基本结构如下:
+一个前端的vue项目的基本结构如下:
 
 ```bash
 helloworld--|
@@ -66,9 +31,44 @@ helloworld--|
 
 vue.js是完全组件化的,通常每个文件就是一个组件,管理页面中的一个元素,组件之间可以嵌套,构造成一个组件树,这个组件树就是我们要表现的页面了.我们要表现的完整页面通常被称为视图(view)会放在单独的文件加下管理,通常组件树的根节点并不直接包含视图节点,而是通过路由来串联.
 
-在这个例子中这个组件树如下:
+## 英雄指南项目
 
-```bash
-App.vue(+router)--|
-                  |--components/HelloWorld.vue
-```
+这是个非常经典的样例项目,是[angular教程](https://angular.cn/tutorial)使用的例子.它包含如下功能:
+
+1. 仪表盘
+2. 英雄列表
+3. 英雄录入
+4. 英雄详情
+
+当然这个例子还不够复杂,我们会在本章节中逐渐增加它的复杂度,从而让他可以:
+
+1. 与后端交互获取和提交数据
+2. 使用数据可视化技术展示英雄属性
+3. 通过动画过渡提高交互体验
+
+这个项目原始有3个页面
+
++ 首页仪表盘
+
+![首页仪表盘](./source/heroes-dashboard-1.png)
+
++ 英雄列表
+
+![英雄列表](./source/heroes-list-2.png)
+
++ 英雄详情
+
+![英雄详情](./source/hero-details-1.png)
+
+我们会增加一个页面`创建英雄`以让这个项目更加丰富
+
+但在开始之前我们先来介绍下用到的其他库:
+
+1. [element-plus](https://element-plus.gitee.io/zh-CN/component/border.html),应该是vue生态下最知名的综合性组件库,可以满足90%的web开发需求,通过`vue-cli`的插件`vue-cli-plugin-element-plus`安装
+2. [Vue Router](https://next.router.vuejs.org/zh/index.html),vue官方的路由插件,通过`vue-cli`的插件`@vue/cli-plugin-router`安装
+3. [vuex](https://next.vuex.vuejs.org/zh/index.html),vue官方的状态管理插件,通过`vue-cli`的插件`@vue/cli-plugin-vuex`安装
+4. [vue-echarts](https://github.com/ecomfe/vue-echarts/blob/main/README.zh-Hans.md),[echarts](https://echarts.apache.org/zh/index.html)项目的vue组件封装,直接`npm install echarts vue-echarts`安装
+
+补充:
+
+1. 我们的服务端在[hero-tutorial-api分支](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/hero-tutorial-api)

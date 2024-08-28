@@ -1,5 +1,5 @@
 <template>
-    <h1>这是一个测试,prop是 {{ }}</h1>
+    <h1>这是一个测试,prop是 {{ foo }}</h1>
 </template>
 
 

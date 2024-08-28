@@ -3,6 +3,7 @@ import { myvuepluginobj } from "./provides"
 import { myvuepluginfunc } from "./properties"
 interface MyvuepluginOptions {
     withComponents?: boolean
+    [k: string]: any
 }
 
 export interface ComponentCustomProperties {
@@ -15,6 +16,14 @@ export const MyVuePlugin = {
         app.config.globalProperties.$myvuepluginfunc = myvuepluginfunc
         if (options.withComponents) {
             app.component("TestComponents", () => TestComponents)
+        } else {
+            for (let [k, v] of Object.entries(options)) {
+                if (k == "withComponents") {
+                    continue
+                } else {
+                    app.component(k, () => v)
+                }
+            }
         }
     }
 }

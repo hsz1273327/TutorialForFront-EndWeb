@@ -1,5 +1,5 @@
 interface MyvuepluginOptions {
-    withComponents?: boolean;
+    withAllComponents?: boolean;
     [k: string]: any;
 }
 export interface ComponentCustomProperties {

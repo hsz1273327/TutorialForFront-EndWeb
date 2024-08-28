@@ -2,7 +2,7 @@ import TestComponents from "./components/TestComponents.vue"
 import { myvuepluginobj } from "./provides"
 import { myvuepluginfunc } from "./properties"
 interface MyvuepluginOptions {
-    withComponents?: boolean
+    withAllComponents?: boolean
     [k: string]: any
 }
 
@@ -14,11 +14,11 @@ export const MyVuePlugin = {
     install: (app, options: MyvuepluginOptions) => {
         app.provide("myvueplugin", myvuepluginobj)
         app.config.globalProperties.$myvuepluginfunc = myvuepluginfunc
-        if (options.withComponents) {
+        if (options.withAllComponents) {
             app.component("TestComponents", () => TestComponents)
         } else {
             for (let [k, v] of Object.entries(options)) {
-                if (k == "withComponents") {
+                if (k == "withAllComponents") {
                     continue
                 } else {
                     app.component(k, () => v)

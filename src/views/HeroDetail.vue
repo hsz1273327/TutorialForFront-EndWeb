@@ -20,16 +20,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "HeroDetail",
-});
-</script>
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { ElRow, ElCard, ElInput, ElButton } from "element-plus";
+import { ref } from "vue";
 import { DefaultHeros } from "../const";
 interface Props {
   id: number;

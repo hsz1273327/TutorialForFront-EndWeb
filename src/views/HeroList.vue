@@ -32,23 +32,9 @@
     </el-row>
   </div>
 </template>
-<script lang="ts">
-import { defineComponent } from "vue";
 
-export default defineComponent({
-  name: "HeroList",
-});
-</script>
 <script setup lang="ts">
 import { ref } from "vue";
-import {
-  ElRow,
-  ElTag,
-  ElInput,
-  ElButton,
-  ElTable,
-  ElTableColumn,
-} from "element-plus";
 import { DefaultHeros } from "../const";
 const heros = ref(Object.assign([], DefaultHeros));
 const handleEdit = (index: any, row: any) => {

@@ -1,11 +1,12 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
+import DashBoard from '../views/DashBoard.vue'
+import HeroList from '../views/HeroList.vue'
 
-
-const routes: Array<RouteRecordRaw> = [
+const routes = [
   {
     path: '/',
     name: '',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Dashboard.vue')
+    component: DashBoard
   },
   {
     path: '/herolist',
@@ -13,13 +14,14 @@ const routes: Array<RouteRecordRaw> = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/HeroList.vue')
+    component: HeroList
   }
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes
 })
 
 export default router
+

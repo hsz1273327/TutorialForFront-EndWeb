@@ -20,7 +20,7 @@
         </header>
       </el-header>
       <el-main>
-        <Dashboard></Dashboard>
+        <DashBoard></DashBoard>
         <HeroList></HeroList>
         <HeroDetail></HeroDetail>
         <NewHero></NewHero>
@@ -29,23 +29,8 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  name: "app",
-};
-</script>
-
-<script setup lang="ts">
-import {
-  ElContainer,
-  ElMain,
-  ElHeader,
-  ElDivider,
-  ElRow,
-  ElMenu,
-  ElMenuItem,
-} from "element-plus";
-import Dashboard from "./views/Dashboard.vue";
+<script lang="ts" setup>
+import DashBoard from "./views/DashBoard.vue";
 import HeroDetail from "./views/HeroDetail.vue";
 import HeroList from "./views/HeroList.vue";
 import NewHero from "./views/NewHero.vue";

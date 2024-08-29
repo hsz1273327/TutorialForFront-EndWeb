@@ -20,23 +20,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "NewHero",
-});
-</script>
 <script setup lang="ts">
 import { ref } from "vue";
-import {
-  ElRow,
-  ElCard,
-  ElInput,
-  ElButton,
-  ElForm,
-  ElFormItem,
-} from "element-plus";
 const _defaultHeroInfo = {
   name: "",
 };

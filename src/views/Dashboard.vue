@@ -13,14 +13,8 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  name: "dashboard",
-};
-</script>
 <script setup lang="ts">
 import { ref } from "vue";
 import { DefaultHeros } from "../const";
-import { ElCol, ElRow, ElCard } from "element-plus";
 const heros = ref(Object.assign([], DefaultHeros));
 </script>

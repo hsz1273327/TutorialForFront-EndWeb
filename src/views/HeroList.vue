@@ -32,13 +32,14 @@
     </el-row>
   </div>
 </template>
-
 <script setup lang="ts">
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import { DefaultHeros } from "../const";
+const router = useRouter();
 const heros = ref(Object.assign([], DefaultHeros));
 const handleEdit = (index: any, row: any) => {
-  console.log(index, row);
+  router.push(`/herodetail/${row.id}`);
 };
 const handleDelete = (index: any, row: any) => {
   console.log(index, row);

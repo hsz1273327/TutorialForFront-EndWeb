@@ -6,13 +6,7 @@
       <el-breadcrumb-item>profile</el-breadcrumb-item>
     </el-breadcrumb>
     <el-divider></el-divider>
-    <el-button
-      type="primary"
-      icon="el-icon-arrow-left"
-      @click="goBack"
-      style="float: right"
-      >返回</el-button
-    >
+    <el-button type="primary" icon="el-icon-arrow-left" @click="goBack" style="float: right">返回</el-button>
 
     <el-row type="flex" justify="center">
       <h1>英雄详情</h1>
@@ -35,34 +29,32 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref, provide, computed } from "vue";
-import { useRouter } from "vue-router";
-import {
-  ElBreadcrumb,
-  ElBreadcrumbItem,
-  ElDivider,
-  ElRow,
-  ElCard,
-  ElInput,
-  ElButton,
-} from "element-plus";
-import { DefaultHeros } from "../const";
+<script lang="ts">
+import { defineComponent } from "vue";
 
+export default defineComponent({
+  name: "HeroDetail",
+});
+</script>
+<script setup lang="ts">
+import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
+import { useHeroStore } from '../stores/herolist'
 
 const router = useRouter();
+const store = useHeroStore()
+// 作为 action 的 increment 可以直接解构
+const { GetHero, UpdateHero } = store
+
 interface Props {
   id: number;
 }
 const props = defineProps<Props>();
-const _hero = DefaultHeros.filter((ele) => ele.id == props.id);
-if (_hero.length != 1) {
-  alert(`id ${props.id} not found`);
-  throw `id ${props.id} not found`;
-}
-const hero = ref(_hero[0]);
+const _hero = GetHero(props.id);
+const hero = ref(_hero);
 const submitHero = () => {
   console.log(hero.value);
+  UpdateHero(props.id, hero.value)
 };
 const goBack = () => router.back();
 
@@ -76,14 +68,7 @@ const option = computed(() => {
     "成长性",
   ];
   return {
-    // title: {
-    //   text: "英雄属性",
-    // },
-    // legend: {
-    //   data: [hero.value.name],
-    // },
     radar: {
-      // shape: 'circle',
       indicator: heroattrs.map((i) => ({ name: i, max: 100 })),
     },
     series: [

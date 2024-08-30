@@ -4,7 +4,7 @@
       <h2>Top Heros</h2>
     </el-row>
     <el-row :gutter="1" type="flex" justify="space-around">
-      <template v-for="item in heros" :key="item.id">
+      <template v-for="item in allHeros" :key="item.id">
         <el-col span="4">
           <el-card shadow="hover">{{ item.name }}</el-card>
         </el-col>
@@ -14,7 +14,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { DefaultHeros } from "../const";
-const heros = ref(Object.assign([], DefaultHeros));
+import { storeToRefs } from 'pinia'
+import { useHeroStore } from '../stores/herolist'
+
+const store = useHeroStore()
+const { allHeros } = storeToRefs(store)
 </script>

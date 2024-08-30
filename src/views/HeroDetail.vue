@@ -36,17 +36,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, provide, computed } from "vue";
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
-import {
-  ElBreadcrumb,
-  ElBreadcrumbItem,
-  ElDivider,
-  ElRow,
-  ElCard,
-  ElInput,
-  ElButton,
-} from "element-plus";
 import { DefaultHeros } from "../const";
 
 

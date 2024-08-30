@@ -21,7 +21,7 @@
       <el-card shadow="hover">
         <template v-slot:header>
           <div class="clearfix" v-if="hero">
-            <span>{{ hero.id }}</span>
+            <span>ID:{{ hero.id }}</span>
           </div>
         </template>
         <div>
@@ -30,12 +30,14 @@
           <el-button type="primary" round @click="submitHero">提交</el-button>
         </div>
       </el-card>
+      <v-chart class="chart" :option="option" style="height: 400px" />
     </el-row>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, provide, computed } from "vue";
+import { useRouter } from "vue-router";
 import {
   ElBreadcrumb,
   ElBreadcrumbItem,
@@ -46,7 +48,7 @@ import {
   ElButton,
 } from "element-plus";
 import { DefaultHeros } from "../const";
-import { useRouter } from "vue-router";
+
 
 const router = useRouter();
 interface Props {
@@ -63,4 +65,43 @@ const submitHero = () => {
   console.log(hero.value);
 };
 const goBack = () => router.back();
+
+const option = computed(() => {
+  const heroattrs = [
+    "破坏力",
+    "速度",
+    "射程距离",
+    "持久力",
+    "精密度",
+    "成长性",
+  ];
+  return {
+    // title: {
+    //   text: "英雄属性",
+    // },
+    // legend: {
+    //   data: [hero.value.name],
+    // },
+    radar: {
+      // shape: 'circle',
+      indicator: heroattrs.map((i) => ({ name: i, max: 100 })),
+    },
+    series: [
+      {
+        name: "英雄属性",
+        type: "radar",
+        data: [
+          {
+            value: heroattrs.map((i) => Reflect.get(hero.value.quality, i)),
+            name: hero.value.name,
+            label: {
+              show: true,
+              formatter: (params: any) => params.value,
+            },
+          },
+        ],
+      },
+    ],
+  };
+});
 </script>

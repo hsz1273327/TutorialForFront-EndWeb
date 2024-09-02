@@ -7,11 +7,7 @@
             <h1>英雄指南</h1>
           </el-row>
           <el-row :gutter="10" type="flex" justify="center">
-            <el-menu
-              class="el-menu-demo"
-              mode="horizontal"
-              router
-            >
+            <el-menu class="el-menu-demo" mode="horizontal" router>
               <el-menu-item index="/">仪表盘</el-menu-item>
               <el-menu-item index="/herolist">英雄列表</el-menu-item>
               <el-menu-item index="/newhero">创建英雄</el-menu-item>
@@ -28,11 +24,26 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { useHeroStore } from './stores/herolist'
 const store = useHeroStore()
 const { SyncHeros } = store
-onMounted(SyncHeros)
+
+async function sleep(ms: number) {
+  new Promise((r) => setTimeout(r, ms))
+}
+let stop_wait = ref(false)
+onMounted(async () => {
+  await SyncHeros()
+  while (!stop_wait.value) {
+    await sleep(1500)
+    await SyncHeros()
+  }
+})
+
+onUnmounted(() => {
+  stop_wait.value = true
+});
 </script>
 
 <style>

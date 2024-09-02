@@ -14,7 +14,7 @@ export interface HeroInterface {
     id?: number,
     name: string,
     score: number,
-    quality: QualityInterface,
+    quality?: QualityInterface,
 }
 
 export const useHeroStore = defineStore('hero', () => {

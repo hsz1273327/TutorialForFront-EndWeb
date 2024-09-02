@@ -29,17 +29,10 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "HeroDetail",
-});
-</script>
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { useHeroStore } from '../stores/herolist'
+import { useHeroStore, type HeroInterface } from '../stores/herolist'
 
 const router = useRouter();
 const store = useHeroStore()
@@ -50,11 +43,15 @@ interface Props {
   id: number;
 }
 const props = defineProps<Props>();
-const _hero = GetHero(props.id);
-const hero = ref(_hero);
-const submitHero = () => {
+
+const hero = ref<HeroInterface | null>(null);
+const submitHero = async () => {
   console.log(hero.value);
-  UpdateHero(props.id, hero.value)
+  if (hero.value) {
+    await UpdateHero(props.id, hero.value)
+  } else {
+    console.log("hero is none")
+  }
 };
 const goBack = () => router.back();
 
@@ -66,27 +63,36 @@ const option = computed(() => {
     "持久力",
     "精密度",
     "成长性",
-  ];
-  return {
-    radar: {
-      indicator: heroattrs.map((i) => ({ name: i, max: 100 })),
-    },
-    series: [
-      {
-        name: "英雄属性",
-        type: "radar",
-        data: [
-          {
-            value: heroattrs.map((i) => Reflect.get(hero.value.quality, i)),
-            name: hero.value.name,
-            label: {
-              show: true,
-              formatter: (params: any) => params.value,
-            },
-          },
-        ],
+  ]
+  if (hero.value) {
+    return {
+      radar: {
+        indicator: heroattrs.map((i) => ({ name: i, max: 100 })),
       },
-    ],
-  };
+      series: [
+        {
+          name: "英雄属性",
+          type: "radar",
+          data: [
+            {
+              value: heroattrs.map((i) => Reflect.get(hero.value.quality, i)),
+              name: hero.value.name,
+              label: {
+                show: true,
+                formatter: (params: any) => params.value,
+              },
+            },
+          ],
+        },
+      ],
+    };
+  } else {
+    return {}
+  }
 });
+
+onMounted(async () => {
+  const _hero = await GetHero(props.id);
+  hero.value = _hero
+})
 </script>

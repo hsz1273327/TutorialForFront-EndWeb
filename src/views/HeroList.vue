@@ -30,12 +30,6 @@
     </el-row>
   </div>
 </template>
-<script lang="ts">
-import { defineComponent } from "vue";
-export default defineComponent({
-  name: "HeroList",
-});
-</script>
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import { storeToRefs } from 'pinia'
@@ -50,8 +44,8 @@ const { DeleteHero } = store
 const handleEdit = (index: any, row: any) => {
   router.push(`/herodetail/${row.id}`);
 };
-const handleDelete = (index: any, row: any) => {
+const handleDelete = async (index: any, row: any) => {
   console.log(index, row)
-  DeleteHero(row.id)
+  await DeleteHero(row.id)
 };
 </script>

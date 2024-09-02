@@ -28,7 +28,11 @@
 </template>
 
 <script lang="ts" setup>
-console.log("app ok")
+import { onMounted } from 'vue'
+import { useHeroStore } from './stores/herolist'
+const store = useHeroStore()
+const { SyncHeros } = store
+onMounted(SyncHeros)
 </script>
 
 <style>

@@ -1,5 +1,6 @@
 import { ref, computed } from "vue"
 import { defineStore } from 'pinia'
+import { RemoteURL } from "./utils"
 
 export interface QualityInterface {
     "破坏力": number,
@@ -15,86 +16,9 @@ export interface HeroInterface {
     score: number,
     quality: QualityInterface,
 }
-// 6项均值+10~100的能力评分
-export const DefaultHeros: HeroInterface[] = [
-    {
-        id: 1,
-        name: "隐者之紫",
-        score: 50,//30+20
-        quality: {
-            "破坏力": 20,
-            "速度": 20,
-            "射程距离": 20,
-            "持久力": 80,
-            "精密度": 20,
-            "成长性": 20,
-        }
-    },
-    {
-        id: 2,
-        name: "红色魔术师",
-        score: 75,//43+32
-        quality: {
-            "破坏力": 60,
-            "速度": 40,
-            "射程距离": 40,
-            "持久力": 40,
-            "精密度": 40,
-            "成长性": 40,
-        }
-    },
-    {
-        id: 3,
-        name: "白金之星",
-        score: 160,//77+83
-        quality: {
-            "破坏力": 100,
-            "速度": 100,
-            "射程距离": 20,
-            "持久力": 80,
-            "精密度": 100,
-            "成长性": 60,
-        }
-    },
-    {
-        id: 4,
-        name: "法皇",
-        score: 75,//53+32
-        quality: {
-            "破坏力": 60,
-            "速度": 60,
-            "射程距离": 40,
-            "持久力": 80,
-            "精密度": 40,
-            "成长性": 40,
-        }
-    },
-    {
-        id: 5,
-        name: "银色战场",
-        score: 70,//60+10
-        quality: {
-            "破坏力": 60,
-            "速度": 80,
-            "射程距离": 20,
-            "持久力": 80,
-            "精密度": 60,
-            "成长性": 60,
-        }
-    },
-]
-
-const Counter = () => {
-    let count = 0
-    return () => {
-        count += 1
-        return count
-    }
-}
-const counter = Counter()
 
 export const useHeroStore = defineStore('hero', () => {
-    const heros = ref(DefaultHeros)
+    const heros = ref<HeroInterface[]>([])
     const allHeros = computed(() => [...heros.value])
     const top4Heros = computed(() => {
         if (heros.value.length > 0) {
@@ -104,38 +28,117 @@ export const useHeroStore = defineStore('hero', () => {
             return []
         }
     })
-    function GetHero(heroId: number): HeroInterface | null {
-        if (typeof (heroId) === "number") {
-            const hero_list = heros.value.filter(hero => hero.id === heroId)
-            if (hero_list.length === 0) {
-                return null
+    async function SyncHeros() {
+        const res = await fetch(`${RemoteURL}/api/hero`, {
+            method: 'GET',
+            mode: 'cors'
+        })
+        if (!res.ok) {
+            if (res.status === 403) {
+                const resjson = await res.json()
+                console.error(resjson.Message)
             } else {
-                let hero = hero_list[0]
-                hero = { ...hero }
-                return hero
+                const restext = await res.text()
+                console.error(restext)
             }
+            return
+        }
+        const herosinfo = await res.json()
+        heros.value = herosinfo.result
+        console.log(`SyncHeros ok ${JSON.stringify(herosinfo)}`)
+    }
+
+    async function GetHero(heroId: number): Promise<HeroInterface | null> {
+        if (typeof (heroId) === "number") {
+            const res = await fetch(`${RemoteURL}/api/hero/${heroId}`, {
+                method: 'GET',
+                mode: 'cors'
+            })
+            if (!res.ok) {
+                if (res.status === 403) {
+                    const resjson = await res.json()
+                    console.error(resjson.Message)
+                } else {
+                    const restext = await res.text()
+                    console.error(restext)
+                }
+                return null
+            }
+            const herosinfo = await res.json()
+            const currentHero = herosinfo.result as HeroInterface
+            return currentHero
         } else {
             return null
         }
     }
-    function AppendHero(heroObj: HeroInterface) {
-        const id = counter()
-        const hero = Object.assign(heroObj, { id })
-        heros.value.push(hero)
-    }
-    function UpdateHero(heroID: number, source: HeroInterface) {
-        const heros_copy = [...heros.value];
-        const hero_list = heros_copy.filter(hero => hero.id === heroID)
-        if (hero_list.length !== 0) {
-            const hero = hero_list[0]
-            Object.assign(hero, source)
-            heros.value = heros_copy
+    async function AppendHero(heroObj: HeroInterface) {
+        // const id = counter()
+        // const hero = Object.assign(heroObj, { id })
+        // heros.value.push(hero)
+        const res = await fetch(`${RemoteURL}/api/hero`,
+            {
+                method: 'POST',
+                body: JSON.stringify(heroObj),
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                }),
+                mode: 'cors'
+            })
+        if (!res.ok) {
+            if (res.status === 403) {
+                const resjson = await res.json()
+                console.error(resjson.Message)
+            } else {
+                const restext = await res.text()
+                console.error(restext)
+            }
+            return
         }
+        await SyncHeros()
+        // context.dispatch("SyncHeros")
     }
-    function DeleteHero(heroID: number) {
-        heros.value = heros.value.filter((i) => i.id !== heroID)
+    async function UpdateHero(heroId: number, source: HeroInterface) {
+        const res = await fetch(`${RemoteURL}/api/hero/${heroId}`,
+            {
+                method: 'PUT',
+                body: JSON.stringify(source),
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                }),
+                mode: 'cors'
+            })
+        if (!res.ok) {
+            if (res.status === 403) {
+                const resjson = await res.json()
+                console.error(resjson.Message)
+            } else {
+                const restext = await res.text()
+                console.error(restext)
+            }
+            return
+        }
+        await SyncHeros()
     }
-
-    return { heros, allHeros, top4Heros, GetHero, AppendHero, UpdateHero, DeleteHero }
+    async function DeleteHero(heroId: number) {
+        const res = await fetch(`${RemoteURL}/api/hero/${heroId}`,
+            {
+                method: 'DELETE',
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                }),
+                mode: 'cors'
+            })
+        if (!res.ok) {
+            if (res.status === 403) {
+                const resjson = await res.json()
+                console.error(resjson.Message)
+            } else {
+                const restext = await res.text()
+                console.error(restext)
+            }
+            return
+        }
+        await SyncHeros()
+    }
+    return { heros, allHeros, top4Heros, SyncHeros, GetHero, AppendHero, UpdateHero, DeleteHero }
 })
-

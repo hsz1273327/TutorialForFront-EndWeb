@@ -50,9 +50,9 @@ const _defaultHeroInfo = {
   },
 };
 const hero = ref(Object.assign({}, _defaultHeroInfo));
-const submitHero = () => {
+const submitHero = async () => {
   console.log(hero.value)
-  AppendHero(hero.value)
+  await AppendHero(hero.value)
   router.push("/")
 };
 const resetForm = () => {

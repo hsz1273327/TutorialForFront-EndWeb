@@ -1,5 +1,4 @@
-// import ECharts from 'vue-echarts'
-import { use } from "echarts/core";
+import { use } from "echarts/core"
 
 // 手动引入 ECharts 各模块来减小打包体积
 import {
@@ -14,8 +13,8 @@ import {
   TooltipComponent,
   LegendComponent,
   RadarComponent,
-} from "echarts/components";
-import VChart, { THEME_KEY } from "vue-echarts";
+} from "echarts/components"
+import VChart, { THEME_KEY } from "vue-echarts"
 
 use([
   CanvasRenderer,
@@ -24,7 +23,7 @@ use([
   TooltipComponent,
   LegendComponent,
   TitleComponent
-]);
+])
 
 
 export default (app: any) => {

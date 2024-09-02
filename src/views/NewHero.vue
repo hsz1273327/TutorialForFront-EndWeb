@@ -28,16 +28,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { useRouter } from "vue-router";
-import { useHeroStore } from '../stores/herolist'
+import { ref, type Ref, computed, watch } from "vue"
+import { ElMessage } from "element-plus"
+import { useRouter } from "vue-router"
+import { useHeroStore, type HeroInterface } from '../stores/herolist'
 
 const router = useRouter()
 const store = useHeroStore()
 const { AppendHero } = store
-const random100 = () => Math.floor(Math.random() * 100 + 1);
+const random100 = () => Math.floor(Math.random() * 100 + 1)
 
-const _defaultHeroInfo = {
+const _defaultHeroInfo: HeroInterface = {
   name: "",
   score: 0,
   quality: {
@@ -48,16 +49,40 @@ const _defaultHeroInfo = {
     精密度: 0,
     成长性: 0,
   },
-};
-const hero = ref(Object.assign({}, _defaultHeroInfo));
+}
+let _cache: string | null = sessionStorage.getItem("create_hero_cache")
+const hero = ref<HeroInterface>(Object.assign({}, _defaultHeroInfo))
+
+if (_cache) {
+  const cahcedHeroInfo = JSON.parse(_cache) as HeroInterface
+  hero.value = cahcedHeroInfo
+}
+
+watch(hero, (newValue: Ref<HeroInterface>) => {
+  sessionStorage.setItem("create_hero_cache", JSON.stringify(newValue.value))
+})
+
 const submitHero = async () => {
   console.log(hero.value)
-  await AppendHero(hero.value)
-  router.push("/")
-};
+  try {
+    await AppendHero(hero.value)
+    sessionStorage.removeItem("create_hero_cache")
+    router.back()
+  } catch (error) {
+    if (typeof error === "string") {
+      ElMessage({
+        showClose: true,
+        message: error,
+        type: "error",
+      })
+    }
+  }
+
+}
 const resetForm = () => {
-  hero.value = Object.assign({}, _defaultHeroInfo);
-};
+  hero.value = Object.assign({}, _defaultHeroInfo)
+  sessionStorage.removeItem("create_hero_cache")
+}
 const randomHeroQuality = () => {
   hero.value.quality = {
     速度: random100(),
@@ -66,14 +91,14 @@ const randomHeroQuality = () => {
     破坏力: random100(),
     精密度: random100(),
     射程距离: random100(),
-  };
+  }
   hero.value.score =
     Math.floor(
       Object.entries(hero.value.quality).reduce(
         (a: [string, number], b: [string, number]) => ["", a[1] + b[1]]
       )[1] / 6
-    ) + random100();
-};
+    ) + random100()
+}
 
 const option = computed(() => {
   const heroattrs = [
@@ -83,7 +108,7 @@ const option = computed(() => {
     "持久力",
     "精密度",
     "成长性",
-  ];
+  ]
   return {
     radar: {
       indicator: heroattrs.map((i) => ({ name: i, max: 100 })),
@@ -104,6 +129,6 @@ const option = computed(() => {
         ],
       },
     ],
-  };
-});
+  }
+})
 </script>

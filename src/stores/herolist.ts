@@ -19,7 +19,10 @@ export interface HeroInterface {
 
 export const useHeroStore = defineStore('hero', () => {
     const heros = ref<HeroInterface[]>([])
+    const networkOK = ref(true)
     const allHeros = computed(() => [...heros.value])
+    const isOnline = computed(() => networkOK.value)
+
     const top4Heros = computed(() => {
         if (heros.value.length > 0) {
             const heros_copy = [...heros.value]
@@ -28,29 +31,13 @@ export const useHeroStore = defineStore('hero', () => {
             return []
         }
     })
-    async function SyncHeros() {
-        const res = await fetch(`${RemoteURL}/api/hero`, {
-            method: 'GET',
-            mode: 'cors'
-        })
-        if (!res.ok) {
-            if (res.status === 403) {
-                const resjson = await res.json()
-                console.error(resjson.Message)
-            } else {
-                const restext = await res.text()
-                console.error(restext)
-            }
-            return
-        }
-        const herosinfo = await res.json()
-        heros.value = herosinfo.result
-        console.log(`SyncHeros ok ${JSON.stringify(herosinfo)}`)
+    function SwitchNetworkStatus() {
+        networkOK.value = !networkOK.value
     }
 
-    async function GetHero(heroId: number): Promise<HeroInterface | null> {
-        if (typeof (heroId) === "number") {
-            const res = await fetch(`${RemoteURL}/api/hero/${heroId}`, {
+    async function SyncHeros() {
+        try {
+            const res = await fetch(`${RemoteURL}/api/hero`, {
                 method: 'GET',
                 mode: 'cors'
             })
@@ -58,87 +45,146 @@ export const useHeroStore = defineStore('hero', () => {
                 if (res.status === 403) {
                     const resjson = await res.json()
                     console.error(resjson.Message)
+                    throw resjson.Message
                 } else {
                     const restext = await res.text()
                     console.error(restext)
+                    throw restext
                 }
-                return null
             }
             const herosinfo = await res.json()
-            const currentHero = herosinfo.result as HeroInterface
-            return currentHero
+            heros.value = herosinfo.result
+            console.log(`SyncHeros ok ${JSON.stringify(herosinfo)}`)
+        } catch (error) {
+            throw "连接失败"
+        }
+    }
+
+    async function GetHero(heroId: number): Promise<HeroInterface | null> {
+        if (!networkOK.value) {
+            throw "无法连接到服务器"
+        }
+        if (typeof (heroId) === "number") {
+            try {
+                const res = await fetch(`${RemoteURL}/api/hero/${heroId}`, {
+                    method: 'GET',
+                    mode: 'cors'
+                })
+                if (!res.ok) {
+                    if (res.status === 403) {
+                        const resjson = await res.json()
+                        console.error(resjson.Message)
+                        throw resjson.Message
+                    } else {
+                        const restext = await res.text()
+                        console.error(restext)
+                        throw restext
+                    }
+                }
+                const herosinfo = await res.json()
+                const currentHero = herosinfo.result as HeroInterface
+                return currentHero
+            } catch (error) {
+                throw "连接失败"
+            }
         } else {
             return null
         }
     }
     async function AppendHero(heroObj: HeroInterface) {
-        // const id = counter()
-        // const hero = Object.assign(heroObj, { id })
-        // heros.value.push(hero)
-        const res = await fetch(`${RemoteURL}/api/hero`,
-            {
-                method: 'POST',
-                body: JSON.stringify(heroObj),
-                headers: new Headers({
-                    'Content-Type': 'application/json'
-                }),
-                mode: 'cors'
-            })
-        if (!res.ok) {
-            if (res.status === 403) {
-                const resjson = await res.json()
-                console.error(resjson.Message)
-            } else {
-                const restext = await res.text()
-                console.error(restext)
+        if (!networkOK.value) {
+            throw "无法连接到服务器"
+        }
+        try {
+            const res = await fetch(`${RemoteURL}/api/hero`,
+                {
+                    method: 'POST',
+                    body: JSON.stringify(heroObj),
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    }),
+                    mode: 'cors'
+                })
+            if (!res.ok) {
+                if (res.status === 403) {
+                    const resjson = await res.json()
+                    console.error(resjson.Message)
+                    throw resjson.Message
+                } else {
+                    const restext = await res.text()
+                    console.error(restext)
+                    throw restext
+                }
             }
-            return
+        } catch (error) {
+            throw "连接失败"
         }
         await SyncHeros()
-        // context.dispatch("SyncHeros")
     }
     async function UpdateHero(heroId: number, source: HeroInterface) {
-        const res = await fetch(`${RemoteURL}/api/hero/${heroId}`,
-            {
-                method: 'PUT',
-                body: JSON.stringify(source),
-                headers: new Headers({
-                    'Content-Type': 'application/json'
-                }),
-                mode: 'cors'
-            })
-        if (!res.ok) {
-            if (res.status === 403) {
-                const resjson = await res.json()
-                console.error(resjson.Message)
-            } else {
-                const restext = await res.text()
-                console.error(restext)
+        if (!networkOK.value) {
+            throw "无法连接到服务器"
+        }
+        try {
+
+
+            const res = await fetch(`${RemoteURL}/api/hero/${heroId}`,
+                {
+                    method: 'PUT',
+                    body: JSON.stringify(source),
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    }),
+                    mode: 'cors'
+                })
+            if (!res.ok) {
+                if (res.status === 403) {
+                    const resjson = await res.json()
+                    console.error(resjson.Message)
+                    throw resjson.Message
+                } else {
+                    const restext = await res.text()
+                    console.error(restext)
+                    throw restext
+                }
             }
-            return
+        } catch (error) {
+            throw "连接失败"
         }
         await SyncHeros()
     }
     async function DeleteHero(heroId: number) {
-        const res = await fetch(`${RemoteURL}/api/hero/${heroId}`,
-            {
-                method: 'DELETE',
-                headers: new Headers({
-                    'Content-Type': 'application/json'
-                }),
-                mode: 'cors'
-            })
-        if (!res.ok) {
-            if (res.status === 403) {
-                const resjson = await res.json()
-                console.error(resjson.Message)
-            } else {
-                const restext = await res.text()
-                console.error(restext)
+        if (!networkOK.value) {
+            throw "无法连接到服务器"
+        }
+        try {
+            const res = await fetch(`${RemoteURL}/api/hero/${heroId}`,
+                {
+                    method: 'DELETE',
+                    headers: new Headers({
+                        'Content-Type': 'application/json'
+                    }),
+                    mode: 'cors'
+                })
+            if (!res.ok) {
+                if (res.status === 403) {
+                    const resjson = await res.json()
+                    console.error(resjson.Message)
+                    throw resjson.Message
+                } else {
+                    const restext = await res.text()
+                    console.error(restext)
+                    throw restext
+                }
             }
-            return
+        } catch (error) {
+            throw "连接失败"
         }
         await SyncHeros()
     }
-    return { heros, allHeros, top4Heros, SyncHeros, GetHero, AppendHero, UpdateHero, DeleteHero }
+    return {
+        heros, networkOK,
+        allHeros, top4Heros, isOnline,
+        SwitchNetworkStatus, SyncHeros, GetHero, AppendHero, UpdateHero, DeleteHero
+    }
 })

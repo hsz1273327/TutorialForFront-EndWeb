@@ -31,21 +31,33 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useRouter } from "vue-router";
+import { useRouter } from "vue-router"
+import { ElMessage } from 'element-plus'
 import { storeToRefs } from 'pinia'
 import { useHeroStore } from '../stores/herolist'
 
-const router = useRouter();
+const router = useRouter()
 const store = useHeroStore()
 const { allHeros } = storeToRefs(store)
 // 作为 action 的 increment 可以直接解构
 const { DeleteHero } = store
 
 const handleEdit = (index: any, row: any) => {
-  router.push(`/herodetail/${row.id}`);
-};
+  router.push(`/herodetail/${row.id}`)
+}
 const handleDelete = async (index: any, row: any) => {
-  console.log(index, row)
-  await DeleteHero(row.id)
-};
+  try {
+    console.log(index, row)
+    await DeleteHero(row.id)
+  } catch (error) {
+    if (typeof error === "string") {
+      ElMessage({
+        showClose: true,
+        message: error,
+        type: "error",
+      })
+    }
+  }
+
+}
 </script>

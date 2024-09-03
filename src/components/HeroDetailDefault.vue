@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed,  h } from "vue"
+import { ref, computed, h } from "vue"
 import { ElMessage, ElNotification } from 'element-plus'
 import { useRouter } from "vue-router"
 import { storeToRefs } from 'pinia'
@@ -31,7 +31,8 @@ import { useHeroStore, type HeroInterface } from '../stores/herolist'
 const router = useRouter()
 const heroStore = useHeroStore()
 // 作为 action 的 increment 可以直接解构
-const { GetHero, UpdateHero, SwitchNetworkStatus } = heroStore
+const { GetHero, UpdateHero } = heroStore
+// const { GetHero, UpdateHero, SwitchNetworkStatus } = heroStore
 const { isOnline } = storeToRefs(heroStore)
 
 interface Props {
@@ -111,24 +112,18 @@ const option = computed(() => {
 const init = async () => {
   try {
     const _hero = await GetHero(props.id)
-    if (!isOnline.value) {
-      ElNotification({
-        title: "网络已联通",
-        message: h("i", { style: "color: teal" }, "网络已联通"),
-      })
-      SwitchNetworkStatus()
-    }
     if (_hero) {
       hero.value = _hero
     }
   } catch (error) {
-    if (isOnline.value) {
-      ElNotification({
-        title: "网络未通",
-        message: h("i", { style: "color: teal" }, String(error)),
+    if (typeof error === "string") {
+      ElMessage({
+        showClose: true,
+        message: error,
+        type: "error",
       })
-      SwitchNetworkStatus()
     }
+    throw error
   }
 }
 await init()

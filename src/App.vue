@@ -6,7 +6,7 @@
           <el-row :gutter="10" type="flex" justify="center">
             <h1>英雄指南
               <el-icon>
-                <Link v-if="isOnline"/>
+                <Link v-if="isOnline" />
                 <Loading v-else />
               </el-icon>
             </h1>
@@ -36,54 +36,47 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref, h } from 'vue'
+import { onMounted, onUnmounted, watch, h } from 'vue'
 import { ElNotification } from "element-plus"
 import { Link, Loading } from '@element-plus/icons-vue'
 import { storeToRefs } from 'pinia'
+import ReconnectingEventSource from "reconnecting-eventsource"
 import { useHeroStore } from './stores/herolist'
 import { useMenuStore } from './stores/menu'
 
 const heroStore = useHeroStore()
 const { isOnline } = storeToRefs(heroStore)
-const { SyncHeros, SwitchNetworkStatus } = heroStore
+const { SyncHerosBySSE } = heroStore
 
 const menuStore = useMenuStore()
 const { activeIndex } = storeToRefs(menuStore)
 const { changeCurrrentIndex, loadCurrrentIndex } = menuStore
 
-async function sleep(ms: number) {
-  return new Promise((r) => setTimeout(r, ms))
-}
-let stop_wait = ref(false)
-
-onMounted(async () => {
-  loadCurrrentIndex()
-  while (!stop_wait.value) {
-    try {
-      await SyncHeros()
-      if (!isOnline.value) {
-        ElNotification({
-          title: "网络已联通",
-          message: h("i", { style: "color: teal" }, "网络已联通"),
-        })
-        SwitchNetworkStatus()
-      }
-    } catch (error) {
-      if (isOnline.value) {
-        ElNotification({
-          title: "网络未通",
-          message: h("i", { style: "color: teal" }, String(error)),
-        })
-        SwitchNetworkStatus()
-      }
-    }
-    console.log("sync ok")
-    await sleep(2000)
+watch(isOnline, (newValue: boolean) => {
+  if (newValue) {
+    ElNotification({
+      title: "网络已联通",
+      message: h("i", { style: "color: teal" }, "网络已联通"),
+    });
+  } else {
+    ElNotification({
+      title: "网络未通",
+      message: h("i", { style: "color: teal" }, "网络已断开"),
+    });
   }
-})
+});
 
-onUnmounted(() => {
-  stop_wait.value = true
+let es:ReconnectingEventSource|null = null
+
+onMounted(() => {
+  loadCurrrentIndex()
+  es = SyncHerosBySSE()
+})
+onUnmounted(()=>{
+  if (es){
+    es.close()
+    console.log("es close ok")
+  }
 })
 </script>
 

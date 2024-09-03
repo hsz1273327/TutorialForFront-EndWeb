@@ -4,43 +4,158 @@
 
 在vue中view就是组件的堆叠,在web前端场景下组件自然就是html标签.但是html标签过于底层,因此就有不少第三方项目将html标签构根据不同的场景组合搭配后包装成了组件库.
 
-## 使用第三方组件库
+## 使用第三方组件库element-plus
 
 使用组件库主要是为了快速开发,可以将组件库理解为html标签的高级接口.使用组件库最大的好处就是可以省去自己写css,组件逻辑这些事情的麻烦,我们要做的基本只是写个view层就可以了.
 
 vue生态下最知名的组件库应该是饿了么的[element](https://element.eleme.cn/),而针对vue3版本的element组件度是单独的[element-plus](https://element-plus.gitee.io/zh-CN/component/border.html)本文也会使用这个组件库作为例子,其他比较流行的组件库还有[iview](https://github.com/iview/iview)
 等.基本上使用也是一个套路.
 
-我们可以使用vue-cli的插件`vue-cli-plugin-element-plus`快速初始化一个项目.`element-plus`使用的是typescript,
-如果是命令行操作就是创建好项目后执行`vue add vue-cli-plugin-element-plus`,按提示选择一路回车就好.
+要安装它我们直接`npm install element-plus --save`即可
 
-element官方更加推荐全部加载,确实会方便很多,但如果要更加精细的管理所使用的组件,我还是推荐使用按需导入的方式.另一种折中的方式就是开发的时候使用全部加载的方式,但构造组件时也一并导入每个第三方组件,当全部开发没有问题时再将全局导入改为局部导入.
+由于element-plus是一个组件库,组件必然相当多,所以就会存在3种加载模式
 
-全局导入改为局部导入也不费事儿:
++ 全量加载,优点是配置简单,方便调试,缺点是编译后项目大,适合不在乎编译后项目大小的项目
++ 按需加载,官方推荐的加载方式,缺点是隐式导入,且有需要有额外的设置,优点是自动导入按需编译,项目大小更加合理
++ 手动加载,缺点是也要做额外设置,而且导入模块是侵入式的,优点是按需显式导入更加可控,项目大小更加合理
+
+个人也更加推荐按需加载方案.
+
+### 全量加载
+
+全量加载需要在入口导入整个插件和对应的css
 
 + main.ts
 
     ```ts
     import { createApp } from 'vue'
     import App from './App.vue'
-    import router from './router'
-    import store from './store'
-    import ElementPlus from 'element-plus' // <-按需导入
-    import 'element-plus/lib/theme-chalk/index.css' // <-按需导入
-    // import installElementPlus from './plugins/element' //<-全局导入
-
+    import ElementPlus from 'element-plus'
+    ...
     const app = createApp(App)
-    // installElementPlus(app)//<-全局导入
-    app.use(store).use(router).mount('#app')
+    app.use(ElementPlus)
+    ...
+    ```
+
+使用的时候直接在组件的模版部分使用标签即可
+
++ xxx.vue
+
+    ```vue
+    <template>
+      <el-button>我是 ElButton</el-button>
+    </template>
+    ```
+
+### 按需加载
+
+按需加载不需要额外导入,但需要额外安装`unplugin-vue-components`和`unplugin-auto-import`两个插件
+
+```bash
+npm install -D unplugin-vue-components unplugin-auto-import
+```
+
+然后仅需要修改`vite`的配置即可
+
++ vite.config.ts
+
+    ```ts
+    ...
+    import { defineConfig } from 'vite'
+    ...
+    import AutoImport from 'unplugin-auto-import/vite'
+    import Components from 'unplugin-vue-components/vite'
+    import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+    ...
+
+    // https://vitejs.dev/config/
+    export default defineConfig({
+      ...
+      plugins: [
+        ...
+        AutoImport({
+          resolvers: [ElementPlusResolver()],
+        }),
+        Components({
+          resolvers: [ElementPlusResolver()],
+        }),
+        ...
+      ],
+      ...
+    })
+    ```
+
+使用的时候和全局导入一样,直接在组件的模版部分使用标签即可
+
++ xxx.vue
+
+    ```vue
+    <template>
+      <el-button>我是 ElButton</el-button>
+    </template>
+    ```
+
+#### 手动加载
+
+手动加载则是用户在编写组件时要手动导入标签,在导入后就可以正常使用
+
++ xxx.vue
+
+    ```vue
+    <template>
+      <el-button>我是 ElButton</el-button>
+    </template>
+    <script lang="ts" setup>
+      import { ElButton } from 'element-plus'
+
+    </script>
+    ```
+
+要这样使用我们还需要额外安装插件`unplugin-element-plus`
+
+```bash
+npm install -D unplugin-element-plus
+```
+
+然后修改`vite`的配置即可
+
++ vite.config.ts
+
+    ```ts
+    ...
+    import { defineConfig } from 'vite'
+    ...
+    import ElementPlus from 'unplugin-element-plus/vite'
+    ...
+
+    // https://vitejs.dev/config/
+    export default defineConfig({
+      ...
+      plugins: [
+        ...
+        ElementPlus(),
+        ...
+      ],
+      ...
+    })
+    ```
+
+#### 导入样式
+
+需要注意上面仅仅是导入组件的介绍,并不包含导入样式,如果要导入样式我们还得在入口中显示的导入
+
++ main.ts
+
+    ```ts
+    ...
+    import 'element-plus/es/components/message/style/css'
+    ...
     ```
 
 ## 本文例子
 
 这边只是先给出第一版--视图部分,因此本文对应这个项目的分支[hero-tutorial-web-view-only](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/hero-tutorial-web-view-only).
 
-## vue-cli-plugin-element项目的结构
-
-使用`vue-cli-plugin-element`插件构造的项目会比之前的helloworld项目多出一个文件夹`src/plugins`其中的`element.js`文件专门用于导入element组件,这也就意味着只要在这个文件中导入组件,那么这些组件就在项目的全局都可以被使用了.
 
 ## 视图构建
 
@@ -85,7 +200,7 @@ element官方更加推荐全部加载,确实会方便很多,但如果要更加�
             </header>
           </el-header>
           <el-main>
-            <Dashboard></Dashboard>
+            <DashBoard></DashBoard>
             <HeroList></HeroList>
             <HeroDetail></HeroDetail>
             <NewHero></NewHero>
@@ -94,14 +209,8 @@ element官方更加推荐全部加载,确实会方便很多,但如果要更加�
       </div>
     </template>
 
-    <script lang="ts">
-    export default {
-      name: "app",
-    };
-    </script>
-
     <script setup lang="ts">
-    import Dashboard from "./views/Dashboard.vue";
+    import DashBoard from "./views/DashBoard.vue";
     import HeroDetail from "./views/HeroDetail.vue";
     import HeroList from "./views/HeroList.vue";
     import NewHero from "./views/NewHero.vue";
@@ -123,7 +232,7 @@ element官方更加推荐全部加载,确实会方便很多,但如果要更加�
 
 这个根视图除了我们的view组件外使用了如下element组件库中的组件: 
 
-+ [布局容器相关](https://element-plus.gitee.io/zh-CN/component/container.html)
++ [布局容器相关](https://element-plus.org/zh-CN/component/container.html)
 
     这部分是容器相关的组件,用于对app整体布局.作用类似html中的[语义化布局的语义化标签](https://blog.hszofficial.site/TutorialForFront-EndWeb/#/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%8E%AF%E5%A2%83%E7%9A%84%E5%89%8D%E7%AB%AF%E5%BA%94%E7%94%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93/html%E6%A0%87%E8%AF%86%E9%A1%B5%E9%9D%A2%E5%85%83%E7%B4%A0/%E8%AF%AD%E4%B9%89%E5%8C%96%E6%A0%87%E7%AD%BE%E4%B8%8E%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80?id=%e8%af%ad%e4%b9%89%e5%8c%96%e5%b8%83%e5%b1%80%e7%9a%84%e8%af%ad%e4%b9%89%e5%8c%96%e6%a0%87%e7%ad%be)
 
@@ -135,7 +244,7 @@ element官方更加推荐全部加载,确实会方便很多,但如果要更加�
 
     容器相关的组件会根据配置自动按规则排版,具体的可以去看官方文档
 
-+ [布局相关](https://element-plus.gitee.io/zh-CN/component/layout.html)
++ [布局相关](https://element-plus.org/zh-CN/component/layout.html)
 
     这部分布局相关的组件通常需要配合容器相关组件,通常容器相关的是整体布局,而布局相关的则是局部布局,element类似以前的bootstrap使用行作为单位,每一行被分成24份,通过设置一些参数进行排列其中的单元,
 
@@ -143,7 +252,7 @@ element官方更加推荐全部加载,确实会方便很多,但如果要更加�
     | ------------ | ------ | ---------------- |
     | ElRow        | el-row | 声明这是一行组件 |
 
-+ [导航菜单](https://element-plus.gitee.io/zh-CN/component/menu.html)
++ [导航菜单](https://element-plus.org/zh-CN/component/menu.html)
 
     导航菜单组件作用就是构造导航栏,除了可以构造这种传统的顶部导航栏,也可以构造侧边导航.具体的可以看文档中的样例.
 
@@ -166,7 +275,7 @@ element官方更加推荐全部加载,确实会方便很多,但如果要更加�
 
     然后在`el-menu-item`上指定`class="dock-right"`
 
-+ [分割线](https://element-plus.gitee.io/zh-CN/component/divider.html)
++ [分割线](https://element-plus.org/zh-CN/component/divider.html)
 
     分割线组件模块可以以特定格式画出一条分割线
 
@@ -184,7 +293,7 @@ element官方更加推荐全部加载,确实会方便很多,但如果要更加�
 
 我们的组件可以这样定义:
 
-+ Dashboard.vue
++ DashBoard.vue
 
     ```vue
     <template>
@@ -202,11 +311,6 @@ element官方更加推荐全部加载,确实会方便很多,但如果要更加�
       </div>
     </template>
 
-    <script lang="ts">
-    export default {
-      name: "dashboard",
-    };
-    </script>
     <script setup lang="ts">
     import { ref } from "vue";
     import { DefaultHeros } from "../const";
@@ -218,7 +322,7 @@ element官方更加推荐全部加载,确实会方便很多,但如果要更加�
 
 这个组件使用到的element组件有:
 
-+ [布局相关](https://element-plus.gitee.io/zh-CN/component/layout.html)
++ [布局相关](https://element-plus.org/zh-CN/component/layout.html)
 
     此处出现布局中的列,列是布局中的最小单元,行上,可以决定列的间隔,对其方式等属性,列自己则可以决定自己占据行中的长度.
 
@@ -227,7 +331,7 @@ element官方更加推荐全部加载,确实会方便很多,但如果要更加�
     | ElCol        | el-col | 声明这是一行中的一列 |
     | ElRow        | el-row | 声明这是一行         |
 
-+ [卡片组件](https://element-plus.gitee.io/zh-CN/component/card.html)
++ [卡片组件](https://element-plus.org/zh-CN/component/card.html)
 
     卡片组件一般用于展示图片或者介绍信息,其主要的配置项是
 
@@ -285,17 +389,10 @@ element官方更加推荐全部加载,确实会方便很多,但如果要更加�
         </el-row>
       </div>
     </template>
-    <script lang="ts">
-    import { defineComponent } from "vue";
-
-    export default defineComponent({
-      name: "HeroList",
-    });
-    </script>
     <script setup lang="ts">
     import { ref } from "vue";
     import { DefaultHeros } from "../const";
-    const heros = ref(Object.assign([],DefaultHeros));
+    const heros = ref(Object.assign([], DefaultHeros));
     const handleEdit = (index: any, row: any) => {
       console.log(index, row);
     };
@@ -307,7 +404,7 @@ element官方更加推荐全部加载,确实会方便很多,但如果要更加�
 
 这个组件使用到的element组件有:
 
-+ [表格组件](https://element-plus.gitee.io/zh-CN/component/table.html)
++ [表格组件](https://element-plus.org/zh-CN/component/table.html)
 
     表格是展示结构化数据的最佳方式,element提供了足够优秀的表格组件,可以满足大部分需求,具体的样式可以看文档.
     element的表格导入数据使用`data`字段,只要绑定这个字段到我们的父组件上想展示的列表数据上就可以了,因此表格的配置主要是配置列.列除了可以使用`data`字段中的值外,也可以插入其他元素或者自定义样式,只要使用作用域slot即可.
@@ -317,7 +414,7 @@ element官方更加推荐全部加载,确实会方便很多,但如果要更加�
     | ElTable       | el-table        | 声明这是一个表格,必须绑定data    |
     | ElTableColumn | el-table-column | 声明这是一列,可以设置标题,宽度等 |
 
-+ [标签组件](https://element-plus.gitee.io/zh-CN/component/tag.html)
++ [标签组件](https://element-plus.org/zh-CN/component/tag.html)
 
     标签组件一般用于标记和选择,预定义了几种type类型`success/info/warning/danger`用颜色区分等级,如果不填则使用默认配色.
 
@@ -325,7 +422,7 @@ element官方更加推荐全部加载,确实会方便很多,但如果要更加�
     | ------------ | ------ | ---------------- |
     | ElTag        | el-tag | 声明这是一个标签 |
 
-+ [按钮组件](https://element-plus.gitee.io/zh-CN/component/button.html)
++ [按钮组件](https://element-plus.org/zh-CN/component/button.html)
 
     按钮组件就是定义一个按钮,可以通过`size`字段设置`medium / small / mini`定义按钮大小,通过`plain/round/circle`这些属性的布尔值来设定形状,也可以使用`icon`添加图标.
 
@@ -362,15 +459,8 @@ element官方更加推荐全部加载,确实会方便很多,但如果要更加�
       </div>
     </template>
 
-    <script lang="ts">
-    import { defineComponent } from "vue";
-
-    export default defineComponent({
-      name: "HeroDetail",
-    });
-    </script>
     <script setup lang="ts">
-    import { ref, onMounted } from "vue";
+    import { ref } from "vue";
     import { DefaultHeros } from "../const";
     interface Props {
       id: number;
@@ -394,7 +484,7 @@ element官方更加推荐全部加载,确实会方便很多,但如果要更加�
 
 详情页我们用的组件有:
 
-+ [输入框](https://element-plus.gitee.io/zh-CN/component/input.html)
++ [输入框](https://element-plus.org/zh-CN/component/input.html)
 
     这个组件可以使用v-mode做数据的双向绑定.input的类型可以时html中规定的类型
 
@@ -431,13 +521,6 @@ element官方更加推荐全部加载,确实会方便很多,但如果要更加�
       </div>
     </template>
 
-    <script lang="ts">
-    import { defineComponent } from "vue";
-
-    export default defineComponent({
-      name: "NewHero",
-    });
-    </script>
     <script setup lang="ts">
     import { ref } from "vue";
     const _defaultHeroInfo = {
@@ -455,7 +538,7 @@ element官方更加推荐全部加载,确实会方便很多,但如果要更加�
 
 这个组件使用到的element组件有:
 
-+ [表单组件](https://element-plus.gitee.io/zh-CN/component/form.html)
++ [表单组件](https://element-plus.org/zh-CN/component/form.html)
 
     表单组件使用`v-mode`双向绑定数据,`label-position`可以使用值`top`,`left`,`right`来控制输入提示文本的位置,也可以使用`inline`来设置表单为行内表单,这对在复杂结构中嵌入的表单比较有用.
 

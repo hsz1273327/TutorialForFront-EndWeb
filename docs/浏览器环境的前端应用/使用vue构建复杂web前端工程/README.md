@@ -64,9 +64,9 @@ vue.js是完全组件化的,通常每个文件就是一个组件,管理页面中
 
 但在开始之前我们先来介绍下用到的其他库:
 
-1. [element-plus](https://element-plus.gitee.io/zh-CN/component/border.html),应该是vue生态下最知名的综合性组件库,可以满足90%的web开发需求,通过`vue-cli`的插件`vue-cli-plugin-element-plus`安装
-2. [Vue Router](https://next.router.vuejs.org/zh/index.html),vue官方的路由插件,通过`vue-cli`的插件`@vue/cli-plugin-router`安装
-3. [vuex](https://next.vuex.vuejs.org/zh/index.html),vue官方的状态管理插件,通过`vue-cli`的插件`@vue/cli-plugin-vuex`安装
+1. [element-plus](https://element-plus.org/zh-CN/component/overview),应该是vue生态下最知名的综合性组件库,可以满足90%的web开发需求,通过`npm install element-plus --save`
+2. [Vue Router](https://router.vuejs.org/zh/),vue官方的路由插件,在创建项目时选择安装
+3. [pinia](https://pinia.vuejs.org/zh/),vue官方的状态管理插件,在创建项目时选择安装
 4. [vue-echarts](https://github.com/ecomfe/vue-echarts/blob/main/README.zh-Hans.md),[echarts](https://echarts.apache.org/zh/index.html)项目的vue组件封装,直接`npm install echarts vue-echarts`安装
 
 补充:

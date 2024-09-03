@@ -1,5 +1,5 @@
 {
-  "name": "test_cors",
+  "name": "test_serviceworker",
   "type": "module",
   "version": "0.0.1",
   "description": "simple tools",

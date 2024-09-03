@@ -1,18 +1,16 @@
-# 跨域请求示例代码
+# simple service worker
 
-## 项目主旨
+Service Worker test repository. This is a simple demo showing basic service worker features. The demo can be seen on [our GitHub pages](https://mdn.github.io/dom-examples/service-worker/simple-service-worker/).
 
-本项目是个helloworld性质的东西,用于演示跨域请求
+You can learn more about how this works by reading [using service workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers).
+In particular, read ["Why is my service worker failing to register?"](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers#Why_is_my_service_worker_failing_to_register)
+if you are having problems getting your code to do anything. You need to change the paths relative to where you are serving your files!
 
-## 用法
+## Running locally
 
-1. `npm run backend-start`执行后端服务
-2. `npm run start`执行前端服务
+To get this code running locally on your computer as-is, you need to do the following:
 
-在本地4000端口可以正常使用页面,3000端口则会报错.
-
-修改`fetch`的参数`"mode": "cors"`则不会再有跨域问题
-
-## 使用范围
-
-本项目只在`mac osx`下用`chrome 72.0.3626.119`测试打开过,其他浏览器情况未知.
+1. Ensure that you have Nodejs installed. The best way to do this is either using [`nvm`](https://github.com/nvm-sh/nvm) or [`nvm-windows`](https://github.com/coreybutler/nvm-windows).
+2. Clone the repo in a location on your machine.
+3. Start a local server in the root of this directory using [`lite-server`](https://www.npmjs.com/package/lite-server). `npx lite-server .`
+4. When the server starts, the `index.html`` page will open in your default browser.

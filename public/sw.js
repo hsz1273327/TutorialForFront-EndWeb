@@ -1,3 +1,4 @@
+importScripts('foo.js')
 const addResourcesToCache = async () => {
   const SW_VERSION = "v1"
   const SW_CACHE_RESOURCE = [

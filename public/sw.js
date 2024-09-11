@@ -1,46 +1,33 @@
-const SW_VERSION = "v1"
-const SW_CACHE_RESOURCE = [
-  './',
-  './index.html',
-  './style.css',
-  './app.js',
-  './image-list.js',
-  './star-wars-logo.jpg',
-  './gallery/bountyHunters.jpg',
-  './gallery/myLittleVader.jpg',
-  './gallery/snowTroopers.jpg',
-]
-
-const addResourcesToCache = async (resources) => {
+const addResourcesToCache = async () => {
+  const SW_VERSION = "v1"
+  const SW_CACHE_RESOURCE = [
+    './',
+    './index.html',
+    './style.css',
+    './app.js',
+    './image-list.js',
+    './star-wars-logo.jpg',
+    './gallery/bountyHunters.jpg',
+    './gallery/myLittleVader.jpg',
+    './gallery/snowTroopers.jpg',
+  ]
   const cache = await caches.open(SW_VERSION)
-  await cache.addAll(resources)
+  await cache.addAll(SW_CACHE_RESOURCE)
 }
 
 const putInCache = async (request, response) => {
-  const cache = await caches.open('v1')
-  await cache.put(request, response)
+  if (request.url.startsWith('http')) {
+    const cache = await caches.open('v1')
+    await cache.put(request, response)
+  }
 }
 
-const cacheFirst = async ({ request, preloadResponsePromise, fallbackUrl }) => {
+const cacheFirst = async ({ request, fallbackUrl }) => {
   // First try to get the resource from the cache
   const responseFromCache = await caches.match(request)
   if (responseFromCache) {
     return responseFromCache
   }
-
-  // Next try to use the preloaded response, if it's there
-  // NOTE: Chrome throws errors regarding preloadResponse, see:
-  // https://bugs.chromium.org/p/chromium/issues/detail?id=1420515
-  // https://github.com/mdn/dom-examples/issues/145
-  // To avoid those errors, remove or comment out this block of preloadResponse
-  // code along with enableNavigationPreload() and the "activate" listener.
-  const preloadResponse = await preloadResponsePromise
-  if (preloadResponse) {
-    console.info('using preload response', preloadResponse)
-    putInCache(request, preloadResponse.clone())
-    return preloadResponse
-  }
-
   // Next try to get the resource from the network
   try {
     const responseFromNetwork = await fetch(request.clone())
@@ -71,14 +58,22 @@ const enableNavigationPreload = async () => {
   }
 }
 
-self.addEventListener('activate', (event) => {
-  event.waitUntil(enableNavigationPreload())
+self.addEventListener('activate', async (event) => {
+  console.log("activate ok")
+  if ('sync' in self.registration){
+    self.registration.sync.register("say-bye") 
+  }
+  // const tags = await self.registration.sync.getTags()
+  // console.log(tags)
+  event.waitUntil((async () => {
+    await enableNavigationPreload()
+  })())
 })
 
 self.addEventListener('install', (event) => {
   // self.skipWaiting()
   event.waitUntil(
-    addResourcesToCache(SW_CACHE_RESOURCE)
+    addResourcesToCache()
   )
 })
 
@@ -86,36 +81,38 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     cacheFirst({
       request: event.request,
-      preloadResponsePromise: event.preloadResponse,
       fallbackUrl: './gallery/myLittleVader.jpg',
     })
   )
 })
 
-
 addEventListener("message", (event) => {
   event.waitUntil(
     (async () => {
-      console.log(`Message received: ${ event.data }`)
-      // // Get the client.
-      // if (!event.clientId) {
-      //   console.log(`event.clientId not found`)
-      //   return
-      // }
-      // const client = await self.clients.get(event.clientId)
-      // // Exit early if we don't get the client.
-      // // Eg, if it closed.
-      // if (!client) {
-      //   console.log(`client not found`)
-      //   return
-      // }
-      // client.postMessage("This is a message from sw")
-      const clients = await self.clients.matchAll()
-      clients.forEach(function(client) {
-        if (client.url.includes("/my-account")) {
-          client.postMessage("Hi client: "+client.id);
-      } });
+      console.log(`Message from ${ event.source.id } received: ${ event.data }`)
       event.source.postMessage("This is a message from sw")
+      const clients = await self.clients.matchAll()
+      clients.forEach(function (client) {
+        if (client.url.includes("/my-account")) {
+          client.postMessage({
+
+          })
+        }
+      })
     })()
   )
+})
+
+
+addEventListener("sync", (event) => {
+  console.log(`get sync event ${ event.tag }`)
+  if (event.tag === "say-hello") {
+    console.log("say-hello ok")
+  }
+  if (event.tag === "say-bye") {
+    console.log("say-bye ok")
+  }
+})
+addEventListener("periodicsync", (event) => {
+  console.log(`get periodicSync event ${ event.tag }`)
 })

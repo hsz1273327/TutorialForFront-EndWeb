@@ -30,21 +30,46 @@ const registerServiceWorker = async () => {
         // registration.active不为null则说明Service worker已经激活
         console.log('Service worker active');
       }
+      // await registration.navigationPreload.enable()
       navigator.serviceWorker.addEventListener("message", (event) => {
-        console.log(`Get message from worker ${event.data}`);
-      });
+        console.log(`Get message from worker ${event.data}`)
+      })
       navigator.serviceWorker.startMessages()
       await navigator.serviceWorker.ready
       registration.active.postMessage(
         "Test message sent immediately after creation from main to worker",
       )
+      if ("sync" in registration){
+        console.log(`has sync`)
+        // 注册同步事件
+        registration.sync.register("say-hello") 
+        console.log(`Registration sync say-hello`)
+        const tags = await registration.sync.getTags()
+        console.log(tags)
+      }
+      const status = await navigator.permissions.query({
+        name: 'periodic-background-sync',
+      })
+      if (status.state === 'granted') {
+        console.log(`periodic-background-sync permissions ok`)
+        if ('periodicSync' in registration) {
+          console.log(`has periodicSync`)
+          // 注册定期同步事件
+          registration.periodicSync.register("say-hello-1-seconde",{minInterval: 1000}) // 注册定时同步事件
+          console.log(`Registration periodicSync say-hello-1-seconde`)
+          const periodictags = await registration.periodicSync.getTags()
+          console.log(periodictags)
+        }
+      }else{
+        console.log(`periodic-background-sync permissions not ok`)
+      }
     } catch (error) {
-      console.error(`Registration failed with ${error}`);
+      console.error(`Registration failed with ${error}`)
     }
   }
 };
 
-const imgSection = document.querySelector('section');
+const imgSection = document.querySelector('section')
 
 const getImageBlob = async (url) => {
   const imageResponse = await fetch(url);

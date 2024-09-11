@@ -1,4 +1,6 @@
 importScripts('foo.js')
+
+console.log(`get bar ${Bar}`)
 const addResourcesToCache = async () => {
   const SW_VERSION = "v1"
   const SW_CACHE_RESOURCE = [

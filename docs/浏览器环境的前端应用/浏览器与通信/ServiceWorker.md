@@ -899,7 +899,14 @@ self.addEventListener("activate", (event) => {
         }
         ```
 
-+ `过期验证缓存`,这个策略是[HTTP RFC 5861](https://datatracker.ietf.org/doc/html/rfc5861)描述的一种缓存策略,其本质类似食品保质期的概念.这个策略需要后台额外在http的响应头部提供字段`Cache-Control`来设置过期细节,比如`Cache-Control: max-age=600, stale-while-revalidate=30`,它的含义是响应的结果最大可以600s保持新鲜而不用更新,而如果这个响应不再新鲜后30s内依然可以凑活使用,但超过这30s后我们就需要丢弃它重新请求了.一个极端情况是`Cache-Control`没有设置,此时相当于`max-age`和`stale-while-revalidate`都是0,那也就退回到了`仅网络`策略
++ `过期验证缓存`,这个策略是[HTTP RFC 5861](https://datatracker.ietf.org/doc/html/rfc5861)描述的一种缓存策略,其本质类似食品保质期的概念.这个策略需要后台额外在http的响应头部提供字段`Cache-Control`来设置过期细节,比如`Cache-Control: max-age=600, stale-while-revalidate=30`,它的含义是
+    + 响应的结果最大可以600s保持新鲜而不用更新,
+    + 如果这个响应不再新鲜后30s内依然可以凑活使用,但此时也会请求接口更新缓存
+    + 超过这600+30s后我们就需要丢弃它重新请求更新缓存了.
+
+    这个模式有两个极端情况
+    + 一个极端情况是`Cache-Control`没有设置,此时相当于`max-age`和`stale-while-revalidate`都是0,那也就退回到了`仅网络`策略
+    + 一个极端情况是`Cache-Control`仅设置了`max-age`,此时相当于`stale-while-revalidate`是0,那也就退回到`max-age`内仅缓存,`max-age`外`网络优先`了
 
 ### web应用的缓存方案
 

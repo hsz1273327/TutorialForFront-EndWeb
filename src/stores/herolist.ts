@@ -65,9 +65,9 @@ export const useHeroStore = defineStore('hero', () => {
     // }
 
     async function GetHero(heroId: number): Promise<HeroInterface | null> {
-        if (!networkOK.value) {
-            throw "无法连接到服务器"
-        }
+        // if (!networkOK.value) {
+        //     throw "无法连接到服务器"
+        // }
         if (typeof (heroId) === "number") {
             try {
                 const res = await fetch(`${RemoteURL}/api/hero/${heroId}`, {

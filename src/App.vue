@@ -33,6 +33,7 @@
       </el-main>
     </el-container>
   </div>
+  <ReloadPrompt />
 </template>
 
 <script lang="ts" setup>
@@ -43,6 +44,7 @@ import { storeToRefs } from 'pinia'
 import ReconnectingEventSource from "reconnecting-eventsource"
 import { useHeroStore } from './stores/herolist'
 import { useMenuStore } from './stores/menu'
+import ReloadPrompt from './ReloadPrompt.vue'
 
 const heroStore = useHeroStore()
 const { isOnline } = storeToRefs(heroStore)

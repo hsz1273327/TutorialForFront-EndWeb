@@ -131,8 +131,8 @@ export default defineConfig({
         ElementPlusResolver(),
       ],
     }),
-    // VitePWA(pwaOptions),
-    VitePWA(pwaInjectManifestOptions),
+    VitePWA(pwaOptions),
+    // VitePWA(pwaInjectManifestOptions),
   ],
   resolve: {
     alias: {

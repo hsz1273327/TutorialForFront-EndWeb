@@ -7,7 +7,5 @@
         "outDir": "./app/js",
         "sourceMap": true
     },
-    "include": [
-        "src/ts/*"
-    ]
+    "include": [ "src/*" ]
 }

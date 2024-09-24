@@ -113,7 +113,6 @@
         * [其他补充](浏览器环境的前端应用/使用vue构建复杂web前端工程/其他补充.md)
 
     * [番外:chrome扩展](浏览器环境的前端应用/chrome扩展/README.md)
-        * [chrome扩展](浏览器环境的前端应用/chrome扩展/chrome扩展/README.md)
 
 * [移动端原生应用](移动端原生应用/README.md)
     * [nativescript和nativescript-vue](移动端原生应用/nativescript和nativescript-vue.md)

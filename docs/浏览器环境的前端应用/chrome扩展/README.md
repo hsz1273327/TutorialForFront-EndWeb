@@ -120,7 +120,45 @@ chrome扩展的基本开发模式是一个包含`manifest.json`的文件夹.而�
 
 其中的内容包括如下:
 
-+ `manifest.json`,配置文件,配置了这个插件的基本信息和使用的页面,其中`action->default_popup`指定了点击扩展图标后弹出的页面
++ `package.json`,项目设置文件
+
+    ```json
+    {
+      "name": "my_clock",
+      "version": "1.0.0",
+      "description": "一个简单的时钟插件",
+      "main": "index.js",
+      "scripts": {
+        "build": "node_modules/.bin/tsc",
+        "test": "echo \"Error: no test specified\" && exit 1"
+      },
+      "author": "hsz",
+      "license": "GPL-3.0",
+      "devDependencies": {
+        "typescript": "^5.6.2"
+      }
+    }
+    ```
+
++ `tsconfig.json`,typescript编译配置文件
+
+    ```json
+    {
+        "compilerOptions": {
+            "module": "system",
+            "noImplicitAny": true,
+            "removeComments": true,
+            "preserveConstEnums": true,
+            "outDir": "./app/js",
+            "sourceMap": true
+        },
+        "include": [ "src/*" ]
+    }
+    ```
+
+    我们将源文件放在`src`文件夹下,编译后的目标文件夹放在`app/js`
+
++ `app/manifest.json`,配置文件,配置了这个插件的基本信息和使用的页面,其中`action->default_popup`指定了点击扩展图标后弹出的页面
 
     ```json
     {
@@ -146,7 +184,7 @@ chrome扩展的基本开发模式是一个包含`manifest.json`的文件夹.而�
     }
     ```
 
-+ `popup.html`定义了弹出页面的内容
++ `app/popup.html`定义了弹出页面的内容
 
     ```html
     <html>
@@ -160,7 +198,7 @@ chrome扩展的基本开发模式是一个包含`manifest.json`的文件夹.而�
     </html>
     ```
 
-+ `style.css`定义了弹出页面的基本样式
++ `app/style.css`定义了弹出页面的基本样式
 
     ```css
     * {
@@ -180,34 +218,37 @@ chrome扩展的基本开发模式是一个包含`manifest.json`的文件夹.而�
     }
     ```
 
-+ `js->my_clock.js`定义了页面的执行逻辑,其源码的ts内容为
++ `src/my_clock.ts`定义了页面的执行逻辑,其源码的ts内容为
 
     ```ts
-    let my_clock = (el:HTMLElement)=>{
-        let today=new Date()
-        let h=today.getHours()
-        let m=today.getMinutes()
-        let s=today.getSeconds()
+    function my_clock(el: HTMLElement) {
+        const today = new Date()
+        const h = today.getHours()
+        const m = today.getMinutes()
+        const s = today.getSeconds()
 
-        let hours = h.toString()
-        let minutes = m>=10?m.toString():('0'+m.toString())
-        let secondes = s>=10?s.toString():('0'+s.toString())
-        el.innerHTML = h+":"+m+":"+s
-        setTimeout(()=>my_clock(el), 1000)
+        const hours = h.toString()
+        const minutes = m >= 10 ? m.toString() : ('0' + m.toString())
+        const secondes = s >= 10 ? s.toString() : ('0' + s.toString())
+        el.innerHTML = h + ":" + m + ":" + s
+        setTimeout(() => my_clock(el), 1000)
     }
 
-    let clock_div = document.getElementById('clock_div')
-    my_clock(clock_div)
+    const clock_div = document.getElementById('clock_div')
+    if (clock_div) {
+        my_clock(clock_div)
+    }
     ```
+
+    之后调用`npm run build`编译js代码到目标文件夹
 
 ## 调试方法
 
 要调试可以按如下步骤操作:
 
-1. 在chrome中选择`更多工具=>扩展程序`(或者直接输入url<chrome://extensions/>)来进入插件管理界面.
-
+1. 在chrome中选择`扩展程序=>管理扩展程序`(或者直接输入url<chrome://extensions/>)来进入插件管理界面.
 2. 勾选`开发者模式`
-3. 使用`加载已解压扩展程序`,选择项目根目录下有`manifest.json`的文件夹即可
+3. 使用`加载已解压扩展程序`,选择项目根目录下有`manifest.json`的文件夹即可(例子中的`app`文件夹)
 
 ![调试和打包](./source/调试和打包.png)
 

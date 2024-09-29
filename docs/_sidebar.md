@@ -116,6 +116,7 @@
         * [background插件](浏览器环境的前端应用/chrome扩展/background插件/README.md)
         * [content_scripts插件](浏览器环境的前端应用/chrome扩展/content_scripts插件/README.md)
         * [popup插件](浏览器环境的前端应用/chrome扩展/popup插件/README.md)
+        * [美化插件](浏览器环境的前端应用/chrome扩展/美化插件/README.md)
 
 * [移动端原生应用](移动端原生应用/README.md)
     * [nativescript和nativescript-vue](移动端原生应用/nativescript和nativescript-vue.md)

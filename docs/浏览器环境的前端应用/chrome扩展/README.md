@@ -17,7 +17,7 @@ Chrome将其平台上的程序分为扩展与应用,并且使用了同样的文�
 
 ## Chrome扩展的开发模式
 
-chrome扩展的基本开发模式是一个包含`manifest.json`的文件夹.而这个`manifest.json`就是这个扩展的配置文件,其基本形式如下:
+chrome扩展的基本开发模式是一个包含`manifest.json`的文件夹.而这个`manifest.json`就是这个扩展的配置文件(目前的最新版本是[Manifest V3](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3?hl=zh-cn)),其基本形式如下:
 
 ```json
 {

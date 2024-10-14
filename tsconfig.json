@@ -5,7 +5,14 @@
         "removeComments": true,
         "preserveConstEnums": true,
         "outDir": "./app/js",
-        "sourceMap": true
+        "sourceMap": true,
+        "lib": [
+            "ES2015",
+            "dom"
+        ],
+        // "downlevelIteration": true
     },
-    "include": [ "src/*" ]
+    "include": [
+        "src/*"
+    ]
 }

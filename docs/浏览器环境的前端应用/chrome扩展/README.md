@@ -107,7 +107,8 @@ chrome扩展的基本开发模式是一个包含`manifest.json`的文件夹.而�
 + `icons`定义插件使用的图标
 + `action`定义在浏览器右上角扩展列中点击扩展图标后的行为.
 + `background`定义后台执行的脚本位置
-+ `permissions`定义应用要申请的执行权限
++ `permissions`声明应用要申请的执行权限
++ `host_permissions`声明应用要访问的外部地址
 + `storage`定义本地存储声明
 
 其他全部的配置项说明可以查看官方的[插件api文档](https://developer.chrome.com/docs/extensions/mv3/manifest/),其中比较常用的配置我们会用到时进行介绍.

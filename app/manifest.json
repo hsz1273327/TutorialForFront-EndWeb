@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Stock Trace",
+    "name": "My Alarms",
     "version": "1.0",
-    "description": "查询股票",
+    "description": "设置闹钟提醒",
     "background": {
         "service_worker": "js/background.js",
         "type": "module"

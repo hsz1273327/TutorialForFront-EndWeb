@@ -14,7 +14,8 @@
         "keyword": "stock"
     },
     "permissions": [
-        "storage"
+        "storage",
+        "tabs"
     ],
     "host_permissions": [
         "*://finance.sina.com.cn/*",

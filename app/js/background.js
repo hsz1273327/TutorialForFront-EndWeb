@@ -34,267 +34,134 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var ALARMS_STORAGE_KEY = "my-alarms";
-var NotifyAlarmMap = new Map();
-function isInteger(str) {
-    return /^\d+$/.test(str);
-}
-function alarmstrParser(alarmstr) {
-    if (!alarmstr.includes("@")) {
-        throw "语法错误:必须使用@when或@delay指定闹钟时间";
-    }
-    var create_time = Date.now();
-    var _a = alarmstr.split("@"), message = _a[0], alarminfostr = _a[1];
-    var attimestr;
-    var periodInMinutes = 1;
-    if (alarminfostr.includes("#")) {
-        var timelist = alarminfostr.split("#");
-        attimestr = timelist[0];
-        var periodInMinutesstr = timelist[1];
-        if (!isInteger(periodInMinutesstr)) {
-            throw "语法错误:重复间隔部分不为整数";
-        }
-        periodInMinutes = Number(periodInMinutesstr);
-    }
-    else {
-        attimestr = alarminfostr;
-    }
-    if (attimestr.startsWith("when ")) {
-        var whenstr = attimestr.replace("when ", "");
-        if (!isInteger(whenstr)) {
-            throw "语法错误:定时部分不为整数";
-        }
-        var when = Number(whenstr);
-        if (Date.now() <= when) {
-            throw "语法错误:定时部分早于当前时间";
-        }
-        var alarminfo = {
-            periodInMinutes: periodInMinutes,
-            when: when,
-        };
-        return {
-            message: message,
-            alarminfo: alarminfo,
-            create_time: create_time
-        };
-    }
-    else if (attimestr.startsWith("delay ")) {
-        var delaystr = attimestr.replace("delay ", "");
-        if (!isInteger(delaystr)) {
-            throw "语法错误:延迟分钟部分不为整数";
-        }
-        var delayInMinutes = Number(delaystr);
-        var alarminfo = {
-            periodInMinutes: periodInMinutes,
-            delayInMinutes: delayInMinutes
-        };
-        return {
-            message: message,
-            alarminfo: alarminfo,
-            create_time: create_time
-        };
-    }
-    else {
-        throw "\u8BED\u6CD5\u9519\u8BEF:\u65E0\u6CD5\u89E3\u6790\u5B9A\u65F6\u5B57\u7B26\u4E32".concat(attimestr);
-    }
-}
-function deleteAlarmInStorage(alarmName) {
+var _this = this;
+var DEFAULT_VOICE_KEY = "default_voice";
+function speak(msg_to_speak, voice_name) {
     return __awaiter(this, void 0, void 0, function () {
-        var historyAlarmsInStorage, alarms, newalarms, _i, alarms_1, alarminfo;
-        var _a;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0: return [4, chrome.storage.local.get(ALARMS_STORAGE_KEY)];
-                case 1:
-                    historyAlarmsInStorage = _b.sent();
-                    alarms = historyAlarmsInStorage[ALARMS_STORAGE_KEY];
-                    newalarms = [];
-                    if (alarms && alarms.length > 0) {
-                        for (_i = 0, alarms_1 = alarms; _i < alarms_1.length; _i++) {
-                            alarminfo = alarms_1[_i];
-                            if (alarminfo.message !== alarmName) {
-                                newalarms.push(alarminfo);
-                            }
-                        }
-                    }
-                    return [4, chrome.storage.local.set((_a = {},
-                            _a[ALARMS_STORAGE_KEY] = newalarms,
-                            _a))];
-                case 2:
-                    _b.sent();
-                    return [2];
-            }
-        });
-    });
-}
-function checkAlarmState() {
-    return __awaiter(this, void 0, void 0, function () {
-        var historyAlarmsInStorage, alarms, _i, alarms_2, alarminfo, alarm, when;
+        var error_1, notification, notification, notification;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    console.log("checkAlarmState start");
-                    return [4, chrome.storage.local.get(ALARMS_STORAGE_KEY)];
+                    _a.trys.push([0, 5, , 12]);
+                    if (!voice_name) return [3, 2];
+                    return [4, chrome.tts.speak(msg_to_speak, { voiceName: voice_name })];
                 case 1:
-                    historyAlarmsInStorage = _a.sent();
-                    alarms = historyAlarmsInStorage[ALARMS_STORAGE_KEY];
-                    if (!(alarms && alarms.length > 0)) return [3, 8];
-                    _i = 0, alarms_2 = alarms;
-                    _a.label = 2;
-                case 2:
-                    if (!(_i < alarms_2.length)) return [3, 8];
-                    alarminfo = alarms_2[_i];
-                    return [4, chrome.alarms.get(alarminfo.message)];
-                case 3:
-                    alarm = _a.sent();
-                    when = void 0;
-                    if (!!alarm) return [3, 7];
-                    if ("when" in alarminfo.alarminfo) {
-                        when = alarminfo.alarminfo.when;
-                    }
-                    else {
-                        when = alarminfo.create_time + 60 * 1000 * alarminfo.alarminfo.delayInMinutes;
-                    }
-                    if (!(when > Date.now())) return [3, 5];
-                    return [4, chrome.alarms.create(alarminfo.message, { when: when, periodInMinutes: alarminfo.alarminfo.periodInMinutes })];
-                case 4:
                     _a.sent();
-                    return [3, 7];
-                case 5: return [4, chrome.alarms.create(alarminfo.message, { delayInMinutes: 1, periodInMinutes: alarminfo.alarminfo.periodInMinutes })];
-                case 6:
-                    _a.sent();
-                    _a.label = 7;
-                case 7:
-                    _i++;
-                    return [3, 2];
-                case 8:
-                    console.log("checkAlarmState done");
-                    return [2];
-            }
-        });
-    });
-}
-function setAlarm(alarmstr) {
-    return __awaiter(this, void 0, void 0, function () {
-        var notification, alarminfo, historyAlarmsInStorage, alarms, error_1, notificationId;
-        var _a;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    console.log("setAlarm start");
-                    _b.label = 1;
-                case 1:
-                    _b.trys.push([1, 5, , 6]);
-                    alarminfo = alarmstrParser(alarmstr);
-                    console.log("setAlarm get alarminfo");
-                    return [4, chrome.storage.local.get(ALARMS_STORAGE_KEY)];
-                case 2:
-                    historyAlarmsInStorage = _b.sent();
-                    alarms = historyAlarmsInStorage[ALARMS_STORAGE_KEY];
-                    if (alarms) {
-                        alarms.push(alarminfo);
-                    }
-                    else {
-                        alarms = [alarminfo];
-                    }
-                    return [4, chrome.storage.local.set((_a = {},
-                            _a[ALARMS_STORAGE_KEY] = alarms,
-                            _a))];
+                    return [3, 4];
+                case 2: return [4, chrome.tts.speak(msg_to_speak)];
                 case 3:
-                    _b.sent();
-                    console.log("setAlarm set alarm in storage ok");
-                    return [4, chrome.alarms.create(alarminfo.message, alarminfo.alarminfo)];
-                case 4:
-                    _b.sent();
-                    console.log("setAlarm set alarm ok");
+                    _a.sent();
+                    _a.label = 4;
+                case 4: return [3, 12];
+                case 5:
+                    error_1 = _a.sent();
+                    if (!(typeof error_1 === "string")) return [3, 7];
                     notification = {
                         "iconUrl": '../images/icon128.png',
                         "type": "basic",
-                        "title": "设置闹钟成功",
-                        "message": alarmstr,
-                        "contextMessage": "ok"
+                        "title": "speak失败",
+                        "message": error_1,
+                        "contextMessage": "error"
                     };
-                    console.log("setAlarm set ok");
-                    return [3, 6];
-                case 5:
-                    error_1 = _b.sent();
-                    if (typeof error_1 === "string") {
-                        notification = {
-                            "iconUrl": '../images/icon128.png',
-                            "type": "basic",
-                            "title": "设置闹钟失败",
-                            "message": error_1,
-                            "contextMessage": "error"
-                        };
-                    }
-                    else if (error_1 instanceof Error) {
-                        notification = {
-                            "iconUrl": '../images/icon128.png',
-                            "type": "basic",
-                            "title": "设置闹钟失败",
-                            "message": error_1.message,
-                            "contextMessage": "error"
-                        };
-                    }
-                    else {
-                        notification = {
-                            "iconUrl": '../images/icon128.png',
-                            "type": "basic",
-                            "title": "设置闹钟失败",
-                            "message": "未知类型错误",
-                            "contextMessage": "error"
-                        };
-                    }
-                    console.log("setAlarm set get error");
-                    return [3, 6];
-                case 6: return [4, chrome.notifications.create(notification)];
+                    return [4, chrome.notifications.create(notification)];
+                case 6:
+                    _a.sent();
+                    return [3, 11];
                 case 7:
-                    notificationId = _b.sent();
-                    console.log("setAlarm throw notification with id ".concat(notificationId));
+                    if (!(error_1 instanceof Error)) return [3, 9];
+                    notification = {
+                        "iconUrl": '../images/icon128.png',
+                        "type": "basic",
+                        "title": "speak失败",
+                        "message": error_1.message,
+                        "contextMessage": "error"
+                    };
+                    return [4, chrome.notifications.create(notification)];
+                case 8:
+                    _a.sent();
+                    return [3, 11];
+                case 9:
+                    notification = {
+                        "iconUrl": '../images/icon128.png',
+                        "type": "basic",
+                        "title": "speak失败",
+                        "message": "未知类型错误",
+                        "contextMessage": "error"
+                    };
+                    return [4, chrome.notifications.create(notification)];
+                case 10:
+                    _a.sent();
+                    _a.label = 11;
+                case 11: return [3, 12];
+                case 12: return [2];
+            }
+        });
+    });
+}
+function speakOmnibox(msg) {
+    return __awaiter(this, void 0, void 0, function () {
+        var msg_to_speak, DefaultVoiceInStorage, voice_name, msg_to_speak_info, notification;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    console.log("speakOmnibox start");
+                    msg_to_speak = msg;
+                    return [4, chrome.storage.local.get(DEFAULT_VOICE_KEY)];
+                case 1:
+                    DefaultVoiceInStorage = _a.sent();
+                    voice_name = DefaultVoiceInStorage[DEFAULT_VOICE_KEY];
+                    if (!msg.includes("@@")) return [3, 4];
+                    msg_to_speak_info = msg.split("@@");
+                    if (!(msg_to_speak_info.length != 2)) return [3, 3];
+                    notification = {
+                        "iconUrl": '../images/icon128.png',
+                        "type": "basic",
+                        "title": "语法解析出错",
+                        "message": "@@指定声音语法有误",
+                    };
+                    return [4, chrome.notifications.create(notification)];
+                case 2:
+                    _a.sent();
+                    _a.label = 3;
+                case 3:
+                    msg_to_speak = msg_to_speak_info[0];
+                    voice_name = msg_to_speak_info[1];
+                    _a.label = 4;
+                case 4: return [4, speak(msg_to_speak, voice_name)];
+                case 5:
+                    _a.sent();
                     return [2];
             }
         });
     });
 }
-function alarmNotify(alarm) {
-    console.log("alarmNotify get alarm ".concat(alarm.name));
-    chrome.notifications.create({
-        "iconUrl": '../images/icon128.png',
-        "type": "basic",
-        "title": "闹钟提醒",
-        "message": alarm.name,
-        "contextMessage": "ok"
-    }, function (notificationId) {
-        NotifyAlarmMap.set(notificationId, alarm.name);
-    });
-}
-function clearAlarms(notificationId, byUser) {
-    return __awaiter(this, void 0, void 0, function () {
-        var alarmname, ok;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    console.log("clearAlarms start");
-                    if (!(byUser && NotifyAlarmMap.has(notificationId))) return [3, 3];
-                    alarmname = NotifyAlarmMap.get(notificationId);
-                    return [4, deleteAlarmInStorage(alarmname)];
-                case 1:
-                    _a.sent();
-                    return [4, chrome.alarms.clear(alarmname)];
-                case 2:
-                    ok = _a.sent();
-                    console.log("clear alarm ".concat(alarmname, " ").concat(ok));
-                    _a.label = 3;
-                case 3: return [2];
-            }
-        });
-    });
-}
-checkAlarmState();
 chrome.omnibox.setDefaultSuggestion({
-    description: 'set a alarm with Special syntax.'
+    description: 'send message to speak.'
 });
-chrome.omnibox.onInputEntered.addListener(setAlarm);
-chrome.alarms.onAlarm.addListener(alarmNotify);
-chrome.notifications.onClosed.addListener(clearAlarms);
+chrome.omnibox.onInputEntered.addListener(speakOmnibox);
+chrome.contextMenus.create({
+    'type': 'normal',
+    'title': 'title',
+    'contexts': ['selection'],
+    'id': 'speak'
+});
+chrome.contextMenus.onClicked.addListener(function (item, tab) { return __awaiter(_this, void 0, void 0, function () {
+    var tld, DefaultVoiceInStorage, voice_name;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                tld = item.menuItemId;
+                if (!(tld == "speak")) return [3, 3];
+                return [4, chrome.storage.local.get(DEFAULT_VOICE_KEY)];
+            case 1:
+                DefaultVoiceInStorage = _a.sent();
+                voice_name = DefaultVoiceInStorage[DEFAULT_VOICE_KEY];
+                return [4, speak(item.selectionText, voice_name)];
+            case 2:
+                _a.sent();
+                _a.label = 3;
+            case 3: return [2];
+        }
+    });
+}); });
 //# sourceMappingURL=background.js.map

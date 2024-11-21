@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "My Alarms",
+    "name": "Speaker",
     "version": "1.0",
     "description": "设置闹钟提醒",
     "background": {
@@ -9,19 +9,21 @@
     },
     "icons": {
         "16": "images/icon16.png",
-        "128":"images/icon128.png"
+        "128": "images/icon128.png"
     },
     "omnibox": {
-        "keyword": "alarm"
+        "keyword": "speak"
     },
     "permissions": [
         "storage",
         "notifications",
-        "alarms"
+        "tts",
+        "contextMenus"
     ],
     "action": {
         "default_icon": {
             "16": "images/icon16.png"
-        }
+        },
+        "default_popup": "popup.html"
     }
 }

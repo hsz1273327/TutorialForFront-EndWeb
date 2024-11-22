@@ -1,3 +1,0 @@
-# background插件
-
-虽然不是所有所有插件都有`background生命周期`,但chrome的浏览器的插件专用接口基本只能在`background生命周期`中调用,因此这部分才是chrome插件的基础.本篇将从background插件的角度来着重介绍chrome的浏览器的插件专用接口.

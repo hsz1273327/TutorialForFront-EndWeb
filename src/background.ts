@@ -87,3 +87,17 @@ chrome.contextMenus.onClicked.addListener(async (item: chrome.contextMenus.OnCli
         await speak(item.selectionText, voice_name)
     }
 })
+
+chrome.commands.onCommand.addListener(async (command) => {
+    console.log(`Command: ${command}`)
+    if (command == "run-speak") {
+        const [tab]= await chrome.tabs.query({ active: true, lastFocusedWindow: true })
+        console.log(`Command: ${command} tabid: ${tab.id}`)
+        const message = await chrome.tabs.sendMessage(tab.id, "speak")
+        const DefaultVoiceInStorage = await chrome.storage.local.get(DEFAULT_VOICE_KEY)
+        let voice_name: string | undefined = DefaultVoiceInStorage[DEFAULT_VOICE_KEY]
+        if (message){
+            await speak(message, voice_name)
+        }
+    }
+})

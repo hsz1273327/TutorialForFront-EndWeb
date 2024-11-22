@@ -141,7 +141,7 @@ chrome.omnibox.setDefaultSuggestion({
 chrome.omnibox.onInputEntered.addListener(speakOmnibox);
 chrome.contextMenus.create({
     'type': 'normal',
-    'title': 'title',
+    'title': '读出来',
     'contexts': ['selection'],
     'id': 'speak'
 });
@@ -161,6 +161,33 @@ chrome.contextMenus.onClicked.addListener(function (item, tab) { return __awaite
                 _a.sent();
                 _a.label = 3;
             case 3: return [2];
+        }
+    });
+}); });
+chrome.commands.onCommand.addListener(function (command) { return __awaiter(_this, void 0, void 0, function () {
+    var tab, message, DefaultVoiceInStorage, voice_name;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                console.log("Command: ".concat(command));
+                if (!(command == "run-speak")) return [3, 5];
+                return [4, chrome.tabs.query({ active: true, lastFocusedWindow: true })];
+            case 1:
+                tab = (_a.sent())[0];
+                console.log("Command: ".concat(command, " tabid: ").concat(tab.id));
+                return [4, chrome.tabs.sendMessage(tab.id, "speak")];
+            case 2:
+                message = _a.sent();
+                return [4, chrome.storage.local.get(DEFAULT_VOICE_KEY)];
+            case 3:
+                DefaultVoiceInStorage = _a.sent();
+                voice_name = DefaultVoiceInStorage[DEFAULT_VOICE_KEY];
+                if (!message) return [3, 5];
+                return [4, speak(message, voice_name)];
+            case 4:
+                _a.sent();
+                _a.label = 5;
+            case 5: return [2];
         }
     });
 }); });

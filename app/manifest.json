@@ -1,51 +1,21 @@
 {
     "manifest_version": 3,
-    "name": "Speaker",
+    "name": "Cannottouch",
     "version": "1.0",
-    "description": "设置闹钟提醒",
-    "background": {
-        "service_worker": "js/background.js",
-        "type": "module"
-    },
+    "description": "永远点不到百度的搜索按钮",
     "icons": {
         "16": "images/icon16.png",
         "128": "images/icon128.png"
     },
-    "omnibox": {
-        "keyword": "speak"
-    },
-    "permissions": [
-        "storage",
-        "notifications",
-        "tts",
-        "contextMenus",
-        "tabs",
-        "activeTab",
-        "scripting"
-    ],
     "action": {
         "default_icon": {
             "16": "images/icon16.png"
-        },
-        "default_popup": "popup.html"
-    },
-    "commands": {
-        "run-speak": {
-            "suggested_key": {
-                "default": "Alt+T",
-                "mac": "Alt+T"
-            },
-            "description": "Run \"speak\" on the current page."
         }
     },
     "content_scripts": [
         {
-            "matches": [
-                "*://*/*"
-            ],
-            "js": [
-                "js/content.js"
-            ]
+            "matches": ["*://www.baidu.com/"],
+            "js": ["js/content.js"]
         }
     ]
 }

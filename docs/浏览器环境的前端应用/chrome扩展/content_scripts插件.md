@@ -62,6 +62,8 @@
 
 脚本嵌入最主要的用途就是改变特定网页的行为,这部分我们用一个例子[chrome-ext-cannottouch分支](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/chrome-ext-cannottouch)来演示content_script插件.这个例子我们会让百度的搜索按钮你怎么也点不到.
 
+![cannottouch](./source/cannottouch.png)
+
 这个例子其实很简单,我们只针对百度首页,因此设置manifest如下
 
 ```json

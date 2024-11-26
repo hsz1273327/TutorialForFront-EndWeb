@@ -8,7 +8,7 @@
 
 在这个纯后台版本中我们通过在地址栏中输入`stock`关键字加`空格`加`股票symbol`的形式触发插件执行,
 
-![基础用法](../source/stock_trace_basic.png)
+![基础用法](./source/stock_trace_basic.png)
 在触发后会建一个tag跳转到对应页面.
 
 一个纯后台插件通常只有一个后台脚本.这种插件的一般在manifest中只要声明后台脚本和使用的权限即可
@@ -62,7 +62,7 @@
 
 继续扩展我们的插件,让它可以记录我们的查询过的symbol,并在插件图标的`badge`部分记录个数.
 
-![历史symbol数](../source/stock_trace_badge.png)
+![历史symbol数](./source/stock_trace_badge.png)
 
 这需要用到插件的本地存储,并且要让图标可变,我们需要修改manifest.
 
@@ -128,7 +128,7 @@
 
 我们记录历史symbol自然是要用的,可以做一个popup界面,点击插件图标后打开展示历史symbol的当前分时数据.
 
-![stock_trace_popup](../source/stock_trace_popup.png)
+![stock_trace_popup](./source/stock_trace_popup.png)
 
 分时数据的api是`https://vip.stock.finance.sina.com.cn/quotes_service/view/vML_DataList.php?asc=j&symbol=${symbol}&num={number}`,因此需要给`host_permissions`中添加上对应的地址匹配.popup也需要声明`action`的对应字段
 
@@ -267,11 +267,11 @@
 
 我们右键点击插件图标,然后点击`选项`就可以进入插件的配置页.
 
-![stock_trace_find_option](../source/stock_trace_find_option.png)
+![stock_trace_find_option](./source/stock_trace_find_option.png)
 
 我们的配置页要做的是允许用户删除记录的股票symbol,因此写个简单的html将symbol作为多选框列出来,然后加个按钮可以执行批量删除即可
 
-![stock_trace_option_page](../source/stock_trace_option_page.png)
+![stock_trace_option_page](./source/stock_trace_option_page.png)
 
 + `options.html`
 

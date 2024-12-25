@@ -549,3 +549,21 @@ npm install -D unplugin-element-plus
 
 至此,我们的4个页面就都写好了,虽然只是初版,还很不成熟,但基本的样式已经有了,后续的就是数据通信和路由设置了.
 在后续的介绍中我们还会修改现有的方案使用的组件以满足更多的需求.
+
+## 其他第三方组件库
+
+element系列组件库固然知名用的多,其他开源的第三方组件库中也不乏更好的选择.这里推荐两个库:
+
++ [native ui](https://www.naiveui.com/zh-CN/light/docs/introduction),一个只支持vue3的组件库,它的特色是
+    + 仅支持vue3,仅对桌面端有良好支持
+    + typescript支持比较好
+    + 偏门组件多
+    + 单组件引入支持好,全部组件都支持摇树优化(treeshaking)
+    + 不需要额外导入样式文件
+    + 字体库[vfonts](https://github.com/07akioni/vfonts)以及图标库[xicons](https://www.xicons.org/#/zh-CN)配合良好
+
+    这个库就很适合配合electron使用
+
++ [OpenTiny](https://opentiny.design/opentiny-design/guide/introduce),一个支持面很宽的库,它的特色是
+    + 一个库支持vue2和vue3,支持桌面端和移动端
+    + 自带图表组件

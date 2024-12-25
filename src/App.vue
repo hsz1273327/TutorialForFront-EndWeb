@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import {clock} from 'vue-clock-lonlyape-v3'
+import Clock from './components/Clock.vue'
 </script>
 
 <template>
-  <clock />
+  <Clock timeFormat="12hour" hourFormat="roman" />
 </template>
 
 <style scoped>

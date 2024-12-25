@@ -9,12 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.5.13",
-    "vue-analog-clock": "^1.0.2",
-    "vue-clock-lonlyape-v3": "^1.0.0"
+    "vue": "^3.5.13"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^2.0.0-beta.28",
+    "@types/vue": "^2.0.0",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/tsconfig": "^0.7.0",
     "typescript": "~5.6.2",

@@ -1,12 +1,5 @@
-# my_clock
+# Vue 3 + TypeScript + Vite
 
-chrome插件的第一个例子,用于展示chrome扩展的基本结构
+This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
-用法:
-
-1. 执行`npm run build`
-2. 在chrome中进入路径`chrome://extensions/`,点击`加载已解压的扩展程序`后选择本项目下的app文件夹
-
-效果:
-
-点击chrome右上角`我的时钟`图标会弹出当前时间.
+Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).

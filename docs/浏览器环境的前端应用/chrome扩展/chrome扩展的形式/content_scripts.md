@@ -1,6 +1,6 @@
 # content_script插件
 
-一类插件的主要作用是针对特定页面执行特定任务(比如b站的ACG助手).这类插件的核心就是`content_script`.
+content_script插件的主要作用是针对特定页面执行特定任务(比如b站的ACG助手).这类插件的核心就是`content_script`脚本.
 
 `content_script`的本质是在本地魔改页面--在特定页面嵌入js脚本和样式表.因此必须声明
 

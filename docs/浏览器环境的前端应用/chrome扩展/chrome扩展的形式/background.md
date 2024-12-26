@@ -1,6 +1,6 @@
-# 后台插件的形式
+# background
 
-接下来我们通过一个例子来简单看下后台插件的形式有哪些.这个例子我们由浅入深,从一个纯后台插件开始一步一步扩展为一个有状态可配置的后台插件.这个例子在[chrome-ext-stock_trace分支](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/chrome-ext-stock_trace)
+接下来我们通过一个例子来简单看下后台服务型插件的形式有哪些.这个例子我们由浅入深,从一个纯后台插件开始一步一步扩展为一个有状态可配置的后台插件.这个例子在[chrome-ext-stock_trace分支](https://github.com/hsz1273327/TutorialForFront-EndWeb/tree/chrome-ext-stock_trace)
 
 ## 纯后台插件
 

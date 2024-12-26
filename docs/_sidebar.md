@@ -113,11 +113,13 @@
         * [其他补充](浏览器环境的前端应用/使用vue构建复杂web前端工程/其他补充.md)
 
     * [番外:chrome扩展](浏览器环境的前端应用/chrome扩展/README.md)
-        * [美化插件](浏览器环境的前端应用/chrome扩展/美化插件.md)
-        * [background插件](浏览器环境的前端应用/chrome扩展/background插件.md)
-        * [content_scripts插件](浏览器环境的前端应用/chrome扩展/content_scripts插件.md)
-        * [popup插件](浏览器环境的前端应用/chrome扩展/popup插件/README.md)
-        * [chrome提供的功能接口](浏览器环境的前端应用/chrome扩展/chrome提供的功能接口.md)
+        * [chrome扩展的形式](浏览器环境的前端应用/chrome扩展/chrome扩展的形式/README.md)
+            * [popup](浏览器环境的前端应用/chrome扩展/chrome扩展的形式/popup.md)
+            * [background](浏览器环境的前端应用/chrome扩展/chrome扩展的形式/background.md)
+            * [content_scripts](浏览器环境的前端应用/chrome扩展/chrome扩展的形式/content_scripts.md)
+            * [美化插件](浏览器环境的前端应用/chrome扩展/chrome扩展的形式/美化插件.md)
+            * [chrome提供的功能接口](浏览器环境的前端应用/chrome扩展/chrome扩展的形式/chrome提供的功能接口.md)
+        * [使用vue构造chrome插件](浏览器环境的前端应用/chrome扩展/使用vue构造chrome插件/README.md)
 
 * [移动端原生应用](移动端原生应用/README.md)
     * [nativescript和nativescript-vue](移动端原生应用/nativescript和nativescript-vue.md)

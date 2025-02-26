@@ -3,7 +3,8 @@ import Clock from './components/Clock.vue'
 </script>
 
 <template>
-  <Clock timeFormat="12hour" hourFormat="roman" />
+  <!-- <Clock timeFormat="12hour" hourFormat="roman" /> -->
+  <Clock />
 </template>
 
 <style scoped>

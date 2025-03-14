@@ -120,6 +120,8 @@
             * [美化插件](浏览器环境的前端应用/chrome扩展/chrome扩展的形式/美化插件.md)
             * [chrome提供的功能接口](浏览器环境的前端应用/chrome扩展/chrome扩展的形式/chrome提供的功能接口.md)
         * [使用vue构造chrome插件](浏览器环境的前端应用/chrome扩展/使用vue构造chrome插件/README.md)
+            * [实现模型和prompt模板配置功能](浏览器环境的前端应用/chrome扩展/使用vue构造chrome插件/实现模型和prompt模板配置功能.md)
+            * [实现翻译](浏览器环境的前端应用/chrome扩展/使用vue构造chrome插件/实现翻译.md)
 
 * [移动端原生应用](移动端原生应用/README.md)
     * [nativescript和nativescript-vue](移动端原生应用/nativescript和nativescript-vue.md)

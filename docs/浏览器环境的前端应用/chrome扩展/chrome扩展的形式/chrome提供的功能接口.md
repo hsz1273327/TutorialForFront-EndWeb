@@ -1349,3 +1349,14 @@ chrome.proxy.settings.set(
 ```
 
 主要麻烦的是理解其中的概念.这个讲起来就太长了,建议直接去[官网查看](https://developer.chrome.com/docs/extensions/reference/api/proxy?hl=zh-cn)
+
+## 与firefox兼容
+
+最好的情况当然是写一份代码可以在chrome和firefox两个平台都能使用了,我们可以借助`webextension-polyfill`和`@types/webextension-polyfill`两个包实现
+
+```bash
+npm install webextension-polyfill
+npm install --save-dev @types/webextension-polyfill
+```
+
+然后在需要用到接口的地方`import browser from "webextension-polyfill";`导入,用`browser`代替`chrome`即可

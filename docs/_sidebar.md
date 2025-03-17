@@ -42,7 +42,7 @@
         * [Websocket接口服务](Javascript/node环境构建应用/Websocket接口服务.md)
         * [`*`GRpc接口服务](Javascript/node环境构建应用/Rpc接口服务.md)
     * [总结](Javascript/总结.md)
-* [文本标记框架](文本标记框架/README.md)
+* [文本标记框架](文本标记框架.md)
 * [层叠样式表CSS](层叠样式表CSS/README.md)
     * [番外:Stylus声明元素样式](层叠样式表CSS/Stylus声明元素样式/README.md)
         * [注释](层叠样式表CSS/Stylus声明元素样式/注释.md)
@@ -122,6 +122,8 @@
         * [使用vue构造chrome插件](浏览器环境的前端应用/chrome扩展/使用vue构造chrome插件/README.md)
             * [实现模型和prompt模板配置功能](浏览器环境的前端应用/chrome扩展/使用vue构造chrome插件/实现模型和prompt模板配置功能.md)
             * [实现翻译](浏览器环境的前端应用/chrome扩展/使用vue构造chrome插件/实现翻译.md)
+
+* [桌面环境的前端技术应用](桌面环境的前端技术应用/README.md)
 
 * [移动端原生应用](移动端原生应用/README.md)
     * [nativescript和nativescript-vue](移动端原生应用/nativescript和nativescript-vue.md)

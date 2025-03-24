@@ -1,20 +1,48 @@
 {
-  "name": "myAwesomeApp",
-  "main": "src/app.ts",
+  "name": "helloworld",
   "version": "1.0.0",
-  "private": true,
+  "description": "An Electron application with Vue and TypeScript",
+  "main": "./out/main/index.js",
+  "author": "example.com",
+  "homepage": "https://electron-vite.org",
+  "scripts": {
+    "format": "prettier --write .",
+    "lint": "eslint --cache .",
+    "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
+    "typecheck:web": "vue-tsc --noEmit -p tsconfig.web.json --composite false",
+    "typecheck": "npm run typecheck:node && npm run typecheck:web",
+    "start": "electron-vite preview",
+    "dev": "electron-vite dev",
+    "build": "npm run typecheck && electron-vite build",
+    "postinstall": "electron-builder install-app-deps",
+    "build:unpack": "npm run build && electron-builder --dir",
+    "build:win": "npm run build && electron-builder --win",
+    "build:mac": "npm run build && electron-builder --mac",
+    "build:linux": "npm run build && electron-builder --linux"
+  },
   "dependencies": {
-    "@nativescript/core": "~8.7.1",
-    "nativescript-vue": "3.0.0-rc.1"
+    "@electron-toolkit/preload": "^3.0.1",
+    "@electron-toolkit/utils": "^4.0.0",
+    "electron-updater": "^6.3.9"
   },
   "devDependencies": {
-    "@nativescript/android": "8.7.0",
-    "@nativescript/ios": "8.7.0",
-    "@nativescript/tailwind": "~2.0.1",
-    "@nativescript/types": "~8.7.0",
-    "@nativescript/webpack": "~5.0.0",
-    "@types/node": "~17.0.21",
-    "tailwindcss": "^3.1.8",
-    "typescript": "^5.2.2"
+    "@electron-toolkit/eslint-config-prettier": "3.0.0",
+    "@electron-toolkit/eslint-config-ts": "^3.0.0",
+    "@electron-toolkit/tsconfig": "^1.0.1",
+    "@types/node": "^22.13.4",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "electron": "^34.2.0",
+    "electron-builder": "^25.1.8",
+    "electron-vite": "^3.0.0",
+    "eslint": "^9.20.1",
+    "eslint-plugin-vue": "^9.32.0",
+    "prettier": "^3.5.1",
+    "typescript": "^5.7.3",
+    "vite": "^6.1.0",
+    "vue": "^3.5.13",
+    "vue-tsc": "^2.2.2"
+  },
+  "optionalDependencies": {
+    "dmg-license": "^1.0.11"
   }
 }

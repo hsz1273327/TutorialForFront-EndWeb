@@ -15,7 +15,8 @@ import icon from '../../resources/icon.png?asset'
 
 // 系统托盘设置
 function init_tray(): void {
-  const tray_icon = nativeImage.createFromPath(icon)
+  // macos推荐尺寸为16x16
+  const tray_icon = nativeImage.createFromPath(icon).resize({ width: 16, height: 16 })
   const tray = new Tray(tray_icon)
   const contextMenu = Menu.buildFromTemplate([
     { label: 'Item1', type: 'radio' },
@@ -28,7 +29,7 @@ function init_tray(): void {
   //设置鼠标指针在托盘图标上悬停时显示的文本(linux下不支持)
   tray.setToolTip('This is my application')
   // 设置macos中显示在状态栏中托盘图标旁边的标题
-  tray.setTitle('This is my title')
+  // tray.setTitle('This is my title')
 }
 
 // 增加菜单功能

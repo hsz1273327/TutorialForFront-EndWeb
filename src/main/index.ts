@@ -28,8 +28,22 @@ function init_tray(): void {
   tray.setContextMenu(contextMenu)
   //设置鼠标指针在托盘图标上悬停时显示的文本(linux下不支持)
   tray.setToolTip('This is my application')
-  // 设置macos中显示在状态栏中托盘图标旁边的标题
+  // 设置macos中显示在状态栏中托盘图标旁边的标题,一般不设置
   // tray.setTitle('This is my title')
+}
+
+async function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+async function progress_bar_range(win: BrowserWindow): Promise<void> {
+  // set progress bar to indeterminate state
+  win.setProgressBar(0)
+  for (let i = 0; i < 100; i++) {
+    await sleep(1000)
+    win.setProgressBar(i / 100)
+  }
+  win.setProgressBar(-1)
 }
 
 // 增加菜单功能
@@ -37,25 +51,25 @@ function init_application_menu(mainWindow: BrowserWindow): void {
   const menu = new Menu()
   menu.append(
     new MenuItem({
-      label: '关闭到后台',
-      submenu: [
-        {
-          role: 'help',
-          accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Alt+Shift+I',
-          click: (): void => {
-            console.log('Electron rocks!')
-            new Notification({
-              title: 'test electron app message',
-              body: `submenu help clicked`
-            }).show()
-          }
+      label: '进度条',
+      type: 'normal',
+      click: async (): Promise<void> => {
+        // macos和windows下显示进度条
+        if (process.platform == 'darwin' || process.platform == 'win32') {
+          console.log('Electron progress_bar start!')
+          await progress_bar_range(mainWindow)
+        } else {
+          new Notification({
+            title: 'test electron app message',
+            body: `submenu help clicked`
+          }).show()
         }
-      ]
+      }
     })
   )
   menu.append(
     new MenuItem({
-      label: 'Electron-1',
+      label: '关闭',
       submenu: [
         {
           role: 'quit',
@@ -141,7 +155,7 @@ app.whenReady().then(() => {
   const mainwindow = createWindow()
   init_application_menu(mainwindow)
   init_tray()
-  if (process.platform !== 'darwin') {
+  if (process.platform == 'darwin') {
     init_dock()
   }
   app.on('activate', function () {

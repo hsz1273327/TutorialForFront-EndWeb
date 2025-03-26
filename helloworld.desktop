@@ -1,0 +1,19 @@
+[Desktop Entry]
+Name=MyElectronApp
+Exec=/path/to/your/app
+Icon=resources/app/icon.png
+Type=Application
+StartupWMClass=MyElectronApp
+Actions=PlayPause;Next;Previous
+
+[Desktop Action PlayPause]
+Name=Play-Pause
+Exec=audacious -t
+
+[Desktop Action Next]
+Name=Next
+Exec=audacious -f
+
+[Desktop Action Previous]
+Name=Previous
+Exec=audacious -r

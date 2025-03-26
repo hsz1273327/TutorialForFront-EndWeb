@@ -39,9 +39,11 @@ async function sleep(ms: number): Promise<void> {
 async function progress_bar_range(win: BrowserWindow): Promise<void> {
   // set progress bar to indeterminate state
   win.setProgressBar(0)
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i <= 20; i++) {
     await sleep(1000)
-    win.setProgressBar(i / 100)
+    const progress = i / 20
+    win.setProgressBar(progress)
+    console.log(`Electron progress_bar: ${progress}%`)
   }
   win.setProgressBar(-1)
 }
@@ -52,19 +54,24 @@ function init_application_menu(mainWindow: BrowserWindow): void {
   menu.append(
     new MenuItem({
       label: '进度条',
-      type: 'normal',
-      click: async (): Promise<void> => {
-        // macos和windows下显示进度条
-        if (process.platform == 'darwin' || process.platform == 'win32') {
-          console.log('Electron progress_bar start!')
-          await progress_bar_range(mainWindow)
-        } else {
-          new Notification({
-            title: 'test electron app message',
-            body: `submenu help clicked`
-          }).show()
+      submenu: [
+        {
+          label: '开始进度条',
+          toolTip: '开始进度条',
+          click: async (): Promise<void> => {
+            // macos和windows下显示进度条
+            if (process.platform == 'darwin' || process.platform == 'win32') {
+              console.log('Electron progress_bar start!')
+              await progress_bar_range(mainWindow)
+            } else {
+              new Notification({
+                title: 'test electron app message',
+                body: `submenu help clicked`
+              }).show()
+            }
+          }
         }
-      }
+      ]
     })
   )
   menu.append(

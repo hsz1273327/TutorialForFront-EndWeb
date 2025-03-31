@@ -1,118 +1,13 @@
-import {
-  app,
-  shell,
-  BrowserWindow,
-  ipcMain,
-  Notification,
-  Tray,
-  nativeImage,
-  Menu,
-  MenuItem
-} from 'electron'
+import { app, shell, BrowserWindow, ipcMain, Notification } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import sleep from 'await-sleep'
 
-// 系统托盘设置
-function init_tray(): void {
-  // macos推荐尺寸为16x16
-  const tray_icon = nativeImage.createFromPath(icon).resize({ width: 16, height: 16 })
-  const tray = new Tray(tray_icon)
-  const contextMenu = Menu.buildFromTemplate([
-    { label: 'Item1', type: 'radio' },
-    { label: 'Item2', type: 'radio' },
-    { label: 'Item3', type: 'radio', checked: true },
-    { label: 'Item4', type: 'radio' },
-    { label: '退出', type: 'normal', click: (): void => app.quit() }
-  ])
-  tray.setContextMenu(contextMenu)
-  //设置鼠标指针在托盘图标上悬停时显示的文本(linux下不支持)
-  tray.setToolTip('This is my application')
-  // 设置macos中显示在状态栏中托盘图标旁边的标题,一般不设置
-  // tray.setTitle('This is my title')
-}
-
-async function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
-
-async function progress_bar_range(win: BrowserWindow): Promise<void> {
-  // set progress bar to indeterminate state
-  win.setProgressBar(0)
-  for (let i = 0; i <= 20; i++) {
-    await sleep(1000)
-    const progress = i / 20
-    win.setProgressBar(progress)
-    console.log(`Electron progress_bar: ${progress}%`)
-  }
-  win.setProgressBar(-1)
-}
-
-// 增加菜单功能
-function init_application_menu(mainWindow: BrowserWindow): void {
-  const menu = new Menu()
-  menu.append(
-    new MenuItem({
-      label: '进度条',
-      submenu: [
-        {
-          label: '开始进度条',
-          toolTip: '开始进度条',
-          click: async (): Promise<void> => {
-            // macos和windows下显示进度条
-            if (process.platform == 'darwin' || process.platform == 'win32') {
-              console.log('Electron progress_bar start!')
-              await progress_bar_range(mainWindow)
-            } else {
-              new Notification({
-                title: 'test electron app message',
-                body: `submenu help clicked`
-              }).show()
-            }
-          }
-        }
-      ]
-    })
-  )
-  menu.append(
-    new MenuItem({
-      label: '关闭',
-      submenu: [
-        {
-          role: 'quit',
-          accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Alt+Shift+I',
-          click: (): void => {
-            console.log('Electron rocks!')
-            new Notification({
-              title: 'test electron app message',
-              body: `submenu help clicked`
-            }).show()
-          }
-        }
-      ]
-    })
-  )
-  Menu.setApplicationMenu(menu)
-  // 确保显示菜单
-  mainWindow.setMenuBarVisibility(true)
-  mainWindow.setAutoHideMenuBar(false)
-}
-// 设置macos下dock的行为
-function init_dock(): void {
-  app.dock.setIcon(icon)
-  app.dock.setBadge('my application')
-  app.dock.setMenu(
-    Menu.buildFromTemplate([
-      { label: 'New Window', click: (): void => console.log('New Window') },
-      { label: 'New Window with Settings', submenu: [{ label: 'Basic' }, { label: 'Pro' }] },
-      { label: 'New Command...' }
-    ])
-  )
-}
-
-function createWindow(): BrowserWindow {
+function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
+    title: 'helloworld',
     width: 900,
     height: 670,
     show: false,
@@ -140,7 +35,6 @@ function createWindow(): BrowserWindow {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
-  return mainWindow
 }
 
 // This method will be called when Electron has finished
@@ -157,14 +51,13 @@ app.whenReady().then(() => {
   })
 
   // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
+  ipcMain.on('ping', async () => {
+    console.log('pong wait 10s')
+    await sleep(10000)
+    console.log('pong ok')
+  })
 
-  const mainwindow = createWindow()
-  init_application_menu(mainwindow)
-  init_tray()
-  if (process.platform == 'darwin') {
-    init_dock()
-  }
+  createWindow()
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.

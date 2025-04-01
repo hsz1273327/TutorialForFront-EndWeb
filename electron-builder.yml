@@ -31,10 +31,15 @@ dmg:
 linux:
   target:
     - AppImage
-    - snap
-    - deb
   maintainer: electronjs.org
   category: Utility
+  executableName: helloworld
+  desktop:
+    Name: "HelloWorld"
+    Comment: "An example Electron application"
+    Icon: "helloworld"
+    Terminal: false
+    Type: "Application"
 appImage:
   artifactName: ${name}-${version}.${ext}
 npmRebuild: false

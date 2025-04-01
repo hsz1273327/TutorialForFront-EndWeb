@@ -3,6 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import sleep from 'await-sleep'
+import { init_linux } from './linux_init'
 
 function createWindow(): void {
   // Create the browser window.
@@ -40,7 +41,7 @@ function createWindow(): void {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
   // Default open or close DevTools by F12 in development
@@ -63,6 +64,11 @@ app.whenReady().then(() => {
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
+  if (process.platform === 'linux' && !is.dev) {
+    // 仅在 Linux 上执行
+    console.log('Linux platform detected')
+    await init_linux()
+  }
 })
 
 // 生命周期监听

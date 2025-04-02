@@ -12,6 +12,10 @@ files:
 asarUnpack:
   - resources/**
 win:
+  target:
+    - nsis
+    - portable
+  icon: build/icon.ico
   executableName: helloworld
 nsis:
   artifactName: ${name}-${version}-setup.${ext}

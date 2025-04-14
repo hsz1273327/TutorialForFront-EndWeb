@@ -24,6 +24,7 @@
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^4.0.0",
     "await-sleep": "^0.0.1",
+    "commander": "^13.1.0",
     "electron-updater": "^6.3.9"
   },
   "devDependencies": {

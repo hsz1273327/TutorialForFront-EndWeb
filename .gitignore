@@ -34,3 +34,4 @@ typings
 native-src
 .vscode
 out
+cache

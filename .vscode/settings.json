@@ -18,5 +18,10 @@
         "Start-Process powershell -Verb runAs"
       ]
     }
-  }
+  },
+  // "github.copilot.advanced": {
+  //     "debug.overrideProxyUrl": "http://localhost:11437"
+  // },
+  // "http.proxy": "http://localhost:11435",
+  // "http.proxyStrictSSL": false
 }

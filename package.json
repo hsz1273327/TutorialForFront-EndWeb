@@ -23,6 +23,7 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^4.0.0",
+    "ajv": "^6.12.6",
     "await-sleep": "^0.0.1",
     "commander": "^13.1.0",
     "electron-updater": "^6.3.9"

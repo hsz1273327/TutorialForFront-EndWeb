@@ -1,34 +1,10 @@
-# helloworld
+# helloworld-start-up
 
-An Electron application with Vue and TypeScript
 
-## Recommended IDE Setup
++ 单窗口应用`src/main/index_singlewindow.ts`
 
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin)
++ 单窗口可后台应用`src/main/index_singlewindow_background.ts`
 
-## Project Setup
++ 多窗口应用`src/main/index_muiltindow.ts`
 
-### Install
-
-```bash
-$ npm install
-```
-
-### Development
-
-```bash
-$ npm run dev
-```
-
-### Build
-
-```bash
-# For windows
-$ npm run build:win
-
-# For macOS
-$ npm run build:mac
-
-# For Linux
-$ npm run build:linux
-```
++ 多窗口可后台应用`src/main/index_muiltindow_background.ts`

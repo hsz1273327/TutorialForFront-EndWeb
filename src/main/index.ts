@@ -66,16 +66,21 @@ function createWindow(): BrowserWindow {
   })
   // 拦截窗口关闭事件
   Window.on('close', (event) => {
-    const setting = getSetting()
-    if (setting.can_background) {
-      console.log('Window close event triggered')
-      event.preventDefault() // 阻止默认关闭行为
-      if (setting.window_hide_as_close) {
-        console.log('window_hide_as_close')
-        Window.hide() // 隐藏窗口
-      } else {
-        Window?.destroy() // 销毁窗口对象
-        console.log('Window destroy')
+    const all_windows = BrowserWindow.getAllWindows()
+    if (all_windows.length == 1) {
+      // 如果只有一个窗口,检查是否需要拦截
+      const setting = getSetting()
+      // 检查设置,如果设置为允许后台运行，则拦截
+      if (setting.can_background) {
+        console.log('Window close event triggered')
+        event.preventDefault() // 阻止默认关闭行为
+        if (setting.window_hide_as_close) {
+          console.log('window_hide_as_close')
+          Window.hide() // 隐藏窗口
+        } else {
+          Window?.destroy() // 销毁窗口对象
+          console.log('Window destroy')
+        }
       }
     }
   })

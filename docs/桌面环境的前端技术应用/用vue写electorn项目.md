@@ -157,7 +157,6 @@ app.on('window-all-closed', () => {
 
 ```typescript
 import {
-
   Notification
 } from 'electron'
 ...
@@ -167,7 +166,25 @@ new Notification({
 }).show()
 ```
 
-这个和渲染进程中的notification效果差不多.一般多用在debug测试时,真业务里用的不多,但这是我们例子中用于验证行为的必要工具,因此这里先介绍下
+这个和渲染进程中的notification效果差不多.一般多用在debug测试时,真业务里用的不多,但这是我们例子中用于验证行为的必要工具,因此这里先介绍下.
+
+与之类似的是系统对话框`dialog`,它只是相比`notification`多出一个用户点击行为的返回值而已
+
+```typescript
+import { dialog } from 'electron'
+
+const userResponse = await dialog.showMessageBox({
+  type: 'question',
+  buttons: ['是', '否'], //按钮列表
+  defaultId: 0,
+  title: '系统集成',
+  message: '是否将应用程序集成到系统中?(添加到应用菜单)'
+})
+if (userResponse.response === 0) {
+  // userResponse.response会返回用户点击的按钮序号
+  ...
+}
+```
 
 ### 窗口定义
 
@@ -179,50 +196,38 @@ import {
   BrowserWindow
 } from 'electron'
 ...
-function createWindow(): void {
-  // 构造主窗口
-  const mainWindow = new BrowserWindow({
-    // 设置标题,如果渲染进程的入口html中有设置title标签则会使用那个title标签而非这里的设置
-    title: "helloworld",
-    //主窗口的尺寸
-    // 还可以额外设置`maxHeight`,`maxWidth`,`minHeight`,`minWidth`设置窗口的最大最小范围,
-    // 以及`maximizable?: boolean;``minimizable?: boolean;`设置是否允许拉申缩小
-    width: 900, 
+function createWindow(): BrowserWindow {
+  // 创建窗口
+  const Window = new BrowserWindow({
+    title: 'helloworld',
+    width: 900,
     height: 670,
-    // 是否在创建后就展示窗口,一般填false,然后在准备好后调用接口展示
-    // 可以设置`x`,`y`来确定窗口位置,默认是在屏幕中间
-    // 还可以设置`movable?: boolean;`来设置窗口是否可以移动
-    // 还可以设置`alwaysOnTop`
     show: false,
-    //是否自动隐藏菜单栏
     autoHideMenuBar: true,
-    //设置窗口图标,注意这个图标是标题栏上的图标
     ...(process.platform === 'linux' ? { icon } : {}),
-    //设置预加载脚本,一般不用动
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
     }
   })
-  // 当窗口准备好后展示
-  mainWindow.on('ready-to-show', () => {
-    mainWindow.show()
+
+  Window.on('ready-to-show', () => {
+    Window.show()
   })
 
-  // 拦截新窗口的打开请求
-  mainWindow.webContents.setWindowOpenHandler((details) => {
-    // 在浏览器中打开url,一般调试用
+  Window.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
-    // 不允许新窗口打开
     return { action: 'deny' }
   })
 
-  // 加载渲染进程
+  // HMR for renderer base on electron-vite cli.
+  // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-    mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
+    Window.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
-    mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
+    Window.loadFile(join(__dirname, '../renderer/index.html'))
   }
+  return Window
 }
 ...
 app.whenReady().then(() => {

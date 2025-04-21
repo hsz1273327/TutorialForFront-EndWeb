@@ -1,3 +1,4 @@
+// 单窗口单实例应用
 import { app, shell, BrowserWindow, ipcMain, Notification } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
@@ -5,9 +6,9 @@ import icon from '../../resources/icon.png?asset'
 import sleep from 'await-sleep'
 import { init_linux } from './linux_init'
 
-function createWindow(): void {
+function createWindow(): BrowserWindow {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  const Window = new BrowserWindow({
     title: 'helloworld',
     width: 900,
     height: 670,
@@ -20,11 +21,11 @@ function createWindow(): void {
     }
   })
 
-  mainWindow.on('ready-to-show', () => {
-    mainWindow.show()
+  Window.on('ready-to-show', () => {
+    Window.show()
   })
 
-  mainWindow.webContents.setWindowOpenHandler((details) => {
+  Window.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
     return { action: 'deny' }
   })
@@ -32,10 +33,11 @@ function createWindow(): void {
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-    mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
+    Window.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
-    mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
+    Window.loadFile(join(__dirname, '../renderer/index.html'))
   }
+  return Window
 }
 
 // This method will be called when Electron has finished

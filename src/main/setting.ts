@@ -3,10 +3,10 @@ import { join } from 'path'
 import * as fs from 'fs'
 import Ajv from 'ajv'
 
+// 设置schema用于校验
 const SettingSchema = {
   type: 'object',
   properties: {
-    window_limit: { type: 'integer', minimum: 0, maximum: 10 },
     can_background: { type: 'boolean' },
     window_hide_as_close: { type: 'boolean' }
   },
@@ -14,16 +14,15 @@ const SettingSchema = {
 }
 
 interface Setting {
-  window_limit?: number
   can_background?: boolean
   window_hide_as_close?: boolean
 }
+// 配置的默认值
 const DEFAULT_SETTING: Setting = {
-  window_limit: 1, // 窗口数量限制,<=0表示不限制
   can_background: false,
   window_hide_as_close: false
 }
-
+// 获取当前的配置,用户没有定义就使用默认值
 function getSetting(): Setting {
   const setting_path = join(app.getPath('userData'), 'setting.json')
   // 检查文件是否存在
@@ -51,7 +50,7 @@ function getSetting(): Setting {
     return DEFAULT_SETTING
   }
 }
-
+//设置用户配置
 function setSetting(setting: Setting): void {
   const ajv = new Ajv()
   const validate = ajv.compile(SettingSchema)
@@ -83,6 +82,7 @@ function setSetting(setting: Setting): void {
     return
   }
 }
+//清空用户配置
 function cleanSetting(): void {
   const setting_path = join(app.getPath('userData'), 'setting.json')
   // 检查文件是否存在
@@ -93,7 +93,6 @@ function cleanSetting(): void {
     console.log('File does not exist:', setting_path)
   }
 }
-//   })
 
 export { getSetting, setSetting, cleanSetting }
 export type { Setting }

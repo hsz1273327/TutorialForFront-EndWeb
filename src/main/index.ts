@@ -6,6 +6,7 @@ import icon from '../../resources/icon.png?asset'
 import sleep from 'await-sleep'
 import { init_linux } from './linux_init'
 
+//禁用显卡加速避免报错
 app.disableHardwareAcceleration()
 
 function createWindow(): BrowserWindow {

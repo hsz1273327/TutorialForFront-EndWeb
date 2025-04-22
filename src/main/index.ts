@@ -6,6 +6,8 @@ import icon from '../../resources/icon.png?asset'
 import sleep from 'await-sleep'
 import { init_linux } from './linux_init'
 
+app.disableHardwareAcceleration()
+
 function createWindow(): BrowserWindow {
   // Create the browser window.
   const Window = new BrowserWindow({

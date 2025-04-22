@@ -1,28 +1,15 @@
 // 单窗口应用
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
-import { join } from 'path'
+import { app, ipcMain } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import { Command, Option, OptionValues } from 'commander'
-import icon from '../../resources/icon.png?asset'
+import { OptionValues } from 'commander'
 import sleep from 'await-sleep'
 import { init_linux } from './linux_init'
 import { getSetting, Setting, setSetting, cleanSetting } from './setting'
+import { getCmdOptions } from './cmd_operate'
+import { app_soft_quit } from './app_operate'
+import { createWindow, showWindow } from './window_operate'
 
-function make_cmd(): Command {
-  const program = new Command()
-  program
-    .option('--can_background', '是否允许后台运行') // 默认不启用调试模式
-    .option('--window_hide_as_close', '是否将窗口的关闭改为隐藏') // 默认不启用调试模式
-    .addOption(new Option('--usercmd <char>', '用户命令').choices(['cleansetting', 'exit']))
-    .description('Electron 应用程序')
-  return program
-}
-
-const program = make_cmd()
-// 解析命令行参数
-program.parse(process.argv)
-const options = program.opts()
-console.log('解析的参数:', options)
+const options = getCmdOptions()
 
 function change_setting_from_cmd(options: OptionValues): void {
   const custom_setting: Setting = {}
@@ -38,78 +25,8 @@ function change_setting_from_cmd(options: OptionValues): void {
   }
 }
 
-let mainWindow: BrowserWindow | null = null
-
-// 创建窗口
-function createWindow(): BrowserWindow {
-  // Create the browser window.
-  const Window = new BrowserWindow({
-    title: 'helloworld',
-    width: 900,
-    height: 670,
-    show: false,
-    autoHideMenuBar: true,
-    ...(process.platform === 'linux' ? { icon } : {}),
-    webPreferences: {
-      preload: join(__dirname, '../preload/index.js'),
-      sandbox: false
-    }
-  })
-
-  Window.on('ready-to-show', () => {
-    Window.show()
-  })
-  // 拦截窗口关闭事件
-  Window.on('close', (event) => {
-    const all_windows = BrowserWindow.getAllWindows()
-    if (all_windows.length == 1) {
-      // 如果只有一个窗口,检查是否需要拦截
-      const setting = getSetting()
-      // 检查设置,如果设置为允许后台运行，则拦截
-      if (setting.can_background) {
-        console.log('Window close event triggered')
-        event.preventDefault() // 阻止默认关闭行为
-        if (setting.window_hide_as_close) {
-          console.log('window_hide_as_close')
-          Window.hide() // 隐藏窗口
-        } else {
-          Window?.destroy() // 销毁窗口对象
-          mainWindow = null
-          console.log('Window destroy')
-        }
-      }
-    }
-  })
-
-  Window.webContents.setWindowOpenHandler((details) => {
-    shell.openExternal(details.url)
-    return { action: 'deny' }
-  })
-
-  // HMR for renderer base on electron-vite cli.
-  // Load the remote URL for development or the local html file for production.
-  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-    Window.loadURL(process.env['ELECTRON_RENDERER_URL'])
-  } else {
-    Window.loadFile(join(__dirname, '../renderer/index.html'))
-  }
-  return Window
-}
-
 // 检查是否已经有实例在运行
 const gotTheLock = app.requestSingleInstanceLock(options)
-
-async function app_soft_quit(): Promise<void> {
-  await sleep(1000)
-  console.log('app_soft_quit')
-  const all_windows = BrowserWindow.getAllWindows()
-  if (all_windows.length > 0) {
-    for (const window of all_windows) {
-      window.destroy() // 关闭窗口
-    }
-  }
-  app.quit()
-}
 
 if (!gotTheLock) {
   // 如果获取锁失败，说明已经有实例在运行，退出当前实例
@@ -134,20 +51,8 @@ if (!gotTheLock) {
         cleanSetting()
         return
       }
-
       change_setting_from_cmd(additionalData as OptionValues)
-
-      if (mainWindow) {
-        mainWindow.show() // 显示窗口
-        if (mainWindow.isMinimized()) {
-          mainWindow.restore() // 如果窗口最小化，恢复窗口
-        }
-        mainWindow.focus() // 将窗口置于焦点
-      } else {
-        console.log('mainWindow is null')
-        mainWindow = createWindow()
-        return
-      }
+      showWindow()
     }
   )
   // This method will be called when Electron has finished
@@ -156,10 +61,6 @@ if (!gotTheLock) {
   app.whenReady().then(async () => {
     // Set app user model id for windows
     electronApp.setAppUserModelId('com.electron')
-    // 从命令行参数中获取参数
-    console.log('options.port', options.port)
-    console.log('options.debug', options.debug)
-
     app.on('browser-window-created', (_, window) => {
       optimizer.watchWindowShortcuts(window)
     })
@@ -170,19 +71,11 @@ if (!gotTheLock) {
       console.log('pong ok')
     })
 
-    mainWindow = createWindow()
+    createWindow()
     app.on('activate', function () {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.
-      if (mainWindow) {
-        mainWindow.show()
-        if (mainWindow.isMinimized()) {
-          mainWindow.restore() // 如果窗口最小化，恢复窗口
-        }
-        mainWindow.focus() // 将窗口置于焦点
-      } else {
-        createWindow()
-      }
+      showWindow()
     })
     if (process.platform === 'linux' && !is.dev) {
       // 仅在 Linux 上执行

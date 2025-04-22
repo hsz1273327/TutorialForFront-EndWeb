@@ -25,6 +25,8 @@ function change_setting_from_cmd(options: OptionValues): void {
   }
 }
 
+//避免显卡设置问题,屏蔽使用显卡
+app.disableHardwareAcceleration()
 // 检查是否已经有实例在运行
 const gotTheLock = app.requestSingleInstanceLock(options)
 

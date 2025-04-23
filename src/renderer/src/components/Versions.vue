@@ -1,9 +1,3 @@
-<script setup lang="ts">
-import { reactive } from 'vue'
-
-const versions = reactive({ ...window.electron.process.versions })
-</script>
-
 <template>
   <ul class="versions">
     <li class="electron-version">Electron v{{ versions.electron }}</li>
@@ -11,3 +5,9 @@ const versions = reactive({ ...window.electron.process.versions })
     <li class="node-version">Node v{{ versions.node }}</li>
   </ul>
 </template>
+
+<script setup lang="ts">
+import { reactive } from 'vue'
+
+const versions = reactive({ ...window.electron.process.versions })
+</script>

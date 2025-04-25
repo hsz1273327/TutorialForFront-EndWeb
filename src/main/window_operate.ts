@@ -78,4 +78,12 @@ function showWindow(): void {
   }
 }
 
-export { createWindow, showWindow }
+function sendToMainWindow(channel: string, ...args: unknown[]): void {
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.webContents.send(channel, ...args)
+  } else {
+    console.log('mainWindow is null')
+  }
+}
+
+export { createWindow, showWindow, sendToMainWindow }

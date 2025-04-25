@@ -5,7 +5,7 @@ function getCmdOptions(): OptionValues {
   program
     .option('--can_background', '是否允许后台运行') // 默认不启用调试模式
     .option('--window_hide_as_close', '是否将窗口的关闭改为隐藏') // 默认不启用调试模式
-    .addOption(new Option('--usercmd <char>', '用户命令').choices(['cleansetting', 'exit']))
+    .addOption(new Option('--usercmd <char>', '用户命令').choices(['cleansetting', 'exit', 'sendnowtime']))
     .description('Electron 应用程序')
 
   program.parse(process.argv)

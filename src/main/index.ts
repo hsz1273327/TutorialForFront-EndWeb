@@ -1,13 +1,14 @@
 // 单窗口应用
-import { app, ipcMain } from 'electron'
+import { app } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { OptionValues } from 'commander'
-import sleep from 'await-sleep'
+
 import { init_linux } from './linux_init'
 import { getSetting, Setting, setSetting, cleanSetting } from './setting'
 import { getCmdOptions } from './cmd_operate'
 import { app_soft_quit } from './app_operate'
-import { createWindow, showWindow } from './window_operate'
+import { createWindow, showWindow, sendToMainWindow } from './window_operate'
+import { init_ipc } from './ipc'
 
 const options = getCmdOptions()
 
@@ -53,6 +54,11 @@ if (!gotTheLock) {
         cleanSetting()
         return
       }
+      if ((additionalData as OptionValues).usercmd === 'sendnowtime') {
+        // 处理传递的参数
+        sendToMainWindow('nowtime', new Date().toLocaleString())
+        return
+      }
       change_setting_from_cmd(additionalData as OptionValues)
       showWindow()
     }
@@ -67,11 +73,7 @@ if (!gotTheLock) {
       optimizer.watchWindowShortcuts(window)
     })
     // IPC test
-    ipcMain.on('ping', async () => {
-      console.log('pong wait 10s')
-      await sleep(10000)
-      console.log('pong ok')
-    })
+    init_ipc()
 
     createWindow()
     app.on('activate', function () {

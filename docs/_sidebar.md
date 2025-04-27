@@ -127,6 +127,7 @@
     * [用vue写electorn项目](桌面环境的前端技术应用/用vue写electorn项目.md)
     * [打包与分发](桌面环境的前端技术应用/打包与分发.md)
     * [应用的启动](桌面环境的前端技术应用/应用的启动.md)
+    * [进程间通信](桌面环境的前端技术应用/进程间通信.md)
 
 * [移动端原生应用](移动端原生应用/README.md)
     * [nativescript和nativescript-vue](移动端原生应用/nativescript和nativescript-vue.md)

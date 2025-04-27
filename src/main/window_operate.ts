@@ -86,4 +86,12 @@ function sendToMainWindow(channel: string, ...args: unknown[]): void {
   }
 }
 
-export { createWindow, showWindow, sendToMainWindow }
+function publish(channel: string, ...args: unknown[]): void {
+  for (const win of BrowserWindow.getAllWindows()) {
+    if (win && !win.isDestroyed()) {
+      win.webContents.send(channel, ...args)
+    }
+  }
+}
+
+export { createWindow, showWindow, sendToMainWindow, publish }

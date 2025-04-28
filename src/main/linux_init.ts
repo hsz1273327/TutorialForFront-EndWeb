@@ -2,7 +2,7 @@ import { app, dialog } from 'electron'
 import { homedir } from 'os'
 import { join } from 'path'
 import { promises as fs } from 'fs'
-import { existsSync } from 'fs'
+import { existsSync, unlinkSync } from 'fs'
 const home_path = homedir()
 const appName = app.getName()
 const appVersion = app.getVersion()
@@ -23,23 +23,6 @@ async function init_linux(): Promise<void> {
       })
       if (userResponse.response === 0) {
         installDesktopFile()
-      }
-    } else {
-      // 如果已经存在.desktop文件,判断其内容是否一致
-      const source_content = await getSourceDesktopFileContent()
-      const target_content = await fs.readFile(target_desktop_path, 'utf-8')
-      if (source_content !== target_content) {
-        // 如果内容不一致,提示用户是否覆盖
-        const userResponse = await dialog.showMessageBox({
-          type: 'question',
-          buttons: ['是', '否'],
-          defaultId: 0,
-          title: '系统集成',
-          message: '是否更新应用程序的集成集成配置?(更新应用菜单)'
-        })
-        if (userResponse.response === 0) {
-          installDesktopFile()
-        }
       }
     }
   }
@@ -87,4 +70,35 @@ async function installDesktopFile(): Promise<void> {
   }
 }
 
-export { init_linux }
+async function uninstallDesktopFile(): Promise<void> {
+  if (!existsSync(target_desktop_path)) {
+    // 如果不存在.desktop文件,提示用户
+    await dialog.showMessageBox({
+      type: 'info',
+      buttons: ['确定'],
+      defaultId: 0,
+      title: '卸载失败',
+      message: '应用程序未集成到系统中，无需卸载！'
+    })
+    return
+  } else {
+    unlinkSync(target_desktop_path)
+    console.log(`.desktop 文件已删除: ${target_desktop_path}`)
+  }
+  if (existsSync(target_icon_path)) {
+    // 如果不存在图标文件,提示用户
+    await dialog.showMessageBox({
+      type: 'info',
+      buttons: ['确定'],
+      defaultId: 0,
+      title: '卸载失败',
+      message: '应用程序未集成到系统中，无需卸载！'
+    })
+    return
+  } else {
+    unlinkSync(target_icon_path)
+    console.log(`图标文件已删除: ${target_icon_path}`)
+  }
+}
+
+export { init_linux, uninstallDesktopFile }

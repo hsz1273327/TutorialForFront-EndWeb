@@ -49,6 +49,8 @@ linux:
     Icon: "helloworld"
     Terminal: false
     Type: "Application"
+    Categories: "Utility;"
+
 appImage:
   artifactName: ${name}-${version}.${ext}
 npmRebuild: false

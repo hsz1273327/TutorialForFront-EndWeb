@@ -1,4 +1,4 @@
-import { app, Menu } from 'electron'
+import { app, Menu,BrowserWindow } from 'electron'
 import { cleanSetting } from './setting'
 import { sendToMainWindow } from './window_operate'
 import { app_soft_quit } from './app_operate'
@@ -53,5 +53,58 @@ function init_dock(): void {
   }
   // linux下需要在electron-builder.yml中配置
 }
+// 让支持的平台实现dock抖动
+function dockBounce(): () => void {
+  if (process.platform === 'darwin') {
+    const id = app.dock?.bounce('critical')
+    // const id = app.dock?.bounce('informational')
+    console.log('dockBounce', id)
+    return () => {
+      app.dock?.cancelBounce(id)
+      console.log('dockBounce canceled', id)
+    }
+  } else if (process.platform === 'win32') {
+    // Windows
+    const allWindows = BrowserWindow.getAllWindows()
+    if (allWindows.length > 0) {
+      const mainWindow = allWindows[0]
+      mainWindow.flashFrame(true)
+      return () => {
+        mainWindow.flashFrame(false)
+      }
+    } else {
+      return () => {
+        console.log('dockBounce not support without window')
+      }
+    }
+  } else {
+    return () => {
+      console.log('dockBounce not support on this platform')
+    }
+  }
+}
+//设置进度条
+function setDockProgressBar(value: number): void {
+  const allWindows = BrowserWindow.getAllWindows()
+  if (allWindows.length > 0) {
+    const mainWindow = allWindows[0]
+    mainWindow.setProgressBar(value)
+  }
+}
 
-export { init_dock }
+//设置标记
+function setDockBadge(text: string): void {
+  if (process.platform === 'darwin') {
+     // macOS
+     app.dock?.setBadge(text)
+  } else if (process.platform === 'win32') {
+    // Windows
+    const allWindows = BrowserWindow.getAllWindows()
+    if (allWindows.length > 0) {
+      const mainWindow = allWindows[0]
+      mainWindow.setOverlayIcon(null, text)
+    }
+  }
+}
+
+export { init_dock, dockBounce, setDockProgressBar, setDockBadge }

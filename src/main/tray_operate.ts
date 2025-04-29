@@ -3,6 +3,7 @@ import icon from '../../resources/icon.png?asset'
 import { getSetting, setSetting, cleanSetting } from './setting'
 import { showWindow, sendToMainWindow } from './window_operate'
 import { app_soft_quit } from './app_operate'
+import { dockBounce } from './dock_operate'
 
 let tray: Tray | null = null
 
@@ -42,10 +43,14 @@ function update_tray_menu(): Menu {
       click: (): void => sendToMainWindow('nowtime', new Date().toLocaleString())
     },
     {
-      label: '退出',
+      label: 'dock抖动',
       type: 'normal' as const,
       click: (): void => {
-        app_soft_quit()
+        const cancelBounce = dockBounce()
+        setTimeout(() => {
+          console.log('cancelBounce...')
+          cancelBounce()
+        }, 2000)
       }
     }
   ]
@@ -95,7 +100,15 @@ function update_tray_menu(): Menu {
     { type: 'separator' },
     ...checkboxTemplates,
     { type: 'separator' },
-    ...radioTemplates
+    ...radioTemplates,
+    { type: 'separator' },
+    {
+      label: '退出',
+      type: 'normal' as const,
+      click: (): void => {
+        app_soft_quit()
+      }
+    }
   ]
   const contextMenu = Menu.buildFromTemplate(Templates)
   return contextMenu

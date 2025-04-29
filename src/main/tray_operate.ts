@@ -4,11 +4,25 @@ import { getSetting, setSetting, cleanSetting } from './setting'
 import { showWindow, sendToMainWindow } from './window_operate'
 import { app_soft_quit } from './app_operate'
 
-let soft_update_tray_menu: (() => Promise<void>) | null = null
+let tray: Tray | null = null
 
-let itmeChoise: 'Item1' | 'Item2' | 'Item3' | 'Item4' = 'Item3'
+function soft_update_tray_menu(): void {
+  if (tray) {
+    const contextMenu = update_tray_menu()
+    tray.setContextMenu(contextMenu) // 重新设置菜单
+  }
+}
+// let soft_update_tray_menu: (() => Promise<void>) | null = null
+enum ItemChoise {
+  Item1 = 'Item1',
+  Item2 = 'Item2',
+  Item3 = 'Item3',
+  Item4 = 'Item4'
+}
+
+let itmeChoise: ItemChoise
 // 处理
-function handleRadioMenuClick(label: 'Item1' | 'Item2' | 'Item3' | 'Item4'): void {
+function handleRadioMenuClick(label: ItemChoise): void {
   console.log(`${label} clicked`)
   // 在这里处理统一的逻辑
   itmeChoise = label
@@ -66,12 +80,13 @@ function update_tray_menu(): Menu {
   ]
 
   const radioTemplates: MenuItemConstructorOptions[] = []
-  for (const item of ['Item1', 'Item2', 'Item3', 'Item4'] as const) {
+  for (const item of Object.keys(ItemChoise)) {
+    const item_enum = ItemChoise[item as keyof typeof ItemChoise]
     radioTemplates.push({
       label: item,
       type: 'radio' as const,
-      checked: itmeChoise == item,
-      click: (): void => handleRadioMenuClick(item)
+      checked: itmeChoise === item_enum,
+      click: (): void => handleRadioMenuClick(item_enum)
     })
   }
 
@@ -86,22 +101,29 @@ function update_tray_menu(): Menu {
   return contextMenu
 }
 
-function soft_update_tray_menu_factory(tray: Tray): () => Promise<void> {
-  return async function () {
-    const contextMenu = update_tray_menu()
-    tray.setContextMenu(contextMenu) // 重新设置菜单
-  }
-}
+// function soft_update_tray_menu_factory(tray: Tray): () => Promise<void> {
+//   return async function () {
+//     const contextMenu = update_tray_menu()
+//     tray.setContextMenu(contextMenu) // 重新设置菜单
+//   }
+// }
 // 系统托盘设置
 function init_tray(): void {
   // macos推荐尺寸为16x16,其他的也都可以接受就直接用16x16就好
   const tray_icon = nativeImage.createFromPath(icon).resize({ width: 16, height: 16 })
-  const tray = new Tray(tray_icon)
-  soft_update_tray_menu = soft_update_tray_menu_factory(tray)
+  tray = new Tray(tray_icon)
+  // soft_update_tray_menu = soft_update_tray_menu_factory(tray)
   const contextMenu = update_tray_menu()
   tray.setContextMenu(contextMenu)
   //设置鼠标指针在托盘图标上悬停时显示的文本(linux下不支持)
   tray.setToolTip('This is my application')
 }
 
-export { init_tray }
+function show_balloon(options: Electron.DisplayBalloonOptions): void {
+  if (process.platform === 'win32' && tray) {
+    tray.displayBalloon(options)
+    return
+  }
+}
+
+export { init_tray, show_balloon }

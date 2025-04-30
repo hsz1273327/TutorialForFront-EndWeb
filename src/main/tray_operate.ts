@@ -1,11 +1,20 @@
 import { Tray, nativeImage, Menu, MenuItem, MenuItemConstructorOptions } from 'electron'
+import sleep from 'await-sleep'
 import icon from '../../resources/icon.png?asset'
 import { getSetting, setSetting, cleanSetting } from './setting'
 import { showWindow, sendToMainWindow } from './window_operate'
 import { app_soft_quit } from './app_operate'
-import { dockBounce } from './dock_operate'
+import { dockBounce, setDockProgressBar, setDockBadge } from './dock_operate'
+import { platform } from 'os'
 
 let tray: Tray | null = null
+// windows 下的托盘气泡提示
+function show_balloon(options: Electron.DisplayBalloonOptions): void {
+  if (process.platform === 'win32' && tray) {
+    tray.displayBalloon(options)
+    return
+  }
+}
 
 function soft_update_tray_menu(): void {
   if (tray) {
@@ -31,29 +40,80 @@ function handleRadioMenuClick(label: ItemChoise): void {
     soft_update_tray_menu()
   }
 }
+
+let badge: number = 0
 function update_tray_menu(): Menu {
   const setting = getSetting()
   // normal
-  const normalTemplates = [
+  let normalTemplates = [
     { label: '显示', type: 'normal' as const, click: (): void => showWindow() },
     { label: '还原设置', type: 'normal' as const, click: (): void => cleanSetting() },
     {
       label: '更新时间',
       type: 'normal' as const,
       click: (): void => sendToMainWindow('nowtime', new Date().toLocaleString())
-    },
-    {
-      label: 'dock抖动',
-      type: 'normal' as const,
-      click: (): void => {
-        const cancelBounce = dockBounce()
-        setTimeout(() => {
-          console.log('cancelBounce...')
-          cancelBounce()
-        }, 2000)
-      }
     }
   ]
+
+  if (process.platform === 'win32' || process.platform === 'darwin') {
+    normalTemplates = normalTemplates.concat([
+      {
+        label: 'dock抖动',
+        type: 'normal' as const,
+        click: (): void => {
+          const cancelBounce = dockBounce()
+          setTimeout(() => {
+            console.log('cancelBounce...')
+            cancelBounce()
+          }, 2000)
+        }
+      },
+      {
+        label: 'dock进度条',
+        type: 'normal' as const,
+        click: async (): Promise<void> => {
+          setDockProgressBar(0)
+          for (let i = 0; i <= 20; i++) {
+            await sleep(1000)
+            const progress = i / 20
+            setDockProgressBar(progress)
+            console.log(`Electron progress_bar: ${progress}%`)
+          }
+          setDockProgressBar(-1)
+        }
+      },
+      {
+        label: 'dockBadge+1',
+        type: 'normal' as const,
+        click: (): void => {
+          if (badge > 9) {
+            badge = 0
+          } else {
+            badge += 1
+          }
+          if (badge == 0) {
+            setDockBadge('')
+          } else {
+            setDockBadge(`${badge}`)
+          }
+        }
+      }
+    ])
+  }
+  if (process.platform === 'win32') {
+    normalTemplates = normalTemplates.concat([
+      {
+        label: '托盘气泡',
+        type: 'normal' as const,
+        click: (): void => {
+          show_balloon({
+            title: '托盘气泡',
+            content: '这是一个托盘气泡提示'
+          })
+        }
+      }
+    ])
+  }
   // checkbox
   const checkboxTemplates = [
     {
@@ -114,12 +174,6 @@ function update_tray_menu(): Menu {
   return contextMenu
 }
 
-// function soft_update_tray_menu_factory(tray: Tray): () => Promise<void> {
-//   return async function () {
-//     const contextMenu = update_tray_menu()
-//     tray.setContextMenu(contextMenu) // 重新设置菜单
-//   }
-// }
 // 系统托盘设置
 function init_tray(): void {
   // macos推荐尺寸为16x16,其他的也都可以接受就直接用16x16就好
@@ -130,13 +184,10 @@ function init_tray(): void {
   tray.setContextMenu(contextMenu)
   //设置鼠标指针在托盘图标上悬停时显示的文本(linux下不支持)
   tray.setToolTip('This is my application')
-}
-
-function show_balloon(options: Electron.DisplayBalloonOptions): void {
-  if (process.platform === 'win32' && tray) {
-    tray.displayBalloon(options)
-    return
-  }
+  // if (platform === 'darwin') {
+  //   // macOS
+  //   tray.setPressedImage(tray_icon)
+  // }
 }
 
 export { init_tray, show_balloon }

@@ -5,7 +5,6 @@ import { getSetting, setSetting, cleanSetting } from './setting'
 import { showWindow, sendToMainWindow } from './window_operate'
 import { app_soft_quit } from './app_operate'
 import { dockBounce, setDockProgressBar, setDockBadge } from './dock_operate'
-import { platform } from 'os'
 
 let tray: Tray | null = null
 // windows 下的托盘气泡提示

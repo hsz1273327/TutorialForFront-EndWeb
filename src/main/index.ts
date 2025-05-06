@@ -6,7 +6,7 @@ import { init_linux } from './linux_init'
 import { getSetting, Setting, setSetting, cleanSetting } from './setting'
 import { getCmdOptions } from './cmd_operate'
 import { app_soft_quit } from './app_operate'
-import { createWindow, showWindow, sendToMainWindow } from './window_operate'
+import { createWindowFactory, showWindow, sendToMainWindow } from './window_operate'
 import { init_ipc } from './ipc'
 import { init_tray } from './tray_operate'
 import { init_dock } from './dock_operate'
@@ -76,11 +76,12 @@ if (!gotTheLock) {
     // 初始化 IPC
     init_ipc()
     //初始化 dock
-    init_dock()
+    const thumbarButtons = init_dock()
     // 创建窗口
-    createWindow()
+    createWindowFactory(thumbarButtons)()
     // 初始化系统托盘
     init_tray()
+
     app.on('activate', function () {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.

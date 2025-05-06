@@ -1,9 +1,11 @@
-import { app, Menu,BrowserWindow } from 'electron'
+import { app, Menu, BrowserWindow, nativeImage, ThumbarButton } from 'electron'
 import { cleanSetting } from './setting'
 import { sendToMainWindow } from './window_operate'
 import { app_soft_quit } from './app_operate'
+import buttonclock from '../../resources/buttonclock.png?asset'
 // dock以及windows上的任务栏操作
-function init_dock(): void {
+function init_dock(): ThumbarButton[] {
+  let thumbarButtons: ThumbarButton[] = []
   if (process.platform === 'darwin') {
     // macOS
     const dockMenu = Menu.buildFromTemplate([
@@ -50,7 +52,15 @@ function init_dock(): void {
         description: 'close app'
       }
     ])
+    thumbarButtons = [
+      {
+        tooltip: '更新时间',
+        icon: nativeImage.createFromPath(buttonclock).resize({ width: 16, height: 16 }),
+        click: (): void => sendToMainWindow('nowtime', new Date().toLocaleString())
+      }
+    ]
   }
+  return thumbarButtons
   // linux下需要在electron-builder.yml中配置
 }
 // 让支持的平台实现dock抖动
@@ -95,8 +105,8 @@ function setDockProgressBar(value: number): void {
 //设置标记
 function setDockBadge(text: string): void {
   if (process.platform === 'darwin') {
-     // macOS
-     app.dock?.setBadge(text)
+    // macOS
+    app.dock?.setBadge(text)
   } else if (process.platform === 'win32') {
     // Windows
     const allWindows = BrowserWindow.getAllWindows()

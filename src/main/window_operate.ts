@@ -85,6 +85,7 @@ function showWindow(): void {
     if (createWindow) {
       mainWindow = createWindow()
     } else {
+      console.log('createWindow is null')
       createWindowFactory([])()
     }
   }

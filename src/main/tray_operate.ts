@@ -4,7 +4,7 @@ import icon from '../../resources/icon.png?asset'
 import { getSetting, setSetting, cleanSetting } from './setting'
 import { showWindow, sendToMainWindow } from './window_operate'
 import { app_soft_quit } from './app_operate'
-import { dockBounce, setDockProgressBar, setDockBadge } from './dock_operate'
+import { dockBounce, setDockProgressBar } from './dock_operate'
 
 let tray: Tray | null = null
 // windows 下的托盘气泡提示
@@ -40,7 +40,7 @@ function handleRadioMenuClick(label: ItemChoise): void {
   }
 }
 
-let badge: number = 0
+// let badge: number = 0
 function update_tray_menu(): Menu {
   const setting = getSetting()
   // normal
@@ -79,22 +79,6 @@ function update_tray_menu(): Menu {
             console.log(`Electron progress_bar: ${progress}%`)
           }
           setDockProgressBar(-1)
-        }
-      },
-      {
-        label: 'dockBadge+1',
-        type: 'normal' as const,
-        click: (): void => {
-          if (badge > 9) {
-            badge = 0
-          } else {
-            badge += 1
-          }
-          if (badge == 0) {
-            setDockBadge('')
-          } else {
-            setDockBadge(`${badge}`)
-          }
         }
       }
     ])

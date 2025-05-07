@@ -102,19 +102,19 @@ function setDockProgressBar(value: number): void {
   }
 }
 
-//设置标记
-function setDockBadge(text: string): void {
-  if (process.platform === 'darwin') {
-    // macOS
-    app.dock?.setBadge(text)
-  } else if (process.platform === 'win32') {
-    // Windows
-    const allWindows = BrowserWindow.getAllWindows()
-    if (allWindows.length > 0) {
-      const mainWindow = allWindows[0]
-      mainWindow.setOverlayIcon(null, text)
-    }
-  }
-}
+// //设置标记
+// function setDockBadge(text: string): void {
+//   if (process.platform === 'darwin') {
+//     // macOS
+//     app.dock?.setBadge(text)
+//   } else if (process.platform === 'win32') {
+//     // Windows
+//     const allWindows = BrowserWindow.getAllWindows()
+//     if (allWindows.length > 0) {
+//       const mainWindow = allWindows[0]
+//       mainWindow.setOverlayIcon(null, text)
+//     }
+//   }
+// }
 
-export { init_dock, dockBounce, setDockProgressBar, setDockBadge }
+export { init_dock, dockBounce, setDockProgressBar }

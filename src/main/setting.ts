@@ -8,19 +8,27 @@ const SettingSchema = {
   type: 'object',
   properties: {
     can_background: { type: 'boolean' },
-    window_hide_as_close: { type: 'boolean' }
-  },
-  additionalProperties: false
+    window_hide_as_close: { type: 'boolean' },
+    window_menu_type: {
+      type: 'string',
+      enum: ['default', 'custom'],
+      default: 'default'
+    },
+    additionalProperties: false
+  }
 }
 
 interface Setting {
   can_background?: boolean
   window_hide_as_close?: boolean
+  window_menu_type?: 'default' | 'custom'
+  // 其他配置项...
 }
 // 配置的默认值
 const DEFAULT_SETTING: Setting = {
   can_background: false,
-  window_hide_as_close: false
+  window_hide_as_close: false,
+  window_menu_type: 'default'
 }
 // 获取当前的配置,用户没有定义就使用默认值
 function getSetting(): Setting {

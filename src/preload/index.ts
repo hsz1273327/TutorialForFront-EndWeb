@@ -15,7 +15,15 @@ const api = {
   },
 
   // pull api
-  pull: (message: string): void => ipcRenderer.send('pull-request', message)
+  pull: (message: string): void => ipcRenderer.send('pull-request', message),
+  //window-control
+  windowControl: (action: string): void => {
+    ipcRenderer.send('window-control', action)
+  },
+  // update menu visibility
+  onUpdateMenuVisibility: (callback: (value: boolean) => void): void => {
+    ipcRenderer.on('update-menu-visibility', (_event, value: boolean) => callback(value))
+  }
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

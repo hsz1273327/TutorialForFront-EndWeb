@@ -1,4 +1,6 @@
 <template>
+  <Titlebar v-if="titlebarvisible" />
+  <div class="title">Electron-Vite-Vue3-TypeScript</div>
   <img alt="logo" class="logo" src="./assets/electron.svg" />
   <div class="creator">Powered by electron-vite</div>
   <div class="text">
@@ -28,12 +30,14 @@
 </template>
 
 <script setup lang="ts">
+import Titlebar from './components/Titlebar.vue'
 import Versions from './components/Versions.vue'
 import { onBeforeMount, ref } from 'vue'
 
 const appPath = ref('')
 const appDataPath = ref('')
 const nowTime = ref('')
+const titlebarvisible = ref(false)
 
 async function getAppPath(): Promise<void> {
   const _appPath = await window.api.getAppPath()
@@ -81,7 +85,10 @@ window.api.onUpdateNowTime((value) => {
   })
   notification.onclose = (): void => console.log('消息关闭了')
 })
-
+window.api.onUpdateMenuVisibility((value) => {
+  titlebarvisible.value = value
+  console.log('titlebarvisible:', titlebarvisible.value)
+})
 onBeforeMount(async () => {
   await getBrowserSupport()
   await getAppPath()

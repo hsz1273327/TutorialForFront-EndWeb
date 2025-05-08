@@ -2,7 +2,12 @@ import { Tray, nativeImage, Menu, MenuItem, MenuItemConstructorOptions } from 'e
 import sleep from 'await-sleep'
 import icon from '../../resources/icon.png?asset'
 import { getSetting, setSetting, cleanSetting } from './setting'
-import { showWindow, sendToMainWindow } from './window_operate'
+import {
+  showWindow,
+  sendToMainWindow,
+  updateWindowMenuType,
+  shakeMainWindow
+} from './window_operate'
 import { app_soft_quit } from './app_operate'
 import { dockBounce, setDockProgressBar } from './dock_operate'
 
@@ -21,20 +26,20 @@ function soft_update_tray_menu(): void {
     tray.setContextMenu(contextMenu) // 重新设置菜单
   }
 }
-// let soft_update_tray_menu: (() => Promise<void>) | null = null
-enum ItemChoise {
-  Item1 = 'Item1',
-  Item2 = 'Item2',
-  Item3 = 'Item3',
-  Item4 = 'Item4'
+
+enum TitleBarStyleChoise {
+  default = 'default',
+  custom = 'custom'
 }
 
-let itmeChoise: ItemChoise
+// let titleBarStyleChoise: TitleBarStyleChoise
 // 处理
-function handleRadioMenuClick(label: ItemChoise): void {
+function handleRadioMenuClick(label: TitleBarStyleChoise): void {
   console.log(`${label} clicked`)
   // 在这里处理统一的逻辑
-  itmeChoise = label
+  // titleBarStyleChoise = label
+  setSetting({ window_menu_type: label })
+  updateWindowMenuType()
   if (soft_update_tray_menu) {
     soft_update_tray_menu()
   }
@@ -51,6 +56,11 @@ function update_tray_menu(): Menu {
       label: '更新时间',
       type: 'normal' as const,
       click: (): void => sendToMainWindow('nowtime', new Date().toLocaleString())
+    },
+    {
+      label: '窗口抖动',
+      type: 'normal' as const,
+      click: (): void => shakeMainWindow()
     }
   ]
 
@@ -128,12 +138,12 @@ function update_tray_menu(): Menu {
   ]
 
   const radioTemplates: MenuItemConstructorOptions[] = []
-  for (const item of Object.keys(ItemChoise)) {
-    const item_enum = ItemChoise[item as keyof typeof ItemChoise]
+  for (const item of Object.keys(TitleBarStyleChoise)) {
+    const item_enum = TitleBarStyleChoise[item as keyof typeof TitleBarStyleChoise]
     radioTemplates.push({
       label: item,
       type: 'radio' as const,
-      checked: itmeChoise === item_enum,
+      checked: setting['window_menu_type'] === item_enum,
       click: (): void => handleRadioMenuClick(item_enum)
     })
   }

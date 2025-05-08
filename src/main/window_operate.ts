@@ -1,30 +1,86 @@
 // 单窗口应用
-import { shell, BrowserWindow, ThumbarButton } from 'electron'
+import { shell, BrowserWindow, ThumbarButton, Menu, MenuItemConstructorOptions } from 'electron'
 import { join } from 'path'
 import { is } from '@electron-toolkit/utils'
 
 import icon from '../../resources/icon.png?asset'
 import { getSetting } from './setting'
 
+const defaultMenuTemplate: MenuItemConstructorOptions[] = [
+  {
+    label: '文件',
+    submenu: [
+      {
+        label: '退出',
+        role: 'quit' // 使用内置角色
+      }
+    ]
+  },
+  {
+    label: '编辑',
+    submenu: [
+      { label: '撤销', role: 'undo' },
+      { label: '重做', role: 'redo' },
+      { type: 'separator' },
+      { label: '剪切', role: 'cut' },
+      { label: '复制', role: 'copy' },
+      { label: '粘贴', role: 'paste' }
+    ]
+  },
+  {
+    label: '帮助',
+    submenu: [
+      {
+        label: '关于',
+        click: (): void => {
+          console.log('关于菜单被点击')
+        }
+      }
+    ]
+  }
+]
+
 let mainWindow: BrowserWindow | null = null
 let createWindow: (() => BrowserWindow) | null = null
 // 创建窗口的工厂函数
 function createWindowFactory(thumbarButtons: ThumbarButton[]): () => BrowserWindow {
   const _create_window = (): BrowserWindow => {
-    // Create the browser window.
-    const Window = new BrowserWindow({
-      title: 'helloworld',
-      width: 900,
-      height: 670,
-      show: false,
-      autoHideMenuBar: true,
-      ...(process.platform === 'linux' ? { icon } : {}),
-      webPreferences: {
-        preload: join(__dirname, '../preload/index.js'),
-        sandbox: false
-      }
-    })
-
+    const setting = getSetting()
+    let Window: BrowserWindow
+    if (setting.window_menu_type === 'custom') {
+      // Create the browser window.
+      Window = new BrowserWindow({
+        title: 'helloworld',
+        width: 900,
+        height: 670,
+        show: false,
+        autoHideMenuBar: true,
+        titleBarStyle: 'hidden', // 隐藏默认标题栏
+        transparent: true, // 透明窗口
+        frame: false, // 移除窗口边框（可选）
+        ...(process.platform === 'linux' ? { icon } : {}),
+        webPreferences: {
+          preload: join(__dirname, '../preload/index.js'),
+          sandbox: false
+        }
+      })
+    } else {
+      // Create the browser window.
+      Window = new BrowserWindow({
+        title: 'helloworld',
+        width: 900,
+        height: 670,
+        show: false,
+        autoHideMenuBar: false,
+        ...(process.platform === 'linux' ? { icon } : {}),
+        webPreferences: {
+          preload: join(__dirname, '../preload/index.js'),
+          sandbox: false
+        }
+      })
+      const menu = Menu.buildFromTemplate(defaultMenuTemplate)
+      Menu.setApplicationMenu(menu) // 设置全局菜单
+    }
     Window.on('ready-to-show', () => {
       Window.show()
     })
@@ -50,6 +106,15 @@ function createWindowFactory(thumbarButtons: ThumbarButton[]): () => BrowserWind
       }
     })
 
+    Window.on('blur', () => {
+      // linux下无效
+      Window.setOpacity(0.8)
+    })
+
+    Window.on('focus', () => {
+      Window.setOpacity(1)
+    })
+
     Window.webContents.setWindowOpenHandler((details) => {
       shell.openExternal(details.url)
       return { action: 'deny' }
@@ -66,6 +131,13 @@ function createWindowFactory(thumbarButtons: ThumbarButton[]): () => BrowserWind
     } else {
       Window.loadFile(join(__dirname, '../renderer/index.html'))
     }
+    Window.webContents.once('did-finish-load', () => {
+      console.log('Window did-finish-load')
+      const setting = getSetting()
+      const showMenu = setting.window_menu_type === 'custom' // 如果是 custom，则不显示菜单
+      Window.webContents.send('update-menu-visibility', showMenu)
+      console.log(`did-finish-load ${showMenu}`)
+    })
     mainWindow = Window
     return Window
   }
@@ -107,4 +179,54 @@ function publish(channel: string, ...args: unknown[]): void {
   }
 }
 
-export { createWindowFactory, showWindow, sendToMainWindow, publish }
+function updateWindowMenuType(): void {
+  if (mainWindow) {
+    if (mainWindow && createWindow) {
+      mainWindow.destroy() // 销毁当前窗口
+      mainWindow = null
+      createWindow()
+    }
+  }
+}
+
+// 窗口抖动特效
+function shakeWindow(window: BrowserWindow): void {
+  if (!window || window.isDestroyed()) return
+
+  const bounds = window.getBounds() // 获取窗口的当前位置和大小
+  const x = bounds.x
+  const y = bounds.y
+
+  let i = 0
+  const interval = setInterval(() => {
+    const offset = i % 2 === 0 ? 10 : -10 // 偏移量
+    window.setBounds({
+      x: x + offset,
+      y: y,
+      width: bounds.width,
+      height: bounds.height
+    })
+    i++
+    if (i > 5) {
+      // 抖动 3 次后停止
+      clearInterval(interval)
+      window.setBounds(bounds) // 恢复到原始位置
+    }
+  }, 50) // 每 50 毫秒改变一次位置
+}
+
+function shakeMainWindow(): void {
+  if (mainWindow) {
+    shakeWindow(mainWindow)
+  }
+}
+
+export {
+  createWindowFactory,
+  showWindow,
+  sendToMainWindow,
+  publish,
+  updateWindowMenuType,
+  shakeWindow,
+  shakeMainWindow
+}

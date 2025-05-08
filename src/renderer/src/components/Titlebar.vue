@@ -6,22 +6,23 @@
       <button class="titlebar-button" @click="toggleMenu">
         ☰
       </button>
-      <div v-if="menuVisible" class="dropdown-menu">
+      <div v-if="menuVisible" class="dropdown-menu"
+      :class="{ 'macos-dropdown': isMacOS }">
         <button @click="modifyConfig">修改配置</button>
       </div>
 
       <!-- 最小化按钮 -->
-      <button class="titlebar-button" @click="minimizeWindow">
+      <button v-if="!isMacOS" class="titlebar-button" @click="minimizeWindow">
         _
       </button>
 
       <!-- 最大化/还原按钮 -->
-      <button class="titlebar-button" @click="toggleMaximizeWindow">
+      <button v-if="!isMacOS" class="titlebar-button" @click="toggleMaximizeWindow">
         □
       </button>
 
       <!-- 关闭按钮 -->
-      <button class="titlebar-button" @click="closeWindow">
+      <button v-if="!isMacOS" class="titlebar-button" @click="closeWindow">
         ×
       </button>
     </div>
@@ -31,6 +32,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+const isMacOS = ref((window.electron.process.platform as string) === 'darwin')
 
 // 控制下拉菜单的显示状态
 const menuVisible = ref(false)
@@ -40,7 +42,7 @@ const toggleMenu = (): void => {
   menuVisible.value = !menuVisible.value
 }
 
-// 修改配置的逻辑
+// // 修改配置的逻辑
 const modifyConfig = (): void => {
   console.log('修改配置按钮被点击')
 }
@@ -119,7 +121,10 @@ const closeWindow = (): void => {
   padding: 5px;
   z-index: 1000;
 }
-
+/* 针对 macOS 的样式 */
+.macos-dropdown {
+  right: 10px;
+}
 .dropdown-menu button {
   background: none;
   border: none;

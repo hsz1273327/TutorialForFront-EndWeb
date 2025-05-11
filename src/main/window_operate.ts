@@ -5,6 +5,7 @@ import { is } from '@electron-toolkit/utils'
 
 import icon from '../../resources/icon.png?asset'
 import { getSetting } from './setting'
+import { platform } from 'os'
 
 const defaultMenuTemplate: MenuItemConstructorOptions[] = [
   {
@@ -48,13 +49,17 @@ function createWindowFactory(thumbarButtons: ThumbarButton[]): () => BrowserWind
     const setting = getSetting()
     let Window: BrowserWindow
     if (setting.window_menu_type === 'custom') {
+      let autoHideMenuBar = true
+      if (process.platform === 'darwin') {
+        autoHideMenuBar = false // macOS 下不隐藏菜单栏
+      }
       // Create the browser window.
       Window = new BrowserWindow({
         title: 'helloworld',
         width: 900,
         height: 670,
         show: false,
-        autoHideMenuBar: true,
+        autoHideMenuBar: autoHideMenuBar,
         titleBarStyle: 'hidden', // 隐藏默认标题栏
         transparent: true, // 透明窗口
         frame: false, // 移除窗口边框（可选）
@@ -78,9 +83,9 @@ function createWindowFactory(thumbarButtons: ThumbarButton[]): () => BrowserWind
           sandbox: false
         }
       })
-      const menu = Menu.buildFromTemplate(defaultMenuTemplate)
-      Menu.setApplicationMenu(menu) // 设置全局菜单
     }
+    const menu = Menu.buildFromTemplate(defaultMenuTemplate)
+    Menu.setApplicationMenu(menu) // 设置全局菜单\
     Window.on('ready-to-show', () => {
       Window.show()
     })

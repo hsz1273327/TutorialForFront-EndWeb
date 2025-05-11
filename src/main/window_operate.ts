@@ -56,8 +56,8 @@ function createWindowFactory(thumbarButtons: ThumbarButton[]): () => BrowserWind
         show: false,
         autoHideMenuBar: true,
         titleBarStyle: 'hidden', // 隐藏默认标题栏
-        transparent: true, // 透明窗口
-        frame: false, // 移除窗口边框（可选）
+        //transparent: true, // 透明窗口
+        //frame:false, //移除窗口边框（可选
         ...(process.platform === 'linux' ? { icon } : {}),
         webPreferences: {
           preload: join(__dirname, '../preload/index.js'),
@@ -180,13 +180,13 @@ function publish(channel: string, ...args: unknown[]): void {
 }
 
 function updateWindowMenuType(): void {
-  if (mainWindow) {
-    if (mainWindow && createWindow) {
-      mainWindow.destroy() // 销毁当前窗口
-      mainWindow = null
-      createWindow()
-    }
+
+  if (mainWindow && createWindow) {
+    mainWindow.destroy() // 销毁当前窗口
+    mainWindow = null
+    createWindow()
   }
+  
 }
 
 // 窗口抖动特效

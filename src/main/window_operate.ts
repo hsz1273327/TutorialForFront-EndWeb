@@ -69,6 +69,10 @@ function createWindowFactory(thumbarButtons: ThumbarButton[]): () => BrowserWind
         }
       })
     } else {
+      let transparent = true
+      if (process.platform === 'darwin') {
+        transparent = false // macOS 下不隐藏菜单栏
+      }
       // Create the browser window.
       Window = new BrowserWindow({
         title: 'helloworld',
@@ -76,7 +80,7 @@ function createWindowFactory(thumbarButtons: ThumbarButton[]): () => BrowserWind
         height: 670,
         show: false,
         autoHideMenuBar: false,
-        transparent: true, // 透明窗口
+        transparent: transparent, // 透明窗口
         ...(process.platform === 'linux' ? { icon } : {}),
         webPreferences: {
           preload: join(__dirname, '../preload/index.js'),

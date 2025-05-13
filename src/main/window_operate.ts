@@ -164,10 +164,15 @@ function createWindowFactory(thumbarButtons: ThumbarButton[]): () => BrowserWind
 
 function showWindow(): void {
   if (mainWindow) {
+    console.log('mainWindow exists')
+    if (mainWindow.isDestroyed()) {
+      console.log('mainWindow is destroyed')
+    }
     mainWindow.show() // 显示窗口
     if (mainWindow.isMinimized()) {
       mainWindow.restore() // 如果窗口最小化，恢复窗口
     }
+    console.log('mainWindow restore')
     mainWindow.focus() // 将窗口置于焦点
   } else {
     console.log('mainWindow is null')

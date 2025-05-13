@@ -104,12 +104,17 @@ if (!gotTheLock) {
 
   app.on('window-all-closed', () => {
     const setting = getSetting()
-    if (process.platform !== 'darwin') {
-      if (!setting.can_background) {
-        app.quit() // 如果不允许后台运行，退出应用
-      } else {
-        console.log('所有窗口已关闭，但应用仍在后台运行')
-      }
+    // if (process.platform !== 'darwin') {
+    //   if (!setting.can_background) {
+    //     app.quit() // 如果不允许后台运行，退出应用
+    //   } else {
+    //     console.log('所有窗口已关闭，但应用仍在后台运行')
+    //   }
+    // }
+    if (!setting.can_background) {
+      app.quit() // 如果不允许后台运行，退出应用
+    } else {
+      console.log('所有窗口已关闭，但应用仍在后台运行')
     }
   })
 }

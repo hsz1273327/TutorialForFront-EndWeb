@@ -11,6 +11,7 @@ declare global {
       pull: (message: string) => void
       windowControl: (action: string) => void
       onUpdateMenuVisibility: (callback: (value: boolean) => void) => void
+      onSetOpacity: (callback: (value: number) => void) => void
     }
   }
 }

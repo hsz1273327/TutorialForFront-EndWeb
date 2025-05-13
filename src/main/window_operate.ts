@@ -5,7 +5,6 @@ import { is } from '@electron-toolkit/utils'
 
 import icon from '../../resources/icon.png?asset'
 import { getSetting } from './setting'
-import { platform } from 'os'
 
 const defaultMenuTemplate: MenuItemConstructorOptions[] = [
   {
@@ -61,7 +60,7 @@ function createWindowFactory(thumbarButtons: ThumbarButton[]): () => BrowserWind
         show: false,
         autoHideMenuBar: autoHideMenuBar,
         titleBarStyle: 'hidden', // 隐藏默认标题栏
-        //transparent: true, // 透明窗口
+        transparent: true, // 透明窗口
         //frame:false, //移除窗口边框（可选
         ...(process.platform === 'linux' ? { icon } : {}),
         webPreferences: {
@@ -77,6 +76,7 @@ function createWindowFactory(thumbarButtons: ThumbarButton[]): () => BrowserWind
         height: 670,
         show: false,
         autoHideMenuBar: false,
+        transparent: true, // 透明窗口
         ...(process.platform === 'linux' ? { icon } : {}),
         webPreferences: {
           preload: join(__dirname, '../preload/index.js'),
@@ -113,11 +113,19 @@ function createWindowFactory(thumbarButtons: ThumbarButton[]): () => BrowserWind
 
     Window.on('blur', () => {
       // linux下无效
-      Window.setOpacity(0.8)
+      if (process.platform === 'linux') {
+        Window.webContents.send('set-opacity', 0.8)
+      } else {
+        Window.setOpacity(0.8)
+      }
     })
 
     Window.on('focus', () => {
-      Window.setOpacity(1)
+      if (process.platform === 'linux') {
+        Window.webContents.send('set-opacity', 1)
+      } else {
+        Window.setOpacity(1)
+      }
     })
 
     Window.webContents.setWindowOpenHandler((details) => {
@@ -185,13 +193,11 @@ function publish(channel: string, ...args: unknown[]): void {
 }
 
 function updateWindowMenuType(): void {
-
   if (mainWindow && createWindow) {
     mainWindow.destroy() // 销毁当前窗口
     mainWindow = null
     createWindow()
   }
-  
 }
 
 // 窗口抖动特效

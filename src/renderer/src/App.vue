@@ -89,6 +89,12 @@ window.api.onUpdateMenuVisibility((value) => {
   titlebarvisible.value = value
   console.log('titlebarvisible:', titlebarvisible.value)
 })
+window.api.onSetOpacity((value) => {
+  console.log('opacity:', value)
+  // document.body.style.opacity = value.toString()
+  document.body.style.backgroundColor = `rgba(0, 0, 0, ${value})`
+})
+
 onBeforeMount(async () => {
   await getBrowserSupport()
   await getAppPath()

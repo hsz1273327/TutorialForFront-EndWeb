@@ -23,6 +23,9 @@ const api = {
   // update menu visibility
   onUpdateMenuVisibility: (callback: (value: boolean) => void): void => {
     ipcRenderer.on('update-menu-visibility', (_event, value: boolean) => callback(value))
+  },
+  onSetOpacity: (callback: (value: number) => void): void => {
+    ipcRenderer.on('set-opacity', (_event, value: number) => callback(value))
   }
 }
 

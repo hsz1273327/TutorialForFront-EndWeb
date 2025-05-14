@@ -116,20 +116,11 @@ function createWindowFactory(thumbarButtons: ThumbarButton[]): () => BrowserWind
     })
 
     Window.on('blur', () => {
-      // linux下无效
-      if (process.platform === 'linux') {
-        Window.webContents.send('set-opacity', 0.8)
-      } else {
-        Window.setOpacity(0.8)
-      }
+      setOpacityWindow(Window, 0.8) // 设置窗口透明度
     })
 
     Window.on('focus', () => {
-      if (process.platform === 'linux') {
-        Window.webContents.send('set-opacity', 1)
-      } else {
-        Window.setOpacity(1)
-      }
+      setOpacityWindow(Window, 1) // 设置窗口透明度
     })
 
     Window.webContents.setWindowOpenHandler((details) => {
@@ -241,6 +232,15 @@ function shakeMainWindow(): void {
   }
 }
 
+function setOpacityWindow(window: BrowserWindow, value: number): void {
+  // linux下无效
+  if (process.platform === 'linux') {
+    window.webContents.send('set-opacity', value)
+  } else {
+    window.setOpacity(value)
+  }
+}
+
 export {
   createWindowFactory,
   showWindow,
@@ -248,5 +248,6 @@ export {
   publish,
   updateWindowMenuType,
   shakeWindow,
-  shakeMainWindow
+  shakeMainWindow,
+  setOpacityWindow
 }

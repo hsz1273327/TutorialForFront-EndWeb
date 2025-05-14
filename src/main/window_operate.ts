@@ -46,6 +46,10 @@ let createWindow: (() => BrowserWindow) | null = null
 function createWindowFactory(thumbarButtons: ThumbarButton[]): () => BrowserWindow {
   const _create_window = (): BrowserWindow => {
     const setting = getSetting()
+    let transparent = false
+    if (process.platform === 'linux') {
+      transparent = true // linux 下需要设置透明以便配合css透明处理背景色
+    }
     let Window: BrowserWindow
     if (setting.window_menu_type === 'custom') {
       let autoHideMenuBar = true
@@ -60,7 +64,7 @@ function createWindowFactory(thumbarButtons: ThumbarButton[]): () => BrowserWind
         show: false,
         autoHideMenuBar: autoHideMenuBar,
         titleBarStyle: 'hidden', // 隐藏默认标题栏
-        transparent: true, // 透明窗口
+        transparent: transparent, // 透明窗口
         //frame:false, //移除窗口边框（可选
         ...(process.platform === 'linux' ? { icon } : {}),
         webPreferences: {
@@ -69,10 +73,6 @@ function createWindowFactory(thumbarButtons: ThumbarButton[]): () => BrowserWind
         }
       })
     } else {
-      let transparent = false
-      if (process.platform === 'linux') {
-        transparent = true // linux 下需要设置透明以便配合css透明处理背景色
-      }
       // Create the browser window.
       Window = new BrowserWindow({
         title: 'helloworld',

@@ -9,9 +9,15 @@ declare global {
       echo: (requestData: string) => Promise<string>
       onUpdateNowTime: (callback: (value: string) => void) => void
       pull: (message: string) => void
-      windowControl: (action: string) => void
       onUpdateMenuVisibility: (callback: (value: boolean) => void) => void
       onSetOpacity: (callback: (value: number) => void) => void
+      // window-control
+      windowControl: (action: string) => void
+      // file-control
+      openFile: () => Promise<FileInfo>
+      selectFiles: () => Promise<string[]>
+      saveFile: (name: string, content: string | Uint8Array) => Promise<void>
+      readFile: (file: File) => Promise<FileInfo>
     }
   }
 }

@@ -20,6 +20,13 @@
     <div class="action">
       <a target="_blank" rel="noreferrer" @click="queryNowTime()">刷新时间</a>
     </div>
+
+    <div class="action">
+      <a target="_blank" rel="noreferrer" @click="querySaveFile()">保存测试文件</a>
+    </div>
+    <div class="action">
+      <a target="_blank" rel="noreferrer" @click="queryOpenFile()">打开文件</a>
+    </div>
   </div>
   <p class="tip">应用的apppath为: {{ appPath }}</p>
   <p class="tip">应用的app-data-path为: {{ appDataPath }}</p>
@@ -27,12 +34,13 @@
     当前上次更新时间: <strong> {{ nowTime }}</strong>
   </p>
   <Versions />
+  <pre>{{ fileContent }}</pre>
 </template>
 
 <script setup lang="ts">
 import Titlebar from './components/Titlebar.vue'
 import Versions from './components/Versions.vue'
-import { onBeforeMount, ref } from 'vue'
+import { onMounted, onBeforeMount, onBeforeUnmount, ref } from 'vue'
 
 const appPath = ref('')
 const appDataPath = ref('')
@@ -76,6 +84,33 @@ function queryNowTime(): void {
   console.log('querying now time')
   window.api.pull('nowtime')
 }
+const fileContent = ref('')
+async function queryOpenFile(): Promise<void> {
+  console.log('querying open file')
+  const file = await window.api.openFile()
+  fileContent.value = file.content
+}
+
+async function querySaveFile(): Promise<void> {
+  console.log('querying open dir')
+  const content = await window.api.saveFile('test.txt', 'hello world')
+  fileContent.value = content
+}
+
+function preventDefault(event: Event): void {
+  event.preventDefault()
+}
+async function handleDrop(event: DragEvent): Promise<void> {
+  console.log('handleDrop start')
+  event.preventDefault()
+  if (event.dataTransfer && event.dataTransfer.files.length > 0) {
+    const file = event.dataTransfer.files[0]
+    // 通过 preload 暴露的 api 发送路径
+    const content = await window.api.readFile(file)
+    console.log('file content:', content)
+    fileContent.value = content
+  }
+}
 
 window.api.onUpdateNowTime((value) => {
   nowTime.value = value
@@ -95,9 +130,19 @@ window.api.onSetOpacity((value) => {
   document.body.style.backgroundColor = `rgba(0, 0, 0, ${value})`
 })
 
+
 onBeforeMount(async () => {
   await getBrowserSupport()
   await getAppPath()
   await getAppDataPath()
+})
+onMounted(() => {
+  window.addEventListener('dragover', preventDefault)
+  window.addEventListener('drop', handleDrop)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('dragover', preventDefault)
+  window.removeEventListener('drop', handleDrop)
 })
 </script>

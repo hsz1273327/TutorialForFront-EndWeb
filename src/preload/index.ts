@@ -1,6 +1,6 @@
-import { contextBridge, ipcRenderer } from 'electron'
+import { contextBridge, ipcRenderer, webUtils } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-
+import type { FileInfo } from '../common/file-info'
 // Custom APIs for renderer
 const api = {
   // Add your custom APIs here
@@ -26,6 +26,17 @@ const api = {
   },
   onSetOpacity: (callback: (value: number) => void): void => {
     ipcRenderer.on('set-opacity', (_event, value: number) => callback(value))
+  },
+  // file-control
+  openFile: (): Promise<FileInfo> => ipcRenderer.invoke('file-control', 'open-file'),
+  selectFiles: (): Promise<string[]> => ipcRenderer.invoke('file-control', 'select-files'),
+  readFile: (file: File): Promise<FileInfo> => {
+    const path = webUtils.getPathForFile(file)
+    console.log('readFile', path)
+    return ipcRenderer.invoke('file-control', 'read-file', path)
+  },
+  saveFile: (name: string, content: string | Uint8Array): Promise<void> => {
+    return ipcRenderer.invoke('file-control', 'save-file', null, { name, content })
   }
 }
 

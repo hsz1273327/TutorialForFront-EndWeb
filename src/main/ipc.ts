@@ -1,6 +1,6 @@
 import { app, ipcMain, IpcMainEvent, IpcMainInvokeEvent, BrowserWindow } from 'electron'
 import { openFile, selectFiles, readFile, saveFileWithDialog } from './file_operate'
-import { ContentMenuFactory } from './context_menus'
+import { ContentMenuFactory } from './default_context_menus'
 import type { FileInfo } from '../common/file-info'
 function init_ipc(): void {
   // `Request-Reply`模式的接口

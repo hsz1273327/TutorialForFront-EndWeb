@@ -6,7 +6,7 @@ body {
   justify-content: center;
   background-image: url('./wavy-lines.svg');
   background-size: cover;
-  user-select: none;
+  /* user-select: none; */
    transition: opacity 0.3s ease; /* 添加透明度变化的过渡效果 */
 }
 

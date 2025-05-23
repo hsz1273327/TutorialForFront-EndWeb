@@ -3,7 +3,7 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import type { FileInfo } from '../common/file-info'
 // 简单的扩展名到 mimeType 映射
-const mimeTypeMap: Record<string, string> = {
+const SupportedMimeTypeMap: Record<string, string> = {
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
@@ -15,6 +15,18 @@ const mimeTypeMap: Record<string, string> = {
   '.txt': 'text/plain',
   '.md': 'text/markdown',
   '.json': 'application/json',
+  '.jsonl': 'application/jsonl',
+  '.parquet': 'application/parquet',
+  '.mp4': 'video/mp4',
+  '.avi': 'video/x-msvideo',
+  '.mkv': 'video/x-matroska',
+  '.webm': 'video/webm',
+  '.mp3': 'audio/mpeg',
+  '.wav': 'audio/wav',
+  '.flac': 'audio/flac',
+  '.aac': 'audio/aac',
+  '.ogg': 'audio/ogg',
+  '.opus': 'audio/opus',
   '.js': 'application/javascript',
   '.html': 'text/html',
   '.css': 'text/css',
@@ -23,6 +35,23 @@ const mimeTypeMap: Record<string, string> = {
   '.pdf': 'application/pdf'
   // 可根据需要继续扩展
 }
+const supportedSuxfixToMimeType = (suxfix: string): string => {
+  const mimetype = SupportedMimeTypeMap[suxfix]
+  if (mimetype) {
+    return mimetype
+  }
+  throw new Error(`Unsupported suxfix: ${suxfix}`)
+}
+// 将 mimeType 转换为扩展名
+const supportedMimeTypeToSuxfix = (mimetype: string): string => {
+  const suxf = Object.keys(SupportedMimeTypeMap).find(
+    (key) => SupportedMimeTypeMap[key] === mimetype
+  )
+  if (suxf) {
+    return suxf
+  }
+  throw new Error(`Unsupported mimeType: ${mimetype}`)
+}
 
 // readFile 读取文件
 // 读取文件内容并返回
@@ -30,6 +59,7 @@ async function readFile(filePath: string): Promise<FileInfo> {
   console.log('readFile', filePath)
   const name = path.basename(filePath)
   const ext = path.extname(filePath).toLowerCase()
+  const mimeType = supportedSuxfixToMimeType(ext)
   const imageExts = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp', '.ico', '.svg']
   let content: string | Uint8Array
   if (imageExts.includes(ext)) {
@@ -38,7 +68,6 @@ async function readFile(filePath: string): Promise<FileInfo> {
   } else {
     content = await fs.readFile(filePath, 'utf-8')
   }
-  const mimeType = mimeTypeMap[ext] || 'application/octet-stream'
   return { name, content, mimeType }
 }
 // openFile 文件系统打开文件
@@ -87,23 +116,71 @@ async function openDirectory(window: BrowserWindow): Promise<string | null> {
   return null
 }
 
-async function saveFile(window: BrowserWindow, file: FileInfo): Promise<void> {
-  const dir_path = await openDirectory(window)
-  if (dir_path) {
-    const filePath = `${dir_path}/${file.name}`
-    console.log('saveFile', filePath)
-    if (typeof file.content === 'string') {
-      await fs.writeFile(filePath, file.content, 'utf-8')
-      console.log('File saved successfully:', filePath)
-    } else if (file.content instanceof Uint8Array) {
-      await fs.writeFile(filePath, file.content)
-    } else {
-      throw new Error('content 必须是 string 或 Uint8Array')
-    }
+async function saveFile(filePath: string, content: string | Uint8Array): Promise<void> {
+  console.log('saveFile', filePath)
+  if (typeof content === 'string') {
+    await fs.writeFile(filePath, content, 'utf-8')
     console.log('File saved successfully:', filePath)
+  } else if (content instanceof Uint8Array) {
+    await fs.writeFile(filePath, content)
   } else {
-    console.log('No directory selected')
+    throw new Error('content 必须是 string 或 Uint8Array')
   }
+  console.log('File saved successfully:', filePath)
 }
 
-export { readFile, openFile, selectFiles, saveFile, openDirectory }
+async function saveFileWithDialog(window: BrowserWindow, file: FileInfo): Promise<string> {
+  if (file.name) {
+    const dir_path = await openDirectory(window)
+    if (dir_path) {
+      const filePath = path.join(dir_path, file.name)
+      console.log('saveFileWithDialog', filePath)
+      await saveFile(filePath, file.content)
+      console.log('文件保存成功:', filePath)
+      return filePath
+    } else {
+      console.error('文件夹路径不能为空')
+      throw new Error('文件夹路径不能为空')
+    }
+  } else {
+    let ext = '.txt'
+    if (file.mimeType) {
+      try {
+        ext = supportedMimeTypeToSuxfix(file.mimeType)
+      } catch (error) {
+        console.error(`文件类型不支持,${error}`)
+      }
+    }
+    const result = await dialog.showSaveDialog(window, {
+      title: '保存文件',
+      defaultPath: `未命名${ext}`, // 默认文件名
+      filters: [
+        { name: '文本文件', extensions: ['txt', 'md'] },
+        { name: '数据文件', extensions: ['json', 'csv', 'jsonl', 'parquet'] },
+        { name: '图片文件', extensions: ['png', 'jpg', 'jpeg', 'gif', 'webp'] },
+        { name: '视频文件', extensions: ['mp4', 'avi', 'mkv', 'webm'] },
+        { name: '音频文件', extensions: ['mp3', 'wav', 'flac', '.aac'] },
+        { name: '所有文件', extensions: ['*'] }
+      ]
+    })
+    if (!result.canceled && result.filePath) {
+      console.log('saveFileWithDialog', result.filePath)
+      await saveFile(result.filePath, file.content)
+      console.log('文件保存成功:', result.filePath)
+      return result.filePath
+    } else {
+      console.error('文件路径不能为空')
+      throw new Error('文件路径不能为空')
+    }
+  }
+}
+export {
+  supportedSuxfixToMimeType,
+  supportedMimeTypeToSuxfix,
+  readFile,
+  openFile,
+  selectFiles,
+  saveFile,
+  saveFileWithDialog,
+  openDirectory
+}

@@ -93,8 +93,8 @@ async function queryOpenFile(): Promise<void> {
 
 async function querySaveFile(): Promise<void> {
   console.log('querying open dir')
-  const content = await window.api.saveFile('test.txt', 'hello world')
-  fileContent.value = content
+  await window.api.saveFile('hello world')
+  fileContent.value = 'save file test.txt ok'
 }
 
 function preventDefault(event: Event): void {
@@ -130,6 +130,40 @@ window.api.onSetOpacity((value) => {
   document.body.style.backgroundColor = `rgba(0, 0, 0, ${value})`
 })
 
+// function isInputElement(target: EventTarget | null): boolean {
+//   if (!(target instanceof HTMLElement)) return false
+//   // 判断 input、textarea 或 contenteditable
+//   return (
+//     target.tagName === 'INPUT' ||
+//     target.tagName === 'TEXTAREA' ||
+//     target.isContentEditable
+//   )
+// }
+// 处理右键菜单事件
+async function handleContextMenu(event: MouseEvent): Promise<void> {
+  event.preventDefault()
+  const target = event.target as HTMLElement
+  const selection = window.getSelection()?.toString()
+
+  if (target instanceof HTMLImageElement) {
+    console.log('右键图片', target.src)
+    await window.api.openContentMenu('image', target.src)
+  } else if (target instanceof HTMLVideoElement) {
+    console.log('右键视频', target.src)
+    await window.api.openContentMenu('video', target.src)
+  } else if (target instanceof HTMLAnchorElement) {
+    console.log('右键链接', target.href)
+    await window.api.openContentMenu('anchor', target.href)
+  } else if (selection && selection.length > 0) {
+    console.log('右键文本', selection)
+    await window.api.openContentMenu('text', selection)
+    // } else if (isInputElement(target)) {
+    //   console.log('右键输入框', target)
+  } else {
+    console.log('右键其它元素', target)
+    await window.api.openContentMenu()
+  }
+}
 
 onBeforeMount(async () => {
   await getBrowserSupport()
@@ -139,10 +173,12 @@ onBeforeMount(async () => {
 onMounted(() => {
   window.addEventListener('dragover', preventDefault)
   window.addEventListener('drop', handleDrop)
+  window.addEventListener('contextmenu', handleContextMenu)
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener('dragover', preventDefault)
   window.removeEventListener('drop', handleDrop)
+  window.removeEventListener('contextmenu', handleContextMenu)
 })
 </script>

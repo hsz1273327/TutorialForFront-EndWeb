@@ -16,8 +16,13 @@ declare global {
       // file-control
       openFile: () => Promise<FileInfo>
       selectFiles: () => Promise<string[]>
-      saveFile: (name: string, content: string | Uint8Array) => Promise<void>
+      saveFile: (content: string | Uint8Array, name?: string) => Promise<void>
       readFile: (file: File) => Promise<FileInfo>
+      // content-menu
+      openContentMenu: (
+        place?: 'anchor' | 'text' | 'image' | 'video',
+        target?: string
+      ) => Promise<void>
     }
   }
 }

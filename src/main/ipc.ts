@@ -1,5 +1,6 @@
 import { app, ipcMain, IpcMainEvent, IpcMainInvokeEvent, BrowserWindow } from 'electron'
-import { openFile, selectFiles, readFile, saveFile } from './file_operate'
+import { openFile, selectFiles, readFile, saveFileWithDialog } from './file_operate'
+import { ContentMenuFactory } from './context_menus'
 import type { FileInfo } from '../common/file-info'
 function init_ipc(): void {
   // `Request-Reply`模式的接口
@@ -35,7 +36,7 @@ function init_ipc(): void {
     }
   })
   // `window-control`,让渲染进程控制窗口的最大化最小化和关闭
-  ipcMain.on('window-control', (event: IpcMainEvent, action) => {
+  ipcMain.on('window-control', (event: IpcMainEvent, action: string) => {
     // 获取发送消息的 webContents 对象
     const webContents = event.sender
     // 从 webContents 获取对应的 BrowserWindow 对象
@@ -66,7 +67,7 @@ function init_ipc(): void {
       action: string,
       filepath?: string,
       file?: FileInfo
-    ): Promise<FileInfo | string[] | null> => {
+    ): Promise<FileInfo | string[] | string> => {
       // 获取发送消息的 webContents 对象
       const webContents = event.sender
       // 从 webContents 获取对应的 BrowserWindow 对象
@@ -122,9 +123,9 @@ function init_ipc(): void {
                 console.error('文件内容不能为空')
                 throw new Error('文件内容不能为空')
               }
-              await saveFile(Window, file)
-              console.log('保存文件成功:', file.name)
-              return null
+              const filePath = await saveFileWithDialog(Window, file)
+              console.log('保存文件成功:', filePath)
+              return filePath
             }
             break
           default:
@@ -134,6 +135,23 @@ function init_ipc(): void {
             }
             break
         }
+      } else {
+        console.error('获取窗口失败')
+        throw new Error('获取窗口失败')
+      }
+    }
+  )
+  //`context-menu`,让渲染进程控制右键菜单
+  ipcMain.handle(
+    'context-menu',
+    (event: IpcMainInvokeEvent, place?: string, target?: string): void => {
+      // 获取发送消息的 webContents 对象
+      const webContents = event.sender
+      // 从 webContents 获取对应的 BrowserWindow 对象
+      const Window = BrowserWindow.fromWebContents(webContents)
+      if (Window) {
+        ContentMenuFactory(Window, place, target)
+        return
       } else {
         console.error('获取窗口失败')
         throw new Error('获取窗口失败')

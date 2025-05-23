@@ -1,5 +1,5 @@
 export interface FileInfo {
-  name: string
+  name?: string
   content: string | Uint8Array
   mimeType?: string
 }

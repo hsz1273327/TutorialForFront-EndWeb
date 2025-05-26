@@ -70,7 +70,7 @@ async function readFile(filePath: string): Promise<FileInfo> {
   }
   return { name, content, mimeType }
 }
-// openFile 文件系统打开文件
+
 // 打开文件选择对话框，返回选中的文件内容
 async function openFile(window: BrowserWindow): Promise<FileInfo | null> {
   const result = await dialog.showOpenDialog(window, {
@@ -159,7 +159,7 @@ async function saveFileWithDialog(window: BrowserWindow, file: FileInfo): Promis
         { name: '数据文件', extensions: ['json', 'csv', 'jsonl', 'parquet'] },
         { name: '图片文件', extensions: ['png', 'jpg', 'jpeg', 'gif', 'webp'] },
         { name: '视频文件', extensions: ['mp4', 'avi', 'mkv', 'webm'] },
-        { name: '音频文件', extensions: ['mp3', 'wav', 'flac', '.aac'] },
+        { name: '音频文件', extensions: ['mp3', 'wav', 'flac', 'aac'] },
         { name: '所有文件', extensions: ['*'] }
       ]
     })
@@ -174,6 +174,31 @@ async function saveFileWithDialog(window: BrowserWindow, file: FileInfo): Promis
     }
   }
 }
+// 从src中获取文件Uint8Array内容
+async function getUint8ArrayContent(src: string): Promise<FileInfo> {
+  let mimetype
+  const response = await fetch(src)
+  const arrayBuffer = await response.arrayBuffer()
+  const content = new Uint8Array(arrayBuffer)
+  const type = response.headers.get('Content-Type')
+  if (type) {
+    mimetype = type
+  } else {
+    const url = new URL(src)
+    const ext = url.pathname.split('.').pop()
+    if (ext) {
+      mimetype = supportedSuxfixToMimeType(ext)
+    } else {
+      throw new Error('无法获取文件类型')
+    }
+  }
+  return {
+    content,
+    mimeType: mimetype
+  }
+}
+
+
 export {
   supportedSuxfixToMimeType,
   supportedMimeTypeToSuxfix,
@@ -182,5 +207,6 @@ export {
   selectFiles,
   saveFile,
   saveFileWithDialog,
-  openDirectory
+  openDirectory,
+  getUint8ArrayContent
 }

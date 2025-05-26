@@ -1,7 +1,9 @@
 <template>
   <Titlebar v-if="titlebarvisible" />
   <div class="title">Electron-Vite-Vue3-TypeScript</div>
-  <img alt="logo" class="logo" src="./assets/electron.svg" />
+
+  <img alt="logo" class="logo draggable" draggable="true" src="./assets/electron.svg" @dragstart="handleDragStart" />
+
   <div class="creator">Powered by electron-vite</div>
   <div class="text">
     Build an Electron app with
@@ -40,6 +42,7 @@
 <script setup lang="ts">
 import Titlebar from './components/Titlebar.vue'
 import Versions from './components/Versions.vue'
+import { getEventSource } from './utils'
 import { onMounted, onBeforeMount, onBeforeUnmount, ref } from 'vue'
 
 const appPath = ref('')
@@ -112,6 +115,18 @@ async function handleDrop(event: DragEvent): Promise<void> {
   }
 }
 
+function handleDragStart(event: DragEvent): void {
+  console.log('Drag started')
+  const sourceinfo = getEventSource(event)
+  if (event.dataTransfer) {
+    const filePath = '/path/to/your/file.txt'; // 替换为实际文件路径
+    event.dataTransfer.setData(
+      'DownloadURL',
+      `application/octet-stream:file.txt:${filePath}`
+    );
+  }
+}
+
 window.api.onUpdateNowTime((value) => {
   nowTime.value = value
   let notification = new window.Notification('测试推送当前时间', {
@@ -130,41 +145,6 @@ window.api.onSetOpacity((value) => {
   document.body.style.backgroundColor = `rgba(0, 0, 0, ${value})`
 })
 
-// function isInputElement(target: EventTarget | null): boolean {
-//   if (!(target instanceof HTMLElement)) return false
-//   // 判断 input、textarea 或 contenteditable
-//   return (
-//     target.tagName === 'INPUT' ||
-//     target.tagName === 'TEXTAREA' ||
-//     target.isContentEditable
-//   )
-// }
-// 处理右键菜单事件
-async function handleContextMenu(event: MouseEvent): Promise<void> {
-  event.preventDefault()
-  const target = event.target as HTMLElement
-  const selection = window.getSelection()?.toString()
-
-  if (target instanceof HTMLImageElement) {
-    console.log('右键图片', target.src)
-    await window.api.openContentMenu('image', target.src)
-  } else if (target instanceof HTMLVideoElement) {
-    console.log('右键视频', target.src)
-    await window.api.openContentMenu('video', target.src)
-  } else if (target instanceof HTMLAnchorElement) {
-    console.log('右键链接', target.href)
-    await window.api.openContentMenu('anchor', target.href)
-  } else if (selection && selection.length > 0) {
-    console.log('右键文本', selection)
-    await window.api.openContentMenu('text', selection)
-    // } else if (isInputElement(target)) {
-    //   console.log('右键输入框', target)
-  } else {
-    console.log('右键其它元素', target)
-    await window.api.openContentMenu()
-  }
-}
-
 onBeforeMount(async () => {
   await getBrowserSupport()
   await getAppPath()
@@ -173,12 +153,10 @@ onBeforeMount(async () => {
 onMounted(() => {
   window.addEventListener('dragover', preventDefault)
   window.addEventListener('drop', handleDrop)
-  window.addEventListener('contextmenu', handleContextMenu)
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener('dragover', preventDefault)
   window.removeEventListener('drop', handleDrop)
-  window.removeEventListener('contextmenu', handleContextMenu)
 })
 </script>

@@ -170,3 +170,8 @@ code {
     display: none;
   }
 }
+
+.draggable {
+  -webkit-app-region: no-drag; /* 确保元素本身不影响窗口拖动 */
+  cursor: grab; /* 鼠标指针显示为抓取状态 */
+}

@@ -1,7 +1,24 @@
-import { app, ipcMain, IpcMainEvent, IpcMainInvokeEvent, BrowserWindow } from 'electron'
-import { openFile, selectFiles, readFile, saveFileWithDialog } from './file_operate'
-import { ContentMenuFactory } from './default_context_menus'
-import type { FileInfo } from '../common/file-info'
+import {
+  app,
+  ipcMain,
+  IpcMainEvent,
+  IpcMainInvokeEvent,
+  BrowserWindow,
+  nativeImage
+} from 'electron'
+import {
+  supportedMimeTypeToSuxfix,
+  openFile,
+  selectFiles,
+  readFile,
+  saveFileWithDialog,
+  saveFile,
+  getUint8ArrayContent
+} from './file_operate'
+import { join } from 'path'
+import type { FileInfo, TargetSource } from '../common/file-info'
+import icon from '../../resources/icon.png?asset'
+
 function init_ipc(): void {
   // `Request-Reply`模式的接口
   ipcMain.handle('get-app-data-path', () => {
@@ -66,7 +83,8 @@ function init_ipc(): void {
       event: IpcMainInvokeEvent,
       action: string,
       filepath?: string,
-      file?: FileInfo
+      file?: FileInfo,
+      src?: TargetSource
     ): Promise<FileInfo | string[] | string> => {
       // 获取发送消息的 webContents 对象
       const webContents = event.sender
@@ -112,7 +130,7 @@ function init_ipc(): void {
           case 'save-file':
             {
               if (!file) {
-                console.error('文件内容不能为空')
+                console.error('文件不能为空')
                 throw new Error('文件内容不能为空')
               }
               if (!file.name) {
@@ -128,6 +146,75 @@ function init_ipc(): void {
               return filePath
             }
             break
+          case 'drag-as-file': {
+            if (!src) {
+              console.error('元素源不能为空')
+              throw new Error('元素源不能为空')
+            }
+            if (!src.source) {
+              console.error('元素源的 source 不能为空')
+              throw new Error('元素源的 source 不能为空')
+            }
+            if (!src.type) {
+              console.error('元素源的 type 不能为空')
+              throw new Error('元素源的 type 不能为空')
+            }
+            const drag_time = new Date().getTime()
+            let tempfilePath: string
+            switch (src.type) {
+              case 'text':
+                {
+                  src.source = src.source.trim()
+                  if (src.source.length === 0) {
+                    console.error('文本内容不能为空')
+                    throw new Error('文本内容不能为空')
+                  }
+                  tempfilePath = join(app.getPath('temp'), `new-drag-text-${drag_time}.txt`)
+                  await saveFile(tempfilePath, src.source)
+                }
+                break
+              case 'anchor':
+                {
+                  if (!src.source.startsWith('http://') && !src.source.startsWith('https://')) {
+                    console.error('锚点链接必须以 http:// 或 https:// 开头')
+                    throw new Error('锚点链接必须以 http:// 或 https:// 开头')
+                  }
+                  tempfilePath = join(app.getPath('temp'), `new-drag-anchor-${drag_time}.url`)
+                  await saveFile(tempfilePath, src.source)
+                }
+                break
+              case 'image':
+              case 'video':
+                {
+                  const file = await getUint8ArrayContent(src.source)
+                  if (!file) {
+                    console.error('获取文件内容失败')
+                    throw new Error('获取文件内容失败')
+                  }
+                  if (!file.mimeType) {
+                    console.error('文件的 MIME 类型不能为空')
+                    throw new Error('文件的 MIME 类型不能为空')
+                  }
+                  const suxfix = supportedMimeTypeToSuxfix(file.mimeType)
+                  tempfilePath = join(app.getPath('temp'), `new-drag-file-${drag_time}${suxfix}`)
+                  await saveFile(tempfilePath, file.content)
+                }
+                break
+              default:
+                {
+                  console.error('未知的元素源类型:', src.type)
+                  throw new Error('未知的元素源类型')
+                }
+                break
+            }
+
+            Window.webContents.startDrag({
+              file: tempfilePath,
+              icon: nativeImage.createFromPath(icon).resize({ width: 16, height: 16 })
+            })
+
+            return tempfilePath
+          }
           default:
             {
               console.error('未知的操作:', action)
@@ -135,23 +222,6 @@ function init_ipc(): void {
             }
             break
         }
-      } else {
-        console.error('获取窗口失败')
-        throw new Error('获取窗口失败')
-      }
-    }
-  )
-  //`context-menu`,让渲染进程控制右键菜单
-  ipcMain.handle(
-    'context-menu',
-    (event: IpcMainInvokeEvent, place?: string, target?: string): void => {
-      // 获取发送消息的 webContents 对象
-      const webContents = event.sender
-      // 从 webContents 获取对应的 BrowserWindow 对象
-      const Window = BrowserWindow.fromWebContents(webContents)
-      if (Window) {
-        ContentMenuFactory(Window, place, target)
-        return
       } else {
         console.error('获取窗口失败')
         throw new Error('获取窗口失败')

@@ -35,15 +35,8 @@ const api = {
     console.log('readFile', path)
     return ipcRenderer.invoke('file-control', 'read-file', path)
   },
-  saveFile: (content: string | Uint8Array, name?: string): Promise<void> => {
+  saveFile: (content: string | Uint8Array, name?: string): Promise<string> => {
     return ipcRenderer.invoke('file-control', 'save-file', null, { name, content })
-  },
-  // content-menu
-  openContentMenu: (
-    place?: 'anchor' | 'text' | 'image' | 'video',
-    target?: string
-  ): Promise<void> => {
-    return ipcRenderer.invoke('context-menu', place, target)
   }
 }
 

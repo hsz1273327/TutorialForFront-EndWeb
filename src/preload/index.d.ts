@@ -9,7 +9,7 @@ declare global {
       echo: (requestData: string) => Promise<string>
       onUpdateNowTime: (callback: (value: string) => void) => void
       pull: (message: string) => void
-      onUpdateMenuVisibility: (callback: (value: boolean) => void) => void
+      onUpdateRenderSetting: (callback: (setting: RenderSetting) => void) => void
       onSetOpacity: (callback: (value: number) => void) => void
       // window-control
       windowControl: (action: string) => void
@@ -18,6 +18,7 @@ declare global {
       selectFiles: () => Promise<string[]>
       saveFile: (content: string | Uint8Array, name?: string) => Promise<string>
       readFile: (file: File) => Promise<FileInfo>
+      dragAsFile: (src: TargetSource) => Promise<string>
     }
   }
 }

@@ -26,7 +26,8 @@
     "ajv": "^6.12.6",
     "await-sleep": "^0.0.1",
     "commander": "^13.1.0",
-    "electron-updater": "^6.3.9"
+    "electron-updater": "^6.3.9",
+    "pinia": "^3.0.2"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "3.0.0",

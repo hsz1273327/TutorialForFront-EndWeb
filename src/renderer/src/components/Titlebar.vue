@@ -6,8 +6,7 @@
       <button class="titlebar-button" @click="toggleMenu">
         ☰
       </button>
-      <div v-if="menuVisible" class="dropdown-menu"
-      :class="{ 'macos-dropdown': isMacOS }">
+      <div v-if="menuVisible" class="dropdown-menu" :class="{ 'macos-dropdown': isMacOS }">
         <button @click="modifyConfig">修改配置</button>
       </div>
 
@@ -31,8 +30,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-
-const isMacOS = ref((window.electron.process.platform as string) === 'darwin')
+import { storeToRefs } from 'pinia'
+import { useRenderSetting } from '../stores/render-setting'
+const render_setting_store = useRenderSetting()
+const { isMacOS } = storeToRefs(render_setting_store)
 
 // 控制下拉菜单的显示状态
 const menuVisible = ref(false)
@@ -121,10 +122,12 @@ const closeWindow = (): void => {
   padding: 5px;
   z-index: 1000;
 }
+
 /* 针对 macOS 的样式 */
 .macos-dropdown {
   right: 10px;
 }
+
 .dropdown-menu button {
   background: none;
   border: none;

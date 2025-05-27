@@ -120,9 +120,10 @@ async function saveFile(filePath: string, content: string | Uint8Array): Promise
   console.log('saveFile', filePath)
   if (typeof content === 'string') {
     await fs.writeFile(filePath, content, 'utf-8')
-    console.log('File saved successfully:', filePath)
+    await fs.chmod(filePath, 0o644) // 设置文件权限为644
   } else if (content instanceof Uint8Array) {
     await fs.writeFile(filePath, content)
+    await fs.chmod(filePath, 0o644) // 设置文件权限为644
   } else {
     throw new Error('content 必须是 string 或 Uint8Array')
   }

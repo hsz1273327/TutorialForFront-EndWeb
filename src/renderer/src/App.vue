@@ -1,8 +1,9 @@
 <template>
-  <Titlebar v-if="titlebarvisible" />
+  <Titlebar v-if="showTitleBar" />
   <div class="title">Electron-Vite-Vue3-TypeScript</div>
 
-  <img alt="logo" class="logo draggable" draggable="true" src="./assets/electron.svg" @dragstart="handleDragStart" />
+  <img alt="logo" :class="{ logo: true, draggablelink: !isWayland && !isWindows }" src="./assets/electron.svg"
+    @dragstart="(!isWayland && !isWindows) ? handleDragStart : null" />
 
   <div class="creator">Powered by electron-vite</div>
   <div class="text">
@@ -11,10 +12,16 @@
     and
     <span class="ts">TypeScript</span>
   </div>
-  <p class="tip">Please try pressing <code>F12</code> to open the devTool</p>
+  <p :class="{ tip: true, draggable: !isWayland }" :draggable="!isWayland"
+    @dragstart="!isWayland ? handleDragStart : null">
+    Please try pressing <code>F12</code> to open the devTool
+  </p>
   <div class="actions">
     <div class="action">
-      <a href="https://electron-vite.org/" target="_blank" rel="noreferrer">Documentation</a>
+      <a :class="{ draggablelink: !isWayland }" href="https://electron-vite.org/" target="_blank" rel="noreferrer"
+        @dragstart="!isWayland ? handleDragStart : null">
+        Documentation
+      </a>
     </div>
     <div class="action">
       <a target="_blank" rel="noreferrer" @click="echoHandle()">Send echo</a>
@@ -40,15 +47,19 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, onBeforeMount, onBeforeUnmount, ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import Titlebar from './components/Titlebar.vue'
 import Versions from './components/Versions.vue'
 import { getEventSource } from './utils'
-import { onMounted, onBeforeMount, onBeforeUnmount, ref } from 'vue'
+import { useRenderSetting } from './stores/render-setting'
 
+const render_setting_store = useRenderSetting()
+const { showTitleBar, isWayland, isWindows } = storeToRefs(render_setting_store)
+const { updateRenderSetting } = render_setting_store
 const appPath = ref('')
 const appDataPath = ref('')
 const nowTime = ref('')
-const titlebarvisible = ref(false)
 
 async function getAppPath(): Promise<void> {
   const _appPath = await window.api.getAppPath()
@@ -102,6 +113,7 @@ async function querySaveFile(): Promise<void> {
 
 function preventDefault(event: Event): void {
   event.preventDefault()
+  console.log('drag over preventDefault called')
 }
 async function handleDrop(event: DragEvent): Promise<void> {
   console.log('handleDrop start')
@@ -116,14 +128,24 @@ async function handleDrop(event: DragEvent): Promise<void> {
 }
 
 function handleDragStart(event: DragEvent): void {
+  event.preventDefault()
   console.log('Drag started')
+  const notification = new window.Notification('测试Drag', {
+    body: 'Drag started, you can drag files into the app',
+    requireInteraction: true
+  })
+  notification.onclose = (): void => console.log('消息关闭了')
   const sourceinfo = getEventSource(event)
-  if (event.dataTransfer) {
-    const filePath = '/path/to/your/file.txt'; // 替换为实际文件路径
-    event.dataTransfer.setData(
-      'DownloadURL',
-      `application/octet-stream:file.txt:${filePath}`
-    );
+  console.log('sourceinfo:', sourceinfo)
+  try {
+    const tempfilepath = window.api.dragAsFile(sourceinfo)
+    console.log('Drag started temp file path:', tempfilepath)
+  } catch (error) {
+    const notification = new window.Notification('Drag error', {
+      body: 'Drag get error: ' + error,
+      requireInteraction: true
+    })
+    notification.onclose = (): void => console.log('消息关闭了')
   }
 }
 
@@ -135,10 +157,11 @@ window.api.onUpdateNowTime((value) => {
   })
   notification.onclose = (): void => console.log('消息关闭了')
 })
-window.api.onUpdateMenuVisibility((value) => {
-  titlebarvisible.value = value
-  console.log('titlebarvisible:', titlebarvisible.value)
+window.api.onUpdateRenderSetting((setting) => {
+  updateRenderSetting(setting)
+  console.log('onUpdateRenderSetting:', setting)
 })
+
 window.api.onSetOpacity((value) => {
   console.log('opacity:', value)
   // document.body.style.opacity = value.toString()
@@ -158,5 +181,6 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener('dragover', preventDefault)
   window.removeEventListener('drop', handleDrop)
+
 })
 </script>

@@ -172,6 +172,11 @@ code {
 }
 
 .draggable {
-  -webkit-app-region: no-drag; /* 确保元素本身不影响窗口拖动 */
+  -webkit-app-region: no-drag; /* 允许元素内的内容被拖动 */
+  cursor: grab; /* 鼠标指针显示为抓取状态 */
+}
+.draggablelink {
+  -webkit-app-region: no-drag; /* 允许元素内的内容被拖动 */
+  -webkit-user-drag: auto;
   cursor: grab; /* 鼠标指针显示为抓取状态 */
 }

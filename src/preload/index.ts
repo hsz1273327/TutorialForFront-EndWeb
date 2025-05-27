@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer, webUtils } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import type { FileInfo } from '../common/file-info'
+import type { FileInfo, TargetSource, RenderSetting } from '../common/file-info'
 // Custom APIs for renderer
 const api = {
   // Add your custom APIs here
@@ -21,8 +21,8 @@ const api = {
     ipcRenderer.send('window-control', action)
   },
   // update menu visibility
-  onUpdateMenuVisibility: (callback: (value: boolean) => void): void => {
-    ipcRenderer.on('update-menu-visibility', (_event, value: boolean) => callback(value))
+  onUpdateRenderSetting: (callback: (setting: RenderSetting) => void): void => {
+    ipcRenderer.on('update-render-setting', (_event, setting: RenderSetting) => callback(setting))
   },
   onSetOpacity: (callback: (value: number) => void): void => {
     ipcRenderer.on('set-opacity', (_event, value: number) => callback(value))
@@ -37,6 +37,9 @@ const api = {
   },
   saveFile: (content: string | Uint8Array, name?: string): Promise<string> => {
     return ipcRenderer.invoke('file-control', 'save-file', null, { name, content })
+  },
+  dragAsFile: (src: TargetSource): Promise<string> => {
+    return ipcRenderer.invoke('file-control', 'drag-as-file', null, null, src)
   }
 }
 

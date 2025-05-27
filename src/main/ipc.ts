@@ -207,12 +207,11 @@ function init_ipc(): void {
                 }
                 break
             }
-
-            Window.webContents.startDrag({
+            event.sender.startDrag({
               file: tempfilePath,
               icon: nativeImage.createFromPath(icon).resize({ width: 16, height: 16 })
             })
-
+            console.log('开始拖拽文件:', tempfilePath)
             return tempfilePath
           }
           default:

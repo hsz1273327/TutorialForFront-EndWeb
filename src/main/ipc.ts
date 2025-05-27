@@ -13,9 +13,11 @@ import {
   readFile,
   saveFileWithDialog,
   saveFile,
-  getUint8ArrayContent
+  getUint8ArrayContent,
+  deleteFile
 } from './file_operate'
 import { join } from 'path'
+import sleep from 'await-sleep'
 import type { FileInfo, TargetSource } from '../common/file-info'
 import icon from '../../resources/icon.png?asset'
 
@@ -212,6 +214,11 @@ function init_ipc(): void {
               icon: nativeImage.createFromPath(icon).resize({ width: 16, height: 16 })
             })
             console.log('开始拖拽文件:', tempfilePath)
+            await sleep(5000) // 等待拖拽操作完成
+            console.log('拖拽操作完成')
+            // 删除临时文件
+            await deleteFile(tempfilePath)
+            console.log('临时文件已删除:', tempfilePath)
             return tempfilePath
           }
           default:

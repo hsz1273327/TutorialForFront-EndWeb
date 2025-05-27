@@ -2,9 +2,14 @@
   <Titlebar v-if="showTitleBar" />
   <div class="title">Electron-Vite-Vue3-TypeScript</div>
 
-  <img alt="logo" :class="{ logo: true, draggablelink: !isWayland && !isWindows }" src="./assets/electron.svg"
-    @dragstart="(!isWayland && !isWindows) ? handleDragStart : null" />
-
+  <img v-if="isWayland || isWindows" alt="logo" class="logo" src="./assets/electron.svg" />
+  <img
+    v-else
+    alt="logo"
+    class="logo draggablelink"
+    src="./assets/electron.svg"
+    @dragstart="handleDragStart"
+  />
   <div class="creator">Powered by electron-vite</div>
   <div class="text">
     Build an Electron app with
@@ -12,14 +17,25 @@
     and
     <span class="ts">TypeScript</span>
   </div>
-  <p :class="{ tip: true, draggable: !isWayland }" :draggable="!isWayland"
-    @dragstart="!isWayland ? handleDragStart : null">
+  <p v-if="isWayland" class="tip">
+    Please try pressing <code>F12</code> to open the devTool
+  </p>
+  <p v-else class="tip draggable" draggable="true" @dragstart="handleDragStart">
     Please try pressing <code>F12</code> to open the devTool
   </p>
   <div class="actions">
     <div class="action">
-      <a :class="{ draggablelink: !isWayland }" href="https://electron-vite.org/" target="_blank" rel="noreferrer"
-        @dragstart="!isWayland ? handleDragStart : null">
+      <a v-if="isWayland" href="https://electron-vite.org/" target="_blank" rel="noreferrer">
+        Documentation
+      </a>
+      <a
+        v-else
+        class="draggablelink"
+        href="https://electron-vite.org/"
+        target="_blank"
+        rel="noreferrer"
+        @dragstart="handleDragStart"
+      >
         Documentation
       </a>
     </div>

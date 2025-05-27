@@ -199,7 +199,9 @@ async function getUint8ArrayContent(src: string): Promise<FileInfo> {
   }
 }
 
-
+async function deleteFile(filePath: string): Promise<void> {
+  await fs.unlink(filePath)
+}
 export {
   supportedSuxfixToMimeType,
   supportedMimeTypeToSuxfix,
@@ -209,5 +211,6 @@ export {
   saveFile,
   saveFileWithDialog,
   openDirectory,
-  getUint8ArrayContent
+  getUint8ArrayContent,
+  deleteFile
 }

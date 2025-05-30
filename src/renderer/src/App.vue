@@ -2,14 +2,8 @@
   <Titlebar v-if="showTitleBar" />
   <div class="title">Electron-Vite-Vue3-TypeScript</div>
 
-  <img v-if="isWayland || isWindows" alt="logo" class="logo" src="./assets/electron.svg" />
-  <img
-    v-else
-    alt="logo"
-    class="logo draggablelink"
-    src="./assets/electron.svg"
-    @dragstart="handleDragStart"
-  />
+  <img v-if="isWayland" alt="logo" class="logo" src="./assets/electron.svg" />
+  <img v-else alt="logo" class="logo draggablelink" src="./assets/electron.svg" @dragstart="handleDragStart" />
   <div class="creator">Powered by electron-vite</div>
   <div class="text">
     Build an Electron app with
@@ -28,14 +22,8 @@
       <a v-if="isWayland" href="https://electron-vite.org/" target="_blank" rel="noreferrer">
         Documentation
       </a>
-      <a
-        v-else
-        class="draggablelink"
-        href="https://electron-vite.org/"
-        target="_blank"
-        rel="noreferrer"
-        @dragstart="handleDragStart"
-      >
+      <a v-else class="draggablelink" href="https://electron-vite.org/" target="_blank" rel="noreferrer"
+        @dragstart="handleDragStart">
         Documentation
       </a>
     </div>
@@ -71,7 +59,7 @@ import { getEventSource } from './utils'
 import { useRenderSetting } from './stores/render-setting'
 
 const render_setting_store = useRenderSetting()
-const { showTitleBar, isWayland, isWindows } = storeToRefs(render_setting_store)
+const { showTitleBar, isWayland } = storeToRefs(render_setting_store)
 const { updateRenderSetting } = render_setting_store
 const appPath = ref('')
 const appDataPath = ref('')

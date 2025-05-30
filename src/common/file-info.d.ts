@@ -9,10 +9,4 @@ interface TargetSource {
   source?: string
 }
 
-interface RenderSetting {
-  platform: '' | 'darwin' | 'win32' | 'linux' | 'aix' | 'freebsd' | 'openbsd' | 'sunos'
-  wayland: boolean
-  showTitleBar: boolean
-}
-
-export type { FileInfo, TargetSource, RenderSetting }
+export type { FileInfo, TargetSource }

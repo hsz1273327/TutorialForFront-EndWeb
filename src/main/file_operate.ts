@@ -175,27 +175,75 @@ async function saveFileWithDialog(window: BrowserWindow, file: FileInfo): Promis
     }
   }
 }
+function isHttpURL(str: string): boolean {
+  if (typeof str !== 'string' || str.trim() === '') {
+    throw new Error('输入必须是一个非空字符串')
+  }
+
+  // 尝试创建一个 URL 对象。
+  // 如果字符串不是一个合法的URL，URL 构造函数会抛出一个 TypeError。
+  const url = new URL(str)
+  // 只接受 http 和 https 协议的 URL
+  if (url.protocol === 'http:' || url.protocol === 'https:') {
+    return true
+  } else if (url.protocol === 'file:') {
+    return false
+  } else {
+    throw new Error('输入的字符串不是一个有效的 URL')
+  }
+}
 // 从src中获取文件Uint8Array内容
 async function getUint8ArrayContent(src: string): Promise<FileInfo> {
   let mimetype
-  const response = await fetch(src)
-  const arrayBuffer = await response.arrayBuffer()
-  const content = new Uint8Array(arrayBuffer)
-  const type = response.headers.get('Content-Type')
-  if (type) {
-    mimetype = type
-  } else {
-    const url = new URL(src)
-    const ext = url.pathname.split('.').pop()
-    if (ext) {
-      mimetype = supportedSuxfixToMimeType(ext)
+  if (!isHttpURL(src)) {
+    // 如果不是有效的 URL，直接读取本地文件
+    // const filePath = path.resolve(src)
+    let filePath = src
+    if (process.platform === 'win32') {
+      if (src.startsWith('file:///')) {
+        filePath = src.replace(/^file:\/\/\//, '')
+      } else if (src.startsWith('file://')) {
+        filePath = src.replace(/^file:\/\//, '')
+      }
     } else {
-      throw new Error('无法获取文件类型')
+      if (src.startsWith('file://')) {
+        filePath = src.replace(/^file:\/\//, '')
+      }
     }
-  }
-  return {
-    content,
-    mimeType: mimetype
+    const ext = path.extname(filePath).toLowerCase()
+    mimetype = supportedSuxfixToMimeType(ext)
+    try {
+      console.log('getUint8ArrayContent', filePath, mimetype, ext)
+      const content = await fs.readFile(filePath)
+      return {
+        content: new Uint8Array(content),
+        mimeType: mimetype
+      }
+    } catch (error) {
+      console.error(`读取本地文件失败: ${error}`)
+      const f = filePath.slice(0, 15)
+      throw new Error(`filePath: ${f}`)
+    }
+  } else {
+    const response = await fetch(src)
+    const mimetype = response.headers.get('Content-Type')
+    if (!mimetype) {
+      throw new Error('无法获取文件的 MIME 类型')
+    }
+    if (mimetype == 'image/svg+xml') {
+      // 特殊处理 SVG 文件
+      const svgContent = await response.text()
+      return {
+        content: svgContent,
+        mimeType: mimetype
+      }
+    }
+    const arrayBuffer = await response.arrayBuffer()
+    const content = new Uint8Array(arrayBuffer)
+    return {
+      content,
+      mimeType: mimetype
+    }
   }
 }
 
@@ -212,5 +260,6 @@ export {
   saveFileWithDialog,
   openDirectory,
   getUint8ArrayContent,
-  deleteFile
+  deleteFile,
+  isHttpURL
 }

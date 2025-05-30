@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { RenderSetting } from '../../../common/file-info'
+import { RenderSetting } from '../../../common/render-setting'
 
 export const useRenderSetting = defineStore('renderSetting', {
   state: (): RenderSetting => ({

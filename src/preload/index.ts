@@ -1,6 +1,8 @@
 import { contextBridge, ipcRenderer, webUtils } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import type { FileInfo, TargetSource, RenderSetting } from '../common/file-info'
+import type { FileInfo, TargetSource } from '../common/file-info'
+import type { RenderSetting } from '../common/render-setting'
+
 // Custom APIs for renderer
 const api = {
   // Add your custom APIs here

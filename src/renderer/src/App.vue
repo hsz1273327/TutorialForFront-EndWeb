@@ -48,6 +48,9 @@
   </p>
   <Versions />
   <pre>{{ fileContent }}</pre>
+
+  <ContextMenu :visible="contextMenu.visible" :x="contextMenu.x" :y="contextMenu.y" :type="contextMenu.type"
+    :value="contextMenu.value" @menu-click="onMenuClick" />
 </template>
 
 <script setup lang="ts">
@@ -55,11 +58,12 @@ import { onMounted, onBeforeMount, onBeforeUnmount, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import Titlebar from './components/Titlebar.vue'
 import Versions from './components/Versions.vue'
+import ContextMenu from './components/ContextMenu.vue'
 import { getEventSource } from './utils'
 import { useRenderSetting } from './stores/render-setting'
 
 const render_setting_store = useRenderSetting()
-const { showTitleBar, isWayland } = storeToRefs(render_setting_store)
+const { showTitleBar, customContextMenu, isWayland } = storeToRefs(render_setting_store)
 const { updateRenderSetting } = render_setting_store
 const appPath = ref('')
 const appDataPath = ref('')
@@ -153,6 +157,76 @@ function handleDragStart(event: DragEvent): void {
   }
 }
 
+const contextMenu = ref({
+  visible: false,
+  x: 0,
+  y: 0,
+  type: '',
+  value: ''
+})
+
+function showContextMenu(event: MouseEvent, type = '', value = '') {
+  contextMenu.value = {
+    visible: true,
+    x: event.clientX,
+    y: event.clientY,
+    type,
+    value
+  }
+}
+function hideContextMenu() {
+  contextMenu.value.visible = false
+}
+function onMenuClick(action: string, type?: string, value?: string) {
+  hideContextMenu()
+  // 这里可以根据 action/type/value 做不同处理
+  window.api && window.api.handleCustomMenuAction && window.api.handleCustomMenuAction(action, { type, value })
+}
+
+// 处理右键菜单事件
+async function handleContextMenu(event: MouseEvent): Promise<void> {
+  event.preventDefault()
+  const target = event.target as HTMLElement
+  const selection = window.getSelection()?.toString()
+
+  if (target instanceof HTMLImageElement) {
+    console.log('右键图片', target.src)
+    if (customContextMenu.value) {
+      showContextMenu(event, 'image', target.src)
+    } else {
+      await window.api.openContentMenu('image', target.src)
+    }
+  } else if (target instanceof HTMLVideoElement) {
+    console.log('右键视频', target.src)
+    if (customContextMenu.value) {
+      showContextMenu(event, 'video', target.src)
+    } else {
+      await window.api.openContentMenu('video', target.src)
+    }
+  } else if (target instanceof HTMLAnchorElement) {
+    console.log('右键链接', target.href)
+    if (customContextMenu.value) {
+      showContextMenu(event, 'anchor', target.href)
+    } else {
+      await window.api.openContentMenu('anchor', target.href)
+    }
+  } else if (selection && selection.length > 0) {
+    console.log('右键文本', selection)
+    if (customContextMenu.value) {
+      showContextMenu(event, 'text', selection)
+    } else {
+      await window.api.openContentMenu('text', selection)
+    }
+  } else {
+    console.log('右键其它元素', target)
+    if (customContextMenu.value) {
+      showContextMenu(event)
+    } else {
+      await window.api.openContentMenu()
+    }
+  }
+}
+
 window.api.onUpdateNowTime((value) => {
   nowTime.value = value
   let notification = new window.Notification('测试推送当前时间', {
@@ -180,11 +254,18 @@ onBeforeMount(async () => {
 onMounted(() => {
   window.addEventListener('dragover', preventDefault)
   window.addEventListener('drop', handleDrop)
+  window.addEventListener('contextmenu', handleContextMenu)
+  if (customContextMenu.value) {
+    window.addEventListener('click', hideContextMenu)
+  }
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener('dragover', preventDefault)
   window.removeEventListener('drop', handleDrop)
-
+  window.removeEventListener('contextmenu', handleContextMenu)
+  if (customContextMenu.value) {
+    window.removeEventListener('click', hideContextMenu)
+  }
 })
 </script>

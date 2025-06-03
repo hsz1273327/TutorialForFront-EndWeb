@@ -42,6 +42,13 @@ const api = {
   },
   dragAsFile: (src: TargetSource): Promise<string> => {
     return ipcRenderer.invoke('file-control', 'drag-as-file', null, null, src)
+  },
+  // content-menu
+  openContentMenu: (
+    place?: 'anchor' | 'text' | 'image' | 'video',
+    target?: string
+  ): Promise<void> => {
+    return ipcRenderer.invoke('context-menu', place, target)
   }
 }
 

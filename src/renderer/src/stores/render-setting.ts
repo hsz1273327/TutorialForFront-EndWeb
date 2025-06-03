@@ -5,7 +5,8 @@ export const useRenderSetting = defineStore('renderSetting', {
   state: (): RenderSetting => ({
     platform: '',
     wayland: true,
-    showTitleBar: false
+    showTitleBar: false,
+    customContextMenu: false
   }),
   getters: {
     isMacOS: (state): boolean => state.platform === 'darwin',
@@ -20,6 +21,7 @@ export const useRenderSetting = defineStore('renderSetting', {
       this.platform = setting.platform
       this.wayland = setting.wayland
       this.showTitleBar = setting.showTitleBar
+      this.customContextMenu = setting.customContextMenu
     }
   }
 })

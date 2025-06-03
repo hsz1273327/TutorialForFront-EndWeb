@@ -20,6 +20,7 @@ import { join } from 'path'
 import sleep from 'await-sleep'
 import type { FileInfo, TargetSource } from '../common/file-info'
 import icon from '../../resources/icon.png?asset'
+import { ContentMenuFactory } from './default_context_menus'
 
 function init_ipc(): void {
   // `Request-Reply`模式的接口
@@ -228,6 +229,23 @@ function init_ipc(): void {
             }
             break
         }
+      } else {
+        console.error('获取窗口失败')
+        throw new Error('获取窗口失败')
+      }
+    }
+  )
+  //`context-menu`,让渲染进程控制右键菜单
+  ipcMain.handle(
+    'context-menu',
+    (event: IpcMainInvokeEvent, place?: string, target?: string): void => {
+      // 获取发送消息的 webContents 对象
+      const webContents = event.sender
+      // 从 webContents 获取对应的 BrowserWindow 对象
+      const Window = BrowserWindow.fromWebContents(webContents)
+      if (Window) {
+        ContentMenuFactory(Window, place, target)
+        return
       } else {
         console.error('获取窗口失败')
         throw new Error('获取窗口失败')

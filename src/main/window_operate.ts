@@ -157,7 +157,8 @@ function createWindowFactory(thumbarButtons: ThumbarButton[]): () => BrowserWind
       Window.webContents.send('update-render-setting', {
         platform: process.platform,
         wayland: wayland,
-        showTitleBar: setting.window_menu_type === 'custom' // 如果是 custom，则不显示菜单
+        showTitleBar: setting.window_menu_type === 'custom', // 如果是 custom，则不显示菜单
+        customContextMenu: setting.context_menu_type === 'custom' // 如果是 custom，则使用自定义上下文菜单
       })
       console.log(`did-finish-load ${showMenu}`)
     })

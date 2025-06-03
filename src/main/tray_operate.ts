@@ -34,11 +34,29 @@ enum TitleBarStyleChoise {
 
 // let titleBarStyleChoise: TitleBarStyleChoise
 // 处理
-function handleRadioMenuClick(label: TitleBarStyleChoise): void {
+function handleTitleBarStyleMenuClick(label: TitleBarStyleChoise): void {
   console.log(`${label} clicked`)
   // 在这里处理统一的逻辑
   // titleBarStyleChoise = label
   setSetting({ window_menu_type: label })
+  updateWindowMenuType()
+  if (soft_update_tray_menu) {
+    soft_update_tray_menu()
+  }
+}
+
+enum ContextMenuStyleChoise {
+  default = 'default',
+  custom = 'custom'
+}
+
+// let titleBarStyleChoise:ContextMenuStyleChoise
+// 处理
+function handleContextMenuStyleMenuClick(label: ContextMenuStyleChoise): void {
+  console.log(`${label} clicked`)
+  // 在这里处理统一的逻辑
+  // titleBarStyleChoise = label
+  setSetting({ context_menu_type: label })
   updateWindowMenuType()
   if (soft_update_tray_menu) {
     soft_update_tray_menu()
@@ -137,23 +155,36 @@ function update_tray_menu(): Menu {
     }
   ]
 
-  const radioTemplates: MenuItemConstructorOptions[] = []
+  const titlebarRadioTemplates: MenuItemConstructorOptions[] = []
   for (const item of Object.keys(TitleBarStyleChoise)) {
     const item_enum = TitleBarStyleChoise[item as keyof typeof TitleBarStyleChoise]
-    radioTemplates.push({
-      label: item,
+    titlebarRadioTemplates.push({
+      label: `titlebar-${item}`,
       type: 'radio' as const,
       checked: setting['window_menu_type'] === item_enum,
-      click: (): void => handleRadioMenuClick(item_enum)
+      click: (): void => handleTitleBarStyleMenuClick(item_enum)
     })
   }
+  const contextMenuRadioTemplates: MenuItemConstructorOptions[] = []
+  for (const item of Object.keys(ContextMenuStyleChoise)) {
+    const item_enum = ContextMenuStyleChoise[item as keyof typeof ContextMenuStyleChoise]
+    contextMenuRadioTemplates.push({
+      label: `contextMenu-${item}`,
+      type: 'radio' as const,
+      checked: setting['context_menu_type'] === item_enum,
+      click: (): void => handleContextMenuStyleMenuClick(item_enum)
+    })
+  }
+
 
   const Templates: MenuItemConstructorOptions[] = [
     ...normalTemplates,
     { type: 'separator' },
     ...checkboxTemplates,
     { type: 'separator' },
-    ...radioTemplates,
+    ...titlebarRadioTemplates,
+    { type: 'separator' },
+    ...contextMenuRadioTemplates,
     { type: 'separator' },
     {
       label: '退出',

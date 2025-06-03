@@ -23,10 +23,12 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^4.0.0",
+    "@types/mousetrap": "^1.6.15",
     "ajv": "^6.12.6",
     "await-sleep": "^0.0.1",
     "commander": "^13.1.0",
     "electron-updater": "^6.3.9",
+    "mousetrap": "^1.6.5",
     "pinia": "^3.0.2"
   },
   "devDependencies": {

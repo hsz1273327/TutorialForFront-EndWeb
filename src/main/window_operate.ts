@@ -32,6 +32,7 @@ const defaultMenuTemplate: MenuItemConstructorOptions[] = [
     submenu: [
       {
         label: '关于',
+        accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Alt+Shift+I', // 设置快捷键
         click: (): void => {
           console.log('关于菜单被点击')
         }

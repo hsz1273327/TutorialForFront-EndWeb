@@ -8,6 +8,7 @@
       </button>
       <div v-if="menuVisible" class="dropdown-menu" :class="{ 'macos-dropdown': isMacOS }">
         <button @click="modifyConfig">修改配置</button>
+        <button @click="about">关于</button>
       </div>
 
       <!-- 最小化按钮 -->
@@ -29,9 +30,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRenderSetting } from '../stores/render-setting'
+import Mousetrap from 'mousetrap'
 const render_setting_store = useRenderSetting()
 const { isMacOS } = storeToRefs(render_setting_store)
 
@@ -48,6 +50,10 @@ const modifyConfig = (): void => {
   console.log('修改配置按钮被点击')
 }
 
+const about = (): void => {
+  console.log('关于按钮被点击')
+}
+
 // 最小化窗口
 const minimizeWindow = (): void => {
   window.api.windowControl('minimize')
@@ -62,6 +68,14 @@ const toggleMaximizeWindow = (): void => {
 const closeWindow = (): void => {
   window.api.windowControl('close')
 }
+
+onMounted(() => {
+  Mousetrap.bind(isMacOS.value ? 'alt+command+i' : 'alt+shift+i', about)
+})
+
+onUnmounted(() => {
+  Mousetrap.unbind(isMacOS.value ? 'alt+command+i' : 'alt+shift+i')
+})
 </script>
 
 <style scoped>

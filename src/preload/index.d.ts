@@ -19,11 +19,15 @@ declare global {
       saveFile: (content: string | Uint8Array, name?: string) => Promise<string>
       readFile: (file: File) => Promise<FileInfo>
       dragAsFile: (src: TargetSource) => Promise<string>
-       // content-menu
+      // content-menu
       openContentMenu: (
         place?: 'anchor' | 'text' | 'image' | 'video',
         target?: string
       ) => Promise<void>
+      // open in browser
+      openInBrowser: (url: string) => Promise<void>
+      // save-as
+      saveAs: (src: TargetSource) => Promise<void>
     }
   }
 }

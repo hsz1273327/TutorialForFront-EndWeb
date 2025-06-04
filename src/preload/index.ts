@@ -49,6 +49,14 @@ const api = {
     target?: string
   ): Promise<void> => {
     return ipcRenderer.invoke('context-menu', place, target)
+  },
+  // open in browser
+  openInBrowser: (url: string): Promise<void> => {
+    return ipcRenderer.invoke('open-in-browser', url)
+  },
+  //save-as
+  saveAs: (src): Promise<void> => {
+    return ipcRenderer.invoke('save-as', src)
   }
 }
 

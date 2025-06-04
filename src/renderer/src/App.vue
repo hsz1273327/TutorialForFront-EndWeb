@@ -165,7 +165,7 @@ const contextMenu = ref({
   value: ''
 })
 
-function showContextMenu(event: MouseEvent, type = '', value = '') {
+function showContextMenu(event: MouseEvent, type = '', value = ''): void {
   contextMenu.value = {
     visible: true,
     x: event.clientX,
@@ -174,13 +174,32 @@ function showContextMenu(event: MouseEvent, type = '', value = '') {
     value
   }
 }
-function hideContextMenu() {
-  contextMenu.value.visible = false
+function hideContextMenu(): void {
+  console.log('hideContextMenu called')
+  if (customContextMenu.value) {
+    contextMenu.value.visible = false
+  }
 }
-function onMenuClick(action: string, type?: string, value?: string) {
+async function onMenuClick(action: string, type?: string, value?: string): Promise<void> {
   hideContextMenu()
   // 这里可以根据 action/type/value 做不同处理
-  window.api && window.api.handleCustomMenuAction && window.api.handleCustomMenuAction(action, { type, value })
+  console.log('Menu clicked:', action, type, value)
+  if (action === '保存') {
+    if (!value) {
+      console.error('No value provided for save action')
+      return
+    }
+    await window.api.saveAs(value)
+  } else if (action === '浏览器打开') {
+    if (!value) {
+      console.error('No value provided for browser open action')
+      return
+    }
+    await window.api.openInBrowser(value)
+  } else {
+    console.log('执行其他操作:', action)
+  }
+
 }
 
 // 处理右键菜单事件
@@ -255,17 +274,14 @@ onMounted(() => {
   window.addEventListener('dragover', preventDefault)
   window.addEventListener('drop', handleDrop)
   window.addEventListener('contextmenu', handleContextMenu)
-  if (customContextMenu.value) {
-    window.addEventListener('click', hideContextMenu)
-  }
+  window.addEventListener('click', hideContextMenu)
+
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener('dragover', preventDefault)
   window.removeEventListener('drop', handleDrop)
   window.removeEventListener('contextmenu', handleContextMenu)
-  if (customContextMenu.value) {
-    window.removeEventListener('click', hideContextMenu)
-  }
+  window.removeEventListener('click', hideContextMenu)
 })
 </script>

@@ -4,6 +4,7 @@ import {
   IpcMainEvent,
   IpcMainInvokeEvent,
   BrowserWindow,
+  shell,
   nativeImage
 } from 'electron'
 import {
@@ -20,7 +21,7 @@ import { join } from 'path'
 import sleep from 'await-sleep'
 import type { FileInfo, TargetSource } from '../common/file-info'
 import icon from '../../resources/icon.png?asset'
-import { ContentMenuFactory } from './default_context_menus'
+import { ContentMenuFactory, saveAs } from './default_context_menus'
 
 function init_ipc(): void {
   // `Request-Reply`模式的接口
@@ -252,6 +253,24 @@ function init_ipc(): void {
       }
     }
   )
+  // 自定义context-menu用到的额外ipc
+  // 浏览器打开
+  ipcMain.handle(
+    'open-in-browser',
+    async (_event: IpcMainInvokeEvent, url: string): Promise<void> => {
+      shell.openExternal(url)
+    }
+  )
+  // save as
+  ipcMain.handle('save-as', async (_event: IpcMainInvokeEvent, src: string): Promise<void> => {
+    const Window = BrowserWindow.fromWebContents(_event.sender)
+    if (Window) {
+      await saveAs(Window, src)
+    } else {
+      console.error('获取窗口失败')
+      throw new Error('获取窗口失败')
+    }
+  })
 }
 
 export { init_ipc }

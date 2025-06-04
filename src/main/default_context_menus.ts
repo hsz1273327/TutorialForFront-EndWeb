@@ -1,31 +1,7 @@
 import { MenuItemConstructorOptions, shell, BrowserWindow, Menu } from 'electron'
-import { saveFileWithDialog, supportedSuxfixToMimeType } from './file_operate'
-import type { FileInfo } from '../common/file-info'
+import { saveFileWithDialog, getUint8ArrayContent } from './file_operate'
 
-async function getUint8ArrayContent(src: string): Promise<FileInfo> {
-  let mimetype
-  const response = await fetch(src)
-  const arrayBuffer = await response.arrayBuffer()
-  const content = new Uint8Array(arrayBuffer)
-  const type = response.headers.get('Content-Type')
-  if (type) {
-    mimetype = type
-  } else {
-    const url = new URL(src)
-    const ext = url.pathname.split('.').pop()
-    if (ext) {
-      mimetype = supportedSuxfixToMimeType(ext)
-    } else {
-      throw new Error('无法获取文件类型')
-    }
-  }
-  return {
-    content,
-    mimeType: mimetype
-  }
-}
-
-async function saveAs(window, src): Promise<void> {
+async function saveAs(window: BrowserWindow, src: string): Promise<void> {
   const fileinfo = await getUint8ArrayContent(src)
   await saveFileWithDialog(window, fileinfo)
 }
@@ -143,4 +119,4 @@ function ContentMenuFactory(
   menu.popup({ window: window, callback: callback })
 }
 
-export { ContentMenuFactory }
+export { ContentMenuFactory, saveAs }

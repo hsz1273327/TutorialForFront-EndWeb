@@ -158,7 +158,7 @@ async function saveFileWithDialog(window: BrowserWindow, file: FileInfo): Promis
       filters: [
         { name: '文本文件', extensions: ['txt', 'md'] },
         { name: '数据文件', extensions: ['json', 'csv', 'jsonl', 'parquet'] },
-        { name: '图片文件', extensions: ['png', 'jpg', 'jpeg', 'gif', 'webp'] },
+        { name: '图片文件', extensions: ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg'] },
         { name: '视频文件', extensions: ['mp4', 'avi', 'mkv', 'webm'] },
         { name: '音频文件', extensions: ['mp3', 'wav', 'flac', 'aac'] },
         { name: '所有文件', extensions: ['*'] }

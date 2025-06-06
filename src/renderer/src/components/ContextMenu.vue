@@ -9,7 +9,6 @@
       <div class="menu-item" @click="onMenuClick('保存')">保存</div>
     </template>
     <template v-else-if="type === 'video'">
-      <div class="menu-item" @click="onMenuClick('复制')">复制</div>
       <div class="menu-item" @click="onMenuClick('保存')">保存</div>
     </template>
     <template v-else-if="type === 'anchor'">

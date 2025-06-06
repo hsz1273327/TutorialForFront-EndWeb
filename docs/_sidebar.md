@@ -132,6 +132,7 @@
     * [自定义窗口](桌面环境的前端技术应用/自定义窗口.md)
     * [与文件系统交互](桌面环境的前端技术应用/与文件系统交互.md)
     * [快捷键](桌面环境的前端技术应用/快捷键.md)
+    * [右键菜单](桌面环境的前端技术应用/右键菜单.md)
 
 * [移动端原生应用](移动端原生应用/README.md)
     * [nativescript和nativescript-vue](移动端原生应用/nativescript和nativescript-vue.md)

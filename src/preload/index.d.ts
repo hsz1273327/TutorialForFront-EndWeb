@@ -21,13 +21,19 @@ declare global {
       dragAsFile: (src: TargetSource) => Promise<string>
       // content-menu
       openContentMenu: (
-        place?: 'anchor' | 'text' | 'image' | 'video',
+        place?: 'anchor' | 'text' | 'image' | 'video' | 'input',
         target?: string
       ) => Promise<void>
       // open in browser
       openInBrowser: (url: string) => Promise<void>
       // save-as
       saveAs: (src: TargetSource) => Promise<void>
+      // clipboard
+      readTextFromClipboard: () => Promise<string>
+      readImageFromClipboard: () => Promise<string>
+      writeTextToClipboard: (src: string) => Promise<void>
+      writeImageToClipboard: (src: string) => Promise<void>
+      clearClipboard: () => Promise<void>
     }
   }
 }

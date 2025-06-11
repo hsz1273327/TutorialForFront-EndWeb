@@ -48,6 +48,7 @@
   </p>
   <Versions />
   <pre>{{ fileContent }}</pre>
+  <input type="text" />
 
   <ContextMenu :visible="contextMenu.visible" :x="contextMenu.x" :y="contextMenu.y" :type="contextMenu.type"
     :value="contextMenu.value" @menu-click="onMenuClick" />
@@ -196,48 +197,73 @@ async function onMenuClick(action: string, type?: string, value?: string): Promi
       return
     }
     await window.api.openInBrowser(value)
+  } else if (action === '复制') {
+    if (!value) {
+      console.error('No value provided for browser open action')
+      return
+    }
+    if (type === 'image') {
+      await window.api.clearClipboard()
+      await window.api.writeImageToClipboard(value)
+    } else if (type === 'text') {
+      await window.api.clearClipboard()
+      await window.api.writeTextToClipboard(value)
+    } else if (type === 'anchor') {
+      await window.api.clearClipboard()
+      await window.api.writeTextToClipboard(value)
+    } else {
+      console.error(`unsupported type ${type}`)
+      return
+    }
+    await window.api.openInBrowser(value)
   } else {
     console.log('执行其他操作:', action)
   }
-
 }
 
 // 处理右键菜单事件
 async function handleContextMenu(event: MouseEvent): Promise<void> {
   event.preventDefault()
-  const target = event.target as HTMLElement
-  const selection = window.getSelection()?.toString()
-
-  if (target instanceof HTMLImageElement) {
-    console.log('右键图片', target.src)
-    if (customContextMenu.value) {
-      showContextMenu(event, 'image', target.src)
-    } else {
-      await window.api.openContentMenu('image', target.src)
+  try {
+    const target = getEventSource(event)
+    if (target.type == 'image') {
+      console.log('右键图片', target.source)
+      if (customContextMenu.value) {
+        showContextMenu(event, 'image', target.source)
+      } else {
+        await window.api.openContentMenu('image', target.source)
+      }
+    } else if (target.type == 'video') {
+      console.log('右键视频', target.source)
+      if (customContextMenu.value) {
+        showContextMenu(event, 'video', target.source)
+      } else {
+        await window.api.openContentMenu('video', target.source)
+      }
+    } else if (target.type == 'anchor') {
+      console.log('右键链接', target.source)
+      if (customContextMenu.value) {
+        showContextMenu(event, 'anchor', target.source)
+      } else {
+        await window.api.openContentMenu('anchor', target.source)
+      }
+    } else if (target.type == 'input') {
+      console.log('右键输入框', target.source)
+      if (customContextMenu.value) {
+        // showContextMenu(event, 'anchor', target.href)
+      } else {
+        await window.api.openContentMenu('input', target.source)
+      }
+    } else if (target.type == 'text') {
+      console.log('右键文本', target.source)
+      if (customContextMenu.value) {
+        showContextMenu(event, 'text', target.source)
+      } else {
+        await window.api.openContentMenu('text', target.source)
+      }
     }
-  } else if (target instanceof HTMLVideoElement) {
-    console.log('右键视频', target.src)
-    if (customContextMenu.value) {
-      showContextMenu(event, 'video', target.src)
-    } else {
-      await window.api.openContentMenu('video', target.src)
-    }
-  } else if (target instanceof HTMLAnchorElement) {
-    console.log('右键链接', target.href)
-    if (customContextMenu.value) {
-      showContextMenu(event, 'anchor', target.href)
-    } else {
-      await window.api.openContentMenu('anchor', target.href)
-    }
-  } else if (selection && selection.length > 0) {
-    console.log('右键文本', selection)
-    if (customContextMenu.value) {
-      showContextMenu(event, 'text', selection)
-    } else {
-      await window.api.openContentMenu('text', selection)
-    }
-  } else {
-    console.log('右键其它元素', target)
+  } catch (_err) {
+    console.log('右键其它元素')
     if (customContextMenu.value) {
       showContextMenu(event)
     } else {

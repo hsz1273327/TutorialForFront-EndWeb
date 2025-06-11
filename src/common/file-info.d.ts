@@ -5,8 +5,10 @@ interface FileInfo {
 }
 
 interface TargetSource {
-  type: 'image' | 'video' | 'anchor' | 'text'
+  type: 'image' | 'video' | 'anchor' | 'text' | 'input'
   source?: string
+  selectionStart?: number | null
+  selectionEnd?: number | null
 }
 
 export type { FileInfo, TargetSource }

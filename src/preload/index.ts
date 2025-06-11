@@ -2,6 +2,8 @@ import { contextBridge, ipcRenderer, webUtils } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import type { FileInfo, TargetSource } from '../common/file-info'
 import type { RenderSetting } from '../common/render-setting'
+import { write } from 'fs'
+import { clear } from 'console'
 
 // Custom APIs for renderer
 const api = {
@@ -57,6 +59,22 @@ const api = {
   //save-as
   saveAs: (src): Promise<void> => {
     return ipcRenderer.invoke('save-as', src)
+  },
+  // clipboard
+  readTextFromClipboard: (): Promise<string> => {
+    return ipcRenderer.invoke('clipboard-read', 'text')
+  },
+  readImageFromClipboard: (): Promise<string> => {
+    return ipcRenderer.invoke('clipboard-read', 'image')
+  },
+  writeTextToClipboard: (src: string): Promise<void> => {
+    return ipcRenderer.invoke('clipboard-write', 'text', src)
+  },
+  writeImageToClipboard: (src: string): Promise<void> => {
+    return ipcRenderer.invoke('clipboard-write', 'image', src)
+  },
+  clearClipboard: (): Promise<void> => {
+    return ipcRenderer.invoke('clipboard-clear')
   }
 }
 

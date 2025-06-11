@@ -5,7 +5,8 @@ import {
   IpcMainInvokeEvent,
   BrowserWindow,
   shell,
-  nativeImage
+  nativeImage,
+  clipboard
 } from 'electron'
 import {
   supportedMimeTypeToSuxfix,
@@ -206,8 +207,8 @@ function init_ipc(): void {
                 break
               default:
                 {
-                  console.error('未知的元素源类型:', src.type)
-                  throw new Error('未知的元素源类型')
+                  console.error('不支持拖拽的元素源类型:', src.type)
+                  throw new Error('不支持拖拽的元素源类型')
                 }
                 break
             }
@@ -270,6 +271,47 @@ function init_ipc(): void {
       console.error('获取窗口失败')
       throw new Error('获取窗口失败')
     }
+  })
+  // clipboard-write
+  ipcMain.handle(
+    'clipboard-write',
+    async (_event: IpcMainInvokeEvent, type: 'image' | 'text', src: string): Promise<void> => {
+      if (type === 'image') {
+        const fileinfo = await getUint8ArrayContent(src)
+        if (fileinfo.mimeType == 'image/svg+xml') {
+          clipboard.writeText(fileinfo.content as string)
+        } else {
+          const buffer = Buffer.from(fileinfo.content as Uint8Array)
+          const image = nativeImage.createFromBuffer(buffer)
+          clipboard.writeImage(image)
+        }
+      } else {
+        clipboard.writeText(src)
+      }
+    }
+  )
+  // clipboard-read
+  ipcMain.handle(
+    'clipboard-read',
+    async (_event: IpcMainInvokeEvent, type: 'image' | 'text'): Promise<string> => {
+      if (type === 'image') {
+        const result = clipboard.readImage()
+        if (!result) {
+          throw new Error('剪贴板中没有文本内容')
+        }
+        return result.toDataURL()
+      } else {
+        const result = clipboard.readText()
+        if (!result) {
+          throw new Error('剪贴板中没有文本内容')
+        }
+        return result
+      }
+    }
+  )
+  // clipboard-clear
+  ipcMain.handle('clipboard-clear', async (_event: IpcMainInvokeEvent): Promise<void> => {
+    clipboard.clear()
   })
 }
 

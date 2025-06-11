@@ -66,6 +66,16 @@ const VideoTemplateFactory = (window: BrowserWindow, src: string): MenuItemConst
   ] as MenuItemConstructorOptions[]
 }
 
+// 选中的是输入框的右键菜单
+const InputTemplateFactory = (
+  window: BrowserWindow,
+  src?: string
+): MenuItemConstructorOptions[] => {
+  console.log(window)
+  console.log('InputTemplateFactory', src)
+  return [{ label: '黏贴', role: 'paste' }] as MenuItemConstructorOptions[]
+}
+
 function ContentMenuFactory(
   window: BrowserWindow,
   place?: string,
@@ -108,6 +118,11 @@ function ContentMenuFactory(
           throw new Error('target is null')
         }
         template = VideoTemplateFactory(window, target)
+      }
+      break
+    case 'input':
+      {
+        template = InputTemplateFactory(window, target)
       }
       break
     default:

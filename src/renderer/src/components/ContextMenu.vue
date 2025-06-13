@@ -30,12 +30,14 @@ const props = defineProps<{
   y: number
   type?: string
   value?: string
+  selectionStart?: number | null
+  selectionEnd?: number | null
 }>()
 
 const emit = defineEmits(['menu-click'])
 
 function onMenuClick(action: string): void {
-  emit('menu-click', action, props.type, props.value)
+  emit('menu-click', action, props.type, props.value, props.selectionStart, props.selectionEnd)
 }
 </script>
 

@@ -48,7 +48,7 @@
   </p>
   <Versions />
   <pre>{{ fileContent }}</pre>
-  <input type="text" />
+  <input type="text" :value="input_value" />
 
   <ContextMenu :visible="contextMenu.visible" :x="contextMenu.x" :y="contextMenu.y" :type="contextMenu.type"
     :value="contextMenu.value" @menu-click="onMenuClick" />
@@ -158,21 +158,38 @@ function handleDragStart(event: DragEvent): void {
   }
 }
 
-const contextMenu = ref({
+const contextMenu = ref<{
+  visible: boolean,
+  x: number,
+  y: number,
+  type: string,
+  value: string,
+  selectionStart: number | null,
+  selectionEnd: number | null
+}>({
   visible: false,
   x: 0,
   y: 0,
   type: '',
-  value: ''
+  value: '',
+  selectionStart: null,
+  selectionEnd: null
 })
 
-function showContextMenu(event: MouseEvent, type = '', value = ''): void {
+function showContextMenu(event: MouseEvent,
+  type = '',
+  value = '',
+  selectionStart: number | null = null,
+  selectionEnd: number | null = null
+): void {
   contextMenu.value = {
     visible: true,
     x: event.clientX,
     y: event.clientY,
     type,
-    value
+    value,
+    selectionStart: selectionStart,
+    selectionEnd: selectionEnd
   }
 }
 function hideContextMenu(): void {
@@ -181,7 +198,8 @@ function hideContextMenu(): void {
     contextMenu.value.visible = false
   }
 }
-async function onMenuClick(action: string, type?: string, value?: string): Promise<void> {
+const input_value = ref("")
+async function onMenuClick(action: string, type?: string, value?: string, selectionStart?: number | null, selectionEnd?: number | null): Promise<void> {
   hideContextMenu()
   // 这里可以根据 action/type/value 做不同处理
   console.log('Menu clicked:', action, type, value)
@@ -211,6 +229,15 @@ async function onMenuClick(action: string, type?: string, value?: string): Promi
     } else if (type === 'anchor') {
       await window.api.clearClipboard()
       await window.api.writeTextToClipboard(value)
+    } else if (type === 'input') {
+      const insert = await window.api.readTextFromClipboard()
+      if (selectionStart !== null && selectionEnd !== null) {
+        const newValue =
+          input_value.value.slice(0, selectionStart) +
+          insert +
+          input_value.value.slice(selectionEnd)
+        input_value.value = newValue
+      }
     } else {
       console.error(`unsupported type ${type}`)
       return
@@ -250,7 +277,7 @@ async function handleContextMenu(event: MouseEvent): Promise<void> {
     } else if (target.type == 'input') {
       console.log('右键输入框', target.source)
       if (customContextMenu.value) {
-        // showContextMenu(event, 'anchor', target.href)
+        showContextMenu(event, 'anchor', target.source, target.selectionStart, target.selectionEnd)
       } else {
         await window.api.openContentMenu('input', target.source)
       }

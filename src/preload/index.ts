@@ -2,8 +2,6 @@ import { contextBridge, ipcRenderer, webUtils } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import type { FileInfo, TargetSource } from '../common/file-info'
 import type { RenderSetting } from '../common/render-setting'
-import { write } from 'fs'
-import { clear } from 'console'
 
 // Custom APIs for renderer
 const api = {

@@ -15,6 +15,9 @@
       <div class="menu-item" @click="onMenuClick('复制')">复制</div>
       <div class="menu-item" @click="onMenuClick('浏览器打开')">浏览器打开</div>
     </template>
+    <template v-else-if="type === 'input'">
+      <div class="menu-item" @click="onMenuClick('黏贴')">黏贴</div>
+    </template>
     <template v-else>
       <div class="menu-item" @click="onMenuClick('功能1')">功能1</div>
     </template>

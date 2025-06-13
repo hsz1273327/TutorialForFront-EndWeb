@@ -51,7 +51,8 @@
   <input type="text" :value="input_value" />
 
   <ContextMenu :visible="contextMenu.visible" :x="contextMenu.x" :y="contextMenu.y" :type="contextMenu.type"
-    :value="contextMenu.value" @menu-click="onMenuClick" />
+    :value="contextMenu.value" :selectionStart="contextMenu.selectionStart" :selectionEnd="contextMenu.selectionEnd"
+    @menu-click="onMenuClick" />
 </template>
 
 <script setup lang="ts">
@@ -182,6 +183,9 @@ function showContextMenu(event: MouseEvent,
   selectionStart: number | null = null,
   selectionEnd: number | null = null
 ): void {
+  console.log("&&&&&&&&&&&&&&&")
+  console.log(`selectionStart:${selectionStart}`)
+  console.log(`selectionEnd:${selectionEnd}`)
   contextMenu.value = {
     visible: true,
     x: event.clientX,
@@ -199,6 +203,7 @@ function hideContextMenu(): void {
   }
 }
 const input_value = ref("")
+
 async function onMenuClick(action: string, type?: string, value?: string, selectionStart?: number | null, selectionEnd?: number | null): Promise<void> {
   hideContextMenu()
   // 这里可以根据 action/type/value 做不同处理
@@ -229,7 +234,13 @@ async function onMenuClick(action: string, type?: string, value?: string, select
     } else if (type === 'anchor') {
       await window.api.clearClipboard()
       await window.api.writeTextToClipboard(value)
-    } else if (type === 'input') {
+    } else {
+      console.error(`unsupported type ${type}`)
+      return
+    }
+    await window.api.openInBrowser(value)
+  } else if (action === '黏贴') {
+    if (type === 'input') {
       const insert = await window.api.readTextFromClipboard()
       if (selectionStart !== null && selectionEnd !== null) {
         const newValue =
@@ -238,11 +249,7 @@ async function onMenuClick(action: string, type?: string, value?: string, select
           input_value.value.slice(selectionEnd)
         input_value.value = newValue
       }
-    } else {
-      console.error(`unsupported type ${type}`)
-      return
     }
-    await window.api.openInBrowser(value)
   } else {
     console.log('执行其他操作:', action)
   }
@@ -277,7 +284,7 @@ async function handleContextMenu(event: MouseEvent): Promise<void> {
     } else if (target.type == 'input') {
       console.log('右键输入框', target.source)
       if (customContextMenu.value) {
-        showContextMenu(event, 'anchor', target.source, target.selectionStart, target.selectionEnd)
+        showContextMenu(event, 'input', target.source, target.selectionStart, target.selectionEnd)
       } else {
         await window.api.openContentMenu('input', target.source)
       }

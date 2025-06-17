@@ -5,6 +5,7 @@ import { is } from '@electron-toolkit/utils'
 
 import icon from '../../resources/icon.png?asset'
 import { getSetting } from './setting'
+import { getSysInfoHumanReadable } from './sysinfo'
 import type { RenderSetting } from '../common/render-setting'
 
 const defaultMenuTemplate: MenuItemConstructorOptions[] = [
@@ -148,21 +149,9 @@ function createWindowFactory(thumbarButtons: ThumbarButton[]): () => BrowserWind
     Window.webContents.once('did-finish-load', () => {
       console.log('Window did-finish-load')
       const setting = getSetting()
-      const showMenu = setting.window_menu_type === 'custom'
-      let wayland = false
-      if (process.platform === 'linux') {
-        if (process.env.XDG_SESSION_TYPE === 'wayland') {
-          wayland = true // 检测是否在 Wayland 会话中
-        }
-      }
-      
-      Window.webContents.send('update-render-setting', {
-        platform: process.platform,
-        wayland: wayland,
-        showTitleBar: setting.window_menu_type === 'custom', // 如果是 custom，则不显示菜单
-        customContextMenu: setting.context_menu_type === 'custom' // 如果是 custom，则使用自定义上下文菜单
-      })
-      console.log(`did-finish-load ${showMenu}`)
+      const sysinfo = getSysInfoHumanReadable()
+      const render_setting: RenderSetting = Object.assign(Object.assign({}, sysinfo), setting)
+      Window.webContents.send('update-render-setting', render_setting)
     })
     mainWindow = Window
     return Window

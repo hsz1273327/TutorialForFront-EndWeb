@@ -1,7 +1,8 @@
-import { app, contextBridge } from 'electron'
+import { app } from 'electron'
 import { join } from 'path'
 import * as fs from 'fs'
 import Ajv from 'ajv'
+import type { Setting } from '../common/setting'
 
 // 设置schema用于校验
 const SettingSchema = {
@@ -23,13 +24,6 @@ const SettingSchema = {
   }
 }
 
-interface Setting {
-  can_background?: boolean
-  window_hide_as_close?: boolean
-  window_menu_type?: 'default' | 'custom'
-  context_menu_type?: 'default' | 'custom'
-  // 其他配置项...
-}
 // 配置的默认值
 const DEFAULT_SETTING: Setting = {
   can_background: false,

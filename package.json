@@ -29,7 +29,8 @@
     "commander": "^13.1.0",
     "electron-updater": "^6.3.9",
     "mousetrap": "^1.6.5",
-    "pinia": "^3.0.2"
+    "pinia": "^3.0.2",
+    "systeminformation": "^5.27.1"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "3.0.0",

@@ -5,6 +5,7 @@ import { is } from '@electron-toolkit/utils'
 
 import icon from '../../resources/icon.png?asset'
 import { getSetting } from './setting'
+import type { RenderSetting } from '../common/render-setting'
 
 const defaultMenuTemplate: MenuItemConstructorOptions[] = [
   {
@@ -154,6 +155,7 @@ function createWindowFactory(thumbarButtons: ThumbarButton[]): () => BrowserWind
           wayland = true // 检测是否在 Wayland 会话中
         }
       }
+      
       Window.webContents.send('update-render-setting', {
         platform: process.platform,
         wayland: wayland,

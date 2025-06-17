@@ -1,4 +1,12 @@
-import { Tray, nativeImage, Menu, MenuItem, MenuItemConstructorOptions } from 'electron'
+import {
+  Tray,
+  nativeImage,
+  Menu,
+  MenuItem,
+  MenuItemConstructorOptions,
+  powerMonitor,
+  powerSaveBlocker
+} from 'electron'
 import sleep from 'await-sleep'
 import icon from '../../resources/icon.png?asset'
 import { getSetting, setSetting, cleanSetting } from './setting'
@@ -58,6 +66,61 @@ function handleContextMenuStyleMenuClick(label: ContextMenuStyleChoise): void {
   // titleBarStyleChoise = label
   setSetting({ context_menu_type: label })
   updateWindowMenuType()
+  if (soft_update_tray_menu) {
+    soft_update_tray_menu()
+  }
+}
+
+// 节电模式限制
+let powerSaveBlockerID: number | null = null
+
+enum powerSaveBlockerStatus {
+  close = 'close',
+  prevent_app_suspension = 'prevent-app-suspension',
+  prevent_display_sleep = 'prevent-display-sleep'
+}
+
+let power_save_blocker_status: powerSaveBlockerStatus = powerSaveBlockerStatus.close
+
+function handlePowerSaveBlockerClick(label: powerSaveBlockerStatus): void {
+  console.log(`${label} clicked`)
+  // 在这里处理统一的逻辑
+  if (label === powerSaveBlockerStatus.close) {
+    if (power_save_blocker_status !== powerSaveBlockerStatus.close) {
+      if (powerSaveBlockerID !== null) {
+        if (powerSaveBlocker.isStarted(powerSaveBlockerID)) {
+          powerSaveBlocker.stop(powerSaveBlockerID)
+        }
+        powerSaveBlockerID = null
+      }
+    }
+  } else if (label == powerSaveBlockerStatus.prevent_app_suspension) {
+    if (power_save_blocker_status !== powerSaveBlockerStatus.prevent_app_suspension) {
+      if (powerSaveBlockerID !== null) {
+        if (powerSaveBlocker.isStarted(powerSaveBlockerID)) {
+          powerSaveBlocker.stop(powerSaveBlockerID)
+        }
+        powerSaveBlockerID = null
+        powerSaveBlockerID = powerSaveBlocker.start('prevent-app-suspension')
+      } else {
+        powerSaveBlockerID = powerSaveBlocker.start('prevent-app-suspension')
+      }
+    }
+  } else {
+    if (power_save_blocker_status !== powerSaveBlockerStatus.prevent_display_sleep) {
+      if (powerSaveBlockerID !== null) {
+        if (powerSaveBlocker.isStarted(powerSaveBlockerID)) {
+          powerSaveBlocker.stop(powerSaveBlockerID)
+        }
+        powerSaveBlockerID = null
+        powerSaveBlockerID = powerSaveBlocker.start('prevent-display-sleep')
+      } else {
+        powerSaveBlockerID = powerSaveBlocker.start('prevent-display-sleep')
+      }
+    }
+  }
+
+  power_save_blocker_status = label
   if (soft_update_tray_menu) {
     soft_update_tray_menu()
   }
@@ -176,6 +239,31 @@ function update_tray_menu(): Menu {
     })
   }
 
+  //status-check
+
+  const powerCheckTemplates = [
+    {
+      label: '电源状态:' + powerMonitor.getSystemIdleState(1),
+      enabled: false
+    }
+  ]
+  if (process.platform === 'darwin' || process.platform === 'win32') {
+    powerCheckTemplates.push({
+      label: '电源类型:' + powerMonitor.isOnBatteryPower() ? '电池' : '插电',
+      enabled: false
+    })
+  }
+
+  const savePowerRadioTemplates: MenuItemConstructorOptions[] = []
+  for (const item of Object.keys(powerSaveBlockerStatus)) {
+    const item_enum = powerSaveBlockerStatus[item as keyof typeof powerSaveBlockerStatus]
+    contextMenuRadioTemplates.push({
+      label: `节电模式:${item}`,
+      type: 'radio' as const,
+      checked: power_save_blocker_status === item_enum,
+      click: (): void => handlePowerSaveBlockerClick(item_enum)
+    })
+  }
 
   const Templates: MenuItemConstructorOptions[] = [
     ...normalTemplates,
@@ -185,6 +273,10 @@ function update_tray_menu(): Menu {
     ...titlebarRadioTemplates,
     { type: 'separator' },
     ...contextMenuRadioTemplates,
+    { type: 'separator' },
+    ...powerCheckTemplates,
+    { type: 'separator' },
+    ...savePowerRadioTemplates,
     { type: 'separator' },
     {
       label: '退出',
@@ -212,6 +304,42 @@ function init_tray(): void {
   //   // macOS
   //   tray.setPressedImage(tray_icon)
   // }
+  powerMonitor.addListener('lock-screen', () => {
+    if (soft_update_tray_menu) {
+      soft_update_tray_menu()
+    }
+  })
+  powerMonitor.addListener('unlock-screen', () => {
+    if (soft_update_tray_menu) {
+      soft_update_tray_menu()
+    }
+  })
+
+  powerMonitor.addListener('suspend', () => {
+    if (soft_update_tray_menu) {
+      soft_update_tray_menu()
+    }
+  })
+  powerMonitor.addListener('resume', () => {
+    if (soft_update_tray_menu) {
+      soft_update_tray_menu()
+    }
+  })
+  battery().then((batteryInfo) => {
+
+    if (batteryInfo.hasBattery) {
+      powerMonitor.addListener('on-ac', () => {
+        if (soft_update_tray_menu) {
+          soft_update_tray_menu()
+        }
+      })
+      powerMonitor.addListener('on-battery', () => {
+        if (soft_update_tray_menu) {
+          soft_update_tray_menu()
+        }
+      })
+    }
+  })
 }
 
 export { init_tray, show_balloon }

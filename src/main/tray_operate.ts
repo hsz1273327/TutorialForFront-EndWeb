@@ -239,21 +239,7 @@ function update_tray_menu(): Menu {
     })
   }
 
-  //status-check
-
-  const powerCheckTemplates = [
-    {
-      label: '电源状态:' + powerMonitor.getSystemIdleState(1),
-      enabled: false
-    }
-  ]
-  if (process.platform === 'darwin' || process.platform === 'win32') {
-    powerCheckTemplates.push({
-      label: '电源类型:' + powerMonitor.isOnBatteryPower() ? '电池' : '插电',
-      enabled: false
-    })
-  }
-
+  //savePowerRadio
   const savePowerRadioTemplates: MenuItemConstructorOptions[] = []
   for (const item of Object.keys(powerSaveBlockerStatus)) {
     const item_enum = powerSaveBlockerStatus[item as keyof typeof powerSaveBlockerStatus]
@@ -273,8 +259,6 @@ function update_tray_menu(): Menu {
     ...titlebarRadioTemplates,
     { type: 'separator' },
     ...contextMenuRadioTemplates,
-    { type: 'separator' },
-    ...powerCheckTemplates,
     { type: 'separator' },
     ...savePowerRadioTemplates,
     { type: 'separator' },
@@ -304,42 +288,6 @@ function init_tray(): void {
   //   // macOS
   //   tray.setPressedImage(tray_icon)
   // }
-  powerMonitor.addListener('lock-screen', () => {
-    if (soft_update_tray_menu) {
-      soft_update_tray_menu()
-    }
-  })
-  powerMonitor.addListener('unlock-screen', () => {
-    if (soft_update_tray_menu) {
-      soft_update_tray_menu()
-    }
-  })
-
-  powerMonitor.addListener('suspend', () => {
-    if (soft_update_tray_menu) {
-      soft_update_tray_menu()
-    }
-  })
-  powerMonitor.addListener('resume', () => {
-    if (soft_update_tray_menu) {
-      soft_update_tray_menu()
-    }
-  })
-  battery().then((batteryInfo) => {
-
-    if (batteryInfo.hasBattery) {
-      powerMonitor.addListener('on-ac', () => {
-        if (soft_update_tray_menu) {
-          soft_update_tray_menu()
-        }
-      })
-      powerMonitor.addListener('on-battery', () => {
-        if (soft_update_tray_menu) {
-          soft_update_tray_menu()
-        }
-      })
-    }
-  })
 }
 
 export { init_tray, show_balloon }

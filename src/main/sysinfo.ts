@@ -103,7 +103,7 @@ async function init_sysinfo(): Promise<void> {
 
   const cpuinfo = await si.cpu()
   sysInfo = Object.assign(sysInfo, {
-    cpu_info: {
+    cpuInfo: {
       manufacturer: cpuinfo.manufacturer,
       brand: cpuinfo.brand,
       cores: cpuinfo.cores,

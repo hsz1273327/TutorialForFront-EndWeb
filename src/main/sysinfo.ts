@@ -86,7 +86,7 @@ function checkRocmInstalled(): Promise<{ installed: boolean; version?: string }>
 
 let _sysInfo: SysInfo | null = null
 
-async function init_sysinfo(): Promise<void> {
+async function sync_sysinfo(): Promise<void> {
   let wayland = false
   if (process.platform === 'linux') {
     if (process.env.XDG_SESSION_TYPE === 'wayland') {
@@ -183,4 +183,4 @@ function getSysInfoHumanReadable(): SysInfoHumanReadable {
   return sysInfo
 }
 
-export { init_sysinfo, getSysInfo, getSysInfoHumanReadable, formatBytes }
+export { sync_sysinfo, getSysInfo, getSysInfoHumanReadable, formatBytes }

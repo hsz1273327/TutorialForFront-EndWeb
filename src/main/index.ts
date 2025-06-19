@@ -11,7 +11,7 @@ import { init_ipc } from './ipc'
 import { init_tray } from './tray_operate'
 import { init_dock } from './dock_operate'
 import { init_global_shortcuts } from './golbalshortcut'
-import { init_sysinfo} from './sysinfo'
+import { sync_sysinfo } from './sysinfo'
 
 const options = getCmdOptions()
 
@@ -70,7 +70,7 @@ if (!gotTheLock) {
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
   app.whenReady().then(async () => {
-    await init_sysinfo()
+    await sync_sysinfo()
     // Set app user model id for windows
     electronApp.setAppUserModelId('com.electron')
     app.on('browser-window-created', (_, window) => {
@@ -109,13 +109,6 @@ if (!gotTheLock) {
 
   app.on('window-all-closed', () => {
     const setting = getSetting()
-    // if (process.platform !== 'darwin') {
-    //   if (!setting.can_background) {
-    //     app.quit() // 如果不允许后台运行，退出应用
-    //   } else {
-    //     console.log('所有窗口已关闭，但应用仍在后台运行')
-    //   }
-    // }
     if (!setting.can_background) {
       app.quit() // 如果不允许后台运行，退出应用
     } else {

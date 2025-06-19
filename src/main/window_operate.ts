@@ -2,11 +2,9 @@
 import { shell, BrowserWindow, ThumbarButton, Menu, MenuItemConstructorOptions } from 'electron'
 import { join } from 'path'
 import { is } from '@electron-toolkit/utils'
-
-import icon from '../../resources/icon.png?asset'
 import { getSetting } from './setting'
-import { getSysInfoHumanReadable } from './sysinfo'
-import type { RenderSetting } from '../common/render-setting'
+import icon from '../../resources/icon.png?asset'
+import { pushRenderSetting } from './ipc'
 
 const defaultMenuTemplate: MenuItemConstructorOptions[] = [
   {
@@ -148,10 +146,7 @@ function createWindowFactory(thumbarButtons: ThumbarButton[]): () => BrowserWind
     }
     Window.webContents.once('did-finish-load', () => {
       console.log('Window did-finish-load')
-      const setting = getSetting()
-      const sysinfo = getSysInfoHumanReadable()
-      const render_setting: RenderSetting = Object.assign(Object.assign({}, sysinfo), setting)
-      Window.webContents.send('update-render-setting', render_setting)
+      pushRenderSetting(Window)
     })
     mainWindow = Window
     return Window

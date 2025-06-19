@@ -28,6 +28,7 @@
     "await-sleep": "^0.0.1",
     "commander": "^13.1.0",
     "electron-updater": "^6.3.9",
+    "is-online": "^11.0.0",
     "mousetrap": "^1.6.5",
     "pinia": "^3.0.2",
     "systeminformation": "^5.27.1",

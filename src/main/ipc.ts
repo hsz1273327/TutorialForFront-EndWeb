@@ -23,6 +23,9 @@ import sleep from 'await-sleep'
 import type { FileInfo, TargetSource } from '../common/file-info'
 import icon from '../../resources/icon.png?asset'
 import { ContentMenuFactory, saveAs } from './default_context_menus'
+import { getSetting } from './setting'
+import { getSysInfoHumanReadable } from './sysinfo'
+import type { RenderSetting } from '../common/render-setting'
 
 function init_ipc(): void {
   // `Request-Reply`模式的接口
@@ -310,9 +313,17 @@ function init_ipc(): void {
     }
   )
   // clipboard-clear
-  ipcMain.handle('clipboard-clear', async (_event: IpcMainInvokeEvent): Promise<void> => {
+  ipcMain.handle('clipboard-clear', async (): Promise<void> => {
     clipboard.clear()
   })
 }
 
-export { init_ipc }
+// 像指定Window推送更新RenderSetting的消息
+function pushRenderSetting(Window: BrowserWindow): void {
+  const setting = getSetting()
+  const sysinfo = getSysInfoHumanReadable()
+  const render_setting: RenderSetting = Object.assign(Object.assign({}, sysinfo), setting)
+  Window.webContents.send('update-render-setting', render_setting)
+}
+
+export { init_ipc, pushRenderSetting }

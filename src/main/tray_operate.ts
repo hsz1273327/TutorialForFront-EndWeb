@@ -4,7 +4,6 @@ import {
   Menu,
   MenuItem,
   MenuItemConstructorOptions,
-  powerMonitor,
   powerSaveBlocker
 } from 'electron'
 import sleep from 'await-sleep'

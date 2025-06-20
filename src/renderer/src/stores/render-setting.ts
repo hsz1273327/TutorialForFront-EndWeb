@@ -10,6 +10,8 @@ export const useRenderSetting = defineStore('renderSetting', {
     platform: '',
     wayland: false,
     arch: '',
+    timeZone: '',
+    systemLanguage: '',
     hasBattery: false,
     cpuInfo: {
       manufacturer: '',
@@ -47,6 +49,8 @@ export const useRenderSetting = defineStore('renderSetting', {
       this.platform = setting.platform
       this.wayland = setting.wayland
       this.arch = setting.arch
+      this.timeZone = setting.timeZone
+      this.systemLanguage = setting.systemLanguage
       this.hasBattery = setting.hasBattery
       this.cpuInfo = setting.cpuInfo
       this.memorySize = setting.memorySize

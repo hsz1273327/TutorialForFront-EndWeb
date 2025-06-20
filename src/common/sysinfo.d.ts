@@ -33,6 +33,9 @@ interface SysInfoBase {
   arch: string
   hasBattery: boolean
   cpuInfo: CpuInfo
+  timeZone: string
+  systemLanguage: string
+  networkConnection: string
   cudaVersion?: string
   rocmVersion?: string
 }

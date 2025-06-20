@@ -2,6 +2,7 @@ import si from 'systeminformation'
 import path from 'path'
 import { app } from 'electron'
 import { exec } from 'child_process'
+import { networkMonitor } from './networkMonitor'
 import type {
   FSInfo,
   FSInfoHumanReadable,
@@ -84,6 +85,51 @@ function checkRocmInstalled(): Promise<{ installed: boolean; version?: string }>
   })
 }
 
+/**
+ * 跨平台同步获取当前机器的语言信息 (Locale)。
+ * 该函数会尝试通过环境变量和 Intl.DateTimeFormat().resolvedOptions().locale 来获取。
+ *
+ * @returns {string} 表示机器语言的字符串（例如 "en-US", "zh-CN"），
+ * 如果无法获取则返回 "unknown"。
+ */
+function getSystemLanguage(): string {
+  let language = 'unknown'
+
+  // 1. 尝试通过 process.env 获取 (在 macOS/Linux 上最常用)
+  // 这是同步可用的
+  if (process.env.LANG) {
+    language = process.env.LANG
+  } else if (process.env.LC_ALL) {
+    language = process.env.LC_ALL
+  }
+
+  // 规范化语言字符串 (例如 "en_US.UTF-8" -> "en-US")
+  if (language.includes('.')) {
+    language = language.split('.')[0]
+  }
+  if (language.includes('_')) {
+    language = language.replace('_', '-')
+  }
+
+  // 2. 如果是 Windows 平台，并且之前没有获取到，尝试通过 Intl.DateTimeFormat 获取
+  // 这个也是同步可用的
+  if (process.platform === 'win32' && language === 'unknown') {
+    try {
+      language = Intl.DateTimeFormat().resolvedOptions().locale
+    } catch (e) {
+      // 这里我们只是捕获错误，但仍然返回 'unknown' 或之前获取到的值
+      if (e && typeof e === 'object' && 'message' in e) {
+        console.warn(
+          '在 Windows 上尝试通过 Intl.DateTimeFormat 获取 locale 失败:',
+          (e as { message: string }).message
+        )
+      } else {
+        console.warn('在 Windows 上尝试通过 Intl.DateTimeFormat 获取 locale 失败:', e)
+      }
+    }
+  }
+  return language
+}
 let _sysInfo: SysInfo | null = null
 
 async function sync_sysinfo(): Promise<void> {
@@ -96,7 +142,10 @@ async function sync_sysinfo(): Promise<void> {
   let sysInfo = {
     platform: process.platform,
     wayland: wayland,
-    arch: process.arch
+    arch: process.arch,
+    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    systemLanguage: getSystemLanguage(),
+    networkConnection: networkMonitor.getCurrentConnectionLevel()
   }
   const batteryinfo = await si.battery()
   sysInfo = Object.assign(sysInfo, { hasBattery: batteryinfo.hasBattery })
@@ -158,10 +207,13 @@ function getSysInfoHumanReadable(): SysInfoHumanReadable {
     platform: info.platform,
     wayland: info.wayland,
     arch: info.arch,
+    networkConnection: info.networkConnection,
     hasBattery: info.hasBattery,
     cpuInfo: info.cpuInfo,
     memorySize: formatBytes(info.memorySize),
-    fsInfo: fsInfo
+    fsInfo: fsInfo,
+    timeZone: info.timeZone,
+    systemLanguage: info.systemLanguage
   }
   if (info.cudaVersion) {
     sysInfo = Object.assign(sysInfo, { cudaVersion: info.cudaVersion })

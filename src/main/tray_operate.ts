@@ -13,10 +13,12 @@ import {
   showWindow,
   sendToMainWindow,
   updateWindowMenuType,
-  shakeMainWindow
+  shakeMainWindow,
+  PushRenderSettingToMainWindow
 } from './window_operate'
 import { app_soft_quit } from './app_operate'
 import { dockBounce, setDockProgressBar } from './dock_operate'
+import { networkMonitor } from './networkMonitor'
 
 let tray: Tray | null = null
 // windows 下的托盘气泡提示
@@ -262,6 +264,11 @@ function update_tray_menu(): Menu {
     ...savePowerRadioTemplates,
     { type: 'separator' },
     {
+      label: networkMonitor.getCurrentConnectionLevel(),
+      enabled: false
+    },
+    { type: 'separator' },
+    {
       label: '退出',
       type: 'normal' as const,
       click: (): void => {
@@ -287,6 +294,12 @@ function init_tray(): void {
   //   // macOS
   //   tray.setPressedImage(tray_icon)
   // }
+  networkMonitor.on('network-level-changed', () => {
+    if (soft_update_tray_menu) {
+      soft_update_tray_menu()
+    }
+    PushRenderSettingToMainWindow()
+  })
 }
 
 export { init_tray, show_balloon }

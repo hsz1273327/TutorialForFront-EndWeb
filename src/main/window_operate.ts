@@ -5,6 +5,7 @@ import { is } from '@electron-toolkit/utils'
 import { getSetting } from './setting'
 import icon from '../../resources/icon.png?asset'
 import { pushRenderSetting } from './ipc'
+import { getSysInfoHumanReadable, sync_sysinfo } from './sysinfo'
 
 const defaultMenuTemplate: MenuItemConstructorOptions[] = [
   {
@@ -243,6 +244,33 @@ function setOpacityWindow(window: BrowserWindow, value: number): void {
   }
 }
 
+function PushRenderSettingToMainWindow(): void {
+  if (mainWindow) {
+    pushRenderSetting(mainWindow)
+  }
+}
+
+function checkAndPushRenderSettingToMainWindow(): void {
+  const oldsysinfo = JSON.stringify(getSysInfoHumanReadable())
+  sync_sysinfo().then(() => {
+    const newsysinfo = JSON.stringify(getSysInfoHumanReadable())
+    if (oldsysinfo !== newsysinfo) {
+      PushRenderSettingToMainWindow()
+    }
+  })
+}
+let _syncRenderSettingIntervalID: NodeJS.Timeout | null = null
+
+function starSyncRenderSetting(): void {
+  _syncRenderSettingIntervalID = setInterval(checkAndPushRenderSettingToMainWindow, 1000 * 60 * 5)
+}
+
+function stopSyncRenderSetting(): void {
+  if (_syncRenderSettingIntervalID !== null) {
+    clearInterval(_syncRenderSettingIntervalID)
+  }
+}
+
 export {
   createWindowFactory,
   showWindow,
@@ -251,5 +279,8 @@ export {
   updateWindowMenuType,
   shakeWindow,
   shakeMainWindow,
-  setOpacityWindow
+  setOpacityWindow,
+  PushRenderSettingToMainWindow,
+  starSyncRenderSetting,
+  stopSyncRenderSetting
 }

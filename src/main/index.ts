@@ -6,11 +6,18 @@ import { init_linux } from './linux_init'
 import { getSetting, Setting, setSetting, cleanSetting } from './setting'
 import { getCmdOptions } from './cmd_operate'
 import { app_soft_quit } from './app_operate'
-import { createWindowFactory, showWindow, sendToMainWindow } from './window_operate'
+import {
+  createWindowFactory,
+  showWindow,
+  sendToMainWindow,
+  starSyncRenderSetting,
+  stopSyncRenderSetting
+} from './window_operate'
 import { init_ipc } from './ipc'
 import { init_tray } from './tray_operate'
 import { init_dock } from './dock_operate'
 import { init_global_shortcuts } from './golbalshortcut'
+import { networkMonitor } from './networkMonitor'
 import { sync_sysinfo } from './sysinfo'
 
 const options = getCmdOptions()
@@ -70,6 +77,7 @@ if (!gotTheLock) {
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
   app.whenReady().then(async () => {
+    networkMonitor.startPolling() //开始更新网络状态
     await sync_sysinfo()
     // Set app user model id for windows
     electronApp.setAppUserModelId('com.electron')
@@ -90,6 +98,7 @@ if (!gotTheLock) {
     app.on('activate', function () {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.
+      console.log('&&&&&&&&&&&activate')
       showWindow()
     })
     if (process.platform === 'linux' && !is.dev) {
@@ -97,6 +106,7 @@ if (!gotTheLock) {
       console.log('Linux platform detected')
       await init_linux()
     }
+    starSyncRenderSetting() //开始向主window同步配置
   })
 
   // 生命周期监听
@@ -114,5 +124,13 @@ if (!gotTheLock) {
     } else {
       console.log('所有窗口已关闭，但应用仍在后台运行')
     }
+  })
+
+  app.on('before-quit', () => {
+    console.log('get before-quit event')
+    stopSyncRenderSetting()
+    networkMonitor.stopPolling() //停止更新网络状态
+    //停止向主window同步配置
+    console.log('get before-quit event done')
   })
 }

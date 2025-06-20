@@ -2,6 +2,8 @@
   <ul class="sysinfo">
     <li class="platform-sysinfo">Platform{{ platform }}</li>
     <li class="arch-sysinfo">Arch {{ arch }}</li>
+    <li class="timeZone-sysinfo">timeZone {{ timeZone }}</li>
+    <li class="systemLanguage-sysinfo">systemLanguage {{ systemLanguage }}</li>
     <li class="cpu-sysinfo">Cpu {{ cpuInfo.manufacturer }}</li>
     <li class="memory-sysinfo">memory {{ memorySize }}</li>
     <li class="fs-sysinfo">
@@ -22,7 +24,7 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const render_setting_store = useRenderSetting()
-const { platform, arch, cpuInfo, memorySize, fsInfo, graphics } = storeToRefs(render_setting_store)
+const { platform, arch, cpuInfo, memorySize, timeZone, systemLanguage, fsInfo, graphics } = storeToRefs(render_setting_store)
 
 function goBack(): void {
   router.back()
